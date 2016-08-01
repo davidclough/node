@@ -1,0 +1,35 @@
+h2
+{
+  margin-top: 0;
+}
+
+.race-container
+{
+  padding: 10px;
+  background-color: #aaa;
+  margin: 0 0 20px 0;
+  display: block;
+  overflow: hidden;
+}
+
+.race-container.flagship-race
+{
+  border: 5px #0a0 solid;
+}
+
+.race-image
+{
+  display: block;
+  float: left;
+}
+
+.race-description
+{
+  float: left;
+  padding: 0 0 0 20px;
+}
+
+.number
+{
+  width: 30px;
+}

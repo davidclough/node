@@ -1,0 +1,1 @@
+babel Code.es6.js -d build/

@@ -1,0 +1,1 @@
+function myFirstFunction(){var n="First";return n;return"Unreachable"}function mySecondFunction(){return"Second"}(function(){var n;n=function(){return"Third"}}).call(this);

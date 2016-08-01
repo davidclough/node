@@ -1,0 +1,35 @@
+<h1 class="description">Total entrants: {{getTotalEntrants()}}</h1>
+<ul>
+  <!-- CLASS PROPERTY BINDING: Here it successfully appends the possible extra CSS class to the one that is already defined.
+       NOTE: We could include "flagship-race" in the class attribute if we wanted. The Class Property Binding will REMOVE it if false. -->
+  <li *ngFor="let race of races" class="race-container" [class.flagship-race]="race.isFlagship">
+
+    <!-- NOTE: Unfortunately the PROPERTY BINDING does not work here as I need to prepend part of the URL. -->
+    <!-- <img [src]="race.imageUrl" /> -->
+    <img src="../{{race.imageUrl}}" [title]="race.imageUrl" class="race-image" />
+
+    <div class="race-description">
+      <h2 (mouseover)="getTitleCoord($event)">{{race.name}}</h2>
+      <h2>{{race.location | uppercase}}</h2>
+      <h2>{{race.entryFee | currency:"EUR":true}}</h2>
+      <!-- Structural Directives -->
+      <div>
+        <span *ngIf="race.entrants > 0">{{race.entrants}} people entered</span>
+        <span *ngIf="race.entrants === 0">No entrants </span>
+        <button (click)="removeOneEntrant(race)">-</button>
+
+        <!-- TWO WAY BINDING. -->
+        <!-- OBSERVATION: Although you can put javascript in the event, it appears to be only a limited form. In this case it
+                           could not handle the parseInt and we had to move the code to named method instead. -->
+        <!-- <input type="text" [value]="race.entrants" (input)="race.entrants = parseInt($event.target.value, 10)" /> -->
+        <input type="text" [value]="race.entrants" (input)="setEntrants(race, $event.target.value)"  class="number" />
+        <!-- BANANA IN A BOX. -->
+        <!-- UNFORTUNATELY: More info needed as this does not seem to do a good job of interpreting the value as if it were a number.
+                            The fact that it has type "number" in the race model class. -->
+        <!-- <input class="number" type="text" [(ngModel)]="race.entrants" /> -->
+
+        <button (click)="addOneEntrant(race)">+</button>
+      </div>
+    </div>
+  </li>
+</ul>

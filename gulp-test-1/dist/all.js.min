@@ -1,0 +1,1 @@
+function myFirstFunction(){return"First"}function fourth(){return"Fourth"}function mySecondFunction(){return"Second"}(function(){var n;n=function(){return"Third"}}).call(this);
