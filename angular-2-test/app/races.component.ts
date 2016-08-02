@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { Race } from "./race";
-import { RACES } from "./mocks";
+import { RacingDataService } from "./racing-data.service";
 
+// NOTE: As stated in part 5, there is no need to specify RacingDataService as a "provider" because it has already
+//       been done in app.component and this is just a sub-component of that.
 @Component({
   selector: 'races',
   //template: ``
@@ -11,8 +13,18 @@ import { RACES } from "./mocks";
 export class RacesComponent {
   races: Race[];
 
+  // A PRIVATE PARAMETER? This looks like a bodge to get TypeScript to generate the JavaScript we need, i.e. a
+  //                      property for RacesComponent.
+  constructor(private racingDataService: RacingDataService) {
+  }
+
   ngOnInit() {
-    this.races = RACES;
+    // With respect to the "PRIVATE PARAMETER" comment: Until I have learned that this is a TypeScript practice, I will
+    // not be overly comfortable with "this.racingDataService" (NOT its injected value) just gets magically created via
+    // apparent sleight of hand.
+    // I know it is more work but I would have preferred to declare a racingDataService property (bleow races) and set its
+    // value to that of the parameter myself.
+    this.races = this.racingDataService.getRaces();
   }
 
   getTotalEntrants() {

@@ -9,12 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var mocks_1 = require("./mocks");
+var racing_data_service_1 = require("./racing-data.service");
+// NOTE: As stated in part 5, there is no need to specify RacingDataService as a "provider" because it has already
+//       been done in app.component and this is just a sub-component of that.
 var RacesComponent = (function () {
-    function RacesComponent() {
+    // A PRIVATE PARAMETER? This looks like a bodge to get TypeScript to generate the JavaScript we need, i.e. a
+    //                      property for RacesComponent.
+    function RacesComponent(racingDataService) {
+        this.racingDataService = racingDataService;
     }
     RacesComponent.prototype.ngOnInit = function () {
-        this.races = mocks_1.RACES;
+        // With respect to the "PRIVATE PARAMETER" comment: Until I have learned that this is a TypeScript practice, I will
+        // not be overly comfortable with "this.racingDataService" (NOT its injected value) just gets magically created via
+        // apparent sleight of hand.
+        // I know it is more work but I would have preferred to declare a racingDataService property (bleow races) and set its
+        // value to that of the parameter myself.
+        this.races = this.racingDataService.getRaces();
     };
     RacesComponent.prototype.getTotalEntrants = function () {
         return this.races.reduce(function (prev, current) { return prev + current.entrants; }, 0);
@@ -40,7 +50,7 @@ var RacesComponent = (function () {
             templateUrl: "app/races.component.html",
             styleUrls: ["app/races.component.css"]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [racing_data_service_1.RacingDataService])
     ], RacesComponent);
     return RacesComponent;
 }());

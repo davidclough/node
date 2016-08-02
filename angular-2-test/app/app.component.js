@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var races_component_1 = require('./races.component');
+var racing_data_service_1 = require("./racing-data.service");
+var http_1 = require("@angular/http");
 var AppComponent = (function () {
     function AppComponent() {
         this.title = "Ultra Racing";
@@ -18,7 +20,9 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'my-app',
             template: "\n    <h1>{{title}} - DC</h1>\n    <races></races>\n  ",
-            directives: [races_component_1.RacesComponent]
+            directives: [races_component_1.RacesComponent],
+            // For dependency injection.
+            providers: [racing_data_service_1.RacingDataService, http_1.HTTP_PROVIDERS]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
