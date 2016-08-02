@@ -22,6 +22,13 @@ export const RACES: Race[] = [{
   imageUrl: "images/CodingHorror.png",
   isFlagship: false
 }, {
+  name: "Italian Grand Prix",
+  location: "Monza",
+  entryFee: 350,
+  entrants: 24,
+  imageUrl: "images/CodingHorror.png",
+  isFlagship: true
+}, {
   name: "Le Mans 24 Hour Race",
   entrants: 49,
   entryFee: 750,
