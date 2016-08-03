@@ -1,5 +1,12 @@
-// This may be the way to install npm3 so it replaces npm, rather than running alongside.
+// This may be the way to install npm3 so it replaces npm, rather than running alongside. THIS WORKS.
 npm install npm@latest -g
+
+// Might be better to install npm3 first and then upgrade (who know's?)
+npm3 install -g
+npm3 install npm@latest -g
+npm3 uninstall -g
+
+
 
 
 npm3 install -g
