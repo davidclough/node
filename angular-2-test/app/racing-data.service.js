@@ -11,8 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require('rxjs/add/operator/map');
-// Left in for moment so we can still fetch data via mocks file classes.
-var mocks_1 = require("./mocks");
 // Also see app.component.ts
 var RacingDataService = (function () {
     // Http is injected as a dependency of RacingDataService. We can do this because RDS is injectable (possibly he
@@ -20,10 +18,17 @@ var RacingDataService = (function () {
     function RacingDataService(http) {
         this.http = http;
     }
+    //getRaces(): Observable<Race[]> {
     RacingDataService.prototype.getRaces = function () {
-        return mocks_1.RACES;
-        //return this.http.get("app/races.json").
-        //                 map(response => <Race[]>response.json().data);
+        // get returns an Oservable, not a promise.
+        // "races" is also an Observable.
+        // (r for response)
+        var races = this.http.get("app/races.json").map(function (r) { return r.json().data; });
+        //debugger;
+        //var jjj = this.http.get("app/races.json");
+        //debugger;
+        return races;
+        //return RACES;
     };
     RacingDataService = __decorate([
         core_1.Injectable(), 

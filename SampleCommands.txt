@@ -1,3 +1,7 @@
+// This may be the way to install npm3 so it replaces npm, rather than running alongside.
+npm install npm@latest -g
+
+
 npm3 install -g
 npm3 install --save-dev
 
@@ -5,3 +9,25 @@ npm3 install --save-dev
 gulp less
 
 npm3 start
+
+
+
+
+
+
+
+
+
+// From Aurelia talk.
+
+jspm
+jspm init
+
+jspm install aurelia-framework
+jspm install aurelia-bootstrapper
+
+gulp bundle
+
+npm yo
+yo aurelia
+

@@ -24,10 +24,25 @@ var RacesComponent = (function () {
         // apparent sleight of hand.
         // I know it is more work but I would have preferred to declare a racingDataService property (bleow races) and set its
         // value to that of the parameter myself.
-        this.races = this.racingDataService.getRaces();
+        var _this = this;
+        // Use this when races was fetched from JSON array, e.g. RACES in mock.js.
+        //this.races = this.racingDataService.getRaces();
+        // Use this when dealing with the Observable fetched from the web service call.
+        this.racingDataService.
+            getRaces().
+            subscribe(function (races) { return _this.races = races; });
+        // NOTE: Two things were preventing things from working when I first switched to using the HTTP races:
+        //        1) Had to call ".subscribe()" with the Observable.
+        //        2) I had to put EVERY key in quotes for the Races page to work. ALSO I could not put any comment in the JSON.
+        //           This won't be much of a problem as real data sources are unlikely to be static JSON files (maybe used for settings).
     };
     RacesComponent.prototype.getTotalEntrants = function () {
-        return this.races.reduce(function (prev, current) { return prev + current.entrants; }, 0);
+        // NOTE: The was right after all. This is not a hack. The problem is lifecycle related. There are two calls. In the first call this.races
+        //       is not yet populated and so an error occurs.
+        var races = this.races;
+        if (Array.isArray(races)) {
+            return races.reduce(function (prev, current) { return prev + current.entrants; }, 0);
+        }
     };
     RacesComponent.prototype.addOneEntrant = function (race) {
         race.entrants += 1;
