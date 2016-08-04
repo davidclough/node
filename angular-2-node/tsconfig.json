@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    // ...Promise not defined... multiple errors
+    // https://github.com/angular/angular/issues/7280
+    // May 6
+    // NOTE: After later "npm3 install"ing everything again things were OK.
+    //       I did install typings gloablly but am not sure that made any difference.
+    //       One possible difference is that I THINK INOW have a "typings" folder in this folder.
+    "target": "es5",
+    ////"target": "es6",
+    // May 11: Yeah, if you're transpiling to es5, you should also install the typings for es6-shim.
+
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  }
+}
