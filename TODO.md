@@ -11,3 +11,7 @@ Link to web page with LESS/SASS generated styling.
 Use lite?? to watch
 
 ## Tests with Jasmine, Mocha and Chimp
+
+## socket.io
+https://www.npmjs.com/package/socket.io
+
