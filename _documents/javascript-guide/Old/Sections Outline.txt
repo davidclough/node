@@ -1,0 +1,91 @@
+Sections
+----------
+
+JavaScript Language (ECMAScript 5)
+    Overview
+    Sequential
+    Types
+    Truthy and Falsey
+    JavaScript Keywords
+    Reserved Words
+    Variables
+    Functions
+    Calling functions
+    Hoisting
+    Operators
+    Immediately Invoked Function Expressions
+    Global Namespace
+
+Standard Browser Objects
+    document Object
+    window Object
+    localStorage and sessionStorage Objects
+    
+Coding Style
+    Naming Conventions
+    Whitespace
+    Functions
+    Blocks
+    Comments
+    <script> Tag
+    Semicolons
+    Long Lines
+    Operators to Avoid
+    Callback Function Parameters
+    Checking for Equality
+    Declarations
+    Initialising Variables
+    Redefining Properties within Prototypes of Standard Types
+    Augmenting Prototypes of Standard Types with Additional Properties
+    Do Not Create Functions within a Loop
+
+Code Organisation
+    Bundling
+    Common File
+    Custom jQuery Plugins
+    File per Module or Object
+
+Patterns, Tips and Tricks
+    "use strict"
+    Modification of Existing Code
+    "guard" Operator, Using &&
+    "default" Operator, Using ||
+    Convert Something to a Boolean with !!
+    that (or self) Variables
+    Inheritance
+    Code Lines Which Aid Debugging
+    eval Keyword Trick
+    Sample Equality Comparisons
+    Creating Modules (Singletons)
+    Defining an Obect in a Readable Manner
+    Defining an Efficient Constructor for an Obect with Many Instances
+    String Format Example
+    Deferred Object
+    
+jQuery
+    Overview
+    Attaching Event Handlers
+    Creating Plugins
+    Overriding Existing Plugins
+    Tips and Tricks
+
+ECMAScript 6 and Beyond 
+    
+Development Tools
+    Browser Development Tools
+    JSFiddle - https://jsfiddle.net/
+    Simple Testbed Project
+    Hinting and Linting
+    Writing Tests
+    TypeScript
+    
+Documentation Tools
+
+Additional Libraries
+    Functional Programming and Data Maniplulation
+    User Interface
+
+Gotchas
+    
+Therapy
+

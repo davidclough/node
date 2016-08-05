@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "start": "node app",
-    "foo": "node -e 'console.log(1+2)'"
-  }
-}

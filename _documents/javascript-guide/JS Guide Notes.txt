@@ -1,0 +1,343 @@
+Sections (1) Standards, (2) javascript info, (3) patterns, practices and tricks.
+----------
+                                                                                            https://github.com/airbnb/javascript
+http://www.w3schools.com/js                 Avoid going into too much depth
+
+JavaScript Language ECMAScript 5 (ES5)
+    Emphasis on ES5 which works in IE8.
+        Will leave out samples of most keywords as they behave in the same way as for other C-based language. Will include examples for ones that have some different behaviour
+        Not about the use of the word PROPERTY
+        Avoid trying to think in terms of C# and expecting things to behave the same and, if it doesn't it's rubbish. Good, bad, awful but if use the good stuff and structure well then it can be tamed to a large extent...
+        Avoid belief that JS standards should be the same as C# standards
+        In interests of this document not becoming bloated ... explanations may be quite short and will be intended to cover essentials, not every detail..., external links...
+        JS offers a trade off - extra brittleness for lots of flexibility
+        ??Many people: He expresses how he was once a complete advocate of "total strong typing" but has now been converted
+        Cannot be complete reference - serves no purpose - if want to learn, need to read, watch videos and write test applications.
+    sequential
+        hoisting: all variable declarations are hoisted to top of scope. Same with functions, however, although function expressions are hoisted, the actual function assignment itself is not
+        Bad to rely on hoisting though so using function 
+    Types
+        2: 5 types   as we all know by now JS uses dynamic typing so any type of value can be assign to any variable and type can be changed...
+            Each of these are actually objects whose earliest ancestor in the prototype chain the the Object prototype
+            String
+            Number
+                NaN     D7
+                parseInt
+            Boolean
+            Array
+            Object
+                prototype
+            null
+            undefined
+    Objects
+        1: declaration
+        myCar["make"]                   D16
+        http://www.w3schools.com/js/js_properties.asp
+        Prototype
+        toString() and other members in the Object prototype
+        Augmenting with additional methods
+        Adjusting existing methods
+    Arrays
+        1: declaration
+            adding properties after declaration
+    Strings
+    JS Keywords
+    Functions
+        Declarations and expressions (FtU D12) http://stackoverflow.com/questions/1013385/what-is-the-difference-between-a-function-expression-vs-declaration-in-javascrip
+        Use declaration syntax if define inside a loop (http://helephant.com/2012/07/14/javascript-function-declaration-vs-expression/)
+        Space to avoid it looking like you have declared a function called "function".
+        "arguments" property (it's not a true array but there is a trick to convert it to one)
+        Keep small and single resp, e.g. split longer ones into separate functions.
+        Try to keep non-UI logic in separate funtions from ones that manipulate the UI.
+    Calling functions
+        D81 - D97
+    Iterators and Generators
+    Variables
+    Hoisting
+        See section in http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/
+    Operators
+    Boolean - Comparison Operators & Equality
+        == coercive - will not take type into account               http://www.w3schools.com/js/js_comparisons.asp
+        !
+    this keyword
+    Self executing funtions (Immediately-invoked function expressions (IIFE)).
+        Golden parentheses
+    Closures.
+        http://javascript.crockford.com/private.html
+    for...in
+        D35
+    throw
+        Can throw ANY object
+    try/catch, try/finally
+    eval() - avoid. State the one case where have used.
+    new keyword
+    typeof
+        returns a STRING
+        if (typeof(Storage) !== "undefined") {                   http://www.w3schools.com/html/html5_webstorage.asp
+    Truthy and Falsey
+    Reserved Words
+    Type Coercion - D21
+    label statements
+        https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/label             break continue
+        Won't need these
+    Block scope
+        no such thing - hoisting
+        Scope is per containing function or object
+    Global Namespace
+
+The DOM
+    Point them towards jQuery for DOM manipulation
+    Windows
+    Cookies
+    Local Storage
+    
+Coding Style            DO put recommendations in the LANGUAGE section, rather than adding, separately, half a mile below.
+    Whitespace
+        Do not add spaces inside parentheses.
+        Do not add spaces inside brackets.
+        Add spaces inside curly braces.
+    Destructuring (airbnb)
+    Functions
+        Try to keep small with single reponsibility 
+    Blocks
+        braces in blocks
+    Comments
+        Reduce by good var and func naming...
+    <script>
+        DOM D6: Don't bother with type="text/javascript". It is the wrong MIME TYPE (application/...) so no browsers cater for it.
+        Genrally should AVOID putting JS within a page (keep in separate JS file). Sometimes you may want to take advantage of certain ASP.NET feature,
+            one ob being binding to some part of a model via razor tags or web forms data binding tags. In that case keep the code to a minimum, e.g. assign the values of the tags to javacript module properties. Code within JS files can then reference those properties from then on. 
+            Obviously you will have to structure your code so that the JS file(s) containing those variables have been included BEFORE the <script> code initialises them and 
+    Location of <script> tags.
+        Low in body (unlike CSS which are high in head)           This won't necessary always remain the case... async
+    semicolon insertion
+    Avoid excessively long lines. When a statement will not fit nicely on a single line, it may be necessary to break it. It is best to break after a { left brace, [ left bracket, ( left paren, , comma, or before a . period, ? question mark, or : colon. If such a break is not feasible, then break after an operator and continue on the next line with 8 spaces added to the current indentation. Those 8 spaces do not change the current indentation.
+    Inline assignments and ++
+    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.
+    Callback function parameters
+    === and !==
+        Either use if (a === null) or if (!a)
+    Initialising Variable - Object Literals and Arrays, Bools
+    Redefining and adding properties to standard types.
+    Separation of business and UI
+    Declarations
+        Some say put all at top of container. Not really necessary as declaring just before use gives a better indication of intent. As long as people appreciate the concept of hoisting.
+    Naming
+        Descriptive but need to avoid clutter.
+        Namespaces, e.g. PEP.         proactEnterprisePortal could seem to be a much more snsible choice to C# programmers but imagine the readability of code riddle with function calls like     proactEnterprisePortal.incidentManagementUtilities.createIncident()      PEP.incidents.create()
+    Do not create functions within a loop (FtU D84)
+
+Code Organisation
+    File with the namespace object declaration which all modules and object constructors will be members of (it needs to be the FIRST out of the files with YOUR code)
+        XXX You may find a requirement for some global variables may be need to work.  Put these within a module.
+        Common functions that are used in all areas. Can define these within one or more modules.
+        also module for vaues you may want to set via binding tags in web forms pages or razor views.
+    Custom jQuery plugins - include after jQuery...
+    File per module or object
+    You may want some files KendoHelper... NO
+    Bundling
+
+Patterns, Tips and Tricks
+    General modification of existing code
+    !!
+    "guard"          &&    D26
+    "default"        ||        D29
+    Convert to a Boolean        !!        D32
+    that (or self) keyword
+    Object.create()
+    prototype
+    Inheritance
+        Just generally suggest ideas that COULD be implemented (different patterns, shared secrets, supermethods, keep hierarchies shallow) - patterns av in JS are diff from C#...
+        Also indicate that these may be described in separate file.
+        Also indicate that probably don't really need this for the size of our code bases and, if we ever do write larger code bases, consider using TypeScript.
+        Prototypical inheritance
+    console.log();
+    debugger;
+    console.trace();
+    eval() - avoid. State the one case where have used.
+    Samples equality comparisons
+    IIFEs for modules and classes
+    Efficient classes if will create multiple instances
+    Supplant/function example
+    Deferred object (see worksheet)
+    
+jQuery
+    Attaching event handlers
+    Creating Plugins
+    Overriding Existing Plugins
+    Tips and Tricks
+
+ECMAScript 6 and Beyond    ES6 ES2016
+    const, let, properties...
+    
+Development Tools
+    F12 tools
+    JSFiddle - https://jsfiddle.net/
+    Simple testbed project
+    linting and hinting
+    Testing (Simon wrote a wiki article)
+    Typescript (coffeescript traceUR)
+    
+Documentation Tools
+
+Additional Libraries
+    Lodash (Underscore), Lazy
+        http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy-js/
+    jQuery UI
+    ADD SOME MORE MENTIONS LATER
+        Google it - https://en.wikipedia.org/wiki/List_of_JavaScript_libraries
+
+Gotchas (if can think of enough)
+                                                                http://www.w3schools.com/js/js_mistakes.asp
+    http://www.standardista.com/javascript/15-common-javascript-gotchas/
+    
+Illness
+    Strong risk that may get to like. If... contact Dr... for therapy.
+    
+-----------------------------------------------------------------------------
+
+
+
+
+
+
+Leave more complicated and less-used stuff, e.g. inheritance, to separate documents.
+
+
+
+
+
+
+http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0
+http://javascript.crockford.com/code.html
+http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0               Especially RED NOTES
+
+                                                                https://google.github.io/styleguide/javascriptguide.xml#Modifying_prototypes_of_builtin_objects
+
+```
+CODE SAMPLE: 
+```
+
+	CODE SAMPLE: 
+	TO MENTION: 
+>	NEW SECTION REQUIRED: 
+	TO MOVE: 
+    SECTION COMPLETE BUT REARRANGE
+<br /><a href="" target="_blank"></a><br />
+    
+    
+	IMAGE REQUIRED:                        This one will probably only apply to Development Tools (F12) section
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pg 33:
+// Add a method conditionally.
+Function.prototype.method = function (name, func) {
+    if (!this.prototype[name]) {
+        this.prototype[name] = func;
+    }
+};
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Standards: Requirements + Recommendations
+
+
+script type not necessary but no harm - NO POINT mentioning in standards
+https://en.wikibooks.org/wiki/JavaScript/Placing_the_Code:
+    While the text/javascript was formally obsoleted in April 2006 by RFC 4329
+
+Location:
+http://stackoverflow.com/questions/436411/where-is-the-best-place-to-put-script-tags-in-html-markup
+    Mentions bottom as antiquated but ASYNC and DEFER are not reliable enough across all browsers
+https://developer.yahoo.com/performance/rules.html#js_bottom=
+    Would imagine this is up to date. NOT TOTALLY
+    "If a script can be deferred, it can also be moved to the bottom of the page. That will make your web pages load faster."
+Necessary stuff, e.g. maybe namespace, can be put in a small bundle and included at the top.
+NOT SURE if worth mentioning this.
+
+Namespaces - always have one. Caps and small recommended as will avoid clutter and immediately know it is a namespace.
+    A long descriptive namespace will quickly become annoying and use of camel case leaves people guessing if it the namespace object or a normal object.
+    There is no acknowledged standard but I like.
+
+// Comments - be generous - if code inside a method is greater than handful of lines there is a good chance that code is NOT self documenting, even if person writing at the time thinks it is.
+
+http://javascript.crockford.com/code.html
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Some Resources forStandards on Web
+-----------------------------------------------
+
+Google:         https://google.github.io/styleguide/javascriptguide.xml
+Quite concise, mostly in agreement, no mention of ===
+Does is recommend too many other things, e.g. "the Closure library", and is that bad?
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------
+
+General sections:
+
+
+
+
+
+
+
+
+Closure
+Debugging
+Extra libraries that may be of use
+Linting/Hinting
+jQuery
+
+Gotchas
+    Warning about LINTing
+
+
+    
+    
+    
+    
+* Namespaces
+* Private/Public
+* Functions
+* Constants
+* Objects
+* Inheritance
+* Be careful with Context - self/this which to use and when
+* Documentation and how to use JSdocs - setup etc, commenting of code
+* Using strings populated from resource
+*  Operators e.g. == === etc... look at truthy falsey
+* loops https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration 
+* Jquery e.g. selectors
+* Regex - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions 
+* Unit Testing: QUnit or Jasmine    
+    
+    
+    
+    
+    
+
+Can't rec what not used much or stuff which is more specialist, like LoDash, Lazy.js  - could be mentioned as extra tools/libraries.
+Chimp, jasmine, 
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+

@@ -1,0 +1,47 @@
+Session Filters (tab):
+
+Show only the followinf hosts
+    localhost
+    
+Hide the followinf hosts
+    outlook.office365.com;
+
+---------------------------------------------------------------------------------------------------------------------------------
+Session Inspectors (tab):
+
+Can select multiple request:
+    Press R to repeat the call asynchronously at same time.
+    Press S Sequential (one after the other)
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+Session Composer (tab):
+
+Can re-send a previous request
+Modify the request in the RAW tab (or copy and paste into a better editor)
+Click EXECUTE to send
+
+Drag the link from Session Summary to Composer to auto copy its raw contents into Composer tab
+
+PARSE tab contains the "Log Requests - History"
+---------------------------------------------------------------------------------------------------------------------------------
+
+http://www.telerik.com/fiddler/add-ons
+
+---------------------------------------------------------------------------------------------------------------------------------
+INTERCEPTION
+------------------
+
+Rules - Automatic Breakpoints - Before Requests
+
+Intercept POST on http://localhost/AxaGateway/AxaAdmin/OnSiteAdministration/ResendEmails.aspx
+after adding CSV file
+
+Double-click the intercepted request and it will be available for tampering with the Inspectors tab.
+
+Raw tab: Past below in and send (text/csv):
+<img src=a onerror=prompt(1)>smeriah@lexsi.com
+
+
