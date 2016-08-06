@@ -64,4 +64,8 @@ npm install -g generator-aurelia
 
 https://github.com/zewa666/generator-aurelia
 
+-----------------------------------------------------------------------------------------------------------------------------------
 
+npm info socket.io version
+node app.js
+http://localhost:3001/
