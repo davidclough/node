@@ -29,14 +29,14 @@ io.sockets.on("connection", function (socket) {
     } else {
       callback(true);
       socket.name = data;
-      usernames.push(socket.name)
+      usernames.push(socket.name);
       updateUsernames();
     }
   });
 
   // Here "send message" is a custom event??? Iassume it corresponds to the emit in client-side.
   socket.on("send message", function (data) {
-    io.sockets.emit("new message", data);         // including me
+    io.sockets.emit("new message", { msg: data, uname: socket.name } );         // including me
     //socket.broadcast.emit("new message", data);   // excluding me
   });
 

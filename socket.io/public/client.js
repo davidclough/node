@@ -1,16 +1,16 @@
-$(function () {
-  var socket = io.connect();
+// OK the namespace would normally be declared as an empty object. Code only small here.
+var UTILS = (function () {
+  var pub = {};
 
-  var nameForm = $("#nameForm");
-  var nameError = $("#nameError");
-  var nameBox = $("#nameBox");
+  pub.sendNonEmptyMessage = function (messageBox, socket) {
+    var message = messageBox.val();
+    if (message !== "") {
+      socket.emit("send message", message);
+      messageBox.val("");
+    }
+  };
 
-  var messageForm = $("#send-message");
-  var messageBox = $("#message");
-  var chat = $("#chat");
-
-
-  var sendName = function () {
+  pub.sendName = function (nameBox, socket) {
     var name = nameBox.val();
     if (name !== "") {
       // emit with callback.
@@ -19,6 +19,7 @@ $(function () {
           $("#nameWrap").slideUp();
           $("#contentWrap").slideDown();
         } else {
+          var nameError = $("#nameError");
           nameError.html("Name already taken")
         }
       });
@@ -26,9 +27,22 @@ $(function () {
     }
   };
 
+  return pub;
+}());
+
+$(function () {
+  var socket = io.connect();
+
+  var nameForm = $("#nameForm");
+  var nameBox = $("#nameBox");
+
+  var messageForm = $("#send-message");
+  var messageBox = $("#message");
+  var chat = $("#chat");
+
   nameForm.submit(function (e) {
     e.preventDefault();
-    sendName();
+    UTILS.sendName(nameBox, socket);
   });
 
   socket.on("usernames", function (data) {
@@ -38,21 +52,12 @@ $(function () {
     });
   });
 
-
-  var sendNonEmptyMessage = function () {
-    var message = messageBox.val();
-    if (message !== "") {
-      socket.emit("send message", message);
-      messageBox.val("");
-    }
-  };
-
   messageForm.submit(function (e) {
     e.preventDefault();
-    sendNonEmptyMessage();
+    UTILS.sendNonEmptyMessage(messageBox, socket);
   });
 
   socket.on("new message", function (data) {
-    chat.append(data + "<br />");
+    chat.append(data.msg + "<span class='message-sender'>" + data.uname + "</span><br />");
   });
 });

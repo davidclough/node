@@ -25,6 +25,14 @@ input[type="text"]
   height: 500px;
 }
 
+.message-sender
+{
+  font-size: 75%;
+  color: #aaa;
+  font-style: italic;
+  padding: 0 0 0 5px;
+}
+
 #users
 {
   float: left;
