@@ -1,0 +1,10 @@
+body
+{
+  background-color: #ffa;
+  font-family: arial, helvetica;
+}
+
+#chat
+{
+  height: 500px;
+}

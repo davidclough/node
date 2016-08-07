@@ -3,7 +3,11 @@ var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io").listen(server);
 
-server.listen(3001);
+// Allow "non-routed" access to folders.
+//app.use(express.static('.'));
+app.use('/public', express.static('public'));
+
+server.listen(3011);
 
 // Route.
 app.get("/", function (req, res) {

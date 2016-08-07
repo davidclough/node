@@ -1,12 +1,7 @@
 <html>
   <head>
     <title>Chat</title>
-    <style>
-      #chat
-      {
-        height: 500px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="public/styles.css"></link>
   </head>
   <body>
     <div id="chat">
@@ -17,26 +12,8 @@
     </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <!-- socket.io creates this for you. -->
+    <!-- socket.io creates this available for you. -->
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      $(function () {
-        var socket = io.connect();
-        var messageForm = $("#send-message");
-        var messageBox = $("#message");
-        var chat = $("#chat");
-
-        messageForm.submit(function (e) {
-          debugger;
-          e.preventDefault();
-          socket.emit("send message", messageBox.val());
-          messageBox.val("");
-        });
-
-        socket.on("new message", function (data) {
-          chat.append(data + "<br />");
-        });
-      });
-    </script>
+    <script src="public/client.js"></script>
   </body>
 </html>
