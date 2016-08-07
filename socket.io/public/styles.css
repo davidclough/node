@@ -1,7 +1,12 @@
 body
 {
-  background-color: #ffa;
+  background-color: #ffc;
   font-family: arial, helvetica;
+}
+
+input[type="text"]
+{
+  width: 200px;
 }
 
 #chat

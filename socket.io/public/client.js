@@ -4,10 +4,17 @@ $(function () {
   var messageBox = $("#message");
   var chat = $("#chat");
 
+  var sendNonEmptyMessage = function () {
+    var message = messageBox.val();
+    if (message !== "") {
+      socket.emit("send message", message);
+      messageBox.val("");
+    }
+  };
+
   messageForm.submit(function (e) {
     e.preventDefault();
-    socket.emit("send message", messageBox.val());
-    messageBox.val("");
+    sendNonEmptyMessage();
   });
 
   socket.on("new message", function (data) {

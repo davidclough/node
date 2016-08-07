@@ -6,13 +6,13 @@
   <body>
     <div id="chat">
       <form id="send-message">
-        <input size="35" id="message" />
+        <input type="text" id="message" />
         <input type="submit" />
       </form>
     </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <!-- socket.io creates this available for you. -->
+    <!-- socket.io creates this (somewhere) and makes it available to you. -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="public/client.js"></script>
   </body>
