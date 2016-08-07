@@ -4,11 +4,27 @@
     <link rel="stylesheet" type="text/css" href="public/styles.css"></link>
   </head>
   <body>
-    <div id="chat">
-      <form id="send-message">
-        <input type="text" id="message" />
+    <div id="nameWrap">
+      <p id="nameError"></p>
+      <form id="nameForm">
+        Enter name:
+        <input type="text" id="nameBox" />
         <input type="submit" />
       </form>
+    </div>
+
+    <div id="contentWrap">
+      <div id="chatWrap">
+        <div id="chat">
+          <form id="send-message">
+            <input type="text" id="message" />
+            <input type="submit" />
+          </form>
+        </div>
+      </div>
+      <div id="users">
+        <ul id="userList"></ul>
+      </div>
     </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
