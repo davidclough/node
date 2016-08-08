@@ -45,7 +45,9 @@ var UTILS = (function () {
     username = UTILS.htmlEncode(username);
 
     var chat = $("#chat");
-    chat.append("<span class='{0}'>{1}<span class='message-sender'>{2}</span></span><br />".format(cssClass, message, username));
+    var time = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+    chat.append("<span class='{0}'>{1}<span class='message-sender'>{2} </span><span class='message-time'>{3}</span></span><br />".format(
+                cssClass, message, username, time));
   }
 
   // Copied from Stack Overflow: http://stackoverflow.com/questions/1219860/html-encoding-in-javascript-jquery
@@ -58,5 +60,6 @@ var UTILS = (function () {
   pub.htmlDecode = function (value){
     return $('<div/>').html(value).text();
   }
+
   return pub;
 }());

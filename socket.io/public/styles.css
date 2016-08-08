@@ -1,6 +1,6 @@
 body
 {
-  background-color: #ffc;
+  /*background-color: #ffc;*/
   font-family: arial, helvetica;
 }
 
@@ -23,7 +23,7 @@ input[type="text"]
 {
   float: left;
   /*border: 1px #000 solid;*/
-  background-color: #ffe;
+  background-color: #ffd;
   padding: 10px;
 }
 
@@ -43,6 +43,12 @@ input[type="text"]
   color: #aaa;
   font-style: italic;
   padding: 0 0 0 5px;
+}
+
+.message-time
+{
+  color: #aaa;
+  font-size: 60%;
 }
 
 #users
