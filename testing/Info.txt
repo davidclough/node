@@ -1,0 +1,15 @@
+https://www.youtube.com/watch?v=AoMoL2UAC-A
+
+karma init
+    test/**/*.js
+
+  CREATES: karma.conf.js
+
+
+karma start karma.conf.js
+
+
+If want to debug, from the Karma page, click "Debug".
+Refreshing the page will run the tests (in Chrome) again. Console will indicate results.
+Before that, go to F12 sources tab and set breakpoints in the relevant files.
+All tests are run when refresh browser (doesn't just stop at the first failure).
