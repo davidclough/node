@@ -1,0 +1,32 @@
+{
+  "name": "testing-tests",
+  "version": "1.0.0",
+  "description": "Code testing with Karma and Jasmine.",
+  "main": "karma.conf.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "jasmine": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-coverage": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "phantomjs": "^2.1.7"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "phantomjs": "^2.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Clough",
+  "license": "ISC"
+}
