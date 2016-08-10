@@ -51,13 +51,13 @@ var UTILS = (function () {
   }
 
   // Copied from Stack Overflow: http://stackoverflow.com/questions/1219860/html-encoding-in-javascript-jquery
-  pub.htmlEncode = function (value){
+  pub.htmlEncode = function (value) {
     //create a in-memory div, set it's inner text(which jQuery automatically encodes)
     //then grab the encoded contents back out.  The div never exists on the page.
     return $('<div/>').text(value).html();
   }
 
-  pub.htmlDecode = function (value){
+  pub.htmlDecode = function (value) {
     return $('<div/>').html(value).text();
   }
 
