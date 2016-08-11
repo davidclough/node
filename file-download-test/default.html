@@ -1,0 +1,32 @@
+<html>
+<head>
+</head>
+<body>
+  <button id="downloadButton">Download File</button>
+
+  <a href="download.txt" download>Download the file via HTML5 attribute</a>
+
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    var downloadFile = function (filename) {
+      // TODO: Only problem at the moment is that is opens the document in the browser.
+      //       We want it to trigger a download.
+      $.ajax({
+        url: filename,
+        type: "GET",
+        success: function() {
+          window.location = filename;
+        }
+      });
+    };
+
+    $(function () {
+      $("body").on("click", "#downloadButton", function() {
+        downloadFile("download.txt");
+      });
+    });
+  </script>
+
+</body>
+</html>
