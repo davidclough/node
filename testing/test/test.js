@@ -1,31 +1,4 @@
-// TODO: Put this in a separate file.
-// if (!String.prototype.format) {
-//     String.prototype.format = function () {
-//         var args = arguments;
-//         return this.replace(/{(\d+)}/g, function (match, number) {   // number is the value of the 1st capture.
-//             return typeof args[number] != "undefined"
-//                     ? args[number]
-//                     : match;
-//         });
-//     };
-// }
-
-// TODO: Put this in a separate file.
-// pub.htmlEncode = function (value) {
-//   //create a in-memory div, set it's inner text(which jQuery automatically encodes)
-//   //then grab the encoded contents back out.  The div never exists on the page.
-//   return $('<div/>').text(value).html();
-// }
-
-// TEMP: Because we do not have access to jquery at the moment.
-var htmlEncode = function (value) {
-  // Not quite. Only replaces the first matches.
-  //return value.replace("<", "&lt;").replace(">", "&gt;");
-  // .replace(/foo/g, "bar")
-  return value.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-}
-
-
+// Basic test tests.
 
 describe("A test that will always pass", function () {
   it ("is true", function () {
@@ -41,12 +14,25 @@ describe("Another that will always FAIL", function () {
   });
 });
 
-// QUESTION: Can we
-describe("htmlEncode(\"<script></script>\")", function () {
+
+
+// NOTE: After changing the "files" property in karma.conf.js we can now test Code
+//      that is in a different file.
+// QUESTION: The "<script...>" and "&lt;script..." strings are used twice below (surrounded by quotes in describe and it).
+//           What is the cleanest way to avoid manually repeating them twice?
+describe("UTILS.htmlEncode(\"<script></script>\")", function () {
   it ("returns \"&lt;script&gt;&lt;/script&gt;\"", function () {
     var unencodedTest = "<script></script>";
-    var encodedText = htmlEncode(unencodedTest);
+    var encodedText = UTILS.htmlEncode(unencodedTest);
     expect(encodedText).toBe("&lt;script&gt;&lt;/script&gt;");
+  });
+});
+
+describe("UTILS.htmlDecode(\"&lt;script&gt;&lt;/script&gt;\")", function () {
+  it ("returns \"<script></script>\"", function () {
+    var unencodedTest = "&lt;script&gt;&lt;/script&gt;";
+    var encodedText = UTILS.htmlDecode(unencodedTest);
+    expect(encodedText).toBe("<script></script>");
   });
 });
 
@@ -54,4 +40,4 @@ describe("htmlEncode(\"<script></script>\")", function () {
 
 
 
-// TODO: Do some BROWSER tests.
+// TODO: Do some BROWSER tests, testing manipulation of the DOM.
