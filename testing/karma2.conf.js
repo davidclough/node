@@ -16,7 +16,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'http://code.jquery.com/jquery-latest.min.js',
-      'https://raw.githubusercontent.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js',
       'app/**/*.js',
       'test/**/*.js'
     ],
