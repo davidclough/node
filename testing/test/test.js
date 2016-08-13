@@ -41,3 +41,10 @@ describe("UTILS.htmlDecode(\"&lt;script&gt;&lt;/script&gt;\")", function () {
 
 
 // TODO: Do some BROWSER tests, testing manipulation of the DOM.
+
+// Copied from npm jasmine=jquery.
+describe("Clicking special button results in focusing on name textbox", function () {
+  it ("is focused", function () {
+    expect($('<input type="text" />').focus()).toBeFocused()
+  });
+});
