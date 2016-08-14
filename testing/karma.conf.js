@@ -16,7 +16,14 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'http://code.jquery.com/jquery-latest.min.js',
+
+      // DC: I definitely need to make the fixtures availabl in the browser, just like the tests.
+      //     Maybe I wouldn't if I manually fetched via AJAX but I do not want that.
+      'test/fixture/**/*.html',
+
       'app/**/*.js',
+      // Ensure this file is included before the other test files.
+      'test/jasmine-jquery.js',
       'test/**/*.js'
     ],
 
@@ -57,7 +64,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS'],
+    //browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
