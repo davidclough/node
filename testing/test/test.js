@@ -95,3 +95,31 @@ describe("test with jasmine-jquery", function () {
     expect($("input[type=text]")[0]).toHaveClass("fruit-juice");
   });
 });
+
+describe("event test with jasmine-jquery", function () {
+  it("click event should be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text]").first();
+    // String or jQuery object will do for first parameter.
+    var spyEvent = spyOnEvent($firstInput, "keypress");
+
+    $firstInput.keypress();
+
+    expect("keypress").toHaveBeenTriggeredOn($firstInput);
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+});
+
+describe("event test with jasmine-jquery", function () {
+  it("cssClassChanged event should be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text]").first();
+    // String or jQuery object will do for first parameter.
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+    $firstInput.addClass("my-class");
+
+    expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+    //expect(spyEvent).toHaveBeenTriggered();
+  });
+});
