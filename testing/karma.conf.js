@@ -42,7 +42,19 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+
+
+    // NOTE: https://www.npmjs.com/package/karma-coverage
+    //       Needed to add this (as well as 'coverage' above) for code coverage reporter.
+    //       Open the "index.html" in "node\testing\coverage\Chrome 52.0.2743 (Windows 10 0.0.0)" to view results.
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'app/**/*.js': ['coverage']
+    },
+
 
 
     // web server port

@@ -123,3 +123,7 @@ describe("event test with jasmine-jquery", function () {
     //expect(spyEvent).toHaveBeenTriggered();
   });
 });
+
+//
+// TEST COVERAGE  is the final thing.
+//
