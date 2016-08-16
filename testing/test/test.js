@@ -110,7 +110,7 @@ describe("event test with jasmine-jquery", function () {
   });
 });
 
-describe("event test with jasmine-jquery: addClass()", function () {
+describe("event test with jasmine-jquery: addClass(), class does not exist on element", function () {
   it("cssClassChanged event should be fired", function () {
     loadFixtures("my-fixture-1.html");
     var $firstInput = $("input[type=text]").first();
@@ -122,45 +122,60 @@ describe("event test with jasmine-jquery: addClass()", function () {
     expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
     //expect(spyEvent).toHaveBeenTriggered();
   });
+});
 
-  // Added extra test for removeClass() to increase code coverage of custom-jquery-plugins.js from 38.64% to 45.45%.
-  // NOTE: It only required ONE test to give "approved code coverage" of the method.
-  //       The next test to ensure event is not fired if no class was removed had no effect.
-  // QUESTION: Will that only come into play when we add code to the function being tested to
-  //           deal with the secondary case?
-  describe("event test with jasmine-jquery: removeClass(), class exists on an element", function () {
-    it("cssClassChanged event should be fired", function () {
-      loadFixtures("my-fixture-1.html");
-      var $firstInput = $("input[type=text].existing-class").first();
-      // String or jQuery object will do for first parameter.
-      var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on element", function () {
+  it("cssClassChanged event should NOT be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+    // String or jQuery object will do for first parameter.
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
 
-      $firstInput.removeClass("existing-class");
+    $firstInput.addClass("existing-class");
 
-      expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
-      //expect(spyEvent).toHaveBeenTriggered();
-    });
+    expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
+    //expect(spyEvent).toHaveBeenTriggered();
   });
+});
 
-  // QUESTION: Is the whole idea of code coverage that you only need to test each code path once?
-  // THOUGHT:  I would onnly think that is all very well if you have explicit conditional statements.
-  //           I don't think this would be acceptable for testing, say, boundary conditions, where the
-  //           same code path is executed. If the same code path executed but with some different integer
-  //           variable value, code coverage is not necessarily a good indicator.
-  // describe("event test with jasmine-jquery: removeClass(), class does NOT exist on an element", function () {
-  //   it("cssClassChanged event is NOT fired", function () {
-  //     loadFixtures("my-fixture-1.html");
-  //     var $firstInput = $("input[type=text].existing-class").first();
-  //     var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
-  //
-  //     $firstInput.removeClass("non-existant-class");
-  //
-  //     expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
-  //     //expect(spyEvent).toHaveBeenTriggered();
-  //   });
-  // });
+// Added extra test for removeClass() to increase code coverage of custom-jquery-plugins.js from 38.64% to 45.45%.
+// NOTE: It only required ONE test to give "approved code coverage" of the method.
+//       The next test to ensure event is not fired if no class was removed had no effect.
+// QUESTION: Will that only come into play when we add code to the function being tested to
+//           deal with the secondary case?
+// OBSERVATION: app scripts seem to be minified since I enabled code coverage.
+describe("event test with jasmine-jquery: removeClass(), class exists on an element", function () {
+  it("cssClassChanged event should be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+    // String or jQuery object will do for first parameter.
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+    $firstInput.removeClass("existing-class");
+
+    expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+    //expect(spyEvent).toHaveBeenTriggered();
+  });
+});
+
+// QUESTION: Is the whole idea of code coverage that you only need to test each code path once?
+// THOUGHT:  I would onnly think that is all very well if you have explicit conditional statements.
+//           I don't think this would be acceptable for testing, say, boundary conditions, where the
+//           same code path is executed. If the same code path executed but with some different integer
+//           variable value, code coverage is not necessarily a good indicator.
+describe("event test with jasmine-jquery: removeClass(), class does NOT exist on an element", function () {
+  it("cssClassChanged event is NOT fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+    $firstInput.removeClass("non-existant-class");
+
+    expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
+    //expect(spyEvent).not.toHaveBeenTriggered();
+  });
 });
 
 //
-// TEST COVERAGE  is the final thing. DONE.
+// TODO: Can a nicer reporter of tests passing/failing be produced?
 //

@@ -91,18 +91,35 @@
 
     var originalAddClassMethod = $.fn.addClass;
     $.fn.addClass = function () {
+        // Oiginal method must ALWAYS be called.
+        var elementHadClass = $(this).hasClass(arguments[0]);
+
         // Execute the original method.
         var result = originalAddClassMethod.call(this, "fruit-juice");//arguments);
-        $(this).trigger("cssClassChanged");
+        // ******** TODO: remove fruit-juice
+
+        if (!elementHadClass) {
+          $(this).trigger("cssClassChanged");
+        }
+
         // Return the original result.
         return result;
     };
 
     var originalRemoveClassMethod = $.fn.removeClass;
     $.fn.removeClass = function () {
+        // LATER MODIFICATION.
+        // DC WOULD THINK the original should ALWAYS be executed. We cannot just "not call the original" if
+        // the element does not have the class.
+        var elementHadClass = $(this).hasClass(arguments[0]);
+
         // Execute the original method.
         var result = originalRemoveClassMethod.apply(this, arguments);
-        $(this).trigger("cssClassChanged");
+
+        if (elementHadClass) {
+          $(this).trigger("cssClassChanged");
+        }
+
         // Return the original result.
         return result;
     };

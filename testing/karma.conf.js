@@ -55,6 +55,17 @@ module.exports = function(config) {
       'app/**/*.js': ['coverage']
     },
 
+    // DC: I noticed that the app js was compacted and I could not view it properly in the browser to debug.
+    //     Documentation says this line prevents istanbul from compacting the code.
+    // OBSERVATION: It was still minified for me.
+    // OBSERVATION: Comment out the "preprocessors" property above and the app code will no longer be minimized.
+    coverageReporter: {
+      instrumenterOptions: {
+        istanbul: { noCompact: true }
+      }
+    },
+
+
 
 
     // web server port
@@ -76,8 +87,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    //browsers: ['Chrome', 'PhantomJS'],
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'PhantomJS'],
+    //browsers: ['Chrome'],
 
 
     // Continuous Integration mode
