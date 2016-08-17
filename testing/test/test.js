@@ -138,6 +138,21 @@ describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on el
   });
 });
 
+// Simpler version (without the commented out lines). Arange, Act, Assert.
+describe("222 event test with jasmine-jquery: addClass(), class ALREADY EXISTS on element", function () {
+  it("cssClassChanged event should NOT be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+
+    $firstInput.addClass("existing-class");
+
+    expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
+  });
+});
+
+
+
+
 // Added extra test for removeClass() to increase code coverage of custom-jquery-plugins.js from 38.64% to 45.45%.
 // NOTE: It only required ONE test to give "approved code coverage" of the method.
 //       The next test to ensure event is not fired if no class was removed had no effect.
@@ -175,6 +190,21 @@ describe("event test with jasmine-jquery: removeClass(), class does NOT exist on
     //expect(spyEvent).not.toHaveBeenTriggered();
   });
 });
+
+// Simpler version (without the commented out lines). Arange, Act, Assert.
+describe("222 event test with jasmine-jquery: removeClass(), class does NOT exist on an element", function () {
+  it("cssClassChanged event is NOT fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+
+    $firstInput.removeClass("non-existant-class");
+
+    expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
+  });
+});
+
+
+
 
 //
 // TODO: Can a nicer reporter of tests passing/failing be produced?
