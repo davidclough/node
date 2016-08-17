@@ -42,8 +42,28 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    //reporters: ['progress', 'coverage'],
     //reporters: ['dots', 'coverage'],
+
+    // Changed after added karma-htmlfile-reporter.
+    reporters: ['progress', 'html'],
+
+
+
+    // DC: Added after added karma-htmlfile-reporter.
+    //     NOT SURE at moment if the "html" above conventionally matches to the "htmlReporter" property below.
+    htmlReporter: {
+      outputFile: 'tests/units.html',
+
+      // Optional
+      pageTitle: 'Unit Tests',
+      subPageTitle: 'A sample project description',
+      groupSuites: true,
+      useCompactStyle: true,
+      useLegacyStyle: true
+    },
+
+
 
 
     // NOTE: https://www.npmjs.com/package/karma-coverage

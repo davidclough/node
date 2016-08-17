@@ -27,3 +27,13 @@ All tests are run when refresh browser (doesn't just stop at the first failure).
 
 Code coverage (working):
 https://www.npmjs.com/package/karma-coverage
+
+
+
+// Better (karma) test results reporter:
+// https://www.npmjs.com/package/karma-htmlfile-reporter
+
+npm install karma-htmlfile-reporter --save-dev
+
+//You can pass list of reporters as a CLI argument too:
+//karma start --reporters html
