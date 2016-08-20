@@ -124,6 +124,18 @@ describe("event test with jasmine-jquery: addClass(), class does not exist on el
   });
 });
 
+describe("event test with jasmine-jquery: addClass(), class does not exist on element", function () {
+  it("cssClassChanged event should be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text]").first();
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");    // NEED LINE: Or it will not monitor for event???
+
+    $firstInput.addClass("my-class");
+
+    expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+  });
+});
+
 describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on element", function () {
   it("cssClassChanged event should NOT be fired", function () {
     loadFixtures("my-fixture-1.html");
@@ -143,6 +155,8 @@ describe("222 event test with jasmine-jquery: addClass(), class ALREADY EXISTS o
   it("cssClassChanged event should NOT be fired", function () {
     loadFixtures("my-fixture-1.html");
     var $firstInput = $("input[type=text].existing-class").first();
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");    // NEED THIS TO TELL IT TO MONITOR FOR EVENT
+    // Otherwise the "not" will always succeed.
 
     $firstInput.addClass("existing-class");
 
@@ -165,6 +179,20 @@ describe("event test with jasmine-jquery: removeClass(), class exists on an elem
     var $firstInput = $("input[type=text].existing-class").first();
     // String or jQuery object will do for first parameter.
     var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+    $firstInput.removeClass("existing-class");
+
+    expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+    //expect(spyEvent).toHaveBeenTriggered();
+  });
+});
+
+describe("222 event test with jasmine-jquery: removeClass(), class exists on an element", function () {
+  it("cssClassChanged event should be fired", function () {
+    loadFixtures("my-fixture-1.html");
+    var $firstInput = $("input[type=text].existing-class").first();
+    //var spyEvent = spyOnEvent($firstInput, "cssClassChanged");    // NEED LINE: Or it will not monitor for event???
+    spyOnEvent($firstInput, "cssClassChanged");    // NEED LINE: Or it will not monitor for event???
 
     $firstInput.removeClass("existing-class");
 
@@ -196,6 +224,7 @@ describe("222 event test with jasmine-jquery: removeClass(), class does NOT exis
   it("cssClassChanged event is NOT fired", function () {
     loadFixtures("my-fixture-1.html");
     var $firstInput = $("input[type=text].existing-class").first();
+    var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
 
     $firstInput.removeClass("non-existant-class");
 
