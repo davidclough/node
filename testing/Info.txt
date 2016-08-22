@@ -37,3 +37,9 @@ npm install karma-htmlfile-reporter --save-dev
 
 //You can pass list of reporters as a CLI argument too:
 //karma start --reporters html
+
+
+
+
+Other packages:
+https://www.npmjs.com/browse/keyword/karma-reporter
