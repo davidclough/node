@@ -1,0 +1,51 @@
+MAINLY COPIED from main SampleCommands.txt as there is a bit too much in there and need to split into files that are in the more specific locations.
+
+
+
+Read the README.txt in this folder
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+// From Aurelia talk.
+
+jspm
+jspm init
+
+jspm install aurelia-framework
+jspm install aurelia-bootstrapper
+
+gulp bundle
+
+npm yo
+yo aurelia
+
+
+
+NOTE: Accidentally created an "aurelia" folder (when I already had a "yo-tests\aurelia" one) and ran "yo aurelia".
+      Main point is that wanted to UNINSTALL ALL the npm packages in a more automated way. Too many packages to want to uninstall individually.
+      http://stackoverflow.com/questions/19106284/how-do-you-uninstall-all-dependencies-listed-in-package-json-npm indicated:
+      Using powershell, can run the command "npm uninstall (Get-ChildItem).Name" when in "node_modules". This seemed to work pretty well.
+NOTE: In same link, someone suggested the simpler looking "npm uninstall *". Will try that next time.
+
+
+
+
+gulp watch
+need to wait a while???
+
+
+
+
+
+
+
+
+
+
+
+
+                            https://github.com/JeroenVinke/syncfusion-test
+npm install -g jspm
+jspm install -y
+
+
