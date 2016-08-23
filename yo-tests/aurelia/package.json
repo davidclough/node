@@ -52,7 +52,7 @@
     "isparta": "^4.0.0",
     "istanbul": "^1.0.0-alpha.2",
     "jasmine-core": "^2.4.1",
-    "jspm": "^0.16.41",
+    "jspm": "^0.16.44",
     "karma": "^1.1.2",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^1.0.1",
@@ -68,9 +68,9 @@
   "jspm": {
     "dependencies": {
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0-rc.1.0.0",
-      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-rc.1.0.0",
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@^1.0.0-rc.1.0.0",
-      "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.0",
+      "aurelia-framework": "npm:aurelia-framework@^1.0.1",
       "aurelia-history-browser": "npm:aurelia-history-browser@^1.0.0-rc.1.0.0",
       "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-rc.1.0.0",
       "aurelia-logging-console": "npm:aurelia-logging-console@^1.0.0-rc.1.0.0",

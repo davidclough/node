@@ -47,6 +47,26 @@ NOTE: Accidentally created an "aurelia" folder (when I already had a "yo-tests\a
 NOTE: In same link, someone suggested the simpler looking "npm uninstall *". Will try that next time.
 
 
+
+
+gulp watch
+need to wait a while???
+
+
+
+
+
+
+
+
+
+
+
+
+                            https://github.com/JeroenVinke/syncfusion-test
+npm install -g jspm
+jspm install -y
+
 -----------------------------------------------------------------------------------------------------------------------------------
 
 Yo (successor to Yeoman):
@@ -55,7 +75,7 @@ https://github.com/yeoman/yo
 1) Install yo globally           npm install -g yo
 2) Install a generator (using standard npm install) (probably globally as the yo command will be installing the yo will probably install local files)
     npm install -g generator-react-fullstack                (prefix the package with "generator-"yo
-3) Yun it       yo webapp
+3) Run it       yo webapp
 
 http://yeoman.io/generators/
 
