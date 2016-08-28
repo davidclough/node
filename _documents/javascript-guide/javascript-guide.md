@@ -17,8 +17,8 @@
 		* [Arrays](#language-types-arrays)
 	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)
 	*  
-	*  [Truthy and Falsy](#language-truthy-and-falsy)
-	*  [JavaScript Keywords](#language-javascript-keywords)
+	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
+	*  [JavaScript Keywords](#language-javascript-keywords)             DONE? NO
 	*  [Reserved Words](#language-reserved-words)
 	*  [Operators](#language-operators)
 	*  [Built-in Global Functions](#language-built-in-global-functions)
@@ -36,7 +36,7 @@ In interests of this document not becoming too bloated explanations may be quite
 
 It is intended to get you started, to explain many of the concepts that do not become immediately obvious when trying to google it as you go along, and will not be a complete reference. There are other more established sources from which you can obtain more detail.
 
-If you have a desire to learn JavaScript properly, you would helping yourself if you avoid continually trying to think in terms of C#. Although many of the standard instructions, like the flow of control keywords, operate in a very similar way to other C-based languages some, like the `new` and `this` keywords operate in a fundamentally different manner and it would be beneficial not to assume that, just because something looks the same as in C#, it is. 
+If you have a desire to learn JavaScript properly, you would helping yourself if you avoid continually trying to think in terms of C#. Although many of the standard instructions, like the flow of control keywords, operate in a very similar way to other C-based languages some, like the `new` and `this` keywords operate in a fundamentally different manner and it would be beneficial not to assume that, just because something looks the same as in C#, it is.
 
 > Note: The word **property** will be used throughout the document. It is actually referring to what in C# would be considered a field and not to something that has getter and setter methods. With functions being first-class objects in JavaScript (see next section), the word **properties** may also refer to an object's fields and methods. This is standard terminology in JavaScript.
 
@@ -128,7 +128,7 @@ They also allow variables to be declared within finer grained scopes which mean 
 
 As explained above, JavaScript only allows variables to be declared at the level of the containing function (if we dismiss global scope).
 
-It also has a nasty feature called `hoisting` which means that, although you can also declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. This means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions. 
+It also has a nasty feature called `hoisting` which means that, although you can also declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. This means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions.
 
 Note that, if you declare a variable and assign a value to it, the variable declaration will be hoisted at runtime but the assignment will remain where it is.
 
@@ -160,9 +160,9 @@ WRITE YOUR CODE WITH THE INTENTION OF IT BEING EVALUATED LIKE THIS, do not rely 
 > If you are not using `strict mode` (<a href="#style-strict-mode">more</a> about this later) the runtime will implicitly create the variable for you, a situation can cause "hard to find" errors and which sensible people want to avoid.
 
 #### File Organisation
-Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls. 
+Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls.
 
-It is as though the contents of all the files have been concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier. 
+It is as though the contents of all the files have been concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
 
 ### <a name="language-functions"></a>Functions
 <p>    Functions</p>
@@ -228,7 +228,7 @@ IIFEs ARE COMING UP SOON SO NO NEED TO MENTION HERE
 
 #### Nested Functions
 This example demonstrates a nested function. `calculateSquare` is effectively a private function that is only available within `addSquaresOfNumbers`. The choice of functions in this example is purely for demonstration
- 
+
     var addSquaresOfNumbers = function (x1, x2) {
 
 	    var calculateSquare = function (x) {
@@ -252,7 +252,7 @@ Technically, a closure is a function held together with captured parts of the en
 
 They are nested functions that reference variables that were defined in an enclosing scope. These functions "remember" the environment/context in which they were created.
 
-Function parameters and variables, either declared inside or outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function. 
+Function parameters and variables, either declared inside or outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function.
 
     var createIndicateHowManyTimesCalledFunction = function () {
         var counter = 0;
@@ -326,7 +326,7 @@ Below are brief explanations of the different ways that a function can actually 
 This is the most common way and the method used so far in the examples above. Remember that you don't necessarily have to supply the same number of parameters as is in the function definition. However, unless the function has been specifically written to handle a varying number of arguments, unwanted side effects are likely to occur at some point.
 
 #### Preceded by the `new` Keyword
-Call `object constructor` functions by preceding the call with the `new` keyword. Specifically, it instructs the runtime that, within that function, the `this` keyword will refer to the object being created and returned by that constructor function. 
+Call `object constructor` functions by preceding the call with the `new` keyword. Specifically, it instructs the runtime that, within that function, the `this` keyword will refer to the object being created and returned by that constructor function.
 
 	function Person(first, last) {
 	    this.firstName = first;
@@ -409,7 +409,7 @@ WHAT EXACTLY IS A PROTOTYPE AND HOW DOES IT DIFFER FROM AN OBJECT? It is an obje
 	TO MENTION: (redefine members at any point - when some one reads a prop it will first look at object then at its prototype then along the prototype chain until it finds match - writing always attaches to the object itself, any properties of the same name within the prototype chain will still remain but will not be reached when trying to fetch via the object)
 
 
-Think that now appreciate the use of Object.create(prototype) when using functional style to define objects (because the IIFE returns the PROTOTYPE, with the methods defined in 
+Think that now appreciate the use of Object.create(prototype) when using functional style to define objects (because the IIFE returns the PROTOTYPE, with the methods defined in
 
 
 [http://www.w3schools.com/js/js_object_prototypes.asp](http://www.w3schools.com/js/js_object_prototypes.asp)
@@ -465,7 +465,7 @@ Technically, primitives do not have members. However, because of the object wrap
 
 There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them.
 
-Highlight some: 
+Highlight some:
 Give one example.
 
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
@@ -490,7 +490,7 @@ There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (
 	console.log(0 / 0);		     // NaN
 	console.log(-0.0);		     // -0
 	console.log(-1 / Infinity);	 // -0
-	
+
 	// Infinity === Infinity
 	if (10 / 0 === 50 / 0) {
 			console.log("10 / 0 === 50 / 0");
@@ -503,9 +503,9 @@ Boolean does not have any particularly useful methods beyond `toString()`, which
 `undefined` is useful for determining if a variable, or a function parameter or class member, has actually been initialised.
 
 	var myVariable;
-	
+
 	console.log(typeof myVariable);	// "undefined"
-	
+
 	if (typeof myVariable === "undefined") {
 		console.log("myVariable has not been given a value" );
 	}
@@ -527,7 +527,7 @@ This object provides many mathematical functions and standard mathematical value
 	var calculateAreaOfCircle = function (radius) {
 		return Math.PI * Math.pow(radius, 2);
 	};
-	
+
 	var area = calculateAreaOfCircle(2);
 	console.log(area);						// 12.566370614359172
 
@@ -548,7 +548,7 @@ When accessing member of the array, specify a zero-base index within square brac
 
 	console.log(typeof languages);		                            // "object"
 	console.log(languages instanceof Array);		                // true
-	
+
 	var emptyArray = [];
 
 
@@ -579,7 +579,7 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 	var newLength = fruits.push("Orange");
 	console.log(fruits);					       // ["Apple", "Banana", "Orange"]
 	console.log(newLength);				           // 3
-	
+
 	var itemRemoved = fruits.shift();
 	console.log(fruits);					       // ["Banana", "Orange"]
 	console.log(itemRemoved);					   // "Apple"
@@ -594,7 +594,7 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 Splice generally means joining together two pieces. However, confusingly, the `splice` method actually allows you to split an array by removing a particular number of items starting from a particular index of the array an returning them in a separate one. The parameter for the number of items is optional.
 
 	var array1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-	
+
 	// Remove 3 items starting with the one at array1[4]
 	var array2 = array1.splice(4, 3);
 	console.log(array1);					   // [0, 1, 2, 3, 7, 8, 9]
@@ -612,7 +612,7 @@ If you follow the prototype chain of any object in JavaScript it will ultimately
 
 NOTE: SOME ARE PROTOTYPE things... which access via the object. OTHER METHODS are used using the `Object` object itself (a bit like static methods). NEED TO BOTTOM THIS.
 
-It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string. 
+It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
 
 This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the `for ... in` clause (see later).
 
@@ -622,7 +622,7 @@ This function iterates through all the properties of an object and uses the `has
 	  for (var property in obj) {
 	    if(obj.hasOwnProperty(property)) {
 	      console.log(objName + "." + property + " = " + obj[property]);
-	    } 
+	    }
 	  }
 	};
 
@@ -633,7 +633,7 @@ This function iterates through all the properties of an object and uses the `has
 For this simple object, removing the condition containing `hasOwnProperty` will not make any difference BUT CAN THEN SHOW THE PROTOTYPE ONE.
 
 
-Although you can easily define properties of an object on the fly using `person.newProperty = "Fred"` or `person["newProperty"] = "Fred"` XXXthe object prototype gives you licence to add, 
+Although you can easily define properties of an object on the fly using `person.newProperty = "Fred"` or `person["newProperty"] = "Fred"` XXXthe object prototype gives you licence to add,
 define and remove properties (although can add via .fdfg= or ["hhuj"] =
 .........
 WE DELETE PROPERTIES using `delete` keyword. These members are not inherited prototype methods.
@@ -642,9 +642,9 @@ freezing.    The delete silently fails after the `freeze` call. `Object.preventE
 
 	var obj = {a: 1, b: 2};
 	outputOwnProperties(obj, "obj");
-	
+
 	Object.freeze(obj);
-	
+
 	delete obj.b;
 	obj.a = 58;
 	obj.c = 39;
@@ -661,31 +661,31 @@ According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_a
 	  for (var property in obj) {
 	    if(obj.hasOwnProperty(property)) {
 	      console.log(objName + "." + property + " = " + obj[property]);
-	    } 
+	    }
 	  }
 	};
-	
+
 	var triangle = {a:1, b:2, c:3};
-	
+
 	// Define the ColouredTriangle and its prototype.
 	function ColouredTriangle() {
 	  this.color = "red";
 	}
 	ColouredTriangle.prototype = triangle;
-	
+
 	var ct = new ColouredTriangle();
-	
+
 	console.log(ct);
 	outputOwnProperties(ct, "ct");
-	
+
 	// MORE RESEARCH NEEDED. See not above code sample.
 	console.log(ct.prototype);
 	// undefined (maybe only for use with constructors)
-	
+
 	var t = Object.getPrototypeOf(ct);
 	console.log(t);		// Object {a: 1, b: 2, c: 3}
 	outputOwnProperties(t, "t");
-	
+
 	var o = Object.getPrototypeOf(t);
 	console.log(o);		// Object {}
 	outputOwnProperties(o, "o");
@@ -717,7 +717,7 @@ We can now name our anonymous functions (:D) as below. The IE9-compatible Array 
 	var o =	[1,2,3,4,5].map(function factorial (n) {
 		return !(n > 1) ? 1 : factorial(n - 1) * n;
 	});
-	  
+
 	console.log(o);
 
 See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments)
@@ -774,13 +774,52 @@ parse, stringify
 
 
 ### <a name="language-truthy-and-falsy"></a>Truthy and Falsy
-* ...Also explain falsy (also falsey) (false, 0, -0, "", '', null, undefined, NaN) and truthy (all other values, I think). Even then it is not straightforward, e.g. two NaN values are both falsy but NaN != NaN
-* Objects evaluate to true
-    Undefined evaluates to false
-    Null evaluates to false
-    Booleans evaluate to the value of the boolean
-    Numbers evaluate to false if +0, -0, or NaN, otherwise true
-    Strings evaluate to false if an empty string '', otherwise true
+In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coercion is referred to by the community as `truthy` and `falsy` (or falsey).
+
+The concept is best explained by listing all the `falsy` values, i.e. the ones the runtime classes as `false` first:
+
+*	false
+*	null
+*	undefine
+*	NaN
+*	0 or +0 or -0 (zero)
+*	"" or '' (empty string)
+
+**All** other values, including objects that have been initialised, are classed as `truthy` and the runtime will class them as being `true` within a boolean expression.
+
+#### Examples
+```
+console.log(undefined == null);		 // true
+console.log("" == 0);		           // true
+console.log("" === 0);		         // false
+
+// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
+// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
+// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
+// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
+// throwing a runtime error is a better alternative.
+console.log(NaN == NaN);		       // false
+console.log(0 / 0);
+
+// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
+console.log(!!undefined);          // false
+console.log(!!null);  	           // false
+console.log(!!0);	                 // false
+
+// 0 within quotes is a non-empty string and is therefor truthy.
+console.log(!!"0");	               // true
+```
+
+#### Uses
+It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code. It could be used to write some really obscure code that only you can understand but nobody recommends this.
+```
+// Only set the value of any object variable to something different if it does not have a value already.
+// The "know context" here is that obj is only assigned to objects and will never be used to contain a value of another type, e.g. 0 or "".
+obj = obj || newValue;
+
+// A shorthand way of detecting if the length of something is non-zero.
+if ($(".my-class").length)
+```
 
 [https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
 
@@ -1016,7 +1055,7 @@ Certainly they do not work in IE8.
 * Also explain bundles...
             <%: Scripts.Render(BundleConfiguration.GlobalScript) %>
             <%: Styles.Render(BundleConfiguration.VideoStyles) %>
-Prefer inclusion of commonly-used scripts in master pages (MVC layouts). If a script is very specific to a particular area, try to introduce a more specific master page/layout. Only include on an individual page or view if very specific and it is worth the effort to avoid the script being downloaded in areas where it is never used. 
+Prefer inclusion of commonly-used scripts in master pages (MVC layouts). If a script is very specific to a particular area, try to introduce a more specific master page/layout. Only include on an individual page or view if very specific and it is worth the effort to avoid the script being downloaded in areas where it is never used.
 Multiple references to the multiple references to the same file will result in its code being repeated, which can obviously cause problems: If strict mode is being used an error will be highlighted if you have declared using the `var` keyword, otherwise variables will effectively be re-initialised from scratch. This can cause unpredictable side effects so be careful and avoid including in user controls or partial views.
 
 Do not use &lt;script language="JavaScript"&gt; the language attribute is deprecated    
@@ -1071,7 +1110,7 @@ Do not use &lt;script language="JavaScript"&gt; the language attribute is deprec
             urlOnClose: null,
             onClosed: null
         }, extend);
-        
+
 
 
 ## <a name="tips"></a>Patterns, Tips and Tricks
@@ -1234,7 +1273,7 @@ Crockford book.
 [https://gist.github.com/ericelliott/263f24b5ad987e2f09d2](https://gist.github.com/ericelliott/263f24b5ad987e2f09d2)
 [http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 
-[Stop Nesting Functions! (But Not All of Them)](http://javascriptissexy.com/category/16-important-javascript-concepts/) Ignore the rubbish at the end which (1) states efficiency WINS EVERY TIME over code quality, (2) JS does not explicitly provide for private stuff, so don't bother with the idea of encapsulation full stop. 
+[Stop Nesting Functions! (But Not All of Them)](http://javascriptissexy.com/category/16-important-javascript-concepts/) Ignore the rubbish at the end which (1) states efficiency WINS EVERY TIME over code quality, (2) JS does not explicitly provide for private stuff, so don't bother with the idea of encapsulation full stop.
 
 1. [Gotchas](#gotchas)
 
