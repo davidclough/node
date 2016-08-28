@@ -18,8 +18,8 @@
 	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)
 	*  
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
-	*  [JavaScript Keywords](#language-javascript-keywords)             DONE? NO
-	*  [Reserved Words](#language-reserved-words)
+	*  [JavaScript Keywords](#language-javascript-keywords)             DONE? HAVE IDed the ones to explain
+	*  [Reserved Words](#language-reserved-words)						DONE
 	*  [Operators](#language-operators)
 	*  [Built-in Global Functions](#language-built-in-global-functions)
 
@@ -52,7 +52,7 @@ JavaScript makes extensive use of functions and closures.
 It uses dynamic typing, meaning that variables do not have to remain assigned to values of a particular type. Many fans see this as a very powerful feature, providing lots of flexibility and smaller code size. However, we all know there are downsides that go with it, particularly if the code base starts to grow, brittleness of code being the main one, performance being another. There is also less ability to restrict other programmers and prevent people who are less proficient in the language and/or have a lesser experience of a particular system from inadvertently doing bad things.
 
 <br /><a href="http://c2.com/cgi/wiki?BenefitsOfDynamicTyping">http://c2.com/cgi/wiki?BenefitsOfDynamicTyping</a>
-<br /><a href="http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing" target="_blank">http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing</a>
+<br /><a href="http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing" target="_blank" dummy="_">http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing</a>
 
 These features make it a very flexible, multi-paradigm language. For example, it supports both object-oriented and functional programming, although it is not necessarily as good in any given paradigm as certain other languages.
 
@@ -360,7 +360,7 @@ TO MOVE: Put the IIFE section here.
 
 ### <a name="language-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
 <p>    Closures.</p>
-<a target="_blank" href="http://jibbering.com/faq/faq_notes/closures.html">http://jibbering.com/faq/faq_notes/closures.html</a>
+<a target="_blank" dummy="_" href="http://jibbering.com/faq/faq_notes/closures.html">http://jibbering.com/faq/faq_notes/closures.html</a>
 <p>        http://javascript.crockford.com/private.html</p>
 <p>        Golden parentheses</p>
 
@@ -605,7 +605,7 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 
 	_.map([1, 2, 3], function (n) { return n * 3; });	// [3, 6, 9]
 
-#### <a name="language-types-object"></a>Object
+#### <a name="language-types-object" dummy="_"></a>Object
 FINISH WHEN DONE MORE ON objects
 
 If you follow the prototype chain of any object in JavaScript it will ultimately lead back to the `Object`. This means that all objects in JavaScript have access to its members.
@@ -791,6 +791,7 @@ The concept is best explained by listing all the `falsy` values, i.e. the ones t
 ```
 console.log(undefined == null);		 // true
 console.log("" == 0);		           // true
+// Of course, if you use ===, the types of both sides will be equated as well.
 console.log("" === 0);		         // false
 
 // An exception: There is an extra IEEE standard which states that NaN can never equal itself.
@@ -823,7 +824,15 @@ if ($(".my-class").length)
 
 [https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
 
+
+
+
+
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
+
+for...in, select...case, throw, try...catch, with
+
+
 * Will leave out samples of most keywords as they behave in the same way as for other C-based language. Will include examples for ones that have some different behaviour
 switch
 <p>    for...in</p>
@@ -846,7 +855,23 @@ TODO: keywords to avoid should prob be a section in "Coding Style" and then can 
 * Use of "with" keyword is generally intensely disapproved of
 
 switch statements are like they are in C, where all subsequent cases will be executed until break or return. Avoid.
+
 ### <a name="language-reserved-words"></a>Reserved Words
+[http://www.w3schools.com/js/js_reserved.asp](http://www.w3schools.com/js/js_reserved.asp) lists the keywords that are reserved for JavaScript.
+
+They are not necessarily used by the language at present. It may be that they are not used in ES5 but are used in later versions of JavaScript, like ES2015 (the new name for ES6). `float`, `double`, `interface`, `public` and `private` are examples of words that are not used by ES5. The main thing to bear in mind is not to use any of the keywords that your version of JavaScript does not utilise.
+
+```
+Do not use these words as variable or function names. Your code may break if you upgrade to using a later version of JavaScript.
+
+// For example, it may be tempting to use, public or private.
+var public = {
+	...
+};
+```
+
+
+
 ### <a name="language-operators"></a>Operators
 <p>    Boolean - Comparison Operators & Equality</p>
 <p>        == coercive - will not take type into account               http://www.w3schools.com/js/js_comparisons.asp</p>
@@ -880,6 +905,7 @@ Numbers could be automatically converted to strings or vice versa. Here the `+` 
 [JavaScript Global Reference](http://www.w3schools.com/jsref/jsref_obj_global.asp)
 
 parseInt()
+I THINK THIS STUFF IS COVERED IN language-types further up. Not sure if this section is now needed. If it is, it will probably be extremely small.
 
 
 
