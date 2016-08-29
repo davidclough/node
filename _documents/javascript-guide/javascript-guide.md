@@ -829,9 +829,39 @@ if ($(".my-class").length)
 
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
+The of the language keywords in JavaScript behave pretty much the same as in other C-based languages so it is deemed unnecessary to explain them all again. Below are keywords which behave a bit differently from n C# or are not in the language at all.
 
-for...in, select...case, throw, try...catch, with
+#### for...in
+SEE TEXT FURTHER down
+ES2015 introduces an alternative `for...of` which provides behaviour that is more like the C# `for...each`.
 
+#### switch, select...case
+switch statements are like they are in C, where all subsequent cases will be executed until break or return. Avoid hat practice.
+C# forces you to add a `break;` at the end of each `case`.
+
+#### throw
+You throw any object not an exception.
+
+#### try...catch
+Catch any object and need to deal with
+
+#### with
+This is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
+This simple example probably doesn't highlight the problem but, if the `with` statement was bigger, the code could become rather confusing.
+Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math` (it is a variable that was declared earlier on in the code) but htis is not immediately obvious to the reader. 
+```
+with (Math) {
+	pi = PI;
+  console.log(cos(pi));				// -1
+}
+```
+
+#### eval
+Evaluates code that is contained within a string. Use of this is highly disapproved of...reason... Unless you get to a very advanced standard it is unlikely you will want to write code that executes from within a string and there will almost always be a better way to do it.
+There is one situation where it can be very useful, however. Executing code that a third party tool, like one from Telerik, has generated and place within the `href` of a link (`<a>`). In this case the code is already within a string. If you want to latch on to this auto-generated code, e.g. to execute the postback that it performs, but from within an event other than the clicking of that link you can "stick it" within an eval. This would be a tidier way than manually copying the output href content and pasting it into your own code. ...you may want to intercept the click of a button and add some custom logic which determines if you should preced with its action...
+```
+// Example of executing the href of a rad control.
+```
 
 * Will leave out samples of most keywords as they behave in the same way as for other C-based language. Will include examples for ones that have some different behaviour
 switch
@@ -852,9 +882,8 @@ for (variable in object) {...
 <p>        returns a STRING</p>
 <p>        if (typeof(Storage) !== "undefined") {                   http://www.w3schools.com/html/html5_webstorage.asp</p>
 TODO: keywords to avoid should prob be a section in "Coding Style" and then can avoid mentioning `with` here.
-* Use of "with" keyword is generally intensely disapproved of
 
-switch statements are like they are in C, where all subsequent cases will be executed until break or return. Avoid.
+
 
 ### <a name="language-reserved-words"></a>Reserved Words
 [http://www.w3schools.com/js/js_reserved.asp](http://www.w3schools.com/js/js_reserved.asp) lists the keywords that are reserved for JavaScript.
