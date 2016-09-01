@@ -829,26 +829,27 @@ if ($(".my-class").length)
 
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
-The of the language keywords in JavaScript behave pretty much the same as in other C-based languages so it is deemed unnecessary to explain them all again. Below are keywords which behave a bit differently from n C# or are not in the language at all.
+The of the language keywords in JavaScript behave pretty much the same as in other C-based languages so it would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
 #### for...in
-SEE TEXT FURTHER down
 ES2015 introduces an alternative `for...of` which provides behaviour that is more like the C# `for...each`.
 
+Only for iterating over keys in an object/map/hash
+"for...in" loops are not as nice as they are in C#...variable will not contain some nice object...generally use for iterating through properties of an object. Otherwise use a traditional "for" loop with a counter or can use jQuery's $.each()
+
 #### switch, select...case
-switch statements are like they are in C, where all subsequent cases will be executed until break or return. Avoid hat practice.
-C# forces you to add a `break;` at the end of each `case`.
+// DON'T BOTHER WITH THIS ONE. IT IS unnecessary information and does not indicate it should be used differently from C#.
 
 #### throw
-You throw any object not an exception.
+You throw _any_ object, primitive or complex. There is no conventional structure like the Exception in C#.
 
-#### try...catch
-Catch any object and need to deal with
+#### try...catch...finally
+The fact that any type of primitive or object can be thrown means that there will be _at most_ one `catch` clause and the code within it will deal with the structure of any exceptions that could be thrown within the `try` clause.
 
 #### with
-This is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
+Avoid this. It is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
 This simple example probably doesn't highlight the problem but, if the `with` statement was bigger, the code could become rather confusing.
-Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math` (it is a variable that was declared earlier on in the code) but htis is not immediately obvious to the reader. 
+Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math` (it is a variable that was declared earlier on in the code) but this is not immediately obvious to the reader. It may reduce the code but also reduces readability. If you wanted to avoid repeating quite a long object name within a section of code you could always declare an alias that had a short, even one letter, name and use that within the section.
 ```
 with (Math) {
 	pi = PI;
@@ -861,27 +862,13 @@ Evaluates code that is contained within a string. Use of this is highly disappro
 There is one situation where it can be very useful, however. Executing code that a third party tool, like one from Telerik, has generated and place within the `href` of a link (`<a>`). In this case the code is already within a string. If you want to latch on to this auto-generated code, e.g. to execute the postback that it performs, but from within an event other than the clicking of that link you can "stick it" within an eval. This would be a tidier way than manually copying the output href content and pasting it into your own code. ...you may want to intercept the click of a button and add some custom logic which determines if you should preced with its action...
 ```
 // Example of executing the href of a rad control.
+
+NOTE: This trick is also referred to in tips and tricks.
 ```
 
-* Will leave out samples of most keywords as they behave in the same way as for other C-based language. Will include examples for ones that have some different behaviour
-switch
-<p>    for...in</p>
-Only for iterating over keys in an object/map/hash
-<p>        D35</p>
-* "for...in" loops are not as nice as they are in C#...variable will not contain some nice object...generally use for iterating through properties of an object. Otherwise use a traditional "for" loop with a counter or can use jQuery's $.each()
-```
-for (variable in object) {...
-}
-```
-<p>    throw</p>
-<p>        Can throw ANY object</p>
-<p>    try/catch, try/finally</p> Cannot catch specific exceptions.
-<p>    eval() - avoid. State the one case where have used.</p>
-<p>    new keyword</p>
-<p>    typeof</p>
-<p>        returns a STRING</p>
-<p>        if (typeof(Storage) !== "undefined") {                   http://www.w3schools.com/html/html5_webstorage.asp</p>
-TODO: keywords to avoid should prob be a section in "Coding Style" and then can avoid mentioning `with` here.
+#### typeof            instanceof ...   any other object-related ones
+
+
 
 
 
