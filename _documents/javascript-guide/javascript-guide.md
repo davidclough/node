@@ -18,7 +18,7 @@
 	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)
 	*  
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
-	*  [JavaScript Keywords](#language-javascript-keywords)             DONE? HAVE IDed the ones to explain
+	*  [JavaScript Keywords](#language-javascript-keywords)            typeof and tidy eval
 	*  [Reserved Words](#language-reserved-words)						DONE
 	*  [Operators](#language-operators)
 	*  [Built-in Global Functions](#language-built-in-global-functions)
@@ -614,7 +614,7 @@ NOTE: SOME ARE PROTOTYPE things... which access via the object. OTHER METHODS ar
 
 It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
 
-This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the `for ... in` clause (see later).
+This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the `for ... in` clause (see later) (LINK THEM TO IT).
 
 	// Outputs properties of an object that are defined directly with the object
 	// and not inherited from the prototype chain.
@@ -829,22 +829,40 @@ if ($(".my-class").length)
 
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
-The of the language keywords in JavaScript behave pretty much the same as in other C-based languages so it would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
+Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
 #### for...in
-ES2015 introduces an alternative `for...of` which provides behaviour that is more like the C# `for...each`.
+"for...in" loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain the an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
 
-Only for iterating over keys in an object/map/hash
-"for...in" loops are not as nice as they are in C#...variable will not contain some nice object...generally use for iterating through properties of an object. Otherwise use a traditional "for" loop with a counter or can use jQuery's $.each()
+	// Iterate through an array. Not nice.
+	var myArray = ["The", "quick", "brown", "fox"];
+	for (var key in myArray) {
+		  // In this case key is the array index. You then need to fetch the object.
+	    console.log(myArray[key]);
+	}
+
+	// A common use. Iterate through all the properties of an object that are attached to the
+	// directly to the object itself and not inherited.
+	// Remember that an object in JavaScript is a collection of properties.
+	for (var property in obj) {
+	    if(obj.hasOwnProperty(property)) {
+			    console.log(objName + "." + property + " = " + obj[property]);
+		  }
+	}
+
+ES2015 introduces an alternative `for...of` which provides behaviour that is more like the C# `for...each`. You can also use jQuery's $.each() statement.
+
 
 #### switch, select...case
-// DON'T BOTHER WITH THIS ONE. IT IS unnecessary information and does not indicate it should be used differently from C#.
+In C# you will get a compile time error if you do not put `break` statements at the end of your `case` clauses. This is not a requirement in other languages, including JavaScript. If there is no `break` statement the code within the next case will be executed **even if** its case value is not matched (and so on through all subsequent cases until the next `break` or the end of the whole `switch` statement).
+
+This is just for your information, it is not generally wise to omit break statements at the end of your case clauses.
 
 #### throw
 You throw _any_ object, primitive or complex. There is no conventional structure like the Exception in C#.
 
 #### try...catch...finally
-The fact that any type of primitive or object can be thrown means that there will be _at most_ one `catch` clause and the code within it will deal with the structure of any exceptions that could be thrown within the `try` clause.
+The fact that any type of primitive or object can be thrown means that there will be _at most_ one `catch` clause and the code within it will deal with the structure of any exceptions that could be thrown within the `try` clause. This is as opposed to the multiple catch clauses you can add in C#.
 
 #### with
 Avoid this. It is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
@@ -858,10 +876,23 @@ with (Math) {
 ```
 
 #### eval
-Evaluates code that is contained within a string. Use of this is highly disapproved of...reason... Unless you get to a very advanced standard it is unlikely you will want to write code that executes from within a string and there will almost always be a better way to do it.
+Evaluates code that is contained within a string. Use of this is highly disapproved of as you can understand. If you cannot understand, imagine that you took all your beautiful C# code with one particular file, with its syntax highlighting and error highlighting, and stuck it in one big string. Imagine then that you were developing that code further from within the string.
+
+Unless you get to a very advanced standard it is unlikely you will want to write code that executes from within a string and there will almost always be a better way to do it.
+
 There is one situation where it can be very useful, however. Executing code that a third party tool, like one from Telerik, has generated and place within the `href` of a link (`<a>`). In this case the code is already within a string. If you want to latch on to this auto-generated code, e.g. to execute the postback that it performs, but from within an event other than the clicking of that link you can "stick it" within an eval. This would be a tidier way than manually copying the output href content and pasting it into your own code. ...you may want to intercept the click of a button and add some custom logic which determines if you should preced with its action...
+
 ```
-// Example of executing the href of a rad control.
+// Partial code from AXA where the default submit button href code generated by ASP.NET was
+// stored within a variable and replaced with code which displays a confirm popup.
+// Clicking the confirm button within the popup will then result stored code being executed.
+generatedCancelBookingCode = cancelBookingButton.attr("href");
+...
+publicMembers.cancelBookingIfUserConfirmsTheirDecision = function () {
+		AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
+				eval(generatedCancelBookingCode);
+		});
+};
 
 NOTE: This trick is also referred to in tips and tricks.
 ```
