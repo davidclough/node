@@ -11,17 +11,18 @@
 	*  [Objects](#language-objects)
 	*  [The this Keyword](#language-this-keyword)
 	*  
-	*  [Types](#language-types)    arrays DONE
+	*  [Types](#language-types)    arrays done    TODO others
 		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
 		* [Math](#language-types-math)
 		* [Arrays](#language-types-arrays)
-	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)
+	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
 	*  
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
-	*  [JavaScript Keywords](#language-javascript-keywords)            typeof and tidy eval
+	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
-	*  [Operators](#language-operators)
+	*  [Operators](#language-operators) t/f   TODO other non-explained
 	*  [Built-in Global Functions](#language-built-in-global-functions)
+	THIS SECTION MAY NOT BE IN. These may all be in common objects section
 
 [http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
 [http://www.w3schools.com/js](http://www.w3schools.com/js)
@@ -825,9 +826,6 @@ if ($(".my-class").length)
 [https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
 
 
-
-
-
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
@@ -898,9 +896,7 @@ NOTE: This trick is also referred to in tips and tricks.
 ```
 
 #### typeof            instanceof ...   any other object-related ones
-
-
-
+TODO: THESE CAN ONLY BE DONE, HERE OR IN THE RELEVANT SECTION ABOVE, WHEN WRITING ABOUT OBJECTS.
 
 
 ### <a name="language-reserved-words"></a>Reserved Words
@@ -948,12 +944,19 @@ Numbers could be automatically converted to strings or vice versa. Here the `+` 
 	var x = "5" - 7;     // x.valueOf() is -2,  typeof x is a number
 
 
+
+
+
+
 ### <a name="language-built-in-global-functions"></a>Built-in Global Functions
 [JavaScript Global Reference](http://www.w3schools.com/jsref/jsref_obj_global.asp)
+
+http://www.w3schools.com/jsref/jsref_obj_global.asp
 
 parseInt()
 I THINK THIS STUFF IS COVERED IN language-types further up. Not sure if this section is now needed. If it is, it will probably be extremely small.
 
+eval() should be in here
 
 
 1. [Standard Browser Objects](#sbo)
