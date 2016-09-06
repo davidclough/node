@@ -20,7 +20,7 @@
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
 	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
-	*  [Operators](#language-operators) t/f   TODO other non-explained  --- NOT SURE THAT ALL THE OTHERS ARE AS IN C
+	*  [Operators](#language-operators)  TODO: ALL possible ones LISTED
 	*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
 [http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
@@ -893,18 +893,28 @@ var public = {
 
 
 ### <a name="language-operators"></a>Operators
-<p>    Boolean - Comparison Operators & Equality</p>
-<p>        == coercive - will not take type into account               http://www.w3schools.com/js/js_comparisons.asp</p>
-<p>        !</p>
-<p>    Type Coercion - D21</p>
+http://www.w3schools.com/js/js_operators.asp
+http://www.w3schools.com/js/js_arithmetic.asp
+Same as C#, with the same operator precedence rules, except:
+
+#### Comparison Operators & Equality
+There are basically two pairs of operators.
+`==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect.
+
+`===` and `!==` are the identity operators.
+They are **far safer** and you should **prefer these** over the ordinary equality operators. Although there are situations where you can use the equality operator without a problem, e.g. if you know that the two variable s being compared are of the same type, there is _no_ situation where use of the identity operators produces bad results.
+
+  NOTE: When editing legacy code, be careful about replacing occurrences of the equality operators with their identity operator equivalent, e.g. if a linter or hinter highlights that you should. It may be that the code previously "worked but for the wrong reasons". Your "improvements" may result in the code not then behaving as previously expected.
+
+http://www.w3schools.com/js/js_comparisons.asp</p>
 
 * === and !== not == and !=
 The first pair will also equate the types of the items being compared
 With the second pair javascript may coerce the values, e.g.
-```
+```NEEDS WORK - THESE ARE ONLY BOOLEAN EXAMPLES - NEED NUMERIC
 '' == '0'           // false
 0 == ''             // true			falsy v falsy
-0 == '0'            // true			falsy v falsy
+XXX0 == '0'            // true			falsy v falsy
 false == 'false'    // false
 false == '0'        // true
 false == undefined  // false
@@ -912,15 +922,41 @@ false == null       // false
 null == undefined   // true
 ' \t\r\n ' == 0     // true
 // ALSO COERCION STRINGS TO NUMBERS OR VICE VERSA.
+console.log(3 == "3");		// true
+console.log("3" == 3);		// true
+
+TODO: Sort these axamples out properly.
 ```
 
-Numbers could be automatically converted to strings or vice versa. Here the `+` is seen as string concatenation but the `-` is a numerical operator:
+#### + and - With a Mixture of Strings and Numbers
+Numbers could be automatically converted to strings or vice versa. Here the `+` is seen as string concatenation. However, the `-` is only a numerical operator and so the runtime tries to convert the string to a number:
 
 	var x = 5 + "7";     // x.valueOf() is 57,  typeof x is a string
 	var x = "5" + 7;     // x.valueOf() is 57,  typeof x is a string
 	var x = "5" - 7;     // x.valueOf() is -2,  typeof x is a number
 
+#### typeof
+TODO...
 
+#### instanceof
+TODO...
+
+#### new
+As previously explained, in JavaScript, does not magically created a new instance of an object.
+In realty, it is an operator that, when placed before a call to a function:
+
+*	Implicity creates an object whose PROTOTYPE/CONSTRUCTOR is the function and makes any reference to `this` immediately within the function refer to that object.
+* That object will be Implicity returned by the function.
+
+This means that the function will have to have written to expect this behaviour. It will then be known as a `constructor function` and these should always be called using the `new` keyword, whereas ordinary functions should _never_ be called using the `new` keyword.
+
+  NOTE: Generally functions are always named using **camelCase**. However, due to what is said in the above paragraph, it is conventional for `constructor functions` to have a name that is **Pascal Case**. This is a visual indication to consumers that it should be preceeded by the `new` keyword when called.
+
+#### Warning About Line Breaks Near Operators
+Put your operators, e.g. with ternary operator and string concatenation, at the **end** of lines they are next to a line break. **Do not** put them at the start of the next line, as is often done with ternary operators in C#. This is because some browsers try to _infer_ a line ending where a semi-colon is missing and may well do it wrongly of the code on a "part line" looks complete. If the operator is at the end the silly browser will be able to work out that there is more to come.
+
+#### In ES2016 there will be a new power operator `**` and `**=`
+In the meantime you will have to make do with go0d old `Match.pow(x, y)`. In the future you will be able to use `x ** y`.
 
 
 
