@@ -10,19 +10,19 @@
 	*  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions)
 	*  [Objects](#language-objects)
 	*  [The this Keyword](#language-this-keyword)
-	*  
-	*  [Types](#language-types)    arrays done    TODO others
+	*  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
 		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
 		* [Math](#language-types-math)
 		* [Arrays](#language-types-arrays)
-	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
-	*  
-	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
 	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
-	*  [Operators](#language-operators)  TODO: ALL possible ones LISTED
+	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
+	*  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
+	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
 	*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
+
+USEFUL LINKS
 [http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
 [http://www.w3schools.com/js](http://www.w3schools.com/js)
 
@@ -737,94 +737,6 @@ See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 
 [Standard built-in objects](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects) gives an idea of what objects are available. However, not will be usable in all browsers. Give an idea of what may be available in the future, although third party libraries may already cover these anyway...
 
-### <a name="language-built-in-objects"></a>Commonly Used Built-in Object Methods
-THIS MAY BE MIXED IN WITH TYPES
-WHEN FINISHED ABOVE SECTION DECIDE IF WANT TO MOVE MENTIONS OF OBJECT MEMBERS TO HERE.
-
-Ideas: Some may have already been explained and do not add any commonly-used methods. Can remove those or link to another section.
-
-Object?:  toString         NO
-
-String:    Yes
-[w3schools](http://www.w3schools.com/js/js_string_methods.asp)
-
-Array:     LOTS
-
-Function?: apply, call       can mention these in other sections
-
-Math:     just mention loads of mathematical stuff - third party.
-
-Number: parse, isNan  (better jQuery equivalents)     parseInt(string,radix) - always use radix
-
-Date:
-
-RegExp:
-
-JSON
-parse, stringify
-
-
-
-
-
-
-
-
-
-
-
-### <a name="language-truthy-and-falsy"></a>Truthy and Falsy
-In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coercion is referred to by the community as `truthy` and `falsy` (or falsey).
-
-The concept is best explained by listing all the `falsy` values, i.e. the ones the runtime classes as `false` first:
-
-*	false
-*	null
-*	undefine
-*	NaN
-*	0 or +0 or -0 (zero)
-*	"" or '' (empty string)
-
-**All** other values, including objects that have been initialised, are classed as `truthy` and the runtime will class them as being `true` within a boolean expression.
-
-#### Examples
-```
-console.log(undefined == null);		 // true
-console.log("" == 0);		           // true
-// Of course, if you use ===, the types of both sides will be equated as well.
-console.log("" === 0);		         // false
-
-// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
-// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
-// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
-// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
-// throwing a runtime error is a better alternative.
-console.log(NaN == NaN);		       // false
-console.log(0 / 0);
-
-// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
-console.log(!!undefined);          // false
-console.log(!!null);  	           // false
-console.log(!!0);	                 // false
-
-// 0 within quotes is a non-empty string and is therefor truthy.
-console.log(!!"0");	               // true
-```
-
-#### Uses
-It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code. It could be used to write some really obscure code that only you can understand but nobody recommends this.
-```
-// Only set the value of any object variable to something different if it does not have a value already.
-// The "know context" here is that obj is only assigned to objects and will never be used to contain a value of another type, e.g. 0 or "".
-obj = obj || newValue;
-
-// A shorthand way of detecting if the length of something is non-zero.
-if ($(".my-class").length)
-```
-
-[https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
-
-
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
@@ -891,42 +803,136 @@ var public = {
 ```
 
 
+### <a name="language-truthy-and-falsy"></a>Truthy and Falsy
+In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coercion is referred to by the community as `truthy` and `falsy` (or falsey).
+
+The concept is best explained by listing all the `falsy` values, i.e. the ones the runtime classes as `false` first:
+
+*	false
+*	null
+*	undefine
+*	NaN
+*	0 or +0 or -0 (zero)
+*	"" or '' (empty string)
+
+**All** other values, including objects that have been initialised, are classed as `truthy` and the runtime will class them as being `true` within a boolean expression.
+
+#### Examples
+*** TODO: Truthy and falsy and really affect boolean detection within conditions. It affects comparison operators less. For example, just because false and null are both falsy does not mean that they are equal when compared with each other, even just for equality:
+
+	console.log(false == null);			// false.
+
+
+```
+console.log(undefined == null);		 // true
+console.log("" == 0);		           // true
+// Of course, if you use ===, the types of both sides will be equated as well.
+console.log("" === 0);		         // false
+
+// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
+// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
+// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
+// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
+// throwing a runtime error is a better alternative.
+console.log(NaN == NaN);		       // false
+console.log(0 / 0);
+
+// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
+console.log(!!undefined);          // false
+console.log(!!null);  	           // false
+console.log(!!0);	                 // false
+
+// 0 within quotes is a non-empty string and is therefor truthy.
+console.log(!!"0");	               // true
+```
+
+#### Uses
+It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code. It could be used to write some really obscure code that only you can understand but nobody recommends this.
+```
+// Only set the value of any object variable to something different if it does not have a value already.
+// The "know context" here is that obj is only assigned to objects and will never be used to contain a value of another type, e.g. 0 or "".
+obj = obj || newValue;
+
+// A shorthand way of detecting if the length of something is non-zero.
+if ($(".my-class").length)
+```
+
+[https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
+
+> NOTE: Truthy and falsy only affect boolean evaluations, e.g. in if statements or ternary expressions. They do not affect comparisons. So, for example, the fact that `null` and `false` are both falsy does not mean that they will ever be equal when compared
+
+```
+	// null, false and 0 are all falsy but when compared with each other they are not equal.
+	console.log(null == false);			// false
+	console.log(0 == undefined);		// false
+```
+
 
 ### <a name="language-operators"></a>Operators
-http://www.w3schools.com/js/js_operators.asp
-http://www.w3schools.com/js/js_arithmetic.asp
-Same as C#, with the same operator precedence rules, except:
+Same as C#, with the same operator precedence rules with a few exceptions.
+[MDN - Operator Precedence](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
 
 #### Comparison Operators & Equality
-There are basically two pairs of operators.
-`==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect.
+There are basically two pairs of these operators.
 
+##### Equality Operators
+> NOTE: Avoid these in favour of the `identity operators` further down unless you know what you are doing.
+
+`==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict.
+
+	console.log(0 == '');							// 1: true
+	console.log('0' == 0);						// 2: true
+	console.log(0 == false);					// 3: true
+
+	console.log(0 == null);						// 4: false
+	console.log(0 == undefined);			// 5: false
+
+	// Despite the fact that they were both == 0, null and undefined are not ==.
+	console.log(null == undefined);		// 6: true
+
+	console.log('true' == true);			// 7: false
+	console.log(3 == '3');						// 8: true
+
+If both the values being compared are objects then equality is determined by whether or not they refer to the same instance of an object:
+
+	// Two separately created objects have different references,
+	// even if they have the same properties with the same values.
+	console.log({a: 3} == {a: 3});		// false
+
+	var x = {myProperty: "hello"};
+	var y = x;
+	console.log(x == y);							// true
+
+
+##### Identity Operators
 `===` and `!==` are the identity operators.
-They are **far safer** and you should **prefer these** over the ordinary equality operators. Although there are situations where you can use the equality operator without a problem, e.g. if you know that the two variable s being compared are of the same type, there is _no_ situation where use of the identity operators produces bad results.
+They are **far safer** and you should **prefer these** over the ordinary equality operators. Although there are situations where you can use the equality operator without a problem, e.g. if you _know_ that the two variables being compared are of the same type, there is _no_ situation where use of the identity operators produces bad results. Here we present the eight examples from further up again but this time using ===. As you can see the results are much more intuitive.
 
-  NOTE: When editing legacy code, be careful about replacing occurrences of the equality operators with their identity operator equivalent, e.g. if a linter or hinter highlights that you should. It may be that the code previously "worked but for the wrong reasons". Your "improvements" may result in the code not then behaving as previously expected.
+	console.log(0 === '');						 // 1: false
+	console.log('0' === 0);						 // 2: false
+	console.log(0 === false);					 // 3: false
 
-http://www.w3schools.com/js/js_comparisons.asp</p>
+	console.log(0 === null);					 // 4: false
+	console.log(0 === undefined);			 // 5: false
+	console.log(null === undefined);	 // 6: false
 
-* === and !== not == and !=
-The first pair will also equate the types of the items being compared
-With the second pair javascript may coerce the values, e.g.
-```NEEDS WORK - THESE ARE ONLY BOOLEAN EXAMPLES - NEED NUMERIC
-'' == '0'           // false
-0 == ''             // true			falsy v falsy
-XXX0 == '0'            // true			falsy v falsy
-false == 'false'    // false
-false == '0'        // true
-false == undefined  // false
-false == null       // false
-null == undefined   // true
-' \t\r\n ' == 0     // true
-// ALSO COERCION STRINGS TO NUMBERS OR VICE VERSA.
-console.log(3 == "3");		// true
-console.log("3" == 3);		// true
+	console.log('true' === true);			 // 7: false
+	console.log(3 === '3');						 // 8: false
 
-TODO: Sort these axamples out properly.
-```
+	// Here the types are the same.
+	console.log(3 === 3);				       // true
+	console.log('3' === '3');				   // true
+	console.log(true === true);				 // true
+	console.log(Infinity === Infinity);  // true
+
+	// Two instances of NaN are never equal.
+	console.log(NaN === NaN);				   // false
+
+
+> NOTE: When editing legacy code, be careful about replacing occurrences of the equality operators with their identity operator equivalent, e.g. if a linter or hinter highlights that you should. It may be that the code previously "worked but for the wrong reasons". Your "improvements" may result in the code not then behaving as previously expected.
+
+[w3schools - Comparison and Logical Operators](http://www.w3schools.com/js/js_comparisons.asp)
+
 
 #### + and - With a Mixture of Strings and Numbers
 Numbers could be automatically converted to strings or vice versa. Here the `+` is seen as string concatenation. However, the `-` is only a numerical operator and so the runtime tries to convert the string to a number:
@@ -961,7 +967,45 @@ In the meantime you will have to make do with go0d old `Match.pow(x, y)`. In the
 
 
 
+### <a name="language-built-in-objects"></a>Commonly Used Built-in Object Methods
+This section explains about some of the built-in objects, and their methods, that have not already been mentioned in previous sections.
+
+`Function` has already been explained in the [Functions](#language-functions) and [Calling Functions](#language-calling-functions) sections further up.
+
+`Object` has already been explained in the [Objects](#language-objects) section further up.
+
+The following built-in objects are related to JavaScript types and are explained in the [Types](#language-types) section:
+
+* `String`
+* `Array`
+* `Number`
+* `Math`
+* `Date`
+* `RegExp`
+
+
+#### Window
+https://developer.mozilla.org/en-US/docs/Web/API/Window
+
+
+#### Document
+https://developer.mozilla.org/en/docs/Web/API/Document
+
+#### JSON
+parse, stringify
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+
+#### Console
+
+
+
+
+
 ### <a name="language-built-in-global-functions"></a>Built-in Global Properties and Functions
+
+GLOBALS      (NOTE that there are many properties and methods of the window object - they are sort of global)
+
+
 [JavaScript Global Reference](http://www.w3schools.com/jsref/jsref_obj_global.asp) explains that there are a few global properties and global functions. They are _not_ attached to any particular objects so they really are just standalone variables and functions, not methods.
 
 Out of those there may be more convenient alternatives, e.g. there a jQuery methods for testing for numeracy.
@@ -1020,6 +1064,12 @@ When working with JavaScript within a browser, the global namespace we have been
 <br /><a href="http://thanpol.as/javascript/development-using-namespaces" target="_blank">http://thanpol.as/javascript/development-using-namespaces</a><br />
 Window setTimeout() Method
 ### <a name="sbo-localstorage-and-sessionstorage-objects"></a>localStorage and sessionStorage Objects
+
+
+<hr />
+
+
+
 
 1. [Coding Rules and Style](#style)
 	*  [Namespaces](#style-namespaces)
