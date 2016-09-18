@@ -983,10 +983,11 @@ The following built-in objects are related to JavaScript types and are explained
 * `Date`
 * `RegExp`
 
+IN THESE OBJECTS AND ONES IN TYPES: Do not try to give a detailed explanation of every method which looks useful. Could just do a list of notable ones with some examples afterwards.
 
 #### Window
 https://developer.mozilla.org/en-US/docs/Web/API/Window
-
+http://www.w3schools.com/jsref/obj_window.asp
 
 #### Document
 https://developer.mozilla.org/en/docs/Web/API/Document
