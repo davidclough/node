@@ -40,7 +40,7 @@ USEFUL LINKS
 ## <a name="language"></a>JavaScript Language (ECMAScript 5)
 
 ### <a name="language-document-scope"></a>Document Scope
-This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. It is not intended to argue for or against the use of JavaScript but to help you learn the language and techniques that can help tame it.
+This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help you learn the language and techniques that can help tame it.
 
 In interests of this document not becoming too bloated explanations may be quite short. It will be intended to cover more essential areas that are different from other languages and avoid going over things that will be more obvious to an experienced programmer. Some code samples may be over-simplified for the sake of more clearly explaining a concept.
 
@@ -153,13 +153,17 @@ Include in sample but point reader to further down.
 
 CODE SAMPLES: declaration, type changing (all samples in the one code block initially). Also do function examples.
 
+> NOTE: In later versions of JavaScript the `let` keyword is introduced as an improved alternative to `var`. This has main effects. The first is to prevent hoisting. `let` will also ensure that the variable is scoped to the containing `block`, rather than the containing function, and cannot be referenced before it has been declared. This is more like the behaviour you would expect in most C-based languages.
+
+> NOTE: Later versions of JavaScript also introduce the `const` keyword which is similar to `let` but also ensures that a variable's value must be set in the declaration and cannot be modified later. This does _not_ mean that its value has to be set to a literal, e.g. 3.14 - it can still be the result of an expression.
+
 You can see recommended coding styles related to this issue later in <a href="#style-declarations">Declarations</a>.
 
 ### <a name="language-sequential"></a>Top-down Evaluation
 #### Variables
 JavaScript is run using `top-down evaluation`. Put simply, variables must have been declared before they are used.
 
-TO MOVE (to function section): Whilst the The above statement is true you have to bear in mind the effects of hoisting. In particular functions which have been declared below where they are called, using `function declaration syntax`, will still work because hoisting moves both the declaration of the function variable and its assignment to the top of the nearest parent function. Whilst this may look highly convenient it can lead to sloppiness.
+TO MOVE (to function section): Whilst the above statement is true you have to bear in mind the effects of hoisting. In particular functions which have been declared below where they are called, using `function declaration syntax`, will still work because hoisting moves both the declaration of the function variable and its assignment to the top of the nearest parent function. Whilst this may look highly convenient it can lead to sloppiness.
 
 WRITE YOUR CODE WITH THE INTENTION OF IT BEING EVALUATED LIKE THIS, do not rely on hoisting tricks to "make your life easier".
 
@@ -543,7 +547,7 @@ TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is prob
 
 
 
-#### <a name="language-types-arrays"></a>Arrays
+#### <a name="language-types-array"></a>Array
 Declare array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
 
 When accessing member of the array, specify a zero-base index within square brackets. If you try to access an index which the array does not contain a value for there will be no error, `undefined` is returned.
