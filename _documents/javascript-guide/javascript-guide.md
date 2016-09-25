@@ -11,13 +11,13 @@
 	-  [Objects](#language-objects)
 	-  [The this Keyword](#language-this-keyword)
 	-  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
-		* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
+		* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)  DONE ALL DOWN TO Object
 			* [string](#language-types-string)
 			* [number](#language-types-number)
 			* [boolean](#language-types-boolean)
 			* [undefined](#language-types-undefined)
-			* [null](#language-types-null)									DONE all primitives
-		* [Array](#language-types-array)									DONE
+			* [null](#language-types-null)
+		* [Array](#language-types-array)
 		* [Date](#language-types-date)
 		* [RegExp](#language-types-regexp)
 		- [Object](#language-types-object)
@@ -496,7 +496,7 @@ Technically, primitives do not have members. However, because of the object wrap
 There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them. You can also see the String global object in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String).
 
 You can browse view the different methods made available via the String object prototype. Some
-are useful, others not. For simple string processing many are fine. For more complex stuff you may want to use RegExp are some third party library, like string.js, or pinch something off Stack Overflow. Here are some examples:
+are useful, others not. For simple string processing many are fine. For more complex stuff you may want to use the methods which work with RegExp objects (explained in [RegExp](language-types-regexp) further down). You could alternatively some third party library, like string.js, or pinch something off Stack Overflow. Here are some examples:
 
 	console.clear();
 
@@ -596,12 +596,6 @@ Unlike `undefined`, `null` is a genuine value which can be used within your logi
 It is a value which your code or a third party library will actively assign as the value of a variable or object member, e.g. if a value is optional.
 TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is probably best viewed as a value rather than as a type.
 
-
-
-
-
-
-
 #### <a name="language-types-array"></a>Array
 Declare array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
 
@@ -678,17 +672,68 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 
 
 #### <a name="language-types-date"></a>Date
-[momentjs](http://momentjs.com/) example of a library...
+The `Date` object allows you to create the equivalent of the C# `DateTime`s. Given the constant problems we have experienced with dates, times, time zones and cultures, even in more sophisticated languages and frameworks, we will not over-elaborate, just highlight its existence.
 
+[w3schools - JavaScriptDate Reference](http://www.w3schools.com/jsref/jsref_obj_date.asp)
+[w3schools - JavaScript Date Formats](http://www.w3schools.com/js/js_date_formats.asp)
+[MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
+	var d = new Date("2015-03-25T12:00:00");
+	console.log(d);										// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
+	console.log(d.getFullYear());			// 2015
 
+	// This one comes back with 3 for the day!
+	// It immediately highlights a chink in the armour.
+	console.log(d.getDay());					// 3
+
+	// In this constructor the month parameter is 0-based but
+	// the other two are 1-based.
+	var d2 = new Date(2000, 1, 1);
+	console.log(d2);										// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+
+	var d3 = new Date(1474525800000);
+	console.log(d3);										// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
+
+One of the more sophisticated third-party libraries available for JavaScript is [moment.js](http://momentjs.com/). It does cater for:
+
+* String parsing
+* Comparisons and differences
+* Addition of time spans
+* Formatting for display
+* Different date/time standards, e.g. UNIX timestamp and ISO 8601
+*	Time zones
+* Cultures
+
+For anything other than basic usage it is probably best to use something like this above the built-in functionality.
 
 #### <a name="language-types-regexp"></a>RegExp
+`RegExp` objects allow you to perform more complex string parsing and manipulation, via regular expressions, than you can with most of the `String` object methods. Note that the `String` object contains a handful of methods designed to work with `RegExp` objects, notably `match()` and `replace()`.
 
+This document is no about regular expressions is given here. Plenty of information exists online, e.g. at [Regular-Expressions.info](http://www.regular-expressions.info/). A good testing environment can be found at [regex101.com](https://regex101.com/).
 
+There is a special syntax for declaring [RegExp](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp) literal (so there is no need to create one using `new RegExp("...")` syntax. It involves use of the `/` character as a delimiter: `var myRegexp = /<regexp text>/`. Additional `flag` characters may be included at the end (after the closing `/`) to modify its behavior, e.g. /.../`g` for a global match (find _all_ occurrences) or /.../`i` to specify that case should be ignore.  
 
+Below are a couple of not very sophisticated examples. Note that the `replace()` method is capable of accepting a function through which the user can implement a more sophisticated replacement algorithm, and takes into account what was found, than just globally replacing all matches with a static string.
 
+	console.clear();
 
+	// match().
+	var csvLine = "111, 222, false, 444, 888";
+
+	var arrayOfAllNumbers = csvLine.match(/\d+/g);
+	// This outputs ["111", "222", "444", "888"].
+	console.log(arrayOfAllNumbers);
+
+	// replace().
+	var convertToSnakeCase = function (text) {
+		// Define a RegExp with the global modifier which finds all non-word characters.
+	  var regexp = /\W+/g;
+		var snakeCase = text.toLowerCase().replace(regexp, "-");
+		return snakeCase;
+	};
+
+	// This outputs "my-object-container".
+	console.log(convertToSnakeCase("My    object container"));
 
 #### <a name="language-types-object"></a>Object
 FINISH WHEN DONE MORE ON objects
