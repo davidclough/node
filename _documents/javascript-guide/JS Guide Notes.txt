@@ -2,23 +2,28 @@ TO DO NEXT
 ----------------
 
 Types (not too detailed)
-    String
-    Array
-    Number
-    Math
-    Date
-    RegExp
+
+		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
+                    Mention equivalent objects (3)
+		* [Object](#language-types-object)
+		* [Function](#language-types-function)
+			* [arguments Property](#language-types-arguments-property)
+		* [Array](#language-types-array)
+		* [Date](#language-types-date)
+		* [RegExp](#language-types-regexp)
+		* [Other Standard Types](#language-types-other-standard-types)
 
 
 
+        
+        
+        
 
-
-
-
-In strings (or more likely objects) mention that JSON mentioned elsewhere [Commonly Used Built-in Object Methods](#language-built-in-objects)
-
-
-
+		* [Window](#language-built-in-objects-window)
+		* [Document](#language-built-in-objects-document)
+		* [Math](#language-built-in-objects-math)
+		* [JSON](#language-built-in-objects-json)
+		* [Console](#language-built-in-objects-console)
 
 
 

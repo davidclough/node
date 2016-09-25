@@ -5,20 +5,24 @@
 	*  [Variables](#language-variables)           DONE
 	*  [Variable Hoisting](#language-hoisting)    DONE
 	*  [Top-down Evaluation](#language-sequential)    DONE
-	-  [Functions](#language-functions)    DONE    where closures?
+	*  [Functions](#language-functions)    DONE    where closures?
 	*  [Calling Functions](#language-calling-functions)    DONE
 	-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT SURE IF DONE
-	*  [Objects](#language-objects)
+	-  [Objects](#language-objects)
 	-  [The this Keyword](#language-this-keyword)
 	-  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
-		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
-		* [Object](#language-types-object)
-		* [Function](#language-types-function)
-			* [arguments Property](#language-types-arguments-property)
-		* [Array](#language-types-array)
+		* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
+			* [string](#language-types-string)
+			* [number](#language-types-number)
+			* [boolean](#language-types-boolean)
+			* [undefined](#language-types-undefined)
+			* [null](#language-types-null)									DONE all primitives
+		* [Array](#language-types-array)									DONE
 		* [Date](#language-types-date)
 		* [RegExp](#language-types-regexp)
-		* [Other Standard Types](#language-types-other-standard-types)
+		- [Object](#language-types-object)
+		- [Function](#language-types-function)
+			* [arguments Property](#language-types-arguments-property)		DONE
 	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
@@ -50,7 +54,7 @@ If you have a desire to learn JavaScript properly, you would helping yourself if
 
 > Note: The word **property** will be used throughout the document. It is actually referring to what in C# would be considered a field and not to something that has getter and setter methods. With functions being first-class objects in JavaScript (see next section), the word **properties** may also refer to an object's fields and methods. This is standard terminology in JavaScript.
 
-> Note: Code samples will often use `console.log()` to display results in the console. You can access this via the developer tools in your browser of choice (press F12) and and go to the `Console` tab. In this tab you should also be able to paste an entire example into the command line, usually the bottom line of the Console tab with a `>` symbol at the start of it. Chrome is particularly reliable for doing this.<br />Perhaps a better place to paste a sample would be to paste it into the JAVASCRIPT window of a [JSFiddle](https://jsfiddle.net/) page (you will still need the console window open to see the results) and click "Run". Here you can easily play about with the code.
+> Note: Code samples will often use `console.log()` to display results in the console. You can access this via the developer tools in your browser of choice (press F12) and go to the `Console` tab. In this tab you should also be able to paste an entire example into the command line, usually the bottom line of the Console tab with a `>` symbol at the start of it. Chrome is particularly reliable for doing this.<br />Perhaps a better place to paste a sample would be to paste it into the JAVASCRIPT window of a [JSFiddle](https://jsfiddle.net/) page (you will still need the console window open to see the results) and click "Run". Here you can easily play about with the code.
 An alternative is [JS Bin](https://jsbin.com/?js,console,output).
 
 ### <a name="language-overview"></a>Language Overview
@@ -453,9 +457,9 @@ this means (1) the object you are constructing within a ctor fn (EXCEPT), (2) an
 
 
 ### <a name="language-types"></a>Standard Types
-The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard `prototype` objects built into JavaScript (EXPLAIN OR DELETE).
+The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard `prototype` objects built into JavaScript which achieve a similar effect to classes.
 
-#### <a name="language-types-primitive"></a>Primitive Types (boolean, number, string, undefined, null)
+#### <a name="language-types-primitive"></a>Primitive Types (string, number, boolean, undefined, null)
 As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`, `undefined` and `null`. Primitives are only things that will be copied/referenced by value. All other "types" are objects. If you make one object equal to another they will effectively be pointers to the same object.
 
 `boolean`, `number` and `string` have their own special forms of constructor. They actually have their own object constructor equivalents (`Boolean`, `String` and `Number`). JavaScript will readily coerce between these primitives and object wrappers behind the scenes but you can detect their type using `tyepof`:
@@ -467,36 +471,74 @@ As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`,
 	var myString = "Hello";
 
 	console.log(typeof myInteger);		    // "number"
-	console.log(typeof myFloat);			// "number"
+	console.log(typeof myFloat);			    // "number"
 	console.log(typeof myHexadecimal);		// "number"
-	console.log(typeof myBool);				// "boolean"
-	console.log(typeof myString);			// "string"
+	console.log(typeof myBool);				    // "boolean"
+	console.log(typeof myString);			    // "string"
 
-You can create them via their object constructor equivalents although their type will then be `object` and it is not advised to use these directly.
+You can create them via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
 
-	var myStringDefineViaConstructor = new String("Hello");
-	console.log(typeof myStringDefineViaConstructor);			// "object"
+	// Don't use these.
 
-##### string
+	var myString1 = new String("Hello");
+	console.log(typeof myString1);			// "object"
+
+	// Without the new!
+	var myString2 = String("Hello");
+	console.log(typeof myString2);			// "string"
+
+##### <a name="language-types-string"></a>string
 Technically, primitives do not have members. However, because of the object wrappers, you do have access to members of those objects:
 
 	var myString = "Hello";
 	console.log(myString.length);			// 5
 
-There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them.
+There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them. You can also see the String global object in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String).
 
-Highlight some:
-Give one example.
+You can browse view the different methods made available via the String object prototype. Some
+are useful, others not. For simple string processing many are fine. For more complex stuff you may want to use RegExp are some third party library, like string.js, or pinch something off Stack Overflow. Here are some examples:
+
+	console.clear();
+
+	var words = "The cat sat";
+	console.log(words.length);								// 11
+	console.log(words.indexOf("at"));					// 5
+	console.log(words.lastIndexOf("at"));			// 9
+	console.log(words.toUpperCase());			    // "THE CAT SAT"
+	console.log(words.charCodeAt(5));			    // 97
+
+	// This one is case-sensitive and will only replace the first occurrence.
+	// Use regular expressions if want to achieve something more complex.
+	console.log(words.replace("t", ""));			// "The ca sat"
+
+	console.log("*".repeat(10));							// "**********"
+
+	// "hello".
+	// However, trim() is not defined in IE8. You will need to add a shiv.
+	console.log("  hello  ".trim());
+
+	// A string can be treated like an array and has some similar methods and properties.
+	console.log(words[4]);										// "c"
+	console.log(words.split(" "));						// ["The", "cat", "sat"]
+
+	// Concatenate strings.
+	var myWords = "The " + "quick brown " + "fox"
+	console.log(myWords);											// "The quick brown fox"
+
+	// Two different strings instances are equal if they contain exactly the same characters.
+	console.log("eggs" === "eggs");
+
+	// Default string comparisons not especially useful.
+	// They rely on the ASCII code of the letters.
+	// This is false because the code for "a" is greater than the code for "Z".
+	console.log("aardvark" < "Zoo");					// false
 
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
-You can iclude a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
+You can include a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
 
-##### number
+##### <a name="language-types-number"></a>number
 As you can see `number` covers both integers and floating point numbers.
 Numbers are always 64 bit floating point values (according to [w3schools](http://www.w3schools.com/js/js_numbers.asp)).
-
-These links contain list more [String members](http://www.w3schools.com/jsref/jsref_obj_string.asp) and [Number methods](http://www.w3schools.com/js/js_number_methods.asp).
-CAN EXPLAIN ANY IMPORTANT ONES. There aren't really any?
 
 The hexadecimal initialisation will store the number in base 10. However, you can still continue to use that notation for value comparisons or bitwise logical operations like this bitwise or:
 
@@ -516,21 +558,34 @@ There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (
 			console.log("10 / 0 === 50 / 0");
 	}
 
-##### boolean
-Boolean does not have any particularly useful methods beyond `toString()`, which is inherited from the Object prototype.
+The [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) prototype object provides far fewer useful methods for numbers than the String object does for strings.
 
-##### undefined
-`undefined` is useful for determining if a variable, or a function parameter or class member, has actually been initialised.
+	var x = 127.5678;
+	console.log(x.toFixed(2));					// 127.57
+	console.log(x.toExponential(2));		// 1.28e+2
+
+The [Math](#language-built-in-objects-math) object (defined in the "Commonly Used Built-in Object Methods" section) provides a lot of mathematical functions.
+
+##### <a name="language-types-boolean"></a>boolean
+Boolean does not add any particularly useful methods beyond `toString()`, which is ultimately inherited from the Object prototype.
+
+##### <a name="language-types-undefined"></a>undefined
+`undefined` is useful for determining if a variable, function parameter or class member, has actually been initialised.
 
 	var myVariable;
 
 	console.log(typeof myVariable);	// "undefined"
 
+	// You could use == here if you really wanted, given that typeof returns a string.
 	if (typeof myVariable === "undefined") {
-		console.log("myVariable has not been given a value" );
+	  console.log("myVariable has not been given a value");
 	}
 
-##### null
+> NOTE: The above example uses the **standard** method for testing if something is undefined. This is particularly good because browsers will not throw an exception if the variable has not been declared, as may be the case if you had used `if (myVariable === undefined)`.
+
+One of the many mistakes in the JavaScript language is that, certainly in older browsers, `undefined` can be manually set to _any_ value. For this reason you may see code which mentions `void(0)` (as this is always undefined). You may also see code which employs the trick of declaring a final function parameter called `undefined` but does not supply that parameter when calling the function.
+
+##### <a name="language-types-null"></a>null
 Although `null` is said to be a primitive type it is really more a primitive value for an object. Its type is object. However, this is only because of a bug in ES5. In ES6 it has been fixed and null is more like a genuine primitive type.
 
 	var myNull = null;
@@ -539,7 +594,7 @@ Although `null` is said to be a primitive type it is really more a primitive val
 Unlike `undefined`, `null` is a genuine value which can be used within your logic.
 
 It is a value which your code or a third party library will actively assign as the value of a variable or object member, e.g. if a value is optional.
-TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is probably best viewed as a value rather than a type.
+TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is probably best viewed as a value rather than as a type.
 
 
 
@@ -619,7 +674,23 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 
 	_.map([1, 2, 3], function (n) { return n * 3; });	// [3, 6, 9]
 
-#### <a name="language-types-object" dummy="_"></a>Object
+<a dummy="_"></a>
+
+
+#### <a name="language-types-date"></a>Date
+[momentjs](http://momentjs.com/) example of a library...
+
+
+
+
+#### <a name="language-types-regexp"></a>RegExp
+
+
+
+
+
+
+#### <a name="language-types-object"></a>Object
 FINISH WHEN DONE MORE ON objects
 
 If you follow the prototype chain of any object in JavaScript it will ultimately lead back to the `Object`. This means that all objects in JavaScript have access to its members.
@@ -734,16 +805,6 @@ We can now name our anonymous functions (:D) as below. The IE9-compatible Array 
 	console.log(o);
 
 See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments)
-
-#### <a name="language-types-date"></a>Date
-[momentjs](http://momentjs.com/) example of a library...
-
-#### <a name="language-types-regexp"></a>RegExp
-
-#### <a name="language-types-other-standard-types">Other Standard Types
-<p>            Each of these are actually objects whose earliest ancestor in the prototype chain is the the Object prototype</p>
-
-[Standard built-in objects](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects) gives an idea of what objects are available. However, not will be usable in all browsers. Give an idea of what may be available in the future, although third party libraries may already cover these anyway...
 
 
 
