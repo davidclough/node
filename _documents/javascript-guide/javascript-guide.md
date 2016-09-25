@@ -12,11 +12,13 @@
 	-  [The this Keyword](#language-this-keyword)
 	-  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
 		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
-		* [String](#language-types-string)
+		* [Object](#language-types-object)
+		* [Function](#language-types-function)
+			* [arguments Property](#language-types-arguments-property)
 		* [Array](#language-types-array)
-		* [Number](#language-types-number)
 		* [Date](#language-types-date)
 		* [RegExp](#language-types-regexp)
+		* [Other Standard Types](#language-types-other-standard-types)
 	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
@@ -24,6 +26,7 @@
 	-  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
 		* [Window](#language-built-in-objects-window)
 		* [Document](#language-built-in-objects-document)
+		* [Math](#language-built-in-objects-math)
 		* [JSON](#language-built-in-objects-json)
 		* [Console](#language-built-in-objects-console)
 	*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
@@ -439,8 +442,14 @@ can dynamically add and delete members of objects. MENTION SOME OF THE THINGS bu
 The `this` keyword generally refers to the scope that you are in, i.e. the global scope or a function.
 this means (1) the object you are constructing within a ctor fn (EXCEPT), (2) and in an externally created method, (3) the global object, (4) if fn is called with `call` or `apply` then the object represented by `this` is controlled from that call - applications...
 
+
+
+
+
+
+
 ### <a name="language-types"></a>Standard Types
-The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard 'prototype` objects built into JavaScript.
+The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard `prototype` objects built into JavaScript (EXPLAIN OR DELETE).
 
 #### <a name="language-types-primitive"></a>Primitive Types (boolean, number, string, undefined, null)
 As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`, `undefined` and `null`. Primitives are only things that will be copied/referenced by value. All other "types" are objects. If you make one object equal to another they will effectively be pointers to the same object.
@@ -523,22 +532,16 @@ Although `null` is said to be a primitive type it is really more a primitive val
 	var myNull = null;
 	console.log(typeof myNull);				// "object"
 
-Unlike `undfined`, `null` is a genuine value which can be used within your logic.
+Unlike `undefined`, `null` is a genuine value which can be used within your logic.
 
 It is a value which your code or a third party library will actively assign as the value of a variable or object member, e.g. if a value is optional.
 TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is probably best viewed as a value rather than a type.
 
-#### <a name="language-types-math"></a>Math
-This object provides many mathematical functions and standard mathematical values.
 
-	var calculateAreaOfCircle = function (radius) {
-		return Math.PI * Math.pow(radius, 2);
-	};
 
-	var area = calculateAreaOfCircle(2);
-	console.log(area);						// 12.566370614359172
 
-Investigate [w3schools - Math object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) for a full list.
+
+
 
 #### <a name="language-types-arrays"></a>Arrays
 Declare array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
@@ -705,8 +708,7 @@ Functions have been explained above.
 HOWEVER, can highlight members of the function object here.
 Explain that functions are actually objects...
 
-
-#### <a name="language-types-arguments"></a>arguments Object   DONE
+##### <a name="language-types-arguments-property"></a>arguments Property   DONE
 According to documentation `arguments` is a separately available object and is not technically accessed via the `arguments property` of a Function. When control enters the execution context of a function an `arguments` object is created.
 
 arguments.length
@@ -734,15 +736,21 @@ See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 
 #### <a name="language-types-regexp"></a>RegExp
 
-
-
-#### <a name="language-types-json"></a>JSON Object
-
-
-#### Other Standard Types
+#### <a name="language-types-other-standard-types">Other Standard Types
 <p>            Each of these are actually objects whose earliest ancestor in the prototype chain is the the Object prototype</p>
 
 [Standard built-in objects](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects) gives an idea of what objects are available. However, not will be usable in all browsers. Give an idea of what may be available in the future, although third party libraries may already cover these anyway...
+
+
+
+
+
+
+
+
+
+
+
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
@@ -998,6 +1006,19 @@ http://www.w3schools.com/jsref/obj_window.asp
 
 #### <a name="language-built-in-objects-document"></a>Document
 https://developer.mozilla.org/en/docs/Web/API/Document
+
+#### <a name="language-built-in-objects-math"></a>Math
+This object provides many mathematical functions and standard mathematical values.
+
+	var calculateAreaOfCircle = function (radius) {
+		return Math.PI * Math.pow(radius, 2);
+	};
+
+	var area = calculateAreaOfCircle(2);
+	console.log(area);						// 12.566370614359172
+
+Investigate [w3schools - Math object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) for a full list.
+
 
 #### <a name="language-built-in-objects-json"></a>JSON
 parse, stringify
