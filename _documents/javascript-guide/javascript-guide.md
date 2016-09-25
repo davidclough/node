@@ -5,20 +5,27 @@
 	*  [Variables](#language-variables)           DONE
 	*  [Variable Hoisting](#language-hoisting)    DONE
 	*  [Top-down Evaluation](#language-sequential)    DONE
-	*  [Functions](#language-functions)    DONE
+	-  [Functions](#language-functions)    DONE    where closures?
 	*  [Calling Functions](#language-calling-functions)    DONE
-	*  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions)
+	-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT SURE IF DONE
 	*  [Objects](#language-objects)
-	*  [The this Keyword](#language-this-keyword)
-	*  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
+	-  [The this Keyword](#language-this-keyword)
+	-  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
 		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
-		* [Math](#language-types-math)
-		* [Arrays](#language-types-arrays)
+		* [String](#language-types-string)
+		* [Array](#language-types-array)
+		* [Number](#language-types-number)
+		* [Date](#language-types-date)
+		* [RegExp](#language-types-regexp)
 	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 	*  [Reserved Words](#language-reserved-words)						DONE
 	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
 	*  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
-	*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
+	-  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
+		* [Window](#language-built-in-objects-window)
+		* [Document](#language-built-in-objects-document)
+		* [JSON](#language-built-in-objects-json)
+		* [Console](#language-built-in-objects-console)
 	*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
 
@@ -985,19 +992,19 @@ The following built-in objects are related to JavaScript types and are explained
 
 IN THESE OBJECTS AND ONES IN TYPES: Do not try to give a detailed explanation of every method which looks useful. Could just do a list of notable ones with some examples afterwards.
 
-#### Window
+#### <a name="language-built-in-objects-window"></a>Window
 https://developer.mozilla.org/en-US/docs/Web/API/Window
 http://www.w3schools.com/jsref/obj_window.asp
 
-#### Document
+#### <a name="language-built-in-objects-document"></a>Document
 https://developer.mozilla.org/en/docs/Web/API/Document
 
-#### JSON
+#### <a name="language-built-in-objects-json"></a>JSON
 parse, stringify
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
 
-#### Console
-
+#### <a name="language-built-in-objects-console"></a>Console
+Is there a debugging section?
 
 
 

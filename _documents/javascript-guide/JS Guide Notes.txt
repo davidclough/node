@@ -1,3 +1,79 @@
+TO DO NEXT
+----------------
+
+Types (not too detailed)
+    String
+    Array
+    Number
+    Math
+    Date
+    RegExp
+
+
+
+
+
+
+
+In strings (or more likely objects) mention that JSON mentioned elsewhere [Commonly Used Built-in Object Methods](#language-built-in-objects)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
 Sections (1) Standards, (2) javascript info, (3) patterns, practices and tricks.
 ----------
                                                                                             https://github.com/airbnb/javascript
