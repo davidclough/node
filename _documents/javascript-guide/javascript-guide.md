@@ -1,39 +1,49 @@
-1. [JavaScript Languagep (ECMAScript 5)](#language)
-	*  [Document Scope](#language-document-scope)    DONE
-	*  [Language Overview](#language-overview)    DONE
-	*  [Global Namespace](#language-global-namespace)    DONE
-	*  [Variables](#language-variables)           DONE
-	*  [Variable Hoisting](#language-hoisting)    DONE
-	*  [Top-down Evaluation](#language-sequential)    DONE
-	*  [Functions](#language-functions)    DONE    where closures?
-	*  [Calling Functions](#language-calling-functions)    DONE
-	-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT SURE IF DONE
-	-  [Objects](#language-objects)
-	-  [The this Keyword](#language-this-keyword)
-	-  [Types](#language-types)    arrays done    TODO others  DON'T OVER ELAB, NOT EV METHOD
-		* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)  DONE ALL DOWN TO Object
-			* [string](#language-types-string)
-			* [number](#language-types-number)
-			* [boolean](#language-types-boolean)
-			* [undefined](#language-types-undefined)
-			* [null](#language-types-null)
-		* [Array](#language-types-array)
-		* [Date](#language-types-date)
-		* [RegExp](#language-types-regexp)
-		- [Object](#language-types-object)
-		- [Function](#language-types-function)
-			* [arguments Property](#language-types-arguments-property)		DONE
-	*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
-	*  [Reserved Words](#language-reserved-words)						DONE
-	*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
-	*  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
-	-  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
-		* [Window](#language-built-in-objects-window)
-		* [Document](#language-built-in-objects-document)
-		* [Math](#language-built-in-objects-math)
-		* [JSON](#language-built-in-objects-json)
-		* [Console](#language-built-in-objects-console)
-	*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
+# Sections
+
+1. [JavaScript Languagep (ECMAScript 5)](#language-contents)
+1. [Coding Rules and Style](#style-contents)
+1. [Code Organisation](#organisation-contents)
+1. [Patterns, Tips and Tricks](#tips-contents)
+
+<hr />
+
+[JavaScript Language (ECMAScript 5)](#language)<a name="language-contents"></a>
+
+*  [Document Scope](#language-document-scope)    DONE
+*  [Language Overview](#language-overview)    DONE
+*  [Global Namespace](#language-global-namespace)    DONE
+*  [Variables](#language-variables)           DONE
+*  [Variable Hoisting](#language-hoisting)    DONE
+*  [Top-down Evaluation](#language-sequential)    DONE
+*  [Functions](#language-functions)    DONE    where closures?
+*  [Calling Functions](#language-calling-functions)    DONE
+-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT SURE IF DONE
+-  [Objects](#language-objects)
+-  [The this Keyword](#language-this-keyword)
+-  [Types](#language-types)  		DONE ALL DOWN TO Object
+	* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
+		* [string](#language-types-string)
+		* [number](#language-types-number)
+		* [boolean](#language-types-boolean)
+		* [undefined](#language-types-undefined)
+		* [null](#language-types-null)
+	* [Array](#language-types-array)
+	* [Date](#language-types-date)
+	* [RegExp](#language-types-regexp)
+	- [Object](#language-types-object)
+	- [Function](#language-types-function)
+		* [arguments Property](#language-types-arguments-property)		DONE
+*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
+*  [Reserved Words](#language-reserved-words)						DONE
+*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
+*  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
+-  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
+	* [Window](#language-built-in-objects-window)
+	* [Document](#language-built-in-objects-document)
+	* [Math](#language-built-in-objects-math)
+	* [JSON](#language-built-in-objects-json)
+	* [Console](#language-built-in-objects-console)
+*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
 
 USEFUL LINKS
@@ -1205,12 +1215,12 @@ Window setTimeout() Method
 ### <a name="sbo-localstorage-and-sessionstorage-objects"></a>localStorage and sessionStorage Objects
 
 
-<hr />
+<hr dummy="_" />
 
 
 
 
-1. [Coding Rules and Style](#style)
+2. [Coding Rules and Style](#style)<a name="style-contents"></a>
 	*  [Namespaces](#style-namespaces)
 	*  [Naming Conventions](#style-naming-conventions)
 	*  [Declarations](#style-declarations)
@@ -1373,7 +1383,11 @@ Multiple references to the multiple references to the same file will result in i
 
 Do not use &lt;script language="JavaScript"&gt; the language attribute is deprecated    
 
-1. [Code Organisation](#organisation)
+<hr />
+
+
+
+1. [Code Organisation](#organisation)<a name="organisation-contents"></a>
 	*  [Bundling](#organisation-bundling)
 	*  [Common File](#organisation-common-file)
 	*  [Custom jQuery Plugins](#organisation-custom-jquery-plugins)
@@ -1392,7 +1406,11 @@ Do not use &lt;script language="JavaScript"&gt; the language attribute is deprec
 ### <a name="organisation-file-per-module-or-object"></a>File per Module or Object
 <p>    File per module or object</p>
 
-1. [Patterns, Tips and Tricks](#tips)
+<hr />
+
+
+
+1. [Patterns, Tips and Tricks](#tips)<a name="tips-contents"></a>
 	*  ["use strict"](#tips-use-strict)
 	*  [Modification of Existing Code](#tips-modification-of-existing-code)
 	*  ["guard" Operator, Using &&](#tips-guard-operator)
