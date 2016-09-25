@@ -1,4 +1,4 @@
-# Sections
+# JavaScript Guide - Sections
 
 1. [JavaScript Languagep (ECMAScript 5)](#language-contents)
 1. [Coding Rules and Style](#style-contents)
@@ -7,7 +7,7 @@
 
 <hr />
 
-[JavaScript Language (ECMAScript 5)](#language)<a name="language-contents"></a>
+<a name="language-contents"></a>[JavaScript Language (ECMAScript 5)](#language)
 
 *  [Document Scope](#language-document-scope)    DONE
 *  [Language Overview](#language-overview)    DONE
@@ -1220,30 +1220,31 @@ Window setTimeout() Method
 
 
 
-2. [Coding Rules and Style](#style)<a name="style-contents"></a>
-	*  [Namespaces](#style-namespaces)
-	*  [Naming Conventions](#style-naming-conventions)
-	*  [Declarations](#style-declarations)
-	*  [Strict Mode](#style-strict-mode)
-	*  [Initialising Variables](#style-initialising-variables)
-	*  [Checking for Equality](#style-checking-for-equality)
-	*  [Keywords to Avoid](#style-keywords-to-avoid)
-	*  [Operators to Avoid](#style-operators-to-avoid)
-	*  [Semicolons](#style-semicolons)
-	*  [Long Lines](#style-long-lines)
-	*  [Whitespace](#style-whitespace)
-	*  [Quotation Marks](#style-quotation-marks)
-	*  [Comments](#style-comments)
-	*  [Functions](#style-functions)
-	*  [Blocks](#style-blocks)
-	*  [Callback Function Parameters](#style-callback-function-parameters)
-	*  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-	*  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
-	*  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
-	*  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
-	*  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
-	*  [Getters and Setters](#style-getters-and-setters)
-	*  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
+<a name="style-contents"></a>[Coding Rules and Style](#style)
+
+*  [Namespaces](#style-namespaces)
+*  [Naming Conventions](#style-naming-conventions)
+*  [Declarations](#style-declarations)
+*  [Strict Mode](#style-strict-mode)
+*  [Initialising Variables](#style-initialising-variables)
+*  [Checking for Equality](#style-checking-for-equality)
+*  [Keywords to Avoid](#style-keywords-to-avoid)
+*  [Operators to Avoid](#style-operators-to-avoid)
+*  [Semicolons](#style-semicolons)
+*  [Long Lines](#style-long-lines)
+*  [Whitespace](#style-whitespace)
+*  [Quotation Marks](#style-quotation-marks)
+*  [Comments](#style-comments)
+*  [Functions](#style-functions)
+*  [Blocks](#style-blocks)
+*  [Callback Function Parameters](#style-callback-function-parameters)
+*  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
+*  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
+*  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
+*  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
+*  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
+*  [Getters and Setters](#style-getters-and-setters)
+*  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
 
 ## <a name="style"></a>Coding Style
 <p>DO put recommendations in the LANGUAGE section, rather than adding, separately, half a mile below. Can easily repeat the recommendations here.</p>
@@ -1387,11 +1388,12 @@ Do not use &lt;script language="JavaScript"&gt; the language attribute is deprec
 
 
 
-1. [Code Organisation](#organisation)<a name="organisation-contents"></a>
-	*  [Bundling](#organisation-bundling)
-	*  [Common File](#organisation-common-file)
-	*  [Custom jQuery Plugins](#organisation-custom-jquery-plugins)
-	*  [File per Module or Object](#organisation-file-per-module-or-object)
+<a name="organisation-contents"></a>[Code Organisation](#organisation)
+
+*  [Bundling](#organisation-bundling)
+*  [Common File](#organisation-common-file)
+*  [Custom jQuery Plugins](#organisation-custom-jquery-plugins)
+*  [File per Module or Object](#organisation-file-per-module-or-object)
 
 ## <a name="organisation"></a>Code Organisation
 ### <a name="organisation-bundling"></a>Bundling
@@ -1410,23 +1412,24 @@ Do not use &lt;script language="JavaScript"&gt; the language attribute is deprec
 
 
 
-1. [Patterns, Tips and Tricks](#tips)<a name="tips-contents"></a>
-	*  ["use strict"](#tips-use-strict)
-	*  [Modification of Existing Code](#tips-modification-of-existing-code)
-	*  ["guard" Operator, Using &&](#tips-guard-operator)
-	*  ["default" Operator, Using ||](#tips-default-operator)
-	*  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
-	*  [that (or self) Variables](#tips-that-or-self-variables)
-	*  [Inheritance](#tips-inheritance)
-	*  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
-	*  [eval Keyword Trick](#tips-eval-keyword-trick)
-	*  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
-	*  [Creating Modules (Singletons)](#tips-creating-modules-singletons)
-	*  [Defining an Obect in a Readable Manner](#tips-defining-an-obect-in-a-readable-manner)
-	*  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
-	*  [String Format Example](#tips-string-format-example)
-	*  [Deferred Object](#tips-deferred-object)
-	*  Too Many Optional Parameters
+<a name="tips-contents"></a>[Patterns, Tips and Tricks](#tips)
+
+*  ["use strict"](#tips-use-strict)
+*  [Modification of Existing Code](#tips-modification-of-existing-code)
+*  ["guard" Operator, Using &&](#tips-guard-operator)
+*  ["default" Operator, Using ||](#tips-default-operator)
+*  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
+*  [that (or self) Variables](#tips-that-or-self-variables)
+*  [Inheritance](#tips-inheritance)
+*  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
+*  [eval Keyword Trick](#tips-eval-keyword-trick)
+*  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
+*  [Creating Modules (Singletons)](#tips-creating-modules-singletons)
+*  [Defining an Obect in a Readable Manner](#tips-defining-an-obect-in-a-readable-manner)
+*  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
+*  [String Format Example](#tips-string-format-example)
+*  [Deferred Object](#tips-deferred-object)
+*  Too Many Optional Parameters
 
 
     instance.open = function (extend) {
