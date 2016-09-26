@@ -1225,13 +1225,14 @@ There are some other more sophisticated methods you can use, although the basic 
 
 * `console.table()` works quite nicely if you have a variable that is a collection of homogeneous objects. You could call this line from within your code or via the Console window.
 
-
-	var cities = [
-		{id: 0, name: "London", country: "England"},
-		{id: 1, name: "Paris", country: "France"},
-		{id: 2, name: "Rome", country: "Italy"}
-	];
-	console.table(cities);
+```
+var cities = [
+	{id: 0, name: "London", country: "England"},
+	{id: 1, name: "Paris", country: "France"},
+	{id: 2, name: "Rome", country: "Italy"}
+];
+console.table(cities);
+```
 
 * `console.time()` and `console.timeEnd()`. Usage of these is simple. From within your code, call `time()` when you want the timer to start and `timeEnd()` when you want to stop timing. The time will automatically be output to the console window. There are also overloads which accept a label so that you can record multiple times in one go.
 
