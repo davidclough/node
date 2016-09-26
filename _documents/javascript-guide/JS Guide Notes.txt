@@ -3,43 +3,16 @@ TO DO NEXT
 
 Types (not too detailed)
 
-		* [Primitive Types (boolean, number, string, undefined, null)](#language-types-primitive)
-                    Mention equivalent objects (3)
 		* [Object](#language-types-object)
 		* [Function](#language-types-function)
 			* [arguments Property](#language-types-arguments-property)
-		* [Array](#language-types-array)
-		* [Date](#language-types-date)
-		* [RegExp](#language-types-regexp)
-		* [Other Standard Types](#language-types-other-standard-types)
-
 
 
         
-        
-        
 
+		* [JSON](#language-built-in-objects-json)
 		* [Window](#language-built-in-objects-window)
 		* [Document](#language-built-in-objects-document)
-		* [Math](#language-built-in-objects-math)
-		* [JSON](#language-built-in-objects-json)
-		* [Console](#language-built-in-objects-console)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

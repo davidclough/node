@@ -1,4 +1,5 @@
-# JavaScript Guide - Sections
+# JavaScript Guide
+## Sections
 
 1. [JavaScript Languagep (ECMAScript 5)](#language-contents)
 1. [Coding Rules and Style](#style-contents)
@@ -17,7 +18,7 @@
 *  [Top-down Evaluation](#language-sequential)    DONE
 *  [Functions](#language-functions)    DONE    where closures?
 *  [Calling Functions](#language-calling-functions)    DONE
--  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT SURE IF DONE
+-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT DONE
 -  [Objects](#language-objects)
 -  [The this Keyword](#language-this-keyword)
 -  [Types](#language-types)  		DONE ALL DOWN TO Object
@@ -38,10 +39,10 @@
 *  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
 *  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
 -  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
-	* [Window](#language-built-in-objects-window)
-	* [Document](#language-built-in-objects-document)
+	- [Window](#language-built-in-objects-window)
+	- [Document](#language-built-in-objects-document)
 	* [Math](#language-built-in-objects-math)
-	* [JSON](#language-built-in-objects-json)
+	- [JSON](#language-built-in-objects-json)
 	* [Console](#language-built-in-objects-console)
 *  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
@@ -1045,25 +1046,25 @@ If both the values being compared are objects then equality is determined by whe
 `===` and `!==` are the identity operators.
 They are **far safer** and you should **prefer these** over the ordinary equality operators. Although there are situations where you can use the equality operator without a problem, e.g. if you _know_ that the two variables being compared are of the same type, there is _no_ situation where use of the identity operators produces bad results. Here we present the eight examples from further up again but this time using ===. As you can see the results are much more intuitive.
 
-	console.log(0 === '');						 // 1: false
-	console.log('0' === 0);						 // 2: false
-	console.log(0 === false);					 // 3: false
+	console.log(0 === '');               // 1: false
+	console.log('0' === 0);              // 2: false
+	console.log(0 === false);            // 3: false
 
-	console.log(0 === null);					 // 4: false
-	console.log(0 === undefined);			 // 5: false
-	console.log(null === undefined);	 // 6: false
+	console.log(0 === null);             // 4: false
+	console.log(0 === undefined);        // 5: false
+	console.log(null === undefined);     // 6: false
 
-	console.log('true' === true);			 // 7: false
-	console.log(3 === '3');						 // 8: false
+	console.log('true' === true);        // 7: false
+	console.log(3 === '3');              // 8: false
 
 	// Here the types are the same.
-	console.log(3 === 3);				       // true
-	console.log('3' === '3');				   // true
-	console.log(true === true);				 // true
+	console.log(3 === 3);                // true
+	console.log('3' === '3');            // true
+	console.log(true === true);          // true
 	console.log(Infinity === Infinity);  // true
 
 	// Two instances of NaN are never equal.
-	console.log(NaN === NaN);				   // false
+	console.log(NaN === NaN);            // false
 
 
 > NOTE: When editing legacy code, be careful about replacing occurrences of the equality operators with their identity operator equivalent, e.g. if a linter or hinter highlights that you should. It may be that the code previously "worked but for the wrong reasons". Your "improvements" may result in the code not then behaving as previously expected.
@@ -1108,8 +1109,8 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 	// only accepts separate arguments, not arrays.
 	var array1 = [1, 2, 3];
 	var array2 = [4, 5, 6];
-	array1.push(...array2);					// [1, 2, 3, 4, 5, 6]
-	console.log(array1);
+	array1.push(...array2);
+	console.log(array1);           // [1, 2, 3, 4, 5, 6]
 
 	// Math.min does not accept on form of collection.
 	var myNumbers = [24, 36, 8, 72];
@@ -1118,7 +1119,7 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 
 	var someFigures = [1, 2, 3, 4];
 	var allFigures = [...someFigures, 5, 6, ...[7, 8]];
-	console.log(allFigures);				// [1, 2, 3, 4, 5, 6, 7, 8]
+	console.log(allFigures);       // [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 ##### Rest Operator (ES2015)
@@ -1134,7 +1135,7 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 	};
 
 	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
-	console.log(percentageOfTotal);
+	console.log(percentageOfTotal);         // 40
 
 Of course, we can call a JavaScript function with any number of parameters already. We can currently achieve the same effect in a less elegant manner by manually processing the `arguments` property within the function code. Also numbers is a _genuine_ array whereas `arguments` is only "array-like". You can iterate though the values in a `for` loop. However, you have to convert it into a genuine array in order to be able to use the `reduce` array:
 
@@ -1151,7 +1152,7 @@ Of course, we can call a JavaScript function with any number of parameters alrea
 	};
 
 	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
-	console.log(percentageOfTotal);
+	console.log(percentageOfTotal);         // 40
 
 
 ##### Power Operators (ES2016)
@@ -1196,7 +1197,7 @@ This object provides many mathematical functions and standard mathematical value
 	var area = calculateAreaOfCircle(2);
 	console.log(area);						// 12.566370614359172
 
-Investigate [w3schools - Math Reference](http://www.w3schools.com/jsref/jsref_obj_math.asp) for a full list. [MDN - Math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) has a bigger list but many are only available in ES2015 and won't work in any version of IE.
+Investigate [w3schools - Math Reference](http://www.w3schools.com/jsref/jsref_obj_math.asp) for a full list. [MDN - Math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) has a bigger list but many are only available in ES2015 and won't even work in any version of IE.
 
 
 #### <a name="language-built-in-objects-json"></a>JSON
@@ -1204,9 +1205,45 @@ parse, stringify
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
 
 #### <a name="language-built-in-objects-console"></a>Console
-Is there a debugging section?
+The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides. TODO: DEBUGGING IS A SEPARATE SECTION.
+
+##### Basic Methods
+These methods are called from within your code (when debugging).
+
+ * `console.log()` is used often in this document and lets you log a message or the value of a variable to the console.
+
+ * `console.assert()` is very similar but takes an initial boolean expression. The log will only occur if the expression evaluates to false.
+
+ * `console.clear()` can be useful if you find yourself logging many things or having to change and re-run your code a lot.
+
+* `debugger;` is not a console method but it worth mentioning here. Rather than trying to find code and add a breakpoint via the F12 tools you can just add a line containing this to your code and re-run. It also maintains the breakpoint in the correct position if you add or remove lines to your code (breakpoints remaining on exactly the same line number has been a problem in Firefox). You should take to care to ensure that debugger lines are only added temporarily.
+
+##### Other Methods
+There are some other more sophisticated methods you can use, although the basic ones will often be enough. [Beyond Console Debugging Tricks](https://medium.com/outsystems-experts/beyond-console-debugging-tricks-f7d0d7f5df4#.pmwwd5e9g) is a web page which explains these pretty nicely.
+
+* `console.trace()` can be typed into the Console when you are in "breakpoint" mode. It will give you a complete stack trace. One thing to note is that the more anonymous functions you have in your call stack the harder it will be to make sense of the stack trace.
+
+* `console.table()` works quite nicely if you have a variable that is a collection of homogeneous objects. You could call this line from within your code or via the Console window.
+
+	var cities = [
+		{id: 0, name: "London", country: "England"},
+		{id: 1, name: "Paris", country: "France"},
+		{id: 2, name: "Rome", country: "Italy"}
+	];
+	console.table(cities);
+
+* `console.time()` and `console.timeEnd()`. Usage of these is simple. From within your code, call `time()` when you want the timer to start and `timeEnd()` when you want to stop timing. The time will automatically be output to the console window. There are also overloads which accept a label so that you can record multiple times in one go.
+
+* `console.profile()` and `console.profileEnd()` work in a very similar way to the time() methods except they record more detailed metrics of each function call. The results are not seen in the Console window - you can see them in the `Profiles` tab of your F12 tools. It is advisable to supply a value for the `profileName` parameter of both methods. This will avoid multiple anonymously named profiles being created every time you run your code. The results of multiple runs will be retained.
+
+* `console.dir()` and `console.dirxml()`. These are useful when called from your code to record the state of more complex objects to the console. It means that you can avoid having to breakpoint your code in order to manually examine the value of a variable. Because of that have your code run in real time, e.g. if user interaction is involved, and output the state of an object at various points.
 
 
+> NOTE: It is important that, once you have finished your debugging you should remove (or, at a push, comment out) your console statements, leaving your code tidy. If you needed some sort of logging or performance recording on a more permanent basis, console would not be the object to use.
+
+
+
+> TODO: Add a there a debugging section? YES. Will also want to mention F12 tools. Can then give a reference to this section. also debugger statement.
 
 
 ### <a name="language-built-in-global-functions"></a>Built-in Global Properties and Functions
