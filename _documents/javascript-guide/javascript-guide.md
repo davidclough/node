@@ -685,7 +685,9 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 The `Date` object allows you to create the equivalent of the C# `DateTime`s. Given the constant problems we have experienced with dates, times, time zones and cultures, even in more sophisticated languages and frameworks, we will not over-elaborate, just highlight its existence.
 
 [w3schools - JavaScriptDate Reference](http://www.w3schools.com/jsref/jsref_obj_date.asp)
+
 [w3schools - JavaScript Date Formats](http://www.w3schools.com/js/js_date_formats.asp)
+
 [MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 	var d = new Date("2015-03-25T12:00:00");
@@ -1096,9 +1098,66 @@ This means that the function will have to have written to expect this behaviour.
 #### Warning About Line Breaks Near Operators
 Put your operators, e.g. with ternary operator and string concatenation, at the **end** of lines they are next to a line break. **Do not** put them at the start of the next line, as is often done with ternary operators in C#. This is because some browsers try to _infer_ a line ending where a semi-colon is missing and may well do it wrongly of the code on a "part line" looks complete. If the operator is at the end the silly browser will be able to work out that there is more to come.
 
-#### In ES2016 there will be a new power operator `**` and `**=`
-In the meantime you will have to make do with go0d old `Match.pow(x, y)`. In the future you will be able to use `x ** y`.
+#### New Operators in Later JavaScript Versions
+Although this document is primarily concerned with ES5 we may as well mention a small number of operators in upcoming versions.
 
+##### Spread Operator (ES2015)
+`...` is the `spread` operator. It is used for "destructuring arrays", i.e. converts an array into a series of separate values which can be used in situations where a comma-separated series of values are required, most notably parameters to a function call.
+
+	// Push all the values from one array into another. The push method
+	// only accepts separate arguments, not arrays.
+	var array1 = [1, 2, 3];
+	var array2 = [4, 5, 6];
+	array1.push(...array2);					// [1, 2, 3, 4, 5, 6]
+	console.log(array1);
+
+	// Math.min does not accept on form of collection.
+	var myNumbers = [24, 36, 8, 72];
+	var smallest = Math.min(...myNumbers);		// 8
+	console.log(smallest);
+
+	var someFigures = [1, 2, 3, 4];
+	var allFigures = [...someFigures, 5, 6, ...[7, 8]];
+	console.log(allFigures);				// [1, 2, 3, 4, 5, 6, 7, 8]
+
+
+##### Rest Operator (ES2015)
+`...` is also the `rest` operator. The context of its usage is different from the spread operator.  It can be applied to the last parameter of a function definition to turn that into the equivalent of a C# params array argument. It means that any number of arguments can be supplied when the function is called (in a sense, this acts in the opposite direction to the spread operator). Once all the preceding parameters have been catered for, the rest will form an array and be represented by the `rest argument`.
+
+	function sumAggregator(total, num) {
+	  return total + num;
+	}
+
+	var calculatePercentageOfTotal = function (percentage, ...numbers) {
+		var total = numbers.reduce(sumAggregator);
+	  return total * percentage / 100;
+	};
+
+	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
+	console.log(percentageOfTotal);
+
+Of course, we can call a JavaScript function with any number of parameters already. We can currently achieve the same effect in a less elegant manner by manually processing the `arguments` property within the function code. Also numbers is a _genuine_ array whereas `arguments` is only "array-like". You can iterate though the values in a `for` loop. However, you have to convert it into a genuine array in order to be able to use the `reduce` array:
+
+	function sumAggregator(total, num) {
+	  return total + num;
+	}
+
+	var calculatePercentageOfTotal = function (percentage) {
+	  // Extract all but the first memeber of arguments into a genuine array.
+	  var numbers = Array.prototype.slice.call(arguments, 1);
+
+		var total = numbers.reduce(sumAggregator);
+	  return total * percentage / 100;
+	};
+
+	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
+	console.log(percentageOfTotal);
+
+
+##### Power Operators (ES2016)
+`**` and `**=` will become available in ES2016.
+
+In the meantime you will have to make do with go0d old `Match.pow(x, y)`. In the future you will be able to use `x ** y`.
 
 
 
@@ -1137,7 +1196,7 @@ This object provides many mathematical functions and standard mathematical value
 	var area = calculateAreaOfCircle(2);
 	console.log(area);						// 12.566370614359172
 
-Investigate [w3schools - Math object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) for a full list.
+Investigate [w3schools - Math Reference](http://www.w3schools.com/jsref/jsref_obj_math.asp) for a full list. [MDN - Math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) has a bigger list but many are only available in ES2015 and won't work in any version of IE.
 
 
 #### <a name="language-built-in-objects-json"></a>JSON
