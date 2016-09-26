@@ -1225,6 +1225,7 @@ There are some other more sophisticated methods you can use, although the basic 
 
 * `console.table()` works quite nicely if you have a variable that is a collection of homogeneous objects. You could call this line from within your code or via the Console window.
 
+
 	var cities = [
 		{id: 0, name: "London", country: "England"},
 		{id: 1, name: "Paris", country: "France"},
@@ -1236,7 +1237,7 @@ There are some other more sophisticated methods you can use, although the basic 
 
 * `console.profile()` and `console.profileEnd()` work in a very similar way to the time() methods except they record more detailed metrics of each function call. The results are not seen in the Console window - you can see them in the `Profiles` tab of your F12 tools. It is advisable to supply a value for the `profileName` parameter of both methods. This will avoid multiple anonymously named profiles being created every time you run your code. The results of multiple runs will be retained.
 
-* `console.dir()` and `console.dirxml()`. These are useful when called from your code to record the state of more complex objects to the console. It means that you can avoid having to breakpoint your code in order to manually examine the value of a variable. Because of that have your code run in real time, e.g. if user interaction is involved, and output the state of an object at various points.
+* `console.dir()` and `console.dirxml()`. These are useful when called from your code to record the state of more complex objects to the console. It means that you can avoid having to breakpoint your code in order to manually examine the value of a variable. Because of that have your code run in real time, e.g. if user interaction is involved, and output the state of an object at various points. You can try these with the above "cities" example, instead of calling table().
 
 
 > NOTE: It is important that, once you have finished your debugging you should remove (or, at a push, comment out) your console statements, leaving your code tidy. If you needed some sort of logging or performance recording on a more permanent basis, console would not be the object to use.
