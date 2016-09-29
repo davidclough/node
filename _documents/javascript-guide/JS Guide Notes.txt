@@ -8,17 +8,45 @@ Types (not too detailed)
 			* [arguments Property](#language-types-arguments-property)
 
 
-        
+  
+
+
+
+
+
+  
 
 		* [JSON](#language-built-in-objects-json)
 		* [Window](#language-built-in-objects-window)
 		* [Document](#language-built-in-objects-document)
 
+        
+Window
+    global object in browser
+    document
+    history
+    parent   (IFRAMES)
+    screen
+    top
+    alert()
+    addEventListener()
+    set/clear Interval/Timeout
+    screen dimension/mouse
 
+Document (not much in here - refer to jq)
+    DOM
+    getElementById()
+    write() --- debugging or tests only
 
+JSON
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+    2 meths only
+        parse()
+        stringify()
+    http://www.w3schools.com/js/js_json.asp   (JSON in general)
 
-
-
+        
+        
 
 
 
