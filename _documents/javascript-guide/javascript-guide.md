@@ -6,6 +6,8 @@
 1. [Code Organisation](#organisation-contents)
 1. [Patterns, Tips and Tricks](#tips-contents)
 
+2. ?? Associated Tools and Libraries (only brief - with links)
+
 <hr />
 
 <a name="language-contents"></a>[JavaScript Language (ECMAScript 5)](#language)
@@ -40,9 +42,9 @@
 *  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
 -  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
 	- [Window](#language-built-in-objects-window)
-	- [Document](#language-built-in-objects-document)
+	* [Document](#language-built-in-objects-document)
 	* [Math](#language-built-in-objects-math)
-	- [JSON](#language-built-in-objects-json)
+	* [JSON](#language-built-in-objects-json)
 	* [Console](#language-built-in-objects-console)
 *  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
@@ -546,6 +548,14 @@ are useful, others not. For simple string processing many are fine. For more com
 
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
 You can include a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
+
+> `ES2015`: As well as using either single or double quotes you can also put a string within a `literal template` (surrounded by back ticks). These can span multiple lines without the need for string concatenation. You can also put expressions within the template and there calculated value will be used within the string that is output.
+
+	var person = { firstName: "John", surname: "Smith" };
+	var message = `Hello ${person.firstName} ${person.surname}`;
+
+	console.log(message);			// "Hello John Smith"
+
 
 ##### <a name="language-types-number"></a>number
 As you can see `number` covers both integers and floating point numbers.
@@ -1187,6 +1197,17 @@ http://www.w3schools.com/jsref/obj_window.asp
 #### <a name="language-built-in-objects-document"></a>Document
 https://developer.mozilla.org/en/docs/Web/API/Document
 
+The `document` object is a property of the `window` object. Because the window object is the global object you can just write `document.title` rather than `window.document.title`.
+
+It does not provide any _essential_ properties or methods. You may use the `title` to modify the `<title>` content of the document or the `writeln()` could be used for testing purposes (certainly not for generating your actual page content).
+
+There are also a number of methods available to query and modify the DOM. The DOM (Document Object Model) is a programming interface aimed at HTML and XML document content. However, you would generally use some other library these days for doing this, rather than the `document` object from within plain JavaScript. It is also notoriously difficult to work with. In this case the DOM is to blame, not JavaScript. _"The DOM is poorly specified and inconsistently
+implemented...I think writing a
+Good Parts book about the DOM would be extremely challenging."_ is a quote from the book `JavaScript - The Good Parts` by Douglas Crockford.
+
+[jQuery](https://jquery.com/) is one library that has made DOM manipulation much more convenient.
+
+
 #### <a name="language-built-in-objects-math"></a>Math
 This object provides many mathematical functions and standard mathematical values.
 
@@ -1250,7 +1271,7 @@ The JSON string would not normally be defined within the code, it would come fro
 	var country = { name: "Spain", population: 47000000 }
 	var countryJson = JSON.stringify(country);
 
-	// This outputs: {"name":"Spain","population":47000000}
+	// This outputs: {"name": "Spain","population": 47000000}
 	console.log(countryJson);
 
 Also see [w3schools](http://www.w3schools.com/js/js_json.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
@@ -1690,6 +1711,8 @@ $( ".widget-container" ).on( "click", ".widget", function() {
 <p>    Testing (Simon wrote a wiki article)</p>
 <p>    QUnit or Jasmine      Mocha</p>
 <p>    Unit testing and behaviour testing (browser testing)</p>
+> TODO: May need a fifth section. In testing just mention an example of the two types of test I have done in Jasmine. Mention Karma the test runner and other Jasmine-related things.
+> Briefly mention some other libraries. Also mention that the big JS frameworks tend to have their own preferred testing libraries.
 [chhimp.js](https://chimp.readme.io/)
 ### <a name="devtools-typescript"></a>TypeScript
 <p>    TypeScript (coffeescript traceUR)</p>
