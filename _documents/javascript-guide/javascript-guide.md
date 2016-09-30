@@ -1201,8 +1201,60 @@ Investigate [w3schools - Math Reference](http://www.w3schools.com/jsref/jsref_ob
 
 
 #### <a name="language-built-in-objects-json"></a>JSON
-parse, stringify
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+JSON (JavaScript Object Notation) allows you to define JavaScript object via a string. You can then serialize and deserialize between an _actual_ object and its string representation. The main things JSON allows you to define are:
+
+* Objects - enclosed in braces - `{...}`
+* Properties of objects - key value pairs within the braces, e.g.<br />
+	{ `"myQuantity": 3`, `"greeting": "Hello"` }
+* Arrays - a sequence of values surrounded by square brackets, e.g. <br />
+	`["apple", "orange", "banana", false, 23]`
+
+Technically the property keys should be surrounded by `double quotes` for the JSON to be valid. See [http://www.jsonlint.com/](http://www.jsonlint.com/). Often you will not need to do this but it is somthing to bear in mind.
+
+You can nest objects and arrays within other objects or arrays. In the example below we have cheated, to avoid an ugly example, and used a `template literal` as the JSON container instead of a string.
+
+	var myJsonObject = `{
+		"prop1": 5,
+		"prop2": [ "JavaScript", 12, true, { "val1": 2, "val2": 5 } ],
+		"prop3": {
+			"firstName": "John",
+			"surname": "Smith",
+			"age": 28
+		}
+	}`;
+
+>	NOTE: In ES2015 you could use `template literals` (surround the text with back ticks rather than single quotes) to make the above example nicer to read. As well as allowing you to specify placeholders for expression values within the text, as in String.Format() statements in C#, they also allow multiline text to be specified without the ugly concatenations. See [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals).
+
+You don't necessarily have to specify an _object_ as you outer object. You can specify an array or a primitive value, e.g. `33`, `false`, `null`, `"A string value"`.
+
+The `JSON object` only provides two methods to help you convert between JSON strings and the objects they represent. They are effectively like static methods in C#.
+
+* `JSON.parse()` allows you to convert a valid JSON string into the actual JavaScript object it represents. Trailing comma, after the last item of an array, will cause an error in here.
+
+
+	// This example uses ordinary strings which need to be concatenated
+	// if on separate lines.
+	var peopleJson = '[' +
+		'{ "firstName": "Bob", "surname": "Jones" },' +
+		'{ "firstName": "Fred", "surname": "Bloggs" }' +
+	']';
+
+	var people = JSON.parse(peopleJson);
+	console.log(people[1].surname);					// "Bloggs"
+
+The JSON string would not normally be defined within the code, it would come from a separate source, e.g. a file or a call to a web method.
+
+* `JSON.stringify()` goes the other way and serializes an object into JSON.
+
+
+	var country = { name: "Spain", population: 47000000 }
+	var countryJson = JSON.stringify(country);
+
+	// This outputs: {"name":"Spain","population":47000000}
+	console.log(countryJson);
+
+Also see [w3schools](http://www.w3schools.com/js/js_json.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+
 
 #### <a name="language-built-in-objects-console"></a>Console
 The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides. TODO: DEBUGGING IS A SEPARATE SECTION.
