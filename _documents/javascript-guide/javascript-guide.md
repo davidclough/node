@@ -1,7 +1,7 @@
 # JavaScript Guide
 ## Sections
 
-1. [JavaScript Languagep (ECMAScript 5)](#language-contents)
+1. [JavaScript Language (ECMAScript 5)](#language-contents)
 1. [Coding Rules and Style](#style-contents)
 1. [Code Organisation](#organisation-contents)
 1. [Patterns, Tips and Tricks](#tips-contents)
@@ -48,6 +48,7 @@
 	* [Console](#language-built-in-objects-console)
 *  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
 
+This is by far the biggest section of the document.
 
 USEFUL LINKS
 [http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
@@ -1259,7 +1260,7 @@ There are a few methods for displaying popup windows. The windows very simple an
 		alert("Delayed message.");
 	}, 3000);
 
-`setInterval()` is like setTimeout() but the timeout repeats itself intervals. Because the timeouts will continue being triggered forever you should be careful when using this method. `clearInterval()` can be used to cancel a previous call the setInterval().
+`setInterval()` is like setTimeout() but the timeout repeats itself intervals. Because the timeouts will continue being triggered forever you should be **careful** when using this method. `clearInterval()` can be used to cancel a previous call the setInterval().
 
 `btoa()` and `atob()` allow you to convert between a string and a base 64 string.
 
@@ -1464,44 +1465,51 @@ Window setTimeout() Method
 <a name="style-contents"></a>[Coding Rules and Style](#style)
 
 *  [Namespaces](#style-namespaces)
-*  [Naming Conventions](#style-naming-conventions)
-*  [Declarations](#style-declarations)
-*  [Strict Mode](#style-strict-mode)
-*  [Initialising Variables](#style-initialising-variables)
-*  [Checking for Equality](#style-checking-for-equality)
-*  [Keywords to Avoid](#style-keywords-to-avoid)
-*  [Operators to Avoid](#style-operators-to-avoid)
-*  [Semicolons](#style-semicolons)
-*  [Long Lines](#style-long-lines)
-*  [Whitespace](#style-whitespace)
-*  [Quotation Marks](#style-quotation-marks)
-*  [Comments](#style-comments)
-*  [Functions](#style-functions)
-*  [Blocks](#style-blocks)
-*  [Callback Function Parameters](#style-callback-function-parameters)
-*  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-*  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
-*  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
-*  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
-*  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
-*  [Getters and Setters](#style-getters-and-setters)
-*  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
+-  [Naming Conventions](#style-naming-conventions)
+-  [Declarations](#style-declarations)
+-  [Strict Mode](#style-strict-mode)
+-  [Initialising Variables](#style-initialising-variables)
+-  [Checking for Equality](#style-checking-for-equality)
+-  [Keywords to Avoid](#style-keywords-to-avoid)
+-  [Operators to Avoid](#style-operators-to-avoid)
+-  [Semicolons](#style-semicolons)
+-  [Long Lines](#style-long-lines)
+-  [Whitespace](#style-whitespace)
+-  [Quotation Marks](#style-quotation-marks)
+-  [Comments](#style-comments)
+-  [Functions](#style-functions)
+-  [Blocks](#style-blocks)
+-  [Callback Function Parameters](#style-callback-function-parameters)
+-  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
+-  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
+-  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
+-  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
+-  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
+-  [Getters and Setters](#style-getters-and-setters)
+-  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
 
-## <a name="style"></a>Coding Style
-<p>DO put recommendations in the LANGUAGE section, rather than adding, separately, half a mile below. Can easily repeat the recommendations here.</p>
+The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
+
 ### <a name="style-namespaces"></a>Namespaces
 Remove the problem of declaring global variables right at the start by declaring an object to act as a namespace for all the code you write.
 
-The word `namespace` is just a convenient word for us to use, it is really just an object that is a global variable. Unless your code grows to a large scale, it should be the only global variable you ever need to declare.
+The word `namespace` is just a convenient word for us to use. It is really just an object that is a global variable. Unless your code grows to a large scale, it should be the only global variable you ever need to declare.
 
-CODE SAMPLE:     var PEP = {};
-Short name (to avoid cluttering your code with continual mentions of `proactEnterprisePortal` - it may look descriptive at first but, when start appending modules and accessing properties of those modules things can get too verbose and you will find yourself having to introduce more line breaks than is ideal...), CAPITALS is a way of visibly indicating that it is a namespace. Also used for constants - which this is.
-THESE ARE NOT RULES, JUST RECOMMENDATIONS (JavaScript taming).
+The name of your namespace should be:
 
-Avoid the `var PEP = PEP || {};` notation, i.e. instead of plastering that line all over the place, secure in the knowledge that you will never overwrite it once created, prefer to just MAKE SURE that your namespace is the first line in the first file of your code.
+* Short. It may seem like a good idea to use a descriptive name for your namespace but this is only the outer object. Unless you have a small codebase you will very likely introduce other objects or modules within the namespace which then have their own properties and methods. Your code will become cluttered with references to things like `proactEnterprisePortal.performanceAndCapacity.populateMultiSelect()`. Soon you may not be able to see the wood for the trees. In ES5 the only way to simulate a C# `using` statement is using a the, strictly taboo, `with` keyword.
+* Designed to avoid any clash whatsoever with existing global items (properties of the window object when programming in the browser) and potential global objects or namespace introduce by third-party libraries, e.g. `$` would not be the best idea.
+* Often 3 to 5 capitalised letters will achieve the above. This is not an absolute rule, just a recommendation.
 
 
-Any code you subsequently write should then either be a property of that namespace object or nested within other modules or objects. If your code grows you code introduce sub namespaces.
+	// People will soon get used to something like this and know what it means.
+	var PEP = {};
+
+Capitalised letters are often used in ES5 as a crude way of indicating that users should not change the value of an object.
+
+Avoid the `var PEP = PEP || {};` notation - this syntax says "if PEP has already been declared use that value otherwise set it to a new object" and, in this context, it only encourages liberal declarations of PEP all over the place. Instead of plastering that line all over the place, secure in the knowledge that you will never overwrite it once created, prefer to ensure your code is organised. Just **make sure** that your namespace declaration is the first line in the first file of your code. It may be that you introduce a file which contains nothing more than your namespace declaration.
+
+Any code you subsequently write should then either be a property of your outer namespace object or nested within other modules or objects. If your code grows you could introduce sub-namespaces.
 
 
 ### <a name="style-naming-conventions"></a>Naming Conventions
@@ -1519,6 +1527,11 @@ QUESTION: Does this conflict with constants? Maybe not: PEP.PI
 * Constructor functions - pascal case.
 * Do not create functions within blocks, e.g. if statements, only as a root property of an object or within another function.
 * Depending on the manner in which you defined an object constructor...ALL properties of an object may be publicly visible. It is quite a widely-used convention (not mandatory) to name those properties which are not intended to be used outside the object by **preceding with `_`**. Often, when inspecting objects from third party libs in F12 tools you will see properties like this, maybe with equivalent properties without the underscore. Try to avoid modifying values. They are a cheat to overcome a limitation. They also "allow" for protected properties.
+* Constants?
+
+
+
+
 ### <a name="style-declarations"></a>Declarations
 <p>        Some say put all at top of container. Not really necessary as declaring just before use gives a better indication of intent. As long as people appreciate the concept of hoisting.</p>
 * Modules or classes - never have free-standing variables and functions

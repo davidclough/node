@@ -1,58 +1,8 @@
 TO DO NEXT
 ----------------
 
-Types (not too detailed)
-
-		* [Object](#language-types-object)
-		* [Function](#language-types-function)
-			* [arguments Property](#language-types-arguments-property)
-
-
-  
-
- 
-
-		* [JSON](#language-built-in-objects-json)
-		* [Window](#language-built-in-objects-window)
-		* [Document](#language-built-in-objects-document)
-
-        
-Window
-    global object in browser
-    document
-    history
-    parent   (IFRAMES)
-    screen
-    top
-    alert()
-    addEventListener()
-    set/clear Interval/Timeout
-    screen dimension/mouse
-
-    
-    
-window object
-https://developer.mozilla.org/en-US/docs/Web/API/Window
-parseInt and parseFloat really are global, standalones.
-Maybe the window object needs to go its own section?
-
-
-My Note:
-vars declared at global level are properties of window.
-It did not look like this in JSFiddle with console (OK if removed the var and made variable implicitly declared)
-However, if you run a script and do "var myGlob = 3;" and "document.write(window.myGlob);", 3 does get written.
-
-
-
-
-
-
-
-
-
-
-
-
+THEN:
+<a name="style-contents"></a>[Coding Rules and Style](#style)
 
 
 
