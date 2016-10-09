@@ -1235,7 +1235,7 @@ There are `setItem()`, `getItem()`, `removeItem()` and `clear()` methods. Also i
 If you find yourself wanting to store more complex objects you can always make use of JSON:
 
 	var setLocalStorage = function (key, object) {
-		localStorage[key] = JSON.stringify({ "firstName": "Fred", "surname": "Funk" });
+		localStorage[key] = JSON.stringify(object);
 	};
 
 	var getLocalStorage = function (key) {
@@ -1244,7 +1244,6 @@ If you find yourself wanting to store more complex objects you can always make u
 
 	setLocalStorage("person", { "firstName": "Fred", "surname": "Funk" });
 	console.log(getLocalStorage("person").surname);
-
 
 `sessionStorage` is very similar to localStorage except the storage is only temporary - it will be cleared when the session ends. A session lasts for as long as the browser is open and survives over page reloads and restores. Opening the same page in a new browser tab will start a new session.
 
