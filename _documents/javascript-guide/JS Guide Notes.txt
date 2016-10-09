@@ -10,11 +10,7 @@ Types (not too detailed)
 
   
 
-
-
-
-
-  
+ 
 
 		* [JSON](#language-built-in-objects-json)
 		* [Window](#language-built-in-objects-window)
@@ -33,31 +29,18 @@ Window
     set/clear Interval/Timeout
     screen dimension/mouse
 
-Document (not much in here - refer to jq)
-    DOM
-    getElementById()
-    write() --- debugging or tests only
-
-JSON
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-    2 meths only
-        parse()
-        stringify()
-    http://www.w3schools.com/js/js_json.asp   (JSON in general)
-
-        
-        
+    
+    
+window object
+https://developer.mozilla.org/en-US/docs/Web/API/Window
+parseInt and parseFloat really are global, standalones.
+Maybe the window object needs to go its own section?
 
 
-
-
-
-
-
-
-
-
-
+My Note:
+vars declared at global level are properties of window.
+It did not look like this in JSFiddle with console (OK if removed the var and made variable implicitly declared)
+However, if you run a script and do "var myGlob = 3;" and "document.write(window.myGlob);", 3 does get written.
 
 
 

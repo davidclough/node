@@ -40,8 +40,8 @@
 *  [Reserved Words](#language-reserved-words)						DONE
 *  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
 *  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
--  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
-	- [Window](#language-built-in-objects-window)
+*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
+	* [Window](#language-built-in-objects-window)
 	* [Document](#language-built-in-objects-document)
 	* [Math](#language-built-in-objects-math)
 	* [JSON](#language-built-in-objects-json)
@@ -1191,8 +1191,79 @@ The following built-in objects are related to JavaScript types and are explained
 IN THESE OBJECTS AND ONES IN TYPES: Do not try to give a detailed explanation of every method which looks useful. Could just do a list of notable ones with some examples afterwards.
 
 #### <a name="language-built-in-objects-window"></a>Window
-https://developer.mozilla.org/en-US/docs/Web/API/Window
-http://www.w3schools.com/jsref/obj_window.asp
+The `window` object is the global object when operating with JavaScript within a browser. This means that any global variables or functions which you define become properties or methods of the window object. This example does not appear to work as expected in jsfiddle - it displays `undefined`. However, you can also run JavaScript from the console window within the F12 tools in your browser. If you paste the two lines into the console window, next to the `>` symbol and press the enter key, an alert window with the value `4` will be displayed, showing that `myFreeStandingVariable` is actually a property of `window`.
+
+	var myFreeStandingVariable = 4;
+	alert(window.myFreeStandingVariable);
+
+The window object also contains some useful properties and methods, some of which are mentioned below. [w3schools](http://www.w3schools.com/jsref/obj_window.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window) contain more information.
+
+##### window Properties
+`document` gives you access to the document object described in the [section below](#language-built-in-objects-document).
+
+`location` give you access the the (Location object)[http://www.w3schools.com/jsref/obj_location.asp] which allows you to access and manipulate things related to the current URL. `history` gives access to the history object which holds information about and allows you to navigate to URLs accessible in the current tab via the `Go Back` and `Go Forward` buttons in the browser.
+
+If you have a page that is being displayed within an `<iframe>` within another page its JavaScript will only affect the nested page (or window) by default. `parent` gives you access to the parent window. This can be useful if you have markup that is being held within an `<iframe>` and you need to manipulate the page in which the iframe is being held. For example, you may have an input form held within an iframe on a page and may then want to refresh or redirect the main page when the data has been entered. If the window is topmost in the hierarchy the parent will be equal to the window itself (not null or undefined). `top` is the window that is topmost in the hierarchy (if you want iframes within iframes) and `self` is equal to the window itself.
+
+	// We can safely use == as we know both objects are windows (and both are read-only).
+	alert(window.top == window.self ? "In topmost window" : "In nested window");
+
+The `navigator` property will give you access to the navigator object where you can find out some information about the browser which sent the request.
+
+`screen` gives a little bit of information about the user's screen, e.g. the dimensions of the browser window. There are also `scrollTo()` and `scrollBy()` methods to allow you to scroll the window content, although these are a bit primitive. It is likely that you will use some other library to perform more useful scrolling. For example, this jquery plugin allows you to ensure that the screen performs an animated scroll ensure that the first item matched is brought into view at the top of the screen.
+
+	(function ($) {
+	    $.fn.goTo = function () {
+	        $("html, body").animate({
+	            scrollTop: ($(this).offset().top) + "px"
+	        }, "fast");
+	        return this; // for chaining...
+	    };
+	})(jQuery);
+
+Of course this example will throw an exception if there are no matches. This could be called if a large form fails validation to scroll the the first failing item:
+
+	$(".validation-error").goTo();
+
+`localStorage` allows you to use HTML5 local storage to store _primitive_ values in key value pairs. It works in IE8. Advantage over using cookies include a bigger storage capacity (5 megabytes) and the fact that the information is not transmitted to the server in requests. One usage is to persist settings so that, when the user comes back to a particular page, certain elements can be pre-populated with the values that the user last entered.
+
+There are `setItem()`, `getItem()`, `removeItem()` and `clear()` methods. Also items can be set and retrieved using square brackets notation. The values in localStarage are accessible on a "per origin" basis and do not expire by default.
+
+	localStorage["myPersistedSetting"] = "12345";
+	console.log(localStorage["myPersistedSetting"]);
+
+If you find yourself wanting to store more complex objects you can always make use of JSON:
+
+	var setLocalStorage = function (key, object) {
+		localStorage[key] = JSON.stringify({ "firstName": "Fred", "surname": "Funk" });
+	};
+
+	var getLocalStorage = function (key) {
+		return JSON.parse(localStorage[key]);
+	};
+
+	setLocalStorage("person", { "firstName": "Fred", "surname": "Funk" });
+	console.log(getLocalStorage("person").surname);
+
+
+`sessionStorage` is very similar to localStorage except the storage is only temporary - it will be cleared when the session ends. A session lasts for as long as the browser is open and survives over page reloads and restores. Opening the same page in a new browser tab will start a new session.
+
+
+##### window Methods
+There are a few methods for displaying popup windows. The windows very simple and unstyled.  `alert()` displays a message with an OK button. `confirm` also adds a Cancel button, allowing you to take alternative actions. `prompt` allows you to request one value to be input by the user. Whenever one of these windows is displayed the thread on which the code is running will be blocked. When the user closes the window the code execution will resume.
+
+`setTimeout()` allows you to execute a function after a specified number of milliseconds. The timeout only occurs once. `clearTimeout()` allows you to cancel a previous call to setTimeout() before the timeout has occurred.
+
+	// Note that, as window is the global object within the browser, you do not need
+	// to specify the "window." before these method calls.
+	setTimeout(function () {
+		alert("Delayed message.");
+	}, 3000);
+
+`setInterval()` is like setTimeout() but the timeout repeats itself intervals. Because the timeouts will continue being triggered forever you should be careful when using this method. `clearInterval()` can be used to cancel a previous call the setInterval().
+
+`btoa()` and `atob()` allow you to convert between a string and a base 64 string.
+
 
 #### <a name="language-built-in-objects-document"></a>Document
 https://developer.mozilla.org/en/docs/Web/API/Document
