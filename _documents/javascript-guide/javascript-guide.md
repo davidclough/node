@@ -1467,7 +1467,7 @@ Window setTimeout() Method
 *  [Namespaces](#style-namespaces)
 -  [Naming Conventions](#style-naming-conventions)
 -  [Declarations](#style-declarations)
--  [Strict Mode](#style-strict-mode)
+*  [Strict Mode](#style-strict-mode)
 -  [Initialising Variables](#style-initialising-variables)
 -  [Checking for Equality](#style-checking-for-equality)
 -  [Keywords to Avoid](#style-keywords-to-avoid)
@@ -1537,7 +1537,36 @@ QUESTION: Does this conflict with constants? Maybe not: PEP.PI
 * Modules or classes - never have free-standing variables and functions
 * Always use declare variables (using `var`). Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
 * Declare variables at top of scope (for clarity - in JS need to give all help can by using clarity)
+
 ### <a name="style-strict-mode"></a>Strict Mode
+Prefer to use strict mode in code you write. This can be done with the line below. Prefer to apply it at function level (see further down).
+
+	"use strict";
+
+Strict mode provides some extra code enforcement features which may help you avoid errors by throwing an early exception when it comes across a number of things which you may well have written by mistake. Without strict mode these would not stop code execution. These include:
+
+* Variables which are accessed or set but have not been declared. This includes variables which have been declared after they have been referenced, i.e. it does not allow for variable hoisting.
+* Setting a property which has been marked as read-only.
+* Attempts to deleted undeletable properties.
+* Repeating the same property name in an object literal.
+* Repeating the same parameter name in a function definition.
+*	When a function is called via `call`, `apply` or `bind` any references to `this` can never refer to the `window`. Also, if the `this` parameter was not supplied and, if a primitive is supplied as the `this` parameter, no boxing will occur, `this` inside the function will still refer to a genuine primitive and not a primitive wrapped inside an object.
+* Code contained within eval() cannot create variables within the scope that they are being executed in.
+
+The last two are more security features.
+
+Strict mode can be applied either at **script level** by putting the line before all other statements at the top of a script. Its use is discouraged because of problems caused when concatenating scripts that are a mixture of strict and non-strict (don't forget you also often include third-party scripts in your code).
+
+You can also specify strict mode at **function level**. When specified as the first line within a function all code nested within that function operates in strict mode. You can therefore execute your code within an IIFE or module pattern. Because you can safely concatenate code within here with non-safe code elsewhere you should prefer this over script level strict mode.
+
+	(function strictCodeContainer(){
+	  "use strict";
+
+		// All code within here will be run in strict mode.
+	}());
+
+Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) for a lot more information, as well as fuller explanations of the above.
+
 ### <a name="style-initialising-variables"></a>Initialising Variables
 <p>    Initialising Variable - Object Literals and Arrays, Bools</p>
 * Use {} to create an object, not "new Object()". Same with things like Bools... Use {} instead of new Object(). Use [] instead of new Array().

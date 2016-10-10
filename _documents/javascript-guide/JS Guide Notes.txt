@@ -12,6 +12,15 @@ THEN:
 
 
 
+
+
+
+
+
+
+
+
+
 -----------------------------------------------------------------------------
 Sections (1) Standards, (2) javascript info, (3) patterns, practices and tricks.
 ----------
