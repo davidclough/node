@@ -1473,7 +1473,7 @@ Window setTimeout() Method
 -  [Keywords to Avoid](#style-keywords-to-avoid)
 -  [Operators to Avoid](#style-operators-to-avoid)
 *  [Semicolons](#style-semicolons)
-*  [Long Lines](#style-long-lines)
+*  [Breaking Long Lines](#style-long-lines)
 -  [Whitespace](#style-whitespace)
 -  [Quotation Marks](#style-quotation-marks)
 -  [Comments](#style-comments)
@@ -1594,7 +1594,7 @@ See [JavaScript Keywords](#language-javascript-keywords)
 ### <a name="style-semicolons"></a>Semicolons
 End statements with semicolons, as you do in C#. Theoretically they are optional - your code may still work perfectly well. However, whatever engine is running your JavaScript will try to guess where statements end and will sometimes guess wrongly. Also different browsers, particularly older ones, may guess differently.
 
-### <a name="style-long-lines"></a>Long Lines and Line Breaks
+### <a name="style-long-lines"></a>Breaking Long Lines
 Try to avoid excessively long lines without any line breaks. When a statement will not fit nicely on a single line, it may be necessary to break it.
 
 For this reason it is best that the line break occur after: any type of bracket, a comma, any kind of operator.
