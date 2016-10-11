@@ -1609,10 +1609,10 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 	            + c;
 
 	var value = myObject
-								.myProperty;
+                .myProperty;
 
 	var suffix = myNumber === 1
-							 ? ""
+	             ? ""
 	             : "s";
 
   // This line at the end of a function could return undefined.
@@ -1621,13 +1621,13 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 
 	// Correct.						
 	var sum = a + b +
-	 					c;
+            c;
 
 	var value = myObject.
 								myProperty;
 
 	var suffix = myNumber === 1 ?
-							 "" :
+               "" :
 	             "s";
 ```
 
