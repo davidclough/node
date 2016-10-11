@@ -1472,8 +1472,8 @@ Window setTimeout() Method
 -  [Checking for Equality](#style-checking-for-equality)
 -  [Keywords to Avoid](#style-keywords-to-avoid)
 -  [Operators to Avoid](#style-operators-to-avoid)
--  [Semicolons](#style-semicolons)
--  [Long Lines](#style-long-lines)
+*  [Semicolons](#style-semicolons)
+*  [Long Lines](#style-long-lines)
 -  [Whitespace](#style-whitespace)
 -  [Quotation Marks](#style-quotation-marks)
 -  [Comments](#style-comments)
@@ -1538,6 +1538,8 @@ QUESTION: Does this conflict with constants? Maybe not: PEP.PI
 * Always use declare variables (using `var`). Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
 * Declare variables at top of scope (for clarity - in JS need to give all help can by using clarity)
 
+SHORTER
+
 ### <a name="style-strict-mode"></a>Strict Mode
 Prefer to use strict mode in code you write. This can be done with the line below. Prefer to apply it at function level (see further down).
 
@@ -1572,6 +1574,7 @@ Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaSc
 * Use {} to create an object, not "new Object()". Same with things like Bools... Use {} instead of new Object(). Use [] instead of new Array().
 * It is not necessary to initialise a variable as the point where it is declared.
 * Although perfectly acceptable in C#, don't put a `,` after the last item in an object or array definition. Some parsers may fail here as it not spec. Certainly, for an array, you will generally end up with an extra `undefined` item at the end.
+
 ### <a name="style-checking-for-equality"></a>Checking for Equality
 <p>    === and !==</p>
 <p>        Either use if (a === null) or if (!a)</p>
@@ -1579,6 +1582,7 @@ Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaSc
 
 * Also comparing floating point numbers for exact equality may result in errors, even if just declared them.
 * Will often see 1.2000000001 or 1.199999999 ...
+
 ### <a name="style-keywords-to-avoid"></a>Keywords to Avoid
 with, for...in, eval (one exceptional case),
 
@@ -1588,21 +1592,53 @@ See [JavaScript Keywords](#language-javascript-keywords)
 
 
 ### <a name="style-semicolons"></a>Semicolons
-* always end lines with semicolons
-Code may still work perfectly well. However, whatever engine is running the javascript will try to guess where lines end and sometimes will guess wrongly. This hypothetical example will result in the function always returning `undefined` but may well happen when lines become long and need to be broken:
-Different browsers will try to insert it for you, sometimes resulting in behaviour which you did not intend.
+End statements with semicolons, as you do in C#. Theoretically they are optional - your code may still work perfectly well. However, whatever engine is running your JavaScript will try to guess where statements end and will sometimes guess wrongly. Also different browsers, particularly older ones, may guess differently.
+
+### <a name="style-long-lines"></a>Long Lines and Line Breaks
+Try to avoid excessively long lines without any line breaks. When a statement will not fit nicely on a single line, it may be necessary to break it.
+
+For this reason it is best that the line break occur after: any type of bracket, a comma, any kind of operator.
+
+There are no fixed rule on the indentation of code after the line break - some prefer an indentation of a standard size, other prefer some sort of alignment.
+
+Here are some examples (using deliberately short lines). The incorrect ones may well be interpreted incorrectly in old browsers. For example, they may interpret the first line as `var sum = a + b;` and then throw a syntax error when trying to interpret the `+ c;`.
+
 ```
-CODE SAMPLE: The two in test prog
+	// Incorrect.
+	var sum = a + b
+	            + c;
+
+	var value = myObject
+								.myProperty;
+
+	var suffix = myNumber === 1
+							 ? ""
+	             : "s";
+
+  // This line at the end of a function could return undefined.
+	return
+		answer;
+
+	// Correct.						
+	var sum = a + b +
+	 					c;
+
+	var value = myObject.
+								myProperty;
+
+	var suffix = myNumber === 1 ?
+							 "" :
+	             "s";
 ```
-### <a name="style-long-lines"></a>Long Lines
-<p>    Avoid excessively long lines. When a statement will not fit nicely on a single line, it may be necessary to break it. It is best to break after a { left brace, [ left bracket, ( left paren, , comma, or before a . period, ? question mark, or : colon. If such a break is not feasible, then break after an operator and continue on the next line with 8 spaces added to the current indentation. Those 8 spaces do not change the current indentation.</p>
-* Where to break long lines, e.g. end line with an operator. Some parsers will try to put in their own error correcting and predict where a logical line actually ends:
-```
-var sum = a + b
-            + c;
-```
-Same with ternary statements.
-Same with property chains. It looks ugly but is necessary in this case to avoid browser...
+
+#### Breaks in Long Strings
+As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error.
+
+	alert("Please Select file\
+	 to delete");
+
+In ES2015, template literals, which are enclosed by back ticks \` can also spill on to separate lines.
+
 ### <a name="style-whitespace"></a>Whitespace
 <p>        Do not add spaces inside parentheses.</p>
 <p>        Do not add spaces inside brackets.</p>
