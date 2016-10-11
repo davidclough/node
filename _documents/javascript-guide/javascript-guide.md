@@ -1474,8 +1474,8 @@ Window setTimeout() Method
 -  [Operators to Avoid](#style-operators-to-avoid)
 *  [Semicolons](#style-semicolons)
 *  [Breaking Long Lines](#style-long-lines)
--  [Whitespace](#style-whitespace)
--  [Quotation Marks](#style-quotation-marks)
+*  [Whitespace](#style-whitespace)
+*  [Quotation Marks](#style-quotation-marks)
 -  [Comments](#style-comments)
 -  [Functions](#style-functions)
 -  [Blocks](#style-blocks)
@@ -1632,20 +1632,31 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 ```
 
 #### Breaks in Long Strings
-As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error.
+As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error. **Unfortunately**, you will need to align the lines after the break with the left hand side of the page if you do not want new lines to start with spaces, which looks ugly.
 
-	alert("Please Select file\
-	 to delete");
+```
+    alert(`Some text.
+Some more text right at the start of a new line.`);
+```
 
 In ES2015, template literals, which are enclosed by back ticks \` can also spill on to separate lines.
 
 ### <a name="style-whitespace"></a>Whitespace
-<p>        Do not add spaces inside parentheses.</p>
-<p>        Do not add spaces inside brackets.</p>
-<p>        Add spaces inside curly braces.</p>
-Google agree with this.
-Use linespaces to group logically related lines of code.
+Use linespaces to group logically related lines of code or to generally improve readability.
+
+Do not add spaces inside parentheses.
+
+    ( foo === bar )   // Bad way according JSLint.
+    (foo === bar)     // Good way for JSLint.
+
+Do not add spaces inside brackets.
+
+    var aaa = [ 1, 2, 3 ];    // Bad.
+    var bbb = [1, 2, 3];      // Good.
+
 ### <a name="style-quotation-marks"></a>Quotation Marks
+Either single or double quotes can be used to delimit strings. There is no community-wide preference to be found. Consistent use of the for one or the other is all that is asked for.
+
 ### <a name="style-comments"></a>Comments
 <p>        Reduce by good var and func naming...</p>
 Explain how (as in other languages) code can be made more self documenting via (1) use of well named tokens, (2) reduction of reasonably large functions (e.g. more than 10 lines) into smaller, well-named functions. Achieving total self-documenting code is highly unlikely so only stupid people will avoid comments altogether (TODO: rephrase)
