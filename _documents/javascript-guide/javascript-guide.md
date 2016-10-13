@@ -1465,28 +1465,28 @@ Window setTimeout() Method
 <a name="style-contents"></a>[Coding Rules and Style](#style)
 
 *  [Namespaces](#style-namespaces)
--  [Naming Conventions](#style-naming-conventions)
--  [Declarations](#style-declarations)
+++  [Naming Conventions](#style-naming-conventions)
+++  [Declarations](#style-declarations)
 *  [Strict Mode](#style-strict-mode)
--  [Initialising Variables](#style-initialising-variables)
--  [Checking for Equality](#style-checking-for-equality)
+++  [Initialising Variables](#style-initialising-variables)
+++  [Checking for Equality](#style-checking-for-equality)
 -  [Keywords to Avoid](#style-keywords-to-avoid)
 -  [Operators to Avoid](#style-operators-to-avoid)
 *  [Semicolons](#style-semicolons)
 *  [Breaking Long Lines](#style-long-lines)
 *  [Whitespace](#style-whitespace)
 *  [Quotation Marks](#style-quotation-marks)
--  [Comments](#style-comments)
++++  [Comments](#style-comments)
 -  [Functions](#style-functions)
--  [Blocks](#style-blocks)
+*  [Blocks](#style-blocks)
 -  [Callback Function Parameters](#style-callback-function-parameters)
 -  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
--  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
++++  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
 -  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
 -  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
 -  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
 -  [Getters and Setters](#style-getters-and-setters)
--  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
++++  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
 
 The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
 
@@ -1661,16 +1661,43 @@ Either single or double quotes can be used to delimit strings. There is no commu
 <p>        Reduce by good var and func naming...</p>
 Explain how (as in other languages) code can be made more self documenting via (1) use of well named tokens, (2) reduction of reasonably large functions (e.g. more than 10 lines) into smaller, well-named functions. Achieving total self-documenting code is highly unlikely so only stupid people will avoid comments altogether (TODO: rephrase)
 * Comments - plenty. As in other languages you can reduce need for comments by using highly descriptive variable and function names and by breaking functions that are longer than a few lines into smaller functions but, although you may the code jumps out of the screen and talks to you, it is unlikely this is completely the case
+
 ### <a name="style-functions"></a>Functions
 <p>        Try to keep small with single responsibility</p>
 <p>    Separation of business and UI</p>
 * So as to prepare for unit testing and UI behaviour testing it is in our interests not to mix logic with UI manipulation. Not sure how easy this is to do without ending up with convoluted code (may be very easy with a bit of practice) but should at least give it a go
+
 ### <a name="style-blocks"></a>Blocks
-<p>        braces in blocks</p>
-* hanging opening braces
+As you will probably know, blocks in C-based languages are lines of code enclosed by braces. They are often used in association with some outer statement like a `for` or `if` statement but they can exist on their own and not associated with an outer statement.
+
+#### Block Scope
+In many languages, including ES2015, you can declare variables within a block and they will not be accessible from outside that block (or within the block but before the declaration) and they are accessible to any nested blocks.
+
+In ES5 this is **not** the case. Variable **hoisting** means that any declarations are effectively moved up to the level of the containing function at runtime (although any assignment made on a declaration line remains in the same position). As a result you cannot have variables scoped at an level finer than the containing function. Even if you declare it near the end of a function and nested in child blocks it will still be accessible on the first line of the function.
+
+This example shows that even use of strict mode fails to flag an error here. Even though it looks like `a` is being referenced before has been declared, its declaration has actually been hoisted to the start of the function. The alert window will show a 3. The `var a = 17;` statement is even within a block that will never be executed. If you deleted the declaration line, strict mode will then flag an error.
+
+```
+(function () {
+  "use strict";
+
+  a = 3;
+  alert(a);
+  if (false) {
+    var a = 17;
+  }
+}());
+```
+
+#### Hanging Opening Braces
+*Never* put opening braces on a new line. They should be hanging at the end of the previous line.
 The style is not as nice (in my opinion) as opening brace on a separate line but it is the convention throughout the community and being used to it helps to understand, for example, code samples on the web.
-* always use braces, even when only one line in block.
+
+#### Brace Usage
+Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation got out of sync.
+
 ### <a name="style-callback-function-parameters"></a>Callback Function Parameters
+
 ### <a name="style-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
 <p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
 ### <a name="style-do-not-create-functions-within-a-loop"></a>Do Not Create Functions within a Loop
