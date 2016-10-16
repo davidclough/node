@@ -890,7 +890,7 @@ See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
 #### for...in
-"for...in" loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain the an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
+`for...in` loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain the an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
 
 	// Iterate through an array. Not nice.
 	var myArray = ["The", "quick", "brown", "fox"];
@@ -1416,7 +1416,7 @@ If the radix is not specified, the number is usually assumed to be base 10. The 
 
 For this reason you will often see advice telling you to always supply the radix parameter when calling `parseInt()`.
 
-#### eval()
+#### <a name="language-built-in-global-functions-eval"></a>eval()
 Evaluates code that is contained within a string. Use of this is highly disapproved of as you can understand. If you cannot understand, imagine that you took all your beautiful C# code with one particular file, with its syntax highlighting and error highlighting, and stuck it in one big string. Imagine then that you were developing that code further from within the string.
 
 Unless you get to a very advanced standard it is unlikely you will want to write code that executes from within a string and there will almost always be a better way to do it.
@@ -1465,28 +1465,30 @@ Window setTimeout() Method
 <a name="style-contents"></a>[Coding Rules and Style](#style)
 
 *  [Namespaces](#style-namespaces)
-++  [Naming Conventions](#style-naming-conventions)
-++  [Declarations](#style-declarations)
+*  [Naming Conventions](#style-naming-conventions)
+*  [Declarations](#style-declarations)
 *  [Strict Mode](#style-strict-mode)
-++  [Initialising Variables](#style-initialising-variables)
-++  [Checking for Equality](#style-checking-for-equality)
--  [Keywords to Avoid](#style-keywords-to-avoid)
--  [Operators to Avoid](#style-operators-to-avoid)
+*  [Initialising Variables](#style-initialising-variables)
+*  [Checking for Equality](#style-checking-for-equality)
+*  [Keywords to Avoid](#style-keywords-to-avoid)
+*  [Operators to Avoid](#style-operators-to-avoid)
 *  [Semicolons](#style-semicolons)
 *  [Breaking Long Lines](#style-long-lines)
 *  [Whitespace](#style-whitespace)
 *  [Quotation Marks](#style-quotation-marks)
-+++  [Comments](#style-comments)
+*  [Comments](#style-comments)
 -  [Functions](#style-functions)
 *  [Blocks](#style-blocks)
 -  [Callback Function Parameters](#style-callback-function-parameters)
 -  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-+++  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
--  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
--  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
--  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
--  [Getters and Setters](#style-getters-and-setters)
-+++  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
+++  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
+*  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
++++  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
+*  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
+++  [Getters and Setters](#style-getters-and-setters)
+* [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
+* [&lt;script&gt; Tags](#style-including-script-files)
+
 
 The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
 
@@ -1513,23 +1515,22 @@ Any code you subsequently write should then either be a property of your outer n
 
 
 ### <a name="style-naming-conventions"></a>Naming Conventions
-<p>        Descriptive but need to avoid clutter.</p>
-<p>        Namespaces, e.g. PEP.         proactEnterprisePortal could seem to be a much more sensible choice to C# programmers but imagine the readability of code riddle with function calls like     proactEnterprisePortal.incidentManagementUtilities.createIncident()      PEP.incidents.create()</p>
+Try to use descriptive but need to avoid code clutter. Without the array of tools at your disposal that you have in C# you could be doing yourself more harm than favour by giving a function some super-descriptive name which, when preceded by a namespace and object name takes up more than half a line, particularly if it is called a lot. This can cause your code to become cluttered.
 
-* This is not a universal convention but, certainly for the **outermost** namespace of you application it avoids code clutter and is a clear indication that it is intended as a namespace. Your code will be littered with it...
-QUESTION: Does this conflict with constants? Maybe not: PEP.PI
-* Camel case for variables, parameters, methods, objects... (just about everything). Maybe not constants??
-* Camel case functions EXCEPT where the function needs to be called using the "new" keyword. In that case it is a community-wide standard to name ONLY those functions using Pascal case (not to indicate, say, that the function generates and returns a class).
-* Namespaces (I certainly liked a short, upper-case value, at least for the top-level namespace. Gives a clear but unobtrusive indication that the code is "our code". This method is adopted by other people, e.g. Douglas Crockford, but I don't think there is an agreed, community-wide convention.
-* Keep the outer n/s short anyway (3 or 4 characters)
-* CAPTITALS for global variables. In our cases the outer namespace will be the ONLY global variable we define.
-* Use NAMES_LIKE_THIS for constant values.
-* Constructor functions - pascal case.
-* Do not create functions within blocks, e.g. if statements, only as a root property of an object or within another function.
-* Depending on the manner in which you defined an object constructor...ALL properties of an object may be publicly visible. It is quite a widely-used convention (not mandatory) to name those properties which are not intended to be used outside the object by **preceding with `_`**. Often, when inspecting objects from third party libs in F12 tools you will see properties like this, maybe with equivalent properties without the underscore. Try to avoid modifying values. They are a cheat to overcome a limitation. They also "allow" for protected properties.
-* Constants?
+In a nutshell, virtually every token name in JavaScript (ES5) uses **camelCase** by convention.
 
+Here are the exceptions. They are all written differently with the indication of sending a message out to people utilising the tokens, due to the lower toolset quality of many JavaScript development environments.
 
+  * `Namespaces` - explained in previous section.
+
+  * `Constructor functions` - **PascalCase** is strictly used as the name for all functions that, when called, should be prededed by the `new` keyword. This is a strict rule to avoid mistakes being made (and `this` within the function ending up referring to something other than what it was intended to refer to). If you have a function which constucts and returns an object but is **not** intended to be called with the `new` keyword it should use **camelCase**, e.g. `generateEmptyEmployeeObject()`. In Es2015, class names in also use pascal case.
+
+  * `Constants` - **CAPITAL_LETTERS**, with words separated by underscores, are used to give an indication that the value of some variable should not be changed. In ES2015 the `const` keyword, which will flag an error if somebody tries to change its value, means this rule can be relaxed.
+
+  * `Private/protected properties and methods` - **_camelCase** (beginning with an underscore) is not a universal convention but one that is widely adopted, including by writers of many reputable libraries. In JavaScript there are many patterns for creating objects with `private members`. You can create an object that has its own private properties and function without writing overly-convoluted code and can create hierarchies that have degrees of encapsulation, e.g. shared secrets. However, there are at least two problems (below) which have caused people to "accept defeat" and just go with a convention whereby consumers will know that something is not intended to be publicly accessible and should accept any unexpected consequences by doing so. In return you get "pseudo-encapsulation" and efficient objects. You may well have come across these when examining objects within the debugger.
+
+      - To achieve true encapsulation you need to move away from the standard constructor pattern, where methods are attached **once**, to the prototype of a constructor. You would end up with the same methods being created repeatedly for every instance of the object.
+      - Achieving genuinely `protected` members is very difficult. If it is protected members, which are accessible to children within a hierarchy but not to outsiders, is possible the code will be very convoluted and/or inefficient.
 
 
 ### <a name="style-declarations"></a>Declarations
@@ -1570,26 +1571,72 @@ You can also specify strict mode at **function level**. When specified as the fi
 Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) for a lot more information, as well as fuller explanations of the above.
 
 ### <a name="style-initialising-variables"></a>Initialising Variables
-<p>    Initialising Variable - Object Literals and Arrays, Bools</p>
-* Use {} to create an object, not "new Object()". Same with things like Bools... Use {} instead of new Object(). Use [] instead of new Array().
-* It is not necessary to initialise a variable as the point where it is declared.
-* Although perfectly acceptable in C#, don't put a `,` after the last item in an object or array definition. Some parsers may fail here as it not spec. Certainly, for an array, you will generally end up with an extra `undefined` item at the end.
+For certain standard types, including `number`, `string`, `boolean`, `object`, `array`, `regexp`, never use the object constructor. It can cause unexpected behaviour. Instead use the `literal syntaxes` built into JavaScript.
+
+**Use these**:
+
+    var myNumber = 66;
+    var myString = "Hello";
+    var myBoolean = true;
+    var myObject = {firstName: "Bob", surname: "Smith"};
+    var myArray = [1, 2, 3];
+    var myRegExp = /\d{2}/g;
+
+Do **not** use these:
+
+    var myNumber = new Number(66);
+    var myString = new String("Hello");
+    var myBoolean = new Boolean(true);
+    var myObject = new Object();
+    var myArray = new Array(1, 2, 3);
+    var myRegExp = new RegExp("\d{2}", "g");
+
+Other standard objects, e.g. `Date`, do not have a literal so you will have no choice but to use the constructor:
+
+    var d2 = new Date(2000, 1, 1);
+
+> NOTE: It is not necessary to initialise a variable at the point at which it is declared. It will have the value `undefined` until it has been set.
+
+#### Trailing Commas in Objects and Arrays
+Although perfectly acceptable in C#, don't put a `,` after the last item in an object or array definition. Some parsers may fail here as it not spec. Certainly, for an array, you will generally end up with an extra `undefined` item at the end.
 
 ### <a name="style-checking-for-equality"></a>Checking for Equality
-<p>    === and !==</p>
-<p>        Either use if (a === null) or if (!a)</p>
-<p>    Type Coercion - D21</p>
+Prefer the `identity operators` (`===` and `!==`) when testing for equality. They ensure that the types of the two arguments are the same as well as the values.
 
-* Also comparing floating point numbers for exact equality may result in errors, even if just declared them.
-* Will often see 1.2000000001 or 1.199999999 ...
+Avoid using the `equality operators` (`==` and `!=`). They only compare values. If the types are different some type coercion may occur. You may use these for better performance if you _absolutely know_ that the two items being compared are of the same type.
+
+    console.log("3" === 3);   // false
+    console.log("3" == 3);    // true
+
+    // typeof always returns a string.
+    console.log(typeof 3 == "number");
+
+See [Language - Operators](#language-operators) further up for more information.
+
+#### Comparing Numbers for Equality
+
+Remember that `number` variables are stored as floating point numbers and so the _exact_ values stored might not be what you intended. You will often see results of calculations that are clearly meant to have so many decimal places stored with very small variations. For example, a result that is clearly 1.2 in your head may end up being stored as 1.2000000001 or 1.199999999.
+Bear in mind that, if you test for _exact_ equality, the results may be unexpected.
 
 ### <a name="style-keywords-to-avoid"></a>Keywords to Avoid
-with, for...in, eval (one exceptional case),
+Avoid using `with` altogether.
 
-See [JavaScript Keywords](#language-javascript-keywords)
+Avoid `for...in` for anything other than iterating through properties of an object. Do not use it to iterate through collections of objects it is not as convenient to use as the `foreach` statement in C#. ES2015 introduces `for...of` which behaves mush more like foreach.
+
+See [JavaScript Keywords](#language-javascript-keywords) for more information on `with` and `for...in`.
+
+Keep usage of the `eval()` function to a minimum. If there is an alternative which does not involve too much inconvenience take it. See [eval() in Built-in Global Properties and Functions](#language-built-in-global-functions-eval) above for more information.
+
 ### <a name="style-operators-to-avoid"></a>Operators to Avoid
-<p>    Inline assignments and ++</p>
+Avoid inline variable assignments completely unless you are writing a `for` statement. By inline variable assignment we mean assigning a value to one or more variables on a line of code which also performs some other action. Bearing in mind in JavaScript's tendency to "do something", rather than throw a compile time error, going with this policy may help you avoid writing errors.
 
+For the above reason, avoid `++` and `--` operators. They are also a form of inline assignment. However, they are made even trickier because less experienced developers may not fully appreciate the difference between these operators being applie `pre` (`++i`) and `post` (`i++`). Their arcane nature means they are known gateways to errors in JavaScript. There is no real reason why you cannot write `a += 1;` on a line of its own. It is also more expressive.
+
+Of course its sheer ubiquity means there is no reason why you can't break both the above rules within a `for` statement:
+
+    for (int i = 0; i < 10; i++) {
+      ...
+    }
 
 ### <a name="style-semicolons"></a>Semicolons
 End statements with semicolons, as you do in C#. Theoretically they are optional - your code may still work perfectly well. However, whatever engine is running your JavaScript will try to guess where statements end and will sometimes guess wrongly. Also different browsers, particularly older ones, may guess differently.
@@ -1658,9 +1705,14 @@ Do not add spaces inside brackets.
 Either single or double quotes can be used to delimit strings. There is no community-wide preference to be found. Consistent use of the for one or the other is all that is asked for.
 
 ### <a name="style-comments"></a>Comments
-<p>        Reduce by good var and func naming...</p>
-Explain how (as in other languages) code can be made more self documenting via (1) use of well named tokens, (2) reduction of reasonably large functions (e.g. more than 10 lines) into smaller, well-named functions. Achieving total self-documenting code is highly unlikely so only stupid people will avoid comments altogether (TODO: rephrase)
-* Comments - plenty. As in other languages you can reduce need for comments by using highly descriptive variable and function names and by breaking functions that are longer than a few lines into smaller functions but, although you may the code jumps out of the screen and talks to you, it is unlikely this is completely the case
+You can use both the `// ...` and `/* ... */` syntaxes for comments. The first is generally preferred although the second can be used over multiple lines and can be useful for commenting out code when debugging within a primitive environment.
+
+Help other developers by adding comments to your code where necessary. Unless overused, with lots of comments explaining very obvious things, they usually enhance the readability of your code. Broadly speaking, there are two types of comments: those explaining what a piece of code is doing and those explaining why something was done.
+
+We know that comments explaining what your code does can be largely reduced with use of self-explaining variable and function names. If you find yourself adding a comment explaining what a group of lines does you could consider moving that group of lines into a separate function with a descriptive name, even if it only gets called in one place.
+
+Where comments are especially useful is when it comes to explaining _why_ something was done in a certain way, particularly if this was not the expected way. Function names explaining why the code they contain has been written in a certain way could end up being very long and less readable than some conventional text.
+
 
 ### <a name="style-functions"></a>Functions
 <p>        Try to keep small with single responsibility</p>
@@ -1700,8 +1752,16 @@ Always use braces after `if` or loop statements, even when there is only one lin
 
 ### <a name="style-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
 <p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
+
 ### <a name="style-do-not-create-functions-within-a-loop"></a>Do Not Create Functions within a Loop
 <p>    Do not create functions within a loop (FtU D84)</p>
+THE FUNC WILL ONLY BE CREATED ONCE. It is the closures that are the problem.....:
+
+
+or any form of iterator, like the result set of a jquery call
+declaring a function within another function within loop WILL create it multiple times
+
+
 ALSO this sample will create 10 functions all using `i` as a closure. By the time any of the events occur `i` will have the value `10`.
 
 	var elements = document.getElementsByTagName('input');
@@ -1713,36 +1773,65 @@ ALSO this sample will create 10 functions all using `i` as a closure. By the tim
 	}
 
 ### <a name="style-redefining-properties-within-prototypes-of-standard-types"></a>Redefining Properties within Prototypes of Standard Types
-Google: Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
+Modifying methods of the built-in JavaScript object prototypes, like Object.prototype and Array.prototype is **strictly forbidden**. Even if it is only for code consumed within a particular application of yours it causes a high error risk if other people are unaware of the change or if you yourself forget after a period of working on another project. No further explanation is necessary in the case that you are writing library code that is more publicly available.
+
+Of course you may inherit from the prototype of a built-in object and make changes.
+
+Also follow this rule for objects that are defined within third-party libraries which your code utilises.
+
+#### Polyfills and Shiv/Shim Libraries
+There are occasions where a particular member may not be available on a particular object in certain browsers. For example, `String.trim()` is not available in IE8. Rather than defining this yourself, you can include a polyfill which will add in methods that are missing to objects within whatever browser your code is opened in. Note that these libraries will be certain to first make sure that a particular method does not exist before than adding it to the prototype.
+
 ### <a name="style-augmenting-prototypes-of-standard-types-with-additional-properties"></a>Augmenting Prototypes of Standard Types with Additional Properties
+
+Less strict...........
+
+show both the static and instance forms of String.format().
+
+
 ### <a name="style-accessing-array-items-via-strings"></a>Accessing Array Items via Strings
-Only use numbers.
-Despite the fact that Arrays are Object... JavaScript does not support arrays with named indexes.
-Use an ordinary object if want to do this, effectively a hash table.
+Only use numbers to reference members of an array. Often you can use numbers in strings although the results will not be as expected in older versions of IE.
+
+If you want the equivalent of a **Dictionary** you can use an object as a string to object hash table and get and set items using `["propertyKey"]` notation:
+
+    var myDictionary = {};
+    myDictionary["red"] = "#f00";
+    myDictionary["green"] = "#0f0";
+    myDictionary["blue"] = "#00f";
+
+    console.log(myDictionary["green"]);   // #0f0
+    console.log(myDictionary["yellow"]);  // undefined
+
+Note that the above only really works with strings. You are allowed to put any type of object within the brackets but only the `.toString()` text will be used as the key. This means that if you try to use two different complex objects then `[object Object]` will be used as the key, unless toString() has been overridden, meaning that they will refer to the same value.       
+
+ES2015 introduces several new collection types, including `Map`. `Map` _does_ allow you to use any type of object as the key.
+
 
 ### <a name="style-getters-and-setters"></a>Getters and Setters
 ECMAScript 5 getters and setters for properties are discouraged. Why?
-Certainly they do not work in IE8.
+Certainly they do not work in IE8.    Also beware of default get set properties...
+
+If you plan on using a "genuine" property but with a getter that merely retrieves a value from within a field and a setter which merely sets the same field without any additional code, ask yourself if this is really adding any value. ES5 can be arcane enough without you introducing extra noise for no extra gain.
+
 ### <a name="style-separate-files-for-javascript"></a>Put Your JavaScript in Separate Files from Your Markup
-**From the start of a project** you should keep your JavaScript in separate files from HTML and other markup. Do start with the mentality that, because much of your earlier code may have some degree of experimentation about it, you can work in a less strict manner and refactor everything later. Refactoring is not as easy as in C#. Migrating your code into different files, or moving your free-standing functions and variables into more organised modules or objects, at later date risk introducing many bugs. Not having a compiler to help you means that your code will have to be thoroughly tested.....
+This is a very important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place in markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
 
-<p>        DOM D6: Don't bother with type="text/javascript". It is the wrong MIME TYPE (application/...) so no browsers cater for it.</p>
-<p>        Generally should AVOID putting JS within a page (keep in separate JS file). Sometimes you may want to take advantage of certain ASP.NET features,</p>
-<p>            one ob being binding to some part of a model via razor tags or web forms data binding tags. In that case keep the code to a minimum, e.g. assign the values of the tags to javacript module properties. Code within JS files can then reference those properties from then on.</p>
-<p>            Obviously you will have to structure your code so that the JS file(s) containing those variables have been included BEFORE the &lt;script&gt; code initialises them and</p>
-<p>    Location of &lt;script&gt; tags.</p>
-<p>        Low in body (unlike CSS which are high in head)           This won't necessary always remain the case... async</p>
-* Separate files. Avoid plastering JS inside `script` tags in markup files. Sometimes may need to put some things in, e.g. to take advantage of special tags in Web Forms or MVC Razor.
-* Also explain bundles...
-            <%: Scripts.Render(BundleConfiguration.GlobalScript) %>
-            <%: Styles.Render(BundleConfiguration.VideoStyles) %>
-Prefer inclusion of commonly-used scripts in master pages (MVC layouts). If a script is very specific to a particular area, try to introduce a more specific master page/layout. Only include on an individual page or view if very specific and it is worth the effort to avoid the script being downloaded in areas where it is never used.
-Multiple references to the multiple references to the same file will result in its code being repeated, which can obviously cause problems: If strict mode is being used an error will be highlighted if you have declared using the `var` keyword, otherwise variables will effectively be re-initialised from scratch. This can cause unpredictable side effects so be careful and avoid including in user controls or partial views.
+**From the start of a project** you should keep your JavaScript in separate files from HTML and other markup. Do start with the mentality that, because much of your earlier code may have some degree of experimentation about it, you can work in a less strict manner and refactor everything later. Refactoring is not as easy as in C#. Migrating your code into different files, or moving your free-standing functions and variables into more organised modules or objects, at later date risks introducing many bugs. Not having a compiler to help you means that your code refactoring will have to be thoroughly tested.
 
-Do not use &lt;script language="JavaScript"&gt; the language attribute is deprecated    
+Sometimes you will need to take advantage of some particular ASP.NET syntax, e.g. script binding or data binding tags or a piece of razor syntax, and will _have_ to put that JavaScript within a page, control or view. In these situations keep the code to a minimum. You could limit the code that is mixed in with markup just to lines setting the values of object or module properties via the ASP.NET tags. Other code which utilises those properties can still be held within separate `.js` files.
 
-<hr />
+Be especially careful about putting script code directly within controls or partial views. If these entities are included somewhere else multiple times, e.g. as part of a list, the scripts in them will be included multiple times. In case it needs pointing out, mysterious errors and side-effects may occur.
 
+### <a name="style-including-script-files"></a>&lt;script&gt; Tags
+A lot of the time these days you will use ASP.NET bundling to include external CSS and script files which uses a separate syntax. However, you will sometimes find a need to add &lt;script&gt; tags. HTML5 standards state that the MIME type does not have to be specified (in actual fact the actual MIME type should be `application/javascript` and not the commonly-seen `text/javascript`).
+
+```
+<script>
+  ...
+</script>
+```
+
+Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, `async` attribute is only supported in version 10 and above.
 
 
 <a name="organisation-contents"></a>[Code Organisation](#organisation)
