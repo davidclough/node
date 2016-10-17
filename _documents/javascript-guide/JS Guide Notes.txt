@@ -1,19 +1,8 @@
 TO DO NEXT
 ----------------
 
-THEN:
-<a name="style-contents"></a>[Coding Rules and Style](#style)
+Several other items in section 2.
 
-
-
-
-
-
-
-
-
-
-“declaring a function within another function within loop WILL create it multiple times
 
 
 

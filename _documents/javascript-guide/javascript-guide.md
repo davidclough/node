@@ -1634,7 +1634,7 @@ For the above reason, avoid `++` and `--` operators. They are also a form of inl
 
 Of course its sheer ubiquity means there is no reason why you can't break both the above rules within a `for` statement:
 
-    for (int i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++) {
       ...
     }
 
@@ -1756,6 +1756,9 @@ Always use braces after `if` or loop statements, even when there is only one lin
 ### <a name="style-do-not-create-functions-within-a-loop"></a>Do Not Create Functions within a Loop
 <p>    Do not create functions within a loop (FtU D84)</p>
 THE FUNC WILL ONLY BE CREATED ONCE. It is the closures that are the problem.....:
+
+
+declaring a function within another function within loop WILL create it multiple times, e.g. if the outer function is a callback
 
 
 or any form of iterator, like the result set of a jquery call

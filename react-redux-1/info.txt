@@ -1,0 +1,7 @@
+Building Applications with React and Redux in ES6
+-------------------------------------------------
+
+F:\Visual Studio Projects\GitHub\node\react-redux-1
+
+Babel, WebPack, ESlint, Mocha, React, React/Router, Redux
+https://github.com/coryhouse/pluralsight-redux-starter
