@@ -916,6 +916,8 @@ In C# you will get a compile time error if you do not put `break` statements at 
 
 This is just for your information, it is not generally wise to omit break statements at the end of your case clauses.
 
+> NOTE: It is good practice to always end your switch statements with a `default:` case, even if you think there is no need for it.
+
 #### throw
 You throw _any_ object, primitive or complex. There is no conventional structure like the Exception in C#.
 
@@ -1534,12 +1536,11 @@ Here are the exceptions. They are all written differently with the indication of
 
 
 ### <a name="style-declarations"></a>Declarations
-<p>        Some say put all at top of container. Not really necessary as declaring just before use gives a better indication of intent. As long as people appreciate the concept of hoisting.</p>
-* Modules or classes - never have free-standing variables and functions
-* Always use declare variables (using `var`). Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
-* Declare variables at top of scope (for clarity - in JS need to give all help can by using clarity)
+* Always use declare local variables by using `var`. Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
+* Avoid declaring global variables, i.e. a `var` declaration that is not within a function.
+* It is often recommended to declare all local variables at the top of the scope (function) it is within to help with code readability and error prevention. This is as opposed to the C# style of declaring variables only where they are about to be used. Remember variable hoisting in JavaScript means that the declarations will be moved to the top of the function at runtime anyway so it could help to reduce confusion by moving declarations to the point where they will be hoisted to (the top of the function).
 
-SHORTER
+Also see [w3schools - JavaScript Best Practices](http://www.w3schools.com/js/js_best_practices.asp).
 
 ### <a name="style-strict-mode"></a>Strict Mode
 Prefer to use strict mode in code you write. This can be done with the line below. Prefer to apply it at function level (see further down).
@@ -1754,6 +1755,11 @@ Always use braces after `if` or loop statements, even when there is only one lin
 <p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
 
 ### <a name="style-do-not-create-functions-within-a-loop"></a>Do Not Create Functions within a Loop
+Do not define functions within a loop or any form of iterator....
+Q: Are they only defined once even if within a $.each()?
+  functions defined within anonymous functions...
+  http://stackoverflow.com/questions/10204420/define-function-within-another-function-in-javascript   (first answer) -- modern browsers will prob ensure it is only declared once...
+
 <p>    Do not create functions within a loop (FtU D84)</p>
 THE FUNC WILL ONLY BE CREATED ONCE. It is the closures that are the problem.....:
 
