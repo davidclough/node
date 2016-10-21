@@ -1,6 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
 
+// ****************** check that no linting error is preventing compilation
+
 export default {
   debug: true,
   devtool: 'cheap-module-eval-source-map',
