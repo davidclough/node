@@ -4,7 +4,7 @@ TO DO NEXT
 Several other items in section 2.
 
 
-
+check that no linting error is preventing compilation
 
 
 

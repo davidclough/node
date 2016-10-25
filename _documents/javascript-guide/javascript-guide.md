@@ -713,10 +713,25 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 	// In this constructor the month parameter is 0-based but
 	// the other two are 1-based.
 	var d2 = new Date(2000, 1, 1);
-	console.log(d2);										// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+	console.log(d2);										// Tue Jan 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
 
 	var d3 = new Date(1474525800000);
 	console.log(d3);										// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
+
+
+-------------
+console.clear();
+
+var d = new Date("2015-06-25T12:00:00");                              // This one assumed the time zone based on user's computer settingss
+
+//var d2 = new Date(2015, 6, 25, 12, 0, 0);
+console.log(d.toUTCString());
+
+var d3 = new Date("2015-06-25T12:00:00+00:00");                       // This one ENFORCED UTC
+console.log(d3);
+console.log(d3.toUTCString());
+---------------
+
 
 One of the more sophisticated third-party libraries available for JavaScript is [moment.js](http://momentjs.com/). It does cater for:
 
