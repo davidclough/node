@@ -4,12 +4,12 @@ import React from "react";
 //       a problem with stateless at the top of the component hierarchies currently have with hot reloading.
 class AboutPage extends React.Component {
   render() {
-    return {
+    return (
       <div>
         <h1>About</h1>
         <p>This application uses React, Redux, React Router and a variety of other helpful libraries.</p>
       </div>
-    };
+    );
   }
 }
 
