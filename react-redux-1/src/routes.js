@@ -3,6 +3,7 @@ import { Route, IndexRoute } from "react-router";
 import App from "./components/App";
 import HomePage from "./components/home/HomePage";
 import AboutPage from "./components/about/AboutPage";
+import CoursesPage from "./components/course/CoursesPage";
 
 // NOTE(DC): I stuck braces in here instead of brackets and got compilation errors.
 //           In actual fact, the compilation error was being indicated be the command line but
@@ -16,6 +17,7 @@ import AboutPage from "./components/about/AboutPage";
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
+    <Route path="courses" component={CoursesPage} />
     <Route path="about" component={AboutPage} />
   </Route>
 );
