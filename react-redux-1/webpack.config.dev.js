@@ -5,7 +5,15 @@ import path from 'path';
 
 export default {
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+
+  // NOTE: In his example debugger WORKS.
+
+  //devtool: 'cheap-module-eval-source-map',
+  // source-map dDID work for me - the debugger statements broke at the line I put them on.
+  //devtool: 'source-map',        // Worked.
+  devtool: 'eval-source-map',     // Worked.
+  //devtool: 'cheap-module-source-map',     // Didn't work.
+
   noInfo: false,
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE

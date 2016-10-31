@@ -36,10 +36,12 @@ class CoursesPage extends React.Component {
   }
 
   courseRow(course, index) {
+    // DC: The key does not seem to appear in the output.
     return <div key={index}>{course.title}</div>;
   }
 
   render() {
+    debugger;
     return (
       <div>
         <h1>Courses</h1>
@@ -62,6 +64,7 @@ CoursesPage.propTypes = {
 
 // Now we want a Component that can interact with redux. Both "map"s are functions.
 function mapStateToProps(state, ownProps) {
+  debugger;
   return {
     courses: state.courses          // CourseReducer - see file (he named it that for distinguishability of tabs).
   };
