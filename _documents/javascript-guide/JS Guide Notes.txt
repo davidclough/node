@@ -4,9 +4,13 @@ TO DO NEXT
 Several other items in section 2.
 
 
-check that no linting error is preventing compilation
+
+defining functions in loops...
 
 
+
+
+Augmenting Prototypes of Standard Types with Additional Properties
 
 
 

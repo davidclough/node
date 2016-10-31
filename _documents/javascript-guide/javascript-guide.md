@@ -462,8 +462,26 @@ can dynamically add and delete members of objects. MENTION SOME OF THE THINGS bu
 
 ### <a name="language-this-keyword"></a>The this Keyword
 The `this` keyword generally refers to the scope that you are in, i.e. the global scope or a function.
-this means (1) the object you are constructing within a ctor fn (EXCEPT), (2) and in an externally created method, (3) the global object, (4) if fn is called with `call` or `apply` then the object represented by `this` is controlled from that call - applications...
+this means (1) the object you are constructing within a ctor fn (EXCEPT), (2) and in an externally created method, (3) the global object, (4) if fn is called with `call` or `apply` then the object represented by `this` is controlled from that call - applications...     see getters and setters:
 
+
+console.clear();
+
+var o = {
+  a: 7,
+  b() {
+    // *** HERE this is referring to o.
+    return this.a + 1;
+  },
+  c(x) {
+    this.a = x / 2;
+  }
+};
+
+console.log(o.a); // 7
+console.log(o.b()); // 8
+o.c(50);
+console.log(o.a); // 25
 
 
 
@@ -1832,10 +1850,49 @@ ES2015 introduces several new collection types, including `Map`. `Map` _does_ al
 
 
 ### <a name="style-getters-and-setters"></a>Getters and Setters
-ECMAScript 5 getters and setters for properties are discouraged. Why?
-Certainly they do not work in IE8.    Also beware of default get set properties...
+ES5 does allow for getters and setters to be defined. They will only work in IE9 and above though.
 
-If you plan on using a "genuine" property but with a getter that merely retrieves a value from within a field and a setter which merely sets the same field without any additional code, ask yourself if this is really adding any value. ES5 can be arcane enough without you introducing extra noise for no extra gain.
+C# programmers may be tempted to use these as standard instead of using ordinary, "field-like" properties. However, although they can add some real value in places, their overuse in ES5 is strongly discouraged as, in a language like, JavaScript, it is likely to just add extra layers of confusion to your code. This is especially true if the majority of getter/setter pairs merely retrieve the value of a private variable or set its value without anything further - these add an extra layer of indirection without any real value.
+
+As in C# they are really just methods that are called via a special syntax.
+
+#### Type 1 - Adding Getters and Setters via an Object Initialiser
+
+    var o = {
+      a: 7,
+      get b() {
+        return this.a + 1;
+      },
+      set b(x) {
+        this.a = x / 2;
+      }
+    };
+
+    console.log(o.a);   // 7
+    console.log(o.b);   // 8
+    o.b = 50;
+    console.log(o.a);   // 25
+
+#### Type 2 - Adding Getters and Setters to an Object Prototype
+
+    // Define an object constructor.
+    var Widget = function () {
+      this._a = 0;
+    };
+
+    // Add getter and setter properties to its prototype..
+    Object.defineProperties(Widget.prototype, {
+      "b": { get: function () { return this._a + 1; } },
+      "c": { set: function (x) { this._a = x / 2; } }
+    });
+
+    var w = new Widget();
+    w.c = 10;           // _a = 10 / 2 = 5
+    console.log(w.b);   // Runs the getter, which yields _a + 1 or 6
+
+<a dummy="_"></a>
+
+Also see [MDN - Defining getters and setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters).
 
 ### <a name="style-separate-files-for-javascript"></a>Put Your JavaScript in Separate Files from Your Markup
 This is a very important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place in markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
