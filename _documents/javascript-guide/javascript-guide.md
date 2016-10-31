@@ -398,6 +398,13 @@ TO MOVE: Put the IIFE section here.
 
 ### <a name="language-objects"></a>Objects
 
+*** MAKE SURE that use the "function form" when writing a constructor (see getters and setters). Then when you write the line ```Widget.prototype.constructor = Widget;``` it will refer to a named function. When wrote it using the variable form the the `.constructor` property referred to an anonymous function when later queried.
+
+Mention that defining methods within the ctor, rather than against the prototype, will result in all those functions being recreated EVERY time an instance of the object is declared.
+[https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+Encapsulation is good but we have to bear in mind the efficiency of the code as well.
+
+
 LEAVE THIS SECTION TILL LATER (just add notes to it).
 
 <p>    Objects</p>
@@ -1512,15 +1519,15 @@ Window setTimeout() Method
 *  [Whitespace](#style-whitespace)
 *  [Quotation Marks](#style-quotation-marks)
 *  [Comments](#style-comments)
--  [Functions](#style-functions)
+++  [Functions](#style-functions)
 *  [Blocks](#style-blocks)
--  [Callback Function Parameters](#style-callback-function-parameters)
--  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-++  [Do Not Create Functions within a Loop](#style-do-not-create-functions-within-a-loop)
+++  [Callback Function Parameters](#style-callback-function-parameters)
+++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
+*  [Deferred Actions within Loops](#style-deferred-actions-within-loops)
 *  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
-+++  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
+*  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
 *  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
-++  [Getters and Setters](#style-getters-and-setters)
+*  [Getters and Setters](#style-getters-and-setters)
 * [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
 * [&lt;script&gt; Tags](#style-including-script-files)
 
@@ -1753,6 +1760,8 @@ Where comments are especially useful is when it comes to explaining _why_ someth
 <p>    Separation of business and UI</p>
 * So as to prepare for unit testing and UI behaviour testing it is in our interests not to mix logic with UI manipulation. Not sure how easy this is to do without ending up with convoluted code (may be very easy with a bit of practice) but should at least give it a go
 
+Ensure you use the function form when declaring a construction... otherwise .constructor property comes back anonymous.
+
 ### <a name="style-blocks"></a>Blocks
 As you will probably know, blocks in C-based languages are lines of code enclosed by braces. They are often used in association with some outer statement like a `for` or `if` statement but they can exist on their own and not associated with an outer statement.
 
@@ -1783,36 +1792,42 @@ The style is not as nice (in my opinion) as opening brace on a separate line but
 Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation got out of sync.
 
 ### <a name="style-callback-function-parameters"></a>Callback Function Parameters
+MAY MERGE WITH style-deferred-ctions-within-loops.
 
 ### <a name="style-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
 <p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
 
-### <a name="style-do-not-create-functions-within-a-loop"></a>Do Not Create Functions within a Loop
-Do not define functions within a loop or any form of iterator....
-Q: Are they only defined once even if within a $.each()?
-  functions defined within anonymous functions...
-  http://stackoverflow.com/questions/10204420/define-function-within-another-function-in-javascript   (first answer) -- modern browsers will prob ensure it is only declared once...
+### <a name="style-deferred-actions-within-loops"></a>Deferred Actions within Loops
+Beware of deferred actions defines within loops. This includes things code defined within callback functions within the loop, most notably the addition of event handlers. If a variable that the loop iterates through is referenced in a callback function there is a risk that the function will actually use a later value of the variable.
 
-<p>    Do not create functions within a loop (FtU D84)</p>
-THE FUNC WILL ONLY BE CREATED ONCE. It is the closures that are the problem.....:
+This erroneous example uses a call to `setTimeout()`. However, it would be more likely that a real world situation would involve an event handler which relies on user interaction, e.g. the attaching of a click event to multiple elements.
 
+    // This outputs 5 (5 times) after one second.
+    for (var i = 0; i < 5; i++) {
+      setTimeout(function () { console.log(i); }, 1000);
+    }
 
-declaring a function within another function within loop WILL create it multiple times, e.g. if the outer function is a callback
+This is often known as an "access to modified closure". In C# it can be resolve by introducing a local variable within the loop and setting it to the iterated variable. However, JavaScript's variable hoisting would prevent this solution from working.
 
+One solution in ES5 would be to wrap the code within an extra function which would then introduce a new scope. The downside of this is that a new function is defined in each iteration of the loop.
 
-or any form of iterator, like the result set of a jquery call
-declaring a function within another function within loop WILL create it multiple times
+    // This outputs 0, 1, 2, 3 and 4.
+    for (var i = 0; i < 5; i++) {
+      (function (x) {
+        // The current value of i has now been captured in its own scope.
+        // When the callback eventually executes it will be called with that value.
+        setTimeout(function () { console.log(x); }, 1000);
+      }(i));
+    }
 
+In ES2015 we can simply use the `let` keyword to define the loop variable instead of `var`. Unlike in an equivalent C# statement `i` now acts as though it has been declared _within_ the scope of the code executing _inside_ the loop, rather than at the level of the `for` statement. Hence there is no need to declare an extra variable inside the looped code to record `i`'s value at the time.
 
-ALSO this sample will create 10 functions all using `i` as a closure. By the time any of the events occur `i` will have the value `10`.
+    // This outputs 0, 1, 2, 3 and 4.
+    for (let i = 0; i < 5; i++) {
+      setTimeout(function () { console.log(i); }, 1000);
+    }
 
-	var elements = document.getElementsByTagName('input');
-	var n = elements.length;    // assume we have 10 elements for this example
-	for (var i = 0; i < n; i++) {
-	    elements[i].onclick = function() {
-	        console.log("This is element #" + i);
-	    };
-	}
+[https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 
 ### <a name="style-redefining-properties-within-prototypes-of-standard-types"></a>Redefining Properties within Prototypes of Standard Types
 Modifying methods of the built-in JavaScript object prototypes, like Object.prototype and Array.prototype is **strictly forbidden**. Even if it is only for code consumed within a particular application of yours it causes a high error risk if other people are unaware of the change or if you yourself forget after a period of working on another project. No further explanation is necessary in the case that you are writing library code that is more publicly available.
@@ -1826,10 +1841,37 @@ There are occasions where a particular member may not be available on a particul
 
 ### <a name="style-augmenting-prototypes-of-standard-types-with-additional-properties"></a>Augmenting Prototypes of Standard Types with Additional Properties
 
-Less strict...........
+The rules about _adding_ extra properties to prototypes of built in objects are less strict. You may augment the existing methods with some useful ones of your own.
 
-show both the static and instance forms of String.format().
+It is probably not a good idea to add too many of your own properties. If there are too many create a new class whose prototype is the class you wish to extend.
 
+It is also a good idea to only add the property if it has not been added already. If it turns out that if someone else has added the same property, and that one works in a slightly different way, you will not end up breaking some other code.
+
+    if (!String.prototype.format) {
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != "undefined" ? args[number] : match;
+            });
+        };
+    }
+
+    var message = "{0} and {1}".format("chicken", "broccoli");
+    console.log(message);
+
+Of course, you can always add the same method against the object type. This is like adding a static method in C#.
+
+    if (!String.format) {
+        String.format = function (formatString) {
+            var args = Array.prototype.splice.call(arguments, 1);
+            return formatString.replace(/{(\d+)}/g, function (match, number) {   // number is the value of the 1st capture.
+                return typeof args[number] != "undefined" ? args[number] : match;
+            });
+        };
+    }
+
+    var message = String.format("{0} and {1}", "chicken", "broccoli");
+    console.log(message);
 
 ### <a name="style-accessing-array-items-via-strings"></a>Accessing Array Items via Strings
 Only use numbers to reference members of an array. Often you can use numbers in strings although the results will not be as expected in older versions of IE.
@@ -1876,9 +1918,11 @@ As in C# they are really just methods that are called via a special syntax.
 #### Type 2 - Adding Getters and Setters to an Object Prototype
 
     // Define an object constructor.
-    var Widget = function () {
+    function Widget() {
       this._a = 0;
     };
+
+    Widget.prototype.constructor = Widget;
 
     // Add getter and setter properties to its prototype..
     Object.defineProperties(Widget.prototype, {
