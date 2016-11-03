@@ -5,19 +5,13 @@ Several other items in section 2.
 
 
 
-defining functions in loops...
-
-
-
-
-
-
 REMEMBER this is the GUIDELINES section - avoid too much detail
 
-++  [Functions](#style-functions)
+++  [Functions](#style-functions)            THIS IS STYLE AND CONVENTIONS ONLY          function () { }          constructors
+
 ++  [Callback Function Parameters](#style-callback-function-parameters)                                                                 MAY GET MERGED WITH A NEARBY SECTION
 ++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-
+            (   ())
 
 
 

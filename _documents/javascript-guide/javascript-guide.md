@@ -1519,7 +1519,7 @@ Window setTimeout() Method
 *  [Whitespace](#style-whitespace)
 *  [Quotation Marks](#style-quotation-marks)
 *  [Comments](#style-comments)
-++  [Functions](#style-functions)
+*  [Functions](#style-functions)
 *  [Blocks](#style-blocks)
 ++  [Callback Function Parameters](#style-callback-function-parameters)
 ++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
@@ -1565,7 +1565,7 @@ Here are the exceptions. They are all written differently with the indication of
 
   * `Namespaces` - explained in previous section.
 
-  * `Constructor functions` - **PascalCase** is strictly used as the name for all functions that, when called, should be prededed by the `new` keyword. This is a strict rule to avoid mistakes being made (and `this` within the function ending up referring to something other than what it was intended to refer to). If you have a function which constucts and returns an object but is **not** intended to be called with the `new` keyword it should use **camelCase**, e.g. `generateEmptyEmployeeObject()`. In Es2015, **class** names also use pascal case.
+  * `Constructor functions` - **PascalCase** is strictly used as the name for all functions that, when called, should be prededed by the `new` keyword. This is a strict rule to avoid mistakes being made (and `this` within the function ending up referring to something other than what it was intended to refer to). If you have a function which constructs and returns an object but is **not** intended to be called with the `new` keyword it should use **camelCase**, e.g. `generateEmptyEmployeeObject()`. In Es2015, **class** names also use pascal case.
 
   * `Constants` - **CAPITAL_LETTERS**, with words separated by underscores, are used to give an indication that the value of some variable should not be changed. In ES2015 the `const` keyword, which will flag an error if somebody tries to change its value, means this rule can be relaxed.
 
@@ -1754,13 +1754,12 @@ We know that comments explaining what your code does can be largely reduced with
 
 Where comments are especially useful is when it comes to explaining _why_ something was done in a certain way, particularly if this was not the expected way. Function names explaining why the code they contain has been written in a certain way could end up being very long and less readable than some conventional text.
 
-
 ### <a name="style-functions"></a>Functions
-<p>        Try to keep small with single responsibility</p>
-<p>    Separation of business and UI</p>
-* So as to prepare for unit testing and UI behaviour testing it is in our interests not to mix logic with UI manipulation. Not sure how easy this is to do without ending up with convoluted code (may be very easy with a bit of practice) but should at least give it a go
-
-Ensure you use the function form when declaring a construction... otherwise .constructor property comes back anonymous.
+* Try to keep them small and only perform one task.
+* A function may contain business logic or UI manipulation. Try to avoid mixing both within the same function. This will also help when it comes to writing tests.
+* You can declare them using a **function declaration**: `function myFunc() { ... }`
+* or you can declare them using an **function expression**: `var myFunc = function () { ... };`. The space between the `function` and the opening bracket is deliberate and is conventionally used in function expressions.
+* Bear in mind that anonymous functions, ones that have no name and have been declared inline within another statement, will not show up with a meaningful name within any stack trace.
 
 ### <a name="style-blocks"></a>Blocks
 As you will probably know, blocks in C-based languages are lines of code enclosed by braces. They are often used in association with some outer statement like a `for` or `if` statement but they can exist on their own and not associated with an outer statement.
