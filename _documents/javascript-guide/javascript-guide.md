@@ -3,10 +3,12 @@
 
 1. [JavaScript Language (ECMAScript 5)](#language-contents)
 1. [Coding Rules and Style](#style-contents)
-1. [Code Organisation](#organisation-contents)
+  1. [Code Organisation](#organisation-contents)            CAN ADD AS EXTRA SUBSEC in 2
 1. [Patterns, Tips and Tricks](#tips-contents)
-
-2. ?? Associated Tools and Libraries (only brief - with links)
+2. Associated Tools (only brief - with links)
+2. Associated Libraries (only brief - with links)
+    JQ and other types of library, testing, (there will be a list like this somewhere in this doc)
+    yes - SEE #devtools at bottom of document. (there is also a jquery section above)
 
 <hr />
 
@@ -1529,7 +1531,7 @@ Window setTimeout() Method
 *  [Functions](#style-functions)
 *  [Callback Functions](#style-callback-functions)
 *  [Blocks](#style-blocks)
-*  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
+*  [Immediately-invoked Function Expressions](#style-immediately-invoked-function-expressions)
 *  [Deferred Actions within Loops](#style-deferred-actions-within-loops)
 *  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
 *  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
@@ -2106,6 +2108,10 @@ $( ".widget-container" ).on( "click", ".widget", function() {
 ### <a name="jquery-ajax-requests"></a>AJAX Requests
 ### <a name="jquery-tips-and-tricks"></a>Tips and Tricks
 <p>    CSS class change detector</p>
+
+
+
+
 
 1. [ECMAScript 6 and Beyond](#future)
 
