@@ -7,15 +7,37 @@ Several other items in section 2.
 
 REMEMBER this is the GUIDELINES section - avoid too much detail
 
-++  [Functions](#style-functions)            THIS IS STYLE AND CONVENTIONS ONLY          function () { }          constructors
 
-++  [Callback Function Parameters](#style-callback-function-parameters)                                                                 MAY GET MERGED WITH A NEARBY SECTION
 ++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
             (   ())
 
 
 
+            
+            
+            
+            
+            
+ // Can maybe add to arrays section.
+// NO: There is more to destructuring than just arrays - http://www.2ality.com/2015/01/es6-destructuring.html  ********
+            
+// Array destructuring.
+let myColours = ["Red", "Green", "Blue"];
+let [red, green, blue] = myColours;
+console.log(green);
 
+let obj = { first: 'Jane', last: 'Doe' };
+let { first: f, last: l } = obj;
+console.log(l);
+
+
+            
+            
+var w = new Widget();
+console.log(w instanceof Widget);
+            
+            
+            
 
 -----------------------------------------------------------------------------
 This may come in handy if want to explain promises and deferreds in jQuery.

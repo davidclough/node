@@ -12,15 +12,15 @@
 
 <a name="language-contents"></a>[JavaScript Language (ECMAScript 5)](#language)
 
-*  [Document Scope](#language-document-scope)    DONE
-*  [Language Overview](#language-overview)    DONE
-*  [Global Namespace](#language-global-namespace)    DONE
-*  [Variables](#language-variables)           DONE
-*  [Variable Hoisting](#language-hoisting)    DONE
-*  [Top-down Evaluation](#language-sequential)    DONE
+*  [Document Scope](#language-document-scope)
+*  [Language Overview](#language-overview)
+*  [Global Namespace](#language-global-namespace)
+*  [Variables](#language-variables)
+*  [Variable Hoisting](#language-hoisting)
+*  [Top-down Evaluation](#language-sequential)
 *  [Functions](#language-functions)    DONE    where closures?
-*  [Calling Functions](#language-calling-functions)    DONE
--  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions) NOT DONE
+*  [Calling Functions](#language-calling-functions)
+-  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions)
 -  [Objects](#language-objects)
 -  [The this Keyword](#language-this-keyword)
 -  [Types](#language-types)  		DONE ALL DOWN TO Object
@@ -35,18 +35,18 @@
 	* [RegExp](#language-types-regexp)
 	- [Object](#language-types-object)
 	- [Function](#language-types-function)
-		* [arguments Property](#language-types-arguments-property)		DONE
-*  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
-*  [Reserved Words](#language-reserved-words)						DONE
-*  [Truthy and Falsy](#language-truthy-and-falsy)        DONE
-*  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
+		* [arguments Property](#language-types-arguments-property)
+-  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
+*  [Reserved Words](#language-reserved-words)
+*  [Truthy and Falsy](#language-truthy-and-falsy)
+-  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
 *  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
 	* [Window](#language-built-in-objects-window)
 	* [Document](#language-built-in-objects-document)
 	* [Math](#language-built-in-objects-math)
 	* [JSON](#language-built-in-objects-json)
 	* [Console](#language-built-in-objects-console)
-*  [Built-in Global Properties and Functions](#language-built-in-global-functions)   DONE
+*  [Built-in Global Properties and Functions](#language-built-in-global-functions)
 
 This is by far the biggest section of the document.
 
@@ -656,8 +656,8 @@ When accessing member of the array, specify a zero-base index within square brac
 	languages[9] = "Chinese";
 	console.log(languages[9]);										// "Chinese"
 
-	console.log(typeof languages);		                            // "object"
-	console.log(languages instanceof Array);		                // true
+	console.log(typeof languages);		            // "object"
+	console.log(languages instanceof Array);		  // true
 
 	var emptyArray = [];
 
@@ -1520,8 +1520,8 @@ Window setTimeout() Method
 *  [Quotation Marks](#style-quotation-marks)
 *  [Comments](#style-comments)
 *  [Functions](#style-functions)
+*  [Callback Functions](#style-callback-functions)
 *  [Blocks](#style-blocks)
-++  [Callback Function Parameters](#style-callback-function-parameters)
 ++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
 *  [Deferred Actions within Loops](#style-deferred-actions-within-loops)
 *  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
@@ -1759,7 +1759,17 @@ Where comments are especially useful is when it comes to explaining _why_ someth
 * A function may contain business logic or UI manipulation. Try to avoid mixing both within the same function. This will also help when it comes to writing tests.
 * You can declare them using a **function declaration**: `function myFunc() { ... }`
 * or you can declare them using an **function expression**: `var myFunc = function () { ... };`. The space between the `function` and the opening bracket is deliberate and is conventionally used in function expressions.
-* Bear in mind that anonymous functions, ones that have no name and have been declared inline within another statement, will not show up with a meaningful name within any stack trace.
+
+### <a name="style-callback-functions"></a>Callback Functions
+Many functions have parameters that are functions themselves and will be called at some point, like an event handler. For example, jQuery's `$.ajax()` method allows you to specify up to six callback functions in its `settings` parameter object, including a `success` function that allows you to indicate what should be done with the data received from a successful AJAX call.
+
+You should consider declaring the callback functions as separate named functions that have a descriptive name. Also bear in mind that anonymous functions, ones that have no name and have been declared inline within another statement, will not show up with a meaningful name within any stack trace.
+
+Definitely avoid gigantic lines which specify several callback functions declared anonymously.
+
+In ES2015 arrow functions can make inline function declarations neater.
+
+Be very careful about declaring functions within callback functions. The nested functions will recreated every time the callback function is called. If the callback function was for a jQuery `$.forEach()` this could be rather inefficient.
 
 ### <a name="style-blocks"></a>Blocks
 As you will probably know, blocks in C-based languages are lines of code enclosed by braces. They are often used in association with some outer statement like a `for` or `if` statement but they can exist on their own and not associated with an outer statement.
@@ -1789,9 +1799,6 @@ The style is not as nice (in my opinion) as opening brace on a separate line but
 
 #### Brace Usage
 Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation got out of sync.
-
-### <a name="style-callback-function-parameters"></a>Callback Function Parameters
-MAY MERGE WITH style-deferred-ctions-within-loops.
 
 ### <a name="style-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
 <p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
