@@ -20,7 +20,7 @@
 *  [Top-down Evaluation](#language-sequential)
 *  [Functions](#language-functions)    DONE    where closures?
 *  [Calling Functions](#language-calling-functions)
--  [Immediately Invoked Function Expressions](#language-immediately-invoked-function-expressions)
+-  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
 -  [Objects](#language-objects)
 -  [The this Keyword](#language-this-keyword)
 -  [Types](#language-types)  		DONE ALL DOWN TO Object
@@ -390,7 +390,14 @@ This is actually...
 TO MOVE: Put the IIFE section here.
 
 
-### <a name="language-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
+### <a name="language-immediately-invoked-function-expressions"></a>Immediately-invoked Function Expressions
+
+Also known as `IIFE`s, they are just anonymous function expressions that are declared and then executed immediately afterwards.
+
+They are a common way to encapsulate variables and functions so that they are private to that scope. With `"use strict";` allowed to be declared at function-level (the preferred way), it is also common to see a strict mode IIFE declared as the outer container of all code within a js file. Combining the above two reasons indicates that is also common to see IIFEs nested within other IIFEs.
+
+
+
 <p>    Closures.</p>
 <a target="_blank" dummy="_" href="http://jibbering.com/faq/faq_notes/closures.html">http://jibbering.com/faq/faq_notes/closures.html</a>
 <p>        http://javascript.crockford.com/private.html</p>
@@ -1522,7 +1529,7 @@ Window setTimeout() Method
 *  [Functions](#style-functions)
 *  [Callback Functions](#style-callback-functions)
 *  [Blocks](#style-blocks)
-++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
+*  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
 *  [Deferred Actions within Loops](#style-deferred-actions-within-loops)
 *  [Redefining Properties within Prototypes of Standard Types](#style-redefining-properties-within-prototypes-of-standard-types)
 *  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
@@ -1800,8 +1807,14 @@ The style is not as nice (in my opinion) as opening brace on a separate line but
 #### Brace Usage
 Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation got out of sync.
 
-### <a name="style-immediately-invoked-function-expressions"></a>Immediately Invoked Function Expressions
-<p>    IIFEs: Why? An immediately invoked function expression is a single unit - wrapping both it, and its invocation parens, in parens, cleanly expresses this.</p>
+### <a name="style-immediately-invoked-function-expressions"></a>Immediately-invoked Function Expressions
+The syntax is really quite straightforward when you get used to it. The outer brackets are used to indicate to parsers, mainly older ones, that `function` is part of an expression and is not a function _declaration_. If it interpreted it as a declaration, an error would occur as a function declaration requires the name of the function to be specified.
+
+Just follow this template. If the IIFE is being used as a container for all or most of the code within a file you can include a `"use strict";` statement as the first line of the contained code.
+
+    (function () {
+      …
+    }());
 
 ### <a name="style-deferred-actions-within-loops"></a>Deferred Actions within Loops
 Beware of deferred actions defines within loops. This includes things code defined within callback functions within the loop, most notably the addition of event handlers. If a variable that the loop iterates through is referenced in a callback function there is a risk that the function will actually use a later value of the variable.
