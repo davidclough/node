@@ -19,7 +19,7 @@
 *  [Variables](#language-variables)
 *  [Variable Hoisting](#language-hoisting)
 *  [Top-down Evaluation](#language-sequential)
-*  [Functions](#language-functions)    DONE    where closures?
+*  [Functions](#language-functions)
 *  [Calling Functions](#language-calling-functions)
 -  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
 -  [Objects](#language-objects)
@@ -198,20 +198,7 @@ Generally you will separate the JavaScript you write into separate files. In a w
 It is as though the contents of all the files have been concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
 
 ### <a name="language-functions"></a>Functions
-<p>    Functions</p>
-<p>        Declarations and expressions (FtU D12) http://stackoverflow.com/questions/1013385/what-is-the-difference-between-a-function-expression-vs-declaration-in-javascrip</p>
-<p>        Use declaration syntax if define inside a loop (http://helephant.com/2012/07/14/javascript-function-declaration-vs-expression/)</p>
-<p>        Space to avoid it looking like you have declared a function called "function".</p>
-<p>        "arguments" property (it's not a true array but there is a trick to convert it to one)</p>
-<p>        Keep small and single resp, e.g. split longer ones into separate functions.</p>
-<p>        Try to keep non-UI logic in separate funtions from ones that manipulate the UI.</p>
-Functions can nested within other functions. This is one of the backbone...
-
-Function overloading - there is none - last definition with same name wins. However, one property of the function object is `arguments'. **Array-like** object (which can easily converted to an Array) from which all argument values can be accessed...
-`https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/arguments`
-
-EXAMPLES NOW
-Isolated declarations here. However, in reality, you will not just declare standalone functions within the global namespace (HAS THIS BEEN EXPLAINED). but will declared plenty of nested functions in manner of 1 or 2.
+A function allows you to define a piece of functionality which accepts parameters and returns a value. In JavaScript they are actually objects. Three of the most important methods of the Function object are `call()`, `apply()` and `bind()` (see [MDN - Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)). We will see how these are used later.
 
 #### Ways of Declaring Functions
 
@@ -281,7 +268,7 @@ A more important thing to note is that the function it is assigned to is **recre
 > Note: For the above reason, it is imperative that you do not define nest functions within within functions within any form of loop or iterator. This mistake could easily be made from within the callback parameter of a call to a jQuery `each()` method, e.g. `$("li").each(function { ... })`. Here, if you decided you wanted to encapsulate a piece of UI manipulation logic into a function which stated what it was doing, instead of just a series of jQuery calls, you should make sure it is define outside the `each` statement.
 
 #### Closures
-Technically, a closure is a function held together with captured parts of the environment in which it was created.
+Technically, a closure is a function held together with captured parts of the environment in which it was created at the time it was created.
 
 They are nested functions that reference variables that were defined in an enclosing scope. These functions "remember" the environment/context in which they were created.
 
@@ -315,41 +302,57 @@ Function parameters and variables, either declared inside or outside the functio
 Closures are very powerful and one of the few supreme features of JavaScript.
 
 #### Handling a Variable Number of Parameters
-In reality a function is an object. (LEAVE THIS UNTIL MENTION STANDARD OBJECTS, otherwise will confuse)
+There is no function overloading available in JavaScript. If you define a function, including an object method, more than once but with a different number of parameters the final definition will overwrite the previous definitions. Instead of overloading a function we can achieve a similar effect by handling a varying number of arguments within the function itself.
 
-The looseness of JavaScript manifests itself not only via the dynamic typing of variables but but the fact that, although you define a function with a particular number of parameters, it can be called with **any number** of parameters without causing an error.
+The looseness of JavaScript manifests itself not only via the dynamic typing of variables but the fact that, although you define a function with a particular number of parameters, it can be called with **any number** of parameters without causing an error.
 
 Much of the time you would intend a function to be called with the same parameter set as is in its definition. However, this is not always the case. You can supply any number of parameters. However, a function would certainly need to have been written in such a manner as to be able to handle this situation.
 
 If you call a function supplying **fewer** parameters than is in its definition the values of the surplus parameters will be `undefined`. One use of this concept is to provide optional parameters for which a default value may be used within the function if the parameter is not supplied. This document does not recommend wide usage of this technique since there are other ways to achieve this behaviour without having a varying number of parameters, e.g. a function accepting one object parameter whose properties will be set to certain defaults if undefined.
 
     var academicExample = function (optionalArg) {
-        // More about undefined later.
-		if (typeof optionalArg === "undefined") {
-			optionalArg = "default value";
-		}
+      // More about undefined later.
+      if (typeof optionalArg === "undefined") {
+        optionalArg = "default value";
+      }
 
-        console.log(optionalArg);
-	};
+      console.log(optionalArg);
+    };
 
     academicExample("Broccoli");
     // The following line outputs "default value" to the console.
     academicExample();
     academicExample(666);
 
-You can also supply **more** parameters to simulate the equivalent of a C# _params_ argument. For this you will need to access the `arguments` property of the function, which will allow you to access each parameter via an array. Strictly speaking, it is not an exact array but more about this later.
+You can also supply **more** parameters to simulate the equivalent of a C# _params_ argument. For this you will need to access the `arguments` variable that is available within any function, which will allow you to access each parameter via an array-like object.
 
-	var sum = function () {
-	    var result = 0;
-	    for (var i = 0; i < arguments.length; i++) {
-	        result += arguments[i];
-	    }
-	    return result;
-	}
+    var sum = function () {
+      var result = 0;
+      for (var i = 0; i < arguments.length; i++) {
+        result += arguments[i];
+      }
+      return result;
+    };
 
-	console.log(sum(1, 2, 3));              // 6
-	console.log(sum(-10, 1, 1, 1, 1, 1));   // -5
-	console.log(sum());                     // 0
+    console.log(sum(1, 2, 3));              // 6
+    console.log(sum(-10, 1, 1, 1, 1, 1));   // -5
+    console.log(sum());                     // 0
+
+`arguments` is only an array-like object. You can check its `length` property and access individual items but, if you find yourself requiring a _genuine_ array you will need to convert it to one. In ES2015 you would generally call one of these lines. The `Array,prototype.slice` method does accept this array-like object but returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments.
+
+    var myFunc = function (fixedParam1, fixedParam2) {
+      var allArgs = Array.prototype.slice.call(arguments);
+      var optionalArgs = Array.prototype.slice.call(arguments, 2);
+      ...
+    };
+
+In ES2015 you could also make use of the spread operator: `var args = [...arguments];`. Or you could make use of `destructuring`:
+
+    var [fixed1, fixed2, ...args] = arguments;
+    // You can leave the first two array items empty if you aren't going to use them.
+    var [ , , ...args] = arguments;
+
+Also see [MDN - Arguments Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments).
 
 ### <a name="language-calling-functions"></a>Calling Functions
 Below are brief explanations of the different ways that a function can actually be called. We will not go into too much detail as, other than for the first method, we will need to understand about objects in JavaScript and the `this` keyword.
@@ -380,29 +383,11 @@ For both of these, the object which represents `this` is supplied as the first p
     myFunction.apply(thisArg, [argsArray])
     myFunction.call(thisArg[, arg1[, arg2[, ...]]])
 
-USEFUL EXAMPLE USAGE
-
-
-CAN LEAVE THIS ONE OUT AS IT IS NOT STRICTLY FOR calling a function.
-#### Via `eval()`
-This is actually...
-
-
-TO MOVE: Put the IIFE section here.
-
-
 ### <a name="language-immediately-invoked-function-expressions"></a>Immediately-invoked Function Expressions
 
 Also known as `IIFE`s, they are just anonymous function expressions that are declared and then executed immediately afterwards.
 
 They are a common way to encapsulate variables and functions so that they are private to that scope. With `"use strict";` allowed to be declared at function-level (the preferred way), it is also common to see a strict mode IIFE declared as the outer container of all code within a js file. Combining the above two reasons indicates that is also common to see IIFEs nested within other IIFEs.
-
-
-
-<p>    Closures.</p>
-<a target="_blank" dummy="_" href="http://jibbering.com/faq/faq_notes/closures.html">http://jibbering.com/faq/faq_notes/closures.html</a>
-<p>        http://javascript.crockford.com/private.html</p>
-<p>        Golden parentheses</p>
 
 ### <a name="language-objects"></a>Objects
 
