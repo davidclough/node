@@ -2,11 +2,10 @@
 ## Sections
 
 1. [JavaScript Language (ECMAScript 5)](#language-contents)
-1. [Coding Rules and Style](#style-contents)
-  1. [Code Organisation](#organisation-contents)            CAN ADD AS EXTRA SUBSEC in 2
-1. [Patterns, Tips and Tricks](#tips-contents)
-2. Associated Tools (only brief - with links)
-2. Associated Libraries (only brief - with links)
+2. [Coding Rules and Style](#style-contents)
+3. [Patterns, Tips and Tricks](#tips-contents)
+4. Associated Tools (only brief - with links)
+4. Associated Libraries (only brief - with links)
     JQ and other types of library, testing, (there will be a list like this somewhere in this doc)
     yes - SEE #devtools at bottom of document. (there is also a jquery section above)
 
@@ -1537,8 +1536,9 @@ Window setTimeout() Method
 *  [Augmenting Prototypes of Standard Types with Additional Properties](#style-augmenting-prototypes-of-standard-types-with-additional-properties)
 *  [Accessing Array Items via Strings](#style-accessing-array-items-via-strings)
 *  [Getters and Setters](#style-getters-and-setters)
-* [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
-* [&lt;script&gt; Tags](#style-including-script-files)
+*  [Put Your JavaScript in Separate Files from Your Markup](#style-separate-files-for-javascript)
+*  [&lt;script&gt; Tags](#style-including-script-files)
+*  [Use Bundling](#style-use-bundling)
 
 
 The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
@@ -1960,13 +1960,23 @@ As in C# they are really just methods that are called via a special syntax.
 Also see [MDN - Defining getters and setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters).
 
 ### <a name="style-separate-files-for-javascript"></a>Put Your JavaScript in Separate Files from Your Markup
-This is a very important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place in markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
+This is an important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place in markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
 
 **From the start of a project** you should keep your JavaScript in separate files from HTML and other markup. Do start with the mentality that, because much of your earlier code may have some degree of experimentation about it, you can work in a less strict manner and refactor everything later. Refactoring is not as easy as in C#. Migrating your code into different files, or moving your free-standing functions and variables into more organised modules or objects, at later date risks introducing many bugs. Not having a compiler to help you means that your code refactoring will have to be thoroughly tested.
 
 Sometimes you will need to take advantage of some particular ASP.NET syntax, e.g. script binding or data binding tags or a piece of razor syntax, and will _have_ to put that JavaScript within a page, control or view. In these situations keep the code to a minimum. You could limit the code that is mixed in with markup just to lines setting the values of object or module properties via the ASP.NET tags. Other code which utilises those properties can still be held within separate `.js` files.
 
 Be especially careful about putting script code directly within controls or partial views. If these entities are included somewhere else multiple times, e.g. as part of a list, the scripts in them will be included multiple times. In case it needs pointing out, mysterious errors and side-effects may occur.
+
+#### Tightly-coupled Script
+Although we have suggested keeping JavaScript in separate files from markup it _must_ be appreciated that very often some JavaScript gets written that is very specific to some particular control, view or HTML. It is important that these tightly coupled pieces of script are placed in files that give some indication that it very specialised to some area. This could be in a file that is in the same location as the markup file or within the scripts folder in some appropriately named folder and/or file. Putting JavaScript that is very specific to a certain piece of markup in some generic "scripts.js" file where people have to hunt it down would actually be _worse_ than putting it in a &lt;script&gt; tag just below the HTML.
+
+In [React’s JSX: The Other Side of the Coin](https://medium.com/@housecor/react-s-jsx-the-other-side-of-the-coin-2ace7ab62b98#.b5vs0bs70) (_just_ the Phase 1: Unobtrusive JavaScript) section it is highlighted how separating script from markup can actually be counterproductive.
+
+#### IIFEs
+It is often a good idea, in ES5, to wrap all the code in one file within one immediately-invoked function expression whise first line is `"use strict";`. Then you can take advantage of function-level strict mode. This is as opposed to using file-level strict mode which may cause problems if third-party libraries you use have not been written in strict mode.
+
+In ES2015 and onwards there is a more sophisticated module pattern which allows you to export items of code and then import them elsewhere in as many places as you like. This mechanism also requires the use of transpilers as many browser do not currently support it.
 
 ### <a name="style-including-script-files"></a>&lt;script&gt; Tags
 A lot of the time these days you will use ASP.NET bundling to include external CSS and script files which uses a separate syntax. However, you will sometimes find a need to add &lt;script&gt; tags. HTML5 standards state that the MIME type does not have to be specified (in actual fact the actual MIME type should be `application/javascript` and not the commonly-seen `text/javascript`).
@@ -1979,28 +1989,18 @@ A lot of the time these days you will use ASP.NET bundling to include external C
 
 Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, `async` attribute is only supported in version 10 and above.
 
+#### Common Code Files
+You will want to include third-party libraries before your own code. After those, some of your script files may contain common variables or other common code. For example, you may have code that overrides certain Kendo functionality and makes certain features behave the way you want them to or you may have variables whose value you may want to bind to ASP.NET tags or razor variables. Include these files next.
 
-<a name="organisation-contents"></a>[Code Organisation](#organisation)
+### <a name="style-use-bundling"></a>Use Bundling
+Bundling is where certain files, e.g. scripts and styles, are gathered together in one `bundle`. It helps improve performance by reducing the number of separate requests that need to be served when a page is opened in somebody's browser.
 
-*  [Bundling](#organisation-bundling)
-*  [Common File](#organisation-common-file)
-*  [Custom jQuery Plugins](#organisation-custom-jquery-plugins)
-*  [File per Module or Object](#organisation-file-per-module-or-object)
+There are easy-to-use facilities in ASP.NET for bundling. You can define your bundles for different areas of your applications so that only the necessary scripts and styles are served, rather and avoid serving a lot of content that will not be used.
 
-## <a name="organisation"></a>Code Organisation
-### <a name="organisation-bundling"></a>Bundling
-<p>    You may want some files KendoHelper... NO</p>
-### <a name="organisation-common-file"></a>Common File
-<p>    File with the namespace object declaration which all modules and object constructors will be members of (it needs to be the FIRST out of the files with YOUR code)</p>
-<p>        XXX You may find a requirement for some global variables may be need to work.  Put these within a module.</p>
-<p>        Common functions that are used in all areas. Can define these within one or more modules.</p>
-<p>        also module for vaues you may want to set via binding tags in web forms pages or razor views.</p>
-### <a name="organisation-custom-jquery-plugins"></a>Custom jQuery Plugins
-<p>    Custom jQuery plugins - include after jQuery...</p>
-### <a name="organisation-file-per-module-or-object"></a>File per Module or Object
-<p>    File per module or object</p>
+`minification` of bundles makes the requesting of pages within your application even more efficient. ASP.NET bundling makes this very easy. You can switch minification off when in debug mode, e.g. when working locally or deploying to a Dev server, you can still step through script code. Minification will only occur not in debug mode, e.g. on Live or Staging environments, or when you specifically demand it.
 
-<hr />
+Because of the above there is no real need for you to directly include minified versions of common libraries, like jQuery, directly. You then do not have the inconvenience of a JavaScript exception occurring in some mysterious minified code when you are developing.
+
 
 
 
@@ -2022,6 +2022,9 @@ Generally these tags and JavaScript file references should be included as low do
 *  [String Format Example](#tips-string-format-example)
 *  [Deferred Object](#tips-deferred-object)
 *  Too Many Optional Parameters
+
+[Custom jQuery Plugins](#organisation-custom-jquery-plugins)
+SECTION 4? That will be more of a general section about tools and libraries, rather than specifically about jQuery (not going into detail about that).
 
 
     instance.open = function (extend) {
