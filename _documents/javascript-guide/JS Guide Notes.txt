@@ -1,15 +1,11 @@
 TO DO NEXT
 ----------------
 
-Several other items in section 2.
 
 
 
-REMEMBER this is the GUIDELINES section - avoid too much detail
 
 
-++  [Immediately Invoked Function Expressions](#style-immediately-invoked-function-expressions)
-            (   ())
 
 
 

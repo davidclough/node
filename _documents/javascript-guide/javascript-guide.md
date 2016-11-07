@@ -4,8 +4,7 @@
 1. [JavaScript Language (ECMAScript 5)](#language-contents)
 2. [Coding Rules and Style](#style-contents)
 3. [Patterns, Tips and Tricks](#tips-contents)
-4. Associated Tools (only brief - with links)
-4. Associated Libraries (only brief - with links)
+4. Associated Tools and Useful Libraries (only brief - with links)
     JQ and other types of library, testing, (there will be a list like this somewhere in this doc)
     yes - SEE #devtools at bottom of document. (there is also a jquery section above)
 
@@ -21,7 +20,7 @@
 *  [Top-down Evaluation](#language-sequential)
 *  [Functions](#language-functions)
 *  [Calling Functions](#language-calling-functions)
--  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
+*  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
 -  [Objects](#language-objects)
 -  [The this Keyword](#language-this-keyword)
 -  [Types](#language-types)  		DONE ALL DOWN TO Object
@@ -35,8 +34,8 @@
 	* [Date](#language-types-date)
 	* [RegExp](#language-types-regexp)
 	- [Object](#language-types-object)
-	- [Function](#language-types-function)
-		* [arguments Property](#language-types-arguments-property)
+	* [Function](#language-types-function)
+		* [arguments Object](#language-types-arguments-object)
 -  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
 *  [Reserved Words](#language-reserved-words)
 *  [Truthy and Falsy](#language-truthy-and-falsy)
@@ -59,7 +58,7 @@ USEFUL LINKS
 ## <a name="language"></a>JavaScript Language (ECMAScript 5)
 
 ### <a name="language-document-scope"></a>Document Scope
-This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help you learn the language and techniques that can help tame it.
+This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help people learn the language and techniques that can help tame it.
 
 In interests of this document not becoming too bloated explanations may be quite short. It will be intended to cover more essential areas that are different from other languages and avoid going over things that will be more obvious to an experienced programmer. Some code samples may be over-simplified for the sake of more clearly explaining a concept.
 
@@ -200,36 +199,31 @@ It is as though the contents of all the files have been concatenated into one bi
 ### <a name="language-functions"></a>Functions
 A function allows you to define a piece of functionality which accepts parameters and returns a value. In JavaScript they are actually objects. Three of the most important methods of the Function object are `call()`, `apply()` and `bind()` (see [MDN - Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)). We will see how these are used later.
 
-#### Ways of Declaring Functions
+#### Ways to Declare Functions
 
 ##### Function Declaration Syntax
     function addNumbers(x1, x2) {
         return x1 + x2;
-	};
+    };
 
-This does *not* result in the function being defined in some one-off, optimised manner behind the scenes. It is actually shorthand for the function expression explained next. `addNumbers` is really a variable declaration that is made equal to the function you define. You should therefore be careful about where you define a function (see Nested Functions).
+This does *not* result in the function being defined in some one-off, optimised manner behind the scenes. It is actually shorthand for the function expression explained next. `addNumbers` is really a variable declaration that is made equal to the function you define. You should therefore be careful about where you define a function (see [Nested Functions](#language-functions-nested)).
 
 Every time this line of code is encountered by the JavaScript engine a new variable will be created and assigned to a newly defined function.
 
-EXPLAIN that `hoisting` will ensure that BOTH the function variable AND its assignment will be hoisted to the top of the current scope.
+`Variable hoisting` will ensure that _both_ the function variable _and_ its assignment will be moved to the top of the current scope at run time.
 
 ##### Function Expression
     var addNumbers = function (x1, x2) {
         return x1 + x2;
-	};
+	  };
 
-The space after the function keyword is deliberate. It clearly distinguishes that the `function` keyword has been used as part of an expression, rather than a declaration.
+The space after the function keyword is deliberate. It is a convention which clearly states to an readers that the `function` keyword has been used as part of an expression, rather than being a declaration.
 
-> Note: JavaScript practices involve a significant number of "visual" clues where, to compensate for deficiencies, we write the code according to a particular style purely to aid reader understanding and not so that the code runs differently.
+> Note: JavaScript practices involve a significant number of **visual clues** where, to compensate for language deficiencies, we write the code according to a particular style purely to aid reader understanding and not so that the code runs differently.
 
-EXPLAIN that, unlike with FDS, only the variable declaration will be hoisted. The point it is assigned to the function will remain where it is.
-1) Use of this syntax will more likely lead to indication of it being used before it is declared. FDS could be used as standards so can slap definitions out of order and they will be corrected...
-2) Highlights the fact that we are in fact defining a variable.
+Unlike with function declarations the actual function variable declaration is hoisted to the top of the current scope but the location where function is defined and assigned to that variable stays exactly where it is. The function will be `undefined` until that point.
 
-> Strict coding practices are valuable practices in all languages. However, this is even more so in JavaScript, with its deficiencies and lack of super-advanced coding environments.
-
-SPLIT TO ABOVE PARAGRAPHS.
-> Note: Expression syntax has been preferred over declaration syntax in this due to a combination of `top-down Evaluation` and `hoisting` (explained earlier). It helps to keep you inline with the practice of always declaring something before you use it. If you haven't then hoisting will move the declaration of the function to the top of its scope but it will remain undefined until the point where _you_ actually defined it and you will get an exception if you call it before that point. Keeping to strict practices when writing JavaScript is an extra aid to helping you write robust code.<br />Technically, and often you will see this, you could prefer to use function declaration syntax. This will allow you to slap your function definitions anywhere within scope and both...
+> Note: Expression syntax has been preferred over declaration syntax in this document due to a combination of `top-down Evaluation` and `hoisting` (explained earlier). It helps to keep you inline with the practice of always declaring something before you use it. If you haven't then hoisting will move the declaration of the function to the top of its scope but it will remain undefined until the point where _you_ actually defined it and you will get an exception if you call it before that point. Keeping to strict practices when writing JavaScript is an extra aid to helping you write robust code.
 
 ##### Function as a Method
 This is exactly like a function expression but the function is assigned to a property of an object.
@@ -240,23 +234,31 @@ This is exactly like a function expression but the function is assigned to a pro
 	};
 
 #### Anonymous Functions
-There are situations where you may want to define a function _without_ explicitly assigning it to a variable. For example, just the right hand side of the above example may be directly supplied as a parameter in a function call, e.g. specifying a callback method or assigning an event handler.
+There are situations where you may want to define a function _without_ explicitly assigning it to a variable. For example, just the right hand side of the above example may be directly supplied as a parameter in a function call, e.g. specifying a callback method or assigning an event handler. In this example the callback function defined as the first parameter is called once after 2 seconds.
 
-CALLBACK EXAMPLE
+    setTimeout(function () {
+      alert("Boo!");
+    }, 2000);
 
-IIFEs ARE COMING UP SOON SO NO NEED TO MENTION HERE
+##### Named Function Expressions
+We can now name our function expressions as below. The IE9-compatible Array map was used for convenience of demonstration, although ES5 shim will make it usable in lower versions). The only advantage here is that our callback function (named `factorial`) can now call itself. In reality the function could have been defined separately from the statement it has been included in.
 
-#### Nested Functions
+  	var o =	[1,2,3,4,5].map(function factorial (n) {
+  		return !(n > 1) ? 1 : factorial(n - 1) * n;
+  	});
+
+  	console.log(o);
+
+#### <a name="language-functions-nested"></a>Nested Functions
 This example demonstrates a nested function. `calculateSquare` is effectively a private function that is only available within `addSquaresOfNumbers`. The choice of functions in this example is purely for demonstration
 
     var addSquaresOfNumbers = function (x1, x2) {
+      var calculateSquare = function (x) {
+        return x * x;
+      };
 
-	    var calculateSquare = function (x) {
-	        return x * x;
-		};
-
-        return calculateSquare(x1) + calculateSquare(x2);
-	};
+      return calculateSquare(x1) + calculateSquare(x2);
+    };
 
     // This line outputs 25.
     console.log(addSquaresOfNumbers(3, 4));
@@ -265,7 +267,7 @@ Here `calculateSquare` is too general to be available only available within the 
 
 A more important thing to note is that the function it is assigned to is **recreated** every time `addSquaresOfNumbers` is called and destroyed when the `addSquaresOfNumbers` exits.
 
-> Note: For the above reason, it is imperative that you do not define nest functions within within functions within any form of loop or iterator. This mistake could easily be made from within the callback parameter of a call to a jQuery `each()` method, e.g. `$("li").each(function { ... })`. Here, if you decided you wanted to encapsulate a piece of UI manipulation logic into a function which stated what it was doing, instead of just a series of jQuery calls, you should make sure it is define outside the `each` statement.
+> Note: For the above reason, it is imperative that you do not define nest functions within functions within any form of loop or iterator. This mistake could easily be made from within the callback parameter of a call to a jQuery `each()` method, e.g. `$("li").each(function { ... })`. Here, if you decided you wanted to encapsulate a piece of UI manipulation logic into a function which stated what it was doing, instead of just a series of jQuery calls, you should make sure it is define outside the `each` statement.
 
 #### Closures
 Technically, a closure is a function held together with captured parts of the environment in which it was created at the time it was created.
@@ -275,16 +277,17 @@ They are nested functions that reference variables that were defined in an enclo
 Function parameters and variables, either declared inside or outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function.
 
     var createIndicateHowManyTimesCalledFunction = function () {
-        var counter = 0;
+      var counter = 0;
 
-		var indicateHowManyTimesCalledFunction = function () {
-            counter += 1;
-            return counter;
-        };
+      var indicateHowManyTimesCalledFunction = function () {
+        counter += 1;
+        return counter;
+      };
 
-        // Note that there are no brackets after the function. This is because we are returning the function itself.
-        return indicateHowManyTimesCalledFunction;
-	};
+      // Note that there are no brackets after the function.
+      // This is because we are returning the function itself.
+      return indicateHowManyTimesCalledFunction;
+    };
 
     var indicateHowManyTimesCalled = createIndicateHowManyTimesCalledFunction();
     console.log(indicateHowManyTimesCalled());			// outputs 1
@@ -301,7 +304,7 @@ Function parameters and variables, either declared inside or outside the functio
 
 Closures are very powerful and one of the few supreme features of JavaScript.
 
-#### Handling a Variable Number of Parameters
+#### <a name="language-variable-number-of-parameters"></a>Handling a Variable Number of Parameters
 There is no function overloading available in JavaScript. If you define a function, including an object method, more than once but with a different number of parameters the final definition will overwrite the previous definitions. Instead of overloading a function we can achieve a similar effect by handling a varying number of arguments within the function itself.
 
 The looseness of JavaScript manifests itself not only via the dynamic typing of variables but the fact that, although you define a function with a particular number of parameters, it can be called with **any number** of parameters without causing an error.
@@ -338,7 +341,7 @@ You can also supply **more** parameters to simulate the equivalent of a C# _para
     console.log(sum(-10, 1, 1, 1, 1, 1));   // -5
     console.log(sum());                     // 0
 
-`arguments` is only an array-like object. You can check its `length` property and access individual items but, if you find yourself requiring a _genuine_ array you will need to convert it to one. In ES2015 you would generally call one of these lines. The `Array,prototype.slice` method does accept this array-like object but returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments.
+`arguments` is only an array-like object. You can check its `length` property and access individual items but, if you find yourself requiring a _genuine_ array you will need to convert it to one. In ES5 you would generally call one of these lines. The `Array,prototype.slice` method does accept this array-like object but returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments you can also supply the parameter indicating the first item index to slice from.
 
     var myFunc = function (fixedParam1, fixedParam2) {
       var allArgs = Array.prototype.slice.call(arguments);
@@ -357,7 +360,6 @@ Also see [MDN - Arguments Object](https://developer.mozilla.org/en-US/docs/Web/J
 ### <a name="language-calling-functions"></a>Calling Functions
 Below are brief explanations of the different ways that a function can actually be called. We will not go into too much detail as, other than for the first method, we will need to understand about objects in JavaScript and the `this` keyword.
 
-<p>        D81 - D97</p>
 #### Ordinary Call
 This is the most common way and the method used so far in the examples above. Remember that you don't necessarily have to supply the same number of parameters as is in the function definition. However, unless the function has been specifically written to handle a varying number of arguments, unwanted side effects are likely to occur at some point.
 
@@ -374,11 +376,9 @@ Call `object constructor` functions by preceding the call with the `new` keyword
 > Generally functions are named using camelCase. However, object constructor functions are conventionally named using Pascal case strictly as a visual instruction that calls to them should be preceded by `new`. More on those later.<br />
 > It is important that you stick to the above convention. It should override any notions of consistency. For example, later you will see patterns where a function is _effectively_ a constructor, in that its purpose is to create a particular object, but it is not in the form of object constructor above and a call to it should not be preceded by the `new` keyword. In this case it should have a camelCase name.
 
-TOMOVE?: The above should maybe be moved to section 2 (style requirements). First > maybe above and repeated, prob move second >.
-
-#### Via `call` or `apply` Keywords
+#### <a name="language-call-and-apply"></a>Via `call` or `apply` Keywords
 Both these **methods of the function prototype** allow you to call the function by specifying what `this` will be referring to within that function.
-For both of these, the object which represents `this` is supplied as the first parameter. The difference is that `apply` accepts an array containing all the arguments to be supplied to the function call as its only other parameter whereas `call` accepts each parameter individually...
+For both of these, the object which represents `this` is supplied as the first parameter. The difference is that `apply` accepts an array containing all the arguments to be supplied to the function call as its only other parameter whereas `call` accepts each parameter individually.
 
     myFunction.apply(thisArg, [argsArray])
     myFunction.call(thisArg[, arg1[, arg2[, ...]]])
@@ -387,7 +387,70 @@ For both of these, the object which represents `this` is supplied as the first p
 
 Also known as `IIFE`s, they are just anonymous function expressions that are declared and then executed immediately afterwards.
 
-They are a common way to encapsulate variables and functions so that they are private to that scope. With `"use strict";` allowed to be declared at function-level (the preferred way), it is also common to see a strict mode IIFE declared as the outer container of all code within a js file. Combining the above two reasons indicates that is also common to see IIFEs nested within other IIFEs.
+    (function () {
+      "use strict";
+
+      // Can access this variable only within this IIFE.
+    	var privateVariable = 0;
+
+      var privateFunction = function () {
+        // Can access or modify privateVariable in here.
+      };
+
+      // Can call privateFunction only within this IIFE.
+    }());
+
+Although make things look overly complicated, the outer parentheses are there partly by convention and partly to make sure that browsers know it contains an expression to prevent errors (a function declaration statement, as opposed to a function expression, cannot be immediately invoked).
+
+#### Privacy
+One major benefit of IIFEs is the ability to encapsulate variables. Because they can be scoped at function level any variables declared inside are private. Because the code above uses is within an IIFE we can declare "free-standing" variables and functions without any worries. It is effectively like a block in C# but just looks a bit more convoluted than a pair of braces. If it was not wrapped in an IIFE then `privateVariable` and `privateFunction` would be global.
+
+#### Strict Mode
+Another use for IIFEs is as a container for all code within a file because it advised to declare `"use strict";` at function level and not file level. If the outer IIFE starts with a `"use strict";` we have effectively achieved strict mode at file level. Of course we can nest other IIFEs within our outer IIFE `:D`.
+
+#### Local Copies of More Global Objects
+The example below shows how parameters can be define and passed in to allow us to work with local copies of global objects. Here `$` refers to the `jQuery` object within the IIFE. This would be useful if another library has also declared their own meaning for `S`. The second parameter was not supplied in the call so we now know the `undefined` really is undefined. Note that you are not obliged to use these parameters everywhere but they may help you overcome a problem you come across. The global `undefined` property can, unbelievably, be set to any value but, if it has, some part of your code is likely to break anyway.
+
+    (function ($, undefined) {
+      // $ now refers the jQuery object within here. We can avoid clashes
+      //
+      ...
+    }(jQuery));
+
+#### Module Pattern
+One common pattern used in JavaScript ES5 is the module pattern. A module here is effectively a singleton object which exposes properties and methods. However, it can also contain private members.
+Because the public object it returns is only created once we do not have to worry about the efficiency of not adding methods against its prototype.
+
+Because we are not building against a prototype we can use private members. Closures mean that the private variables do not get disposed of after the IIFE has finished executing because properties in the object it returns hold references to them (or there is a chain of references to each item).
+
+Here is one example of the module pattern. The code is just for demonstration purposes. There are quite a lot of variations of this pattern, mostly quite similar.
+
+    // This namespace would probably have been declared in an earlier file.
+    var AXA = {};
+
+    AXA.myModule = (function () {
+      "use strict";
+
+    	var privateCounter = 0;
+
+      var privateFunction = function () {
+        privateCounter += 1;
+        return privateCounter * 10;
+      };
+
+      var publicMembers = {};
+
+      publicMembers.colourCode = "";
+
+      publicMembers.method1 = function () {
+      	return privateFunction();
+      };
+
+      return publicMembers;
+    }());
+
+    console.log(AXA.myModule.method1());		// 10
+    console.log(AXA.myModule.method1());		// 20
 
 ### <a name="language-objects"></a>Objects
 
@@ -484,6 +547,10 @@ o.c(50);
 console.log(o.a); // 25
 
 
+
+
+
+The above example points it out - this within a method of an object initialiser.
 
 
 
@@ -824,6 +891,7 @@ Although you can easily define properties of an object on the fly using `person.
 define and remove properties (although can add via .fdfg= or ["hhuj"] =
 .........
 WE DELETE PROPERTIES using `delete` keyword. These members are not inherited prototype methods.
+I THINK I SAW SOME ADVICE saying just make the properties null...
 
 freezing.    The delete silently fails after the `freeze` call. `Object.preventExtensions()` will prevent anyone from adding new properties, `seal` prevent deletion but not modification...
 
@@ -837,7 +905,7 @@ freezing.    The delete silently fails after the `freeze` call. `Object.preventE
 	obj.c = 39;
 	outputOwnProperties(obj, "obj");
 
-object.create()
+  object.create()
 
 
 According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain), "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances."
@@ -881,37 +949,54 @@ According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_a
 [MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
 
 #### <a name="language-types-function"></a>Function
-Functions have been explained above.
-HOWEVER, can highlight members of the function object here.
-Explain that functions are actually objects...
+As explained above in [Functions](#language-functions), functions are actually objects which have properties and methods of their own.
 
-##### <a name="language-types-arguments-property"></a>arguments Property   DONE
-According to documentation `arguments` is a separately available object and is not technically accessed via the `arguments property` of a Function. When control enters the execution context of a function an `arguments` object is created.
+The main three properties of interest are `call()`, `apply()` and `bind()`. `call()` and `apply()` allow you to specify what `this` refers to within a function when it is executed on a particular occasion and are explained in [this section](#language-call-and-apply) further up.
 
-arguments.length
-arguments[_indexer_]
+The `bind()` method creates a _new function_ that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called. It works in all good browsers and IE9 and above.
 
-The arguments object is not an Array. It is similar to an Array, but does not have any Array properties except length. For example, it does not have the pop method. However it can be converted to a real Array:
+It is rather a specialist method that you won't use commonly but may need in certain situations were you need a copy of a function where the value of `this` within the function has been permanently altered. Optionally you can also make sure that the first few parameters are permanently set and the parameters supply when that new function is called are appended afterwards.
 
-	var args = Array.prototype.slice.call(arguments);
+One such real world specialist area is commonly used pattern when defining event handlers using ES2015 in React. Here is a partial sample. Don't worry too much about trying to understand it. The fact is that in the `onClickSave()` method `this` is not automatically bound to the CoursesPage class instance. Without the `bind()` call within the constructor to ensure that that _is_ now the case, the `this` in `onClickSave()` would actually refer to the `<input />` object that had just been clicked.
 
-`arguments` does have two potentially useful looking properties (maybe for dirty hacks) but use of these is not advised. `caller`, a reference to the function which called the current function, is obsolete. `callee` is a leftover from the days when named function expressions did not exist and we wanted an anonymous function to call itself recursively.
+    class CoursesPage extends React.Component {
+      constructor(props, context) {
+        super(props, context);
 
-(ADD TO FURTHER UP)
-We can now name our anonymous functions (:D) as below. The IE9-compatible Array map was used for convenience of demonstration, although ES5 shim will make it usable in lower versions):
+        this.onClickSave = this.onClickSave.bind(this);
+      }
 
-	var o =	[1,2,3,4,5].map(function factorial (n) {
-		return !(n > 1) ? 1 : factorial(n - 1) * n;
-	});
+      onClickSave() {
+        this.props.dispatch(courseActions.createCourse(this.state.course));
+      }
 
-	console.log(o);
+      render() {
+        debugger;
+        return (
+          <div>
+            ...
+            <input type="submit" value="Save" onClick={this.onClickSave} />
+          </div>
+        );
+      }
+    }
 
-See [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments)
+Here is an example creating a "partially applied" version of another function. Calling `addTen(y)` will return the result of a call to `add(10, y)`. The `this` keyword not used and so a value does not need to be supplied in the `bind()` call.
 
+    var add = function (x, y) {
+    	return x + y;
+    }
 
+    var addTen = add.bind(null, 10);
 
+    console.log(addTen(2));
 
+Also see [MDN - Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
 
+##### <a name="language-types-arguments-object"></a>arguments Object
+This object is explained in the [Handling a Variable Number of Parameters](#language-variable-number-of-parameters) section further up. Note that this is the _arguments object_. It is different from the _arguments property_ of the function object, which is deprecated.
+
+Also see [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments).
 
 
 
@@ -1775,17 +1860,15 @@ In ES5 this is **not** the case. Variable **hoisting** means that any declaratio
 
 This example shows that even use of strict mode fails to flag an error here. Even though it looks like `a` is being referenced before has been declared, its declaration has actually been hoisted to the start of the function. The alert window will show a 3. The `var a = 17;` statement is even within a block that will never be executed. If you deleted the declaration line, strict mode will then flag an error.
 
-```
-(function () {
-  "use strict";
+    (function () {
+      "use strict";
 
-  a = 3;
-  alert(a);
-  if (false) {
-    var a = 17;
-  }
-}());
-```
+      a = 3;
+      alert(a);
+      if (false) {
+        var a = 17;
+      }
+    }());
 
 #### Hanging Opening Braces
 *Never* put opening braces on a new line. They should be hanging at the end of the previous line.
@@ -1975,7 +2058,11 @@ A lot of the time these days you will use ASP.NET bundling to include external C
 Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, `async` attribute is only supported in version 10 and above.
 
 #### Common Code Files
-You will want to include third-party libraries before your own code. After those, some of your script files may contain common variables or other common code. For example, you may have code that overrides certain Kendo functionality and makes certain features behave the way you want them to or you may have variables whose value you may want to bind to ASP.NET tags or razor variables. Include these files next.
+You will want to include third-party libraries before your own code.
+
+Make sure that, if you have declared a namespace for your code that this is the first file containing your own code to be included.
+
+After those, some of your script files may contain common variables or other common code. For example, you may have code that overrides certain Kendo functionality and makes certain features behave the way you want them to or you may have variables whose value you may want to bind to ASP.NET tags or razor variables. Include these files next.
 
 ### <a name="style-use-bundling"></a>Use Bundling
 Bundling is where certain files, e.g. scripts and styles, are gathered together in one `bundle`. It helps improve performance by reducing the number of separate requests that need to be served when a page is opened in somebody's browser.
@@ -1997,12 +2084,11 @@ Because of the above there is no real need for you to directly include minified 
 *  ["default" Operator, Using ||](#tips-default-operator)
 *  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
 *  [that (or self) Variables](#tips-that-or-self-variables)
-*  [Inheritance](#tips-inheritance)
+*  [Inheritance](#tips-inheritance) ??
 *  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
 *  [eval Keyword Trick](#tips-eval-keyword-trick)
 *  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
-*  [Creating Modules (Singletons)](#tips-creating-modules-singletons)
-*  [Defining an Obect in a Readable Manner](#tips-defining-an-obect-in-a-readable-manner)
+*  [Defining an Object in a Readable Manner](#tips-defining-an-obect-in-a-readable-manner)
 *  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
 *  [String Format Example](#tips-string-format-example)
 *  [Deferred Object](#tips-deferred-object)
@@ -2051,7 +2137,7 @@ Explain the two places it can be used.
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
 <p>    eval() - avoid. State the one case where have used.</p>
 ### <a name="tips-sample-equality-comparisons"></a>Sample Equality Comparisons
-### <a name="tips-creating-modules-singletons"></a>Creating Modules (Singletons)
+NOTE: Creating Modules (Singletons) was after this section but has now been moved to IIFEs in sec 1
 ### <a name="tips-defining-an-obect-in-a-readable-manner"></a>Defining an Obect in a Readable Manner
 <p>    My pattern</p>
 <p>    Object.create()</p>
