@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as courseActions from "../../actions/courseActions";
 
 class CoursesPage extends React.Component {
@@ -32,16 +33,19 @@ class CoursesPage extends React.Component {
 
     // With this we only called "connect" at the bottom with one parameter.
     // He is showing us the ugly way first.
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    ////this.props.dispatch(courseActions.createCourse(this.state.course));
+
+    // DC: Here he has now introduced mapDispatchToProps further down.
+    this.props.actions.createCourse(this.state.course);
   }
 
   courseRow(course, index) {
     // DC: The key does not seem to appear in the output.
+    //     He said key is needed when iterating.
     return <div key={index}>{course.title}</div>;
   }
 
   render() {
-    debugger;
     return (
       <div>
         <h1>Courses</h1>
@@ -57,23 +61,42 @@ class CoursesPage extends React.Component {
 //export default CoursesPage;
 
 // Static member...
+// DC: Need to add things in here to avoid "... is missing in props validation".
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
+  // Once defined mapDispatchToProps, dispatch is no longer injected. OK because dispatch is supplied to mapDispatchToProps.
+  //dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired,
+  ////createCourse: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired
 };
+// DC: This means we DO have some "type specification".
+
+//
+// Redux related functions.
+//
 
 // Now we want a Component that can interact with redux. Both "map"s are functions.
 function mapStateToProps(state, ownProps) {
-  debugger;
   return {
-    courses: state.courses          // CourseReducer - see file (he named it that for distinguishability of tabs).
+    // DC: This give the component the "this.props.courses" property.
+    courses: state.courses          // CourseReducer - see file (he named the file that for distinguishability of tabs).
   };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
+  return {
+    // Manual mapping:
+    ////createCourse: course => dispatch(courseActions.createCourse(course))
+    // actions are "dispatch"ed.
+
+    // Now using a redux helper function. All actions in courseActions now bound in one go.
+    actions: bindActionCreators(courseActions, dispatch)
+  };
 }
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+// These names used in redux docs but could use different ones.
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
 
+// DC: He used this inferior way first (no mapDispatchToProps parameter).
 // When omit second parameter, the Component gets a dispatch() property attached to it (to this.props).
-export default connect(mapStateToProps)(CoursesPage);
+////export default connect(mapStateToProps)(CoursesPage);
