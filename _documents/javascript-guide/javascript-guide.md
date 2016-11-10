@@ -761,14 +761,23 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 	fruits[0] = "Orange";
 	console.log(shallowCopy[0]);				   // "Apple"
 
-Splice generally means joining together two pieces. However, confusingly, the `splice` method actually allows you to split an array by removing a particular number of items starting from a particular index of the array an returning them in a separate one. The parameter for the number of items is optional.
+It looks like the `splice` method was named after the process of splicing film reels. It allows you to split an array into two separate arrays by removing items from the original array at a particular index and returning them in a second array. There are effectively _three_ overloads. All require you specify the index from which to start removing items. A second, optional parameter allows you to specify how many items to remove, as in this example:
 
-	var array1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  	var array1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-	// Remove 3 items starting with the one at array1[4]
-	var array2 = array1.splice(4, 3);
-	console.log(array1);					   // [0, 1, 2, 3, 7, 8, 9]
-	console.log(array2);					   // [4, 5, 6]
+  	// Remove 3 items starting with the one at array1[4]
+  	var array2 = array1.splice(4, 3);
+  	console.log(array1);					   // [0, 1, 2, 3, 7, 8, 9]
+  	console.log(array2);					   // [4, 5, 6]
+
+Thirdly, you can specify any number of array items which you would like to be inserted into the "gap" left where the items were removed. This example is the same as the last one except it inserts 2 new items (100 and 200) into the original array where the 3 items were removed:
+
+    var array1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    // Remove 3 items starting with the one at array1[4]
+    var array2 = array1.splice(4, 3, 100, 200);
+    console.log(array1);					   // [0, 1, 2, 3, 100, 200, 7, 8, 9]
+    console.log(array2);					   // [4, 5, 6]
 
 ##### Functional Programming Libraries
 There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js](http://danieltao.com/lazy.js/), which add far richer, functional-style data manipulation of arrays (and other objects in general. Here is a simple example (although there are JavaScript map and reduce methods which work in IE9):
