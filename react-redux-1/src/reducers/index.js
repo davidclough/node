@@ -2,9 +2,11 @@
 
 import {combineReducers} from "redux";
 import courses from "./courseReducer";    // DC: He uses different names for readability when used.
+import authors from "./authorReducer";
 
 const rootReducer = combineReducers({
-  courses
+  courses,
+  authors
 });
 
 export default rootReducer;

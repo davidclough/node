@@ -4,6 +4,7 @@ import App from "./components/App";
 import HomePage from "./components/home/HomePage";
 import AboutPage from "./components/about/AboutPage";
 import CoursesPage from "./components/course/CoursesPage";
+import ManageCoursePage from "./components/course/ManageCoursePage";
 
 // NOTE(DC): I stuck braces in here instead of brackets and got compilation errors.
 //           In actual fact, the compilation error was being indicated be the command line but
@@ -18,6 +19,8 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
     <Route path="courses" component={CoursesPage} />
+    <Route path="course" component={ManageCoursePage} />
+    <Route path="course/:id" component={ManageCoursePage} />
     <Route path="about" component={AboutPage} />
   </Route>
 );

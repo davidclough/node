@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { Router, browserHistory } from "react-router";      // bH uses HTML 5 Push State.
 import routes from "./routes";
 import { loadCourses } from "./actions/courseActions";
+import { loadAuthors } from "./actions/authorActions";
 import "./styles/styles.css";     // Webpack can import CSS files too (using this line).
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,6 +15,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // May want to rehydrate your store here.
 const store = configureStore();
 store.dispatch(loadCourses());
+store.dispatch(loadAuthors());
 
 render(
   <Provider store={store}>
