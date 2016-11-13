@@ -2,31 +2,28 @@ TO DO NEXT
 ----------------
 
 
+Section 3:
+
+Establish all sub-sections.
+    Decide if the "inheritance with privacy" is worth even mentioning given its inefficiency concerning method definition
+        It may be worth mentioning the possibility and the problems with it. NO NEED TO SHOW AN EXAMPLE (maybe a link).
+    Import/export pattern?
+
+    Deferred - can do
 
 
 
+Arrange the contents and section shells
 
+Fill in all sections
+    Can always add any odd ones this think of at a later date.
 
-
-
-            
-            
-            
-            
-            
- // Can maybe add to arrays section.
-// NO: There is more to destructuring than just arrays - http://www.2ality.com/2015/01/es6-destructuring.html  ********
-            
-// Array destructuring.
-let myColours = ["Red", "Green", "Blue"];
-let [red, green, blue] = myColours;
-console.log(green);
-
-let obj = { first: 'Jane', last: 'Doe' };
-let { first: f, last: l } = obj;
-console.log(l);
-
-
+    
+    
+    
+    
+    
+    
             
             
 var w = new Widget();

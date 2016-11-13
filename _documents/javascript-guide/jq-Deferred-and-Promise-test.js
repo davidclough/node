@@ -22,7 +22,6 @@ for (var i = 1; i <= 7; i++) {
 }
 
 $.when(promises[1], promises[2], promises[3], promises[4], promises[5], promises[6], promises[7]).done(function (promise1, promise2) {
-  // Handle both XHR objects
   console.log("All functions completed");
 });
 

@@ -2,15 +2,13 @@
 ## Sections
 
 1. [JavaScript Language (ECMAScript 5)](#language-contents)
-2. [Coding Rules and Style](#style-contents)
+2. [Coding Style and Guidelines](#style-contents)
 3. [Patterns, Tips and Tricks](#tips-contents)
-4. Associated Tools and Useful Libraries (only brief - with links)
-    JQ and other types of library, testing, (there will be a list like this somewhere in this doc)
-    yes - SEE #devtools at bottom of document. (there is also a jquery section above)
+4. [Associated Tools and Useful Libraries](#tools-and-libraries-contents)
 
 <hr />
 
-<a name="language-contents"></a>[JavaScript Language (ECMAScript 5)](#language)
+## <a name="language-contents"></a>JavaScript Language (ECMAScript 5)
 
 *  [Document Scope](#language-document-scope)
 *  [Language Overview](#language-overview)
@@ -54,8 +52,6 @@ USEFUL LINKS
 [http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
 [http://www.w3schools.com/js](http://www.w3schools.com/js)
 
-
-## <a name="language"></a>JavaScript Language (ECMAScript 5)
 
 ### <a name="language-document-scope"></a>Document Scope
 This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help people learn the language and techniques that can help tame it.
@@ -189,7 +185,7 @@ WRITE YOUR CODE WITH THE INTENTION OF IT BEING EVALUATED LIKE THIS, do not rely 
 
 > You should stick with the idea of declaring functions before they are called. Using function expression syntax helps...
 
-> If you are not using `strict mode` (<a href="#style-strict-mode">more</a> about this later) the runtime will implicitly create the variable for you, a situation can cause "hard to find" errors and which sensible people want to avoid.
+> If you are not using `strict mode` ([more](#style-strict-mode) about this later) the runtime will implicitly create the variable for you, a situation can cause "hard to find" errors and which sensible people want to avoid.
 
 #### File Organisation
 Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls.
@@ -1589,9 +1585,7 @@ Window setTimeout() Method
 <hr dummy="_" />
 
 
-
-
-<a name="style-contents"></a>[Coding Rules and Style](#style)
+## <a name="style-contents"></a>Coding Style and Guidelines
 
 *  [Namespaces](#style-namespaces)
 *  [Naming Conventions](#style-naming-conventions)
@@ -2083,49 +2077,31 @@ There are easy-to-use facilities in ASP.NET for bundling. You can define your bu
 Because of the above there is no real need for you to directly include minified versions of common libraries, like jQuery, directly. You then do not have the inconvenience of a JavaScript exception occurring in some mysterious minified code when you are developing.
 
 
+<hr />
 
+## <a name="tips-contents"></a>Patterns, Tips and Tricks
 
-<a name="tips-contents"></a>[Patterns, Tips and Tricks](#tips)
-
-*  ["use strict"](#tips-use-strict)
-*  [Modification of Existing Code](#tips-modification-of-existing-code)
-*  ["guard" Operator, Using &&](#tips-guard-operator)
-*  ["default" Operator, Using ||](#tips-default-operator)
-*  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
-*  [that (or self) Variables](#tips-that-or-self-variables)
-*  [Inheritance](#tips-inheritance) ??
-*  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
-*  [eval Keyword Trick](#tips-eval-keyword-trick)
-*  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
-*  [Defining an Object in a Readable Manner](#tips-defining-an-obect-in-a-readable-manner)
-*  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
-*  [String Format Example](#tips-string-format-example)
-*  [Deferred Object](#tips-deferred-object)
-*  Too Many Optional Parameters
-
-[Custom jQuery Plugins](#organisation-custom-jquery-plugins)
-SECTION 4? That will be more of a general section about tools and libraries, rather than specifically about jQuery (not going into detail about that).
-
-
-    instance.open = function (extend) {
-
-        //Use args instead of a many arguments for hopefully easier dialog creation
-        var options = $.extend({
-            name: "jquery-ui-window",
-            width: 500,
-            dialogClass: "ui-dialog",
-            showClose: true,
-            title: '',
-            urlOnClose: null,
-            onClosed: null
-        }, extend);
+-  [Modification of Existing Code](#tips-modification-of-existing-code)
+-  ["guard" Operator, Using &&](#tips-guard-operator)
+-  ["default" Operator, Using ||](#tips-default-operator)
+-  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
+-  [that (or self) Variables](#tips-that-or-self-variables)
+-?  [Inheritance](#tips-inheritance) ??
+Decide if the "inheritance with privacy" is worth even mentioning given its inefficiency concerning method definition
+    It may be worth mentioning the possibility and the problems with it. NO NEED TO SHOW AN EXAMPLE (maybe a link).
+-  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
+-  [eval Keyword Trick](#tips-eval-keyword-trick)
+-  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
+-?  [Defining an Object in a Readable Manner](#tips-defining-an-object-in-a-readable-manner)
+-??  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
+-  [String Format Example](#tips-string-format-example)
+-  [Deferred Object](#tips-deferred-object)
+-  [Too Many Function Parameters](#tips-too-many-function-parameters)
+-? Module patter +   Import/export (here or in tools and libraries?)
 
 
 
-## <a name="tips"></a>Patterns, Tips and Tricks
-### <a name="tips-use-strict"></a>"use strict"
-Explain the main effects.
-Explain the two places it can be used.
+
 ### <a name="tips-modification-of-existing-code"></a>Modification of Existing Code
 ### <a name="tips-guard-operator"></a>"guard" Operator, Using &&
 <p>    "guard"          &&    D26</p>
@@ -2143,11 +2119,12 @@ Explain the two places it can be used.
 <p>    console.log();</p>
 <p>    debugger;</p>
 <p>    console.trace();</p>
+ADD LINK TO THE console object
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
 <p>    eval() - avoid. State the one case where have used.</p>
 ### <a name="tips-sample-equality-comparisons"></a>Sample Equality Comparisons
 NOTE: Creating Modules (Singletons) was after this section but has now been moved to IIFEs in sec 1
-### <a name="tips-defining-an-obect-in-a-readable-manner"></a>Defining an Obect in a Readable Manner
+### <a name="tips-defining-an-object-in-a-readable-manner"></a>Defining an Object in a Readable Manner
 <p>    My pattern</p>
 <p>    Object.create()</p>
 ### <a name="tips-defining-an-efficient-constructor-for-an-object-with-many-instances"></a>Defining an Efficient Constructor for an Object with Many Instances
@@ -2155,18 +2132,116 @@ Current JavaScript engines optimize based on the "shape" of an object, adding a 
 Basically properies declared within ctor function and methods appended afterwards.
 ### <a name="tips-string-format-example"></a>String Format Example
 ### <a name="tips-deferred-object"></a>Deferred Object
+POINT TO jquery subsection and also mention that they have added to ES ...
 [https://api.jquery.com/category/deferred-object/](https://api.jquery.com/category/deferred-object/)
 Uses Promise object. It does NOT use the JS Promise object underneath, only its own Promise.
 
 There is a Promise built into JavaScript but inferior. [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+### <a name="tips-too-many-function-parameters"></a>Too Many Function Parameters
+    instance.open = function (extend) {
+
+        //Use args instead of a many arguments for hopefully easier dialog creation
+        var options = $.extend({
+            name: "jquery-ui-window",
+            width: 500,
+            dialogClass: "ui-dialog",
+            showClose: true,
+            title: '',
+            urlOnClose: null,
+            onClosed: null
+        }, extend);
+
+
+
+
+<hr />
+
+## <a name="tools-and-libraries-contents"></a>Associated Tools and Useful Libraries
+
+-  [jQuery](#tools-jquery)
+-  [User Interface Libraries](#tools-ui-libraries)
+-  [Forms](#tools-forms)
+-  [Shims and Polyfills](#tools-shims-and-polyfills)
+-  [Functional Programming and Data Manipulation](#tools-functional-and-data)
+-  [Transpilers](#tools-transpilers)
+-  [JSFiddle](#tools-jsfiddle)
+-  [Code Editors](#tools-code-editors)
+-  [Linting/Hinting](#tools-linting)
+-  [Testing](#tools-testing)
+-  [Documentation Libraries](#tools-documentation-libraries)
+-  [Graphics Libraries](#tools-graphics)
+-  [MV* Frameworks](#tools-mv-frameworks)
+-  [Node.js](#tools-node-js)
+
+
+### <a name="tools-jquery"></a>jQuery
+#### Attaching Event Handlers
+#### Creating Plugins
+#### Overriding Existing Plugins
+#### Deferred Object and Promises
+My sample is in "jq-Deferred-and-Promise-test.js"
+
+### <a name="tools-ui-libraries"></a>User Interface Libraries
+jquery UI - plenty more, many open source, others paid for
+### <a name="tools-forms"></a>Forms
+Forms and validation
+jquery.form.js
+jquery.validate.js
+### <a name="tools-shims-and-polyfills"></a>Shims and Polyfills
+Also known as shivs
+explain difference - String.trim() can do easy shim... - Name an ES2015 feature from react course where polyfill was needed - the import in the file will be at the top
+es5-shim.js
+### <a name="tools-functional-and-data"></a>Functional Programming and Data Manipulation
+lodash, lazy - Functional Programming and Data Maniplulation, immutablejs
+http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy-js/
+### <a name="tools-transpilers"></a>Transpilers
+Babel/traceur and TS
+Also mention TS language and future ES versions
+### <a name="tools-jsfiddle"></a>JSFiddle
+open up and explore. Allows you to specify language, use F12. Most examples in this doc...
+Save your most memorable fiddles, as they call them.
+### <a name="tools-code-editors"></a>Code Editors
+WebStorm is number 1. Atom is commonly used. Visual Studio code already gained good reputation...
+### <a name="tools-linting"></a>Linting/Hinting
+It is far better to use these tools as you develop rather than one big audit at end where you change lots of code and things break because they worked but for the wrong reason
+### <a name="tools-testing"></a>Testing
+testing
+<p>    Testing (Simon wrote a wiki article)</p>
+<p>    QUnit or Jasmine      Mocha</p>
+<p>    Unit testing and behaviour testing (browser testing)</p>
+TODO: May need a fifth section. In testing just mention an example of the two types of test I have done in Jasmine. Mention Karma the test runner and other Jasmine-related things.
+Briefly mention some other libraries. Also mention that the big JS frameworks tend to have their own preferred testing libraries.
+[chimp.js](https://chimp.readme.io/)
+
+### <a name="tools-documentation-libraries"></a>Documentation Libraries
+Ask Andrew. Also point to any docs or intranet posts he did.
+<p>    Leave for Andrew</p>
+JSDoc                                ? Will certainly have to if this doc to be finished in time. If got more time then will be able to do by self in conjuction with him.
+http://documentation.js.org/         ?
+
+### <a name="tools-graphics"></a>Graphics Libraries
+  Raphaël, three.js (web gl), processjs (2D), velocity js animations, greensock
+### <a name="tools-mv-frameworks"></a>MV* Frameworks
+Mention 3 or 4 prominent ones and there are a million others. Cover different fields...and have different stengths
+Often have there own "preferred testing library",
+### <a name="tools-node-js"></a>Node.js
+A whole topic of its own - would need separate guide.
+
+
+
+<hr />
+
+
+jQuery below will just be one sub-section.
+MOVE THIS STUFF UP TO tools-jquery
+
 
 1. [jQuery](#jquery)
 	*  [Overview](#jquery-overview)
 	*  [Attaching Event Handlers](#jquery-attaching-event-handlers)
 	*  [Creating Plugins](#jquery-creating-plugins)
 	*  [Overriding Existing Plugins](#jquery-overriding-existing-plugins)
-	*  [AJAX Requests](#jquery-ajax-requests)
-	*  [Tips and Tricks](#jquery-tips-and-tricks)
+	*  [Deferred Object and Promises](#jquery-deferred-object)
 
 ## <a name="jquery"></a>jQuery
 This is a whole AREA of its own and will not be discussed in detail here, only specific areas of interest.
@@ -2188,86 +2263,23 @@ $( ".widget-container" ).on( "click", ".widget", function() {
 ```
 ### <a name="jquery-creating-plugins"></a>Creating Plugins
 ### <a name="jquery-overriding-existing-plugins"></a>Overriding Existing Plugins
-### <a name="jquery-ajax-requests"></a>AJAX Requests
-### <a name="jquery-tips-and-tricks"></a>Tips and Tricks
-<p>    CSS class change detector</p>
 
 
 
 
 
-1. [ECMAScript 6 and Beyond](#future)
+<hr />
 
-## <a name="future"></a>ECMAScript 6 and Beyond
-<p>    const, let, properties...</p>
+CAN POSSIBLY DELETE EVERYTHING BELOW.
+There are enough external reference links.
+JS to big to sum up a list of Gotchas, like CSS guide. Already got Patterns, Tips and Tricks.
 
-1. [Development Tools](#devtools)
-	*  [Browser Development Tools](#devtools-browser-development-tools)
-	*  [JSFiddle](#devtools-jsfiddle)
-	*  [Simple Testbed Project](#devtools-simple-testbed-project)
-	*  [Hinting and Linting](#devtools-hinting-and-linting)
-	*  [Writing Tests](#devtools-writing-tests)
-	*  [TypeScript](#devtools-typescript)
-
-## <a name="devtools"></a>Development Tools
-### <a name="devtools-browser-development-tools"></a>Browser Development Tools
-### <a name="devtools-jsfiddle"></a>JSFiddle
-<p>    JSFiddle - https://jsfiddle.net/</p>
-### <a name="devtools-simple-testbed-project"></a>Simple Testbed Project
-### <a name="devtools-hinting-and-linting"></a>Hinting and Linting
-### <a name="devtools-writing-tests"></a>Writing Tests
-<p>    Testing (Simon wrote a wiki article)</p>
-<p>    QUnit or Jasmine      Mocha</p>
-<p>    Unit testing and behaviour testing (browser testing)</p>
-> TODO: May need a fifth section. In testing just mention an example of the two types of test I have done in Jasmine. Mention Karma the test runner and other Jasmine-related things.
-> Briefly mention some other libraries. Also mention that the big JS frameworks tend to have their own preferred testing libraries.
-[chhimp.js](https://chimp.readme.io/)
-### <a name="devtools-typescript"></a>TypeScript
-<p>    TypeScript (coffeescript traceUR)</p>
-
-There is no escape from JavaScript. The benefits of TS have been explained but do not run to it as a means of avoiding JS. What you write may be partially or fully strongly-typed but it is then converted into ordinary JavaScript. You can choose which ECMAScript version it is converted to but, for client-side web development, it is ES5. You will get benefits from certain errors being avoided pre-rendering but when your web page doesn't behave you will have to debug the generated ES5 code.
-
-
-1. [Documentation Tools](#doctools)
-
-## <a name="doctools"></a>Documentation Tools
-<p>    Leave for Andrew</p>
-JSDoc                                ? Will certainly have to if this doc to be finished in time. If got more time then will be able to do by self in conjuction with him.
-http://documentation.js.org/         ?
-
-1. [Additional Libraries](#libraries)
-	*  [Functional Programming and Data Maniplulation](#libraries-functional-programming-and-data-maniplulation)
-	*  [User Interface](#libraries-user-interface)
-
-## <a name="libraries"></a>Additional Libraries
-### <a name="libraries-functional-programming-and-data-maniplulation"></a>Functional Programming and Data Maniplulation
-<p>    Lodash (Underscore), Lazy</p>
-<p>        http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy-js/</p>
-### <a name="libraries-user-interface"></a>User Interface
-<p>    jQuery UI</p>
-<p>    ADD SOME MORE MENTIONS LATER</p>
-<p>        Google it - https://en.wikipedia.org/wiki/List_of_JavaScript_libraries</p>
-OTHER
-es5-shim.js
-FORMS
-jquery.form.js
-jquery.validate.js
-
-DATA
-JSON
-
-http://requirejs.org/
-
-MV* Frameworks
-Never ending list of these ... Backbone, Angular, Ember, Knockout...
-There's a tiny MVP library called [http://riotjs.com/](Riot) that an experienced JavaScript programmer can learn in an afternoon (not my words though). Although it may not be as powerful as the other frameworks it takes so little time to learn that the question of, "What if I invest lots time learning one and it turns out that others are better?", doesn't really matter.
-
-REALLY NEED TO AVOID MENTIONING EVERYTHING UNDER SUN - only stuff which got something to say about.
-No mention: Server-side JavaScript - will mention Node.js but also point to Nancy (or on Jonny used)
+CAN PUT THE "code conventions" ones at start of section 3. SAME with gotcha links.
 
 
 
-e5-shim
+
+
 
 1. [References](#references)
 
@@ -2299,8 +2311,3 @@ Crockford book.
 If can sum these up briefly then can put this somewhere near bottom of document.
 Good: Good, bad, awful but if use the good stuff and structure well then it can be tamed to a large extent...
 There is an appendix for these in Crockford book.
-
-1. [Therapy](#therapy)
-
-## <a name="therapy"></a>Therapy
-<p>    Some people are immune to the effects of JavaScript but, for others, Strong risk that may get to like. If... contact Dr... for therapy.</p>
