@@ -1956,7 +1956,8 @@ Of course, you can always add the same method against the object type. This is l
     if (!String.format) {
         String.format = function (formatString) {
             var args = Array.prototype.splice.call(arguments, 1);
-            return formatString.replace(/{(\d+)}/g, function (match, number) {   // number is the value of the 1st capture.
+            // number is the value of the 1st capture.
+            return formatString.replace(/{(\d+)}/g, function (match, number) {
                 return typeof args[number] != "undefined" ? args[number] : match;
             });
         };
@@ -2086,23 +2087,16 @@ Because of the above there is no real need for you to directly include minified 
 -  ["default" Operator, Using ||](#tips-default-operator)
 -  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
 -  [that (or self) Variables](#tips-that-or-self-variables)
--?  [Inheritance](#tips-inheritance) ??
-Decide if the "inheritance with privacy" is worth even mentioning given its inefficiency concerning method definition
-    It may be worth mentioning the possibility and the problems with it. NO NEED TO SHOW AN EXAMPLE (maybe a link).
 -  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
 -  [eval Keyword Trick](#tips-eval-keyword-trick)
--  [Sample Equality Comparisons](#tips-sample-equality-comparisons)
--?  [Defining an Object in a Readable Manner](#tips-defining-an-object-in-a-readable-manner)
--??  [Defining an Efficient Constructor for an Object with Many Instances](#tips-defining-an-efficient-constructor-for-an-object-with-many-instances)
--  [String Format Example](#tips-string-format-example)
+-  [Inheritance](#tips-inheritance)
 -  [Deferred Object](#tips-deferred-object)
 -  [Too Many Function Parameters](#tips-too-many-function-parameters)
--? Module patter +   Import/export (here or in tools and libraries?)
-
-
+-  [Module Patterns](#tips-module-patterns)
 
 
 ### <a name="tips-modification-of-existing-code"></a>Modification of Existing Code
+Link to linting in section 4.
 ### <a name="tips-guard-operator"></a>"guard" Operator, Using &&
 <p>    "guard"          &&    D26</p>
 ### <a name="tips-default-operator"></a>"default" Operator, Using ||
@@ -2110,11 +2104,6 @@ Decide if the "inheritance with privacy" is worth even mentioning given its inef
 ### <a name="tips-convert-something-to-a-boolean"></a>Convert Something to a Boolean with !!
 <p>    Convert to a Boolean        !!        D32</p>
 ### <a name="tips-that-or-self-variables"></a>that (or self) Variables
-### <a name="tips-inheritance"></a>Inheritance
-<p>        Just generally suggest ideas that COULD be implemented (different patterns, shared secrets, supermethods, keep hierarchies shallow) - patterns av in JS are diff from C#...</p>
-<p>        Also indicate that these may be described in separate file.</p>
-<p>        Also indicate that probably don't really need this for the size of our code bases and, if we ever do write larger code bases, consider using TypeScript.</p>
-<p>        Prototypical inheritance</p>
 ### <a name="tips-code-lines-which-aid-debugging"></a>Code Lines Which Aid Debugging
 <p>    console.log();</p>
 <p>    debugger;</p>
@@ -2122,15 +2111,12 @@ Decide if the "inheritance with privacy" is worth even mentioning given its inef
 ADD LINK TO THE console object
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
 <p>    eval() - avoid. State the one case where have used.</p>
-### <a name="tips-sample-equality-comparisons"></a>Sample Equality Comparisons
-NOTE: Creating Modules (Singletons) was after this section but has now been moved to IIFEs in sec 1
-### <a name="tips-defining-an-object-in-a-readable-manner"></a>Defining an Object in a Readable Manner
-<p>    My pattern</p>
-<p>    Object.create()</p>
-### <a name="tips-defining-an-efficient-constructor-for-an-object-with-many-instances"></a>Defining an Efficient Constructor for an Object with Many Instances
-Current JavaScript engines optimize based on the "shape" of an object, adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance.
-Basically properies declared within ctor function and methods appended afterwards.
-### <a name="tips-string-format-example"></a>String Format Example
+### <a name="tips-inheritance"></a>Inheritance
+KEEP THIS SHORT
+There is no need to show any example of inheritance using privacy.
+Although can indicate to the user that can modify the module pattern to define objects with private methods and inherit from them. NO SUCH THING AS PROTECTED without convoluted code.
+If can find a link can show that.
+Point the user towards working with prototypes and just prefix private members with underscore
 ### <a name="tips-deferred-object"></a>Deferred Object
 POINT TO jquery subsection and also mention that they have added to ES ...
 [https://api.jquery.com/category/deferred-object/](https://api.jquery.com/category/deferred-object/)
@@ -2151,6 +2137,13 @@ There is a Promise built into JavaScript but inferior. [https://developer.mozill
             onClosed: null
         }, extend);
 
+Explain other ways to extend/copy objects in ES2015
+
+### <a name="tips-module-patterns"></a>Module Patterns
+Provide a link to the module pattern explained further up
+Then explain about a new module pattern (or whatever the proper name is for it) that is available in TS and ES2015.
+Transpilers are an absolute requirement for this as not many browsers, if any, support it.
+It avoids PHP style JS where all files are ultimately cobbled together in effectively one giant scripte, hopefully where you have defined everything in a correct order and have not defined something repeatedly.
 
 
 
@@ -2198,7 +2191,8 @@ http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy
 Babel/traceur and TS
 Also mention TS language and future ES versions
 ### <a name="tools-jsfiddle"></a>JSFiddle
-open up and explore. Allows you to specify language, use F12. Most examples in this doc...
+open up and explore. Allows you to specify language (all common JS languages available)
+Use F12 at same time. Most examples in this doc...
 Save your most memorable fiddles, as they call them.
 ### <a name="tools-code-editors"></a>Code Editors
 WebStorm is number 1. Atom is commonly used. Visual Studio code already gained good reputation...
