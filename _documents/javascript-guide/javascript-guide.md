@@ -2157,6 +2157,7 @@ It avoids PHP style JS where all files are ultimately cobbled together in effect
 -  [Shims and Polyfills](#tools-shims-and-polyfills)
 -  [Functional Programming and Data Manipulation](#tools-functional-and-data)
 -  [Transpilers](#tools-transpilers)
+-  [Browser Debugging Tools](#tools-browser-debugging-tools)
 -  [JSFiddle](#tools-jsfiddle)
 -  [Code Editors](#tools-code-editors)
 -  [Linting/Hinting](#tools-linting)
@@ -2190,6 +2191,8 @@ http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy
 ### <a name="tools-transpilers"></a>Transpilers
 Babel/traceur and TS
 Also mention TS language and future ES versions
+### <a name="tools-browser-debugging-tools"></a>Browser Debugging Tools
+F12
 ### <a name="tools-jsfiddle"></a>JSFiddle
 open up and explore. Allows you to specify language (all common JS languages available)
 Use F12 at same time. Most examples in this doc...
