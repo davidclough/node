@@ -2248,8 +2248,31 @@ You may occasionally have a need to use this technique and it certainly helps to
 <p>    debugger;</p>
 <p>    console.trace();</p>
 ADD LINK TO THE console object
+
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
-<p>    eval() - avoid. State the one case where have used.</p>
+The `eval` should generally be very much avoided as it executes code from within a string (see [Keywords to Avoid](#style-keywords-to-avoid)).
+
+There is one situation where use of eval is a real help. When working with frameworks which generate HTML markup. Some of these frameworks create HTML elements containing postback JavaScript which they have generated.
+
+For example ASP.NET Web Forms renders its `<LinkButton>` controls as `<a>` tags where the `href` contains some JavaScript. Usually a postback to the server will occur when the user clicks on that link, something along the lines of the example below. Often other controls are referred to using Web Forms generated encoding, e.g. `ctl00$ctl00$ctl00$ctl00$ContentPlaceHolderMain$Cont...`.
+
+    <a href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(...)"..>
+      Perform Action
+    </a>
+
+Sometimes you may wish to latch on to that auto-generated postback code and call it from somewhare else. This could be if some other client-side action should trigger the same postback or if you wish to intercept the could with, say, a confirmation window where the postback is only performed if the user confirms.
+
+You could copy the generated href content and manually call that. This is rather fragile but, if you don't change the names of any controls, it will probably work.
+
+Another way is to call the href JavaScript via an `eval` statement. The first lines of this sample code grab the href content and the last one calls it at a later point.
+
+    var cancelBookingButton = $(".js-booking-cancel-button");
+    generatedCancelBookingCode = cancelBookingButton.attr("href");
+    ...
+    eval(generatedCancelBookingCode);
+
+ Now it doesn't matter if page or control is later edited as long as the control has the same CSS class.
+
 ### <a name="tips-inheritance"></a>Inheritance
 KEEP THIS SHORT
 There is no need to show any example of inheritance using privacy.
