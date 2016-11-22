@@ -2088,11 +2088,12 @@ Because of the above there is no real need for you to directly include minified 
 *  [Too Many Function Parameters](#tips-too-many-function-parameters)
 *  [Convert Something to a Boolean with !!](#tips-convert-something-to-a-boolean)
 *  [that (or self) Variables](#tips-that-or-self-variables)
----  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
--  [eval Keyword Trick](#tips-eval-keyword-trick)
--  [Inheritance](#tips-inheritance)
+*  [Code Lines Which Aid Debugging](#tips-code-lines-which-aid-debugging)
+*  [eval Keyword Trick](#tips-eval-keyword-trick)
+*  [Module Patterns](#tips-module-patterns)
+  *  [Modules in ES2015](#tips-modules-in-es2015)
+*  [Inheritance](#tips-inheritance)
 -  [Deferred Object](#tips-deferred-object)
--  [Module Patterns](#tips-module-patterns)
 
 ### <a name="tips-modification-of-existing-code"></a>Modification of Existing Code
 It is common sense that make logic changes to existing code comes with a risk of breaking things which were working. In more advanced languages/development tools there are many non-logical changes you may consider making to code which you come across without worry of breaking stuff, e.g. renaming variables or other tokens if they don't appear to explain themselves correctly or extracting some lines of code out into a method of their own.
@@ -2241,13 +2242,38 @@ One situation where you may see this pattern is within a callback function or an
     car.start();
     console.log(car.starter.active);
 
+Another academic example shows that, in a function directly within the global namespace, `this` refers to the `Window` object. Even in ordinary functions nested within that function the same is true. However, `this` within the anonymous callback function in the `$.each` refers to the object currently in the `value` parameter. `that` has been used to capture the value of `this` as it is in its parent function.
+
+    console.log("default this: " + this);											// [object Window]
+
+    function outerFunction() {
+      console.log("this within outerFunction: " + this);			// [object Window]
+
+    	function nestedFunction() {
+        console.log("this within nestedFunction: " + this);		// [object Window]
+
+        var that = this;
+    	  $.each([52, 97], function(index, value) {
+          // 52 then 97
+          console.log("this within anonymous $.each callback function: " + this);
+
+          // [object Window] both times. that has captured the value of this within
+          // the outer function.
+          console.log("that within anonymous $.each callback function: " + that);
+        });
+      }
+
+      nestedFunction();
+    }
+
+    outerFunction();
+
 You may occasionally have a need to use this technique and it certainly helps to appreciate the meaning of its presence when reading somebody else code.
 
 ### <a name="tips-code-lines-which-aid-debugging"></a>Code Lines Which Aid Debugging
-<p>    console.log();</p>
-<p>    debugger;</p>
-<p>    console.trace();</p>
-ADD LINK TO THE console object
+These consist of the `Console` object methods and the `debugger` statement and are explained in [this  section further up](#language-built-in-objects-console).
+
+Avoid leaving these lines within your code once you have finished debugging.
 
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
 The `eval` should generally be very much avoided as it executes code from within a string (see [Keywords to Avoid](#style-keywords-to-avoid)).
@@ -2273,12 +2299,146 @@ Another way is to call the href JavaScript via an `eval` statement. The first li
 
  Now it doesn't matter if page or control is later edited as long as the control has the same CSS class.
 
+### <a name="tips-module-patterns"></a>Module Patterns
+The module pattern in ES5 effectively creates a single instance of an object which has access to its own set of genuinely private variables and functions.
+
+Because only one instance of the object is ever defined there is no need to worry about the efficiency problem of not defining its methods against its `prototype` property.
+
+Here is a cut-down example of a module from one of our projects. The object only has one public method but often there will be more. The `pub` object is eventually returned by the module. The `priv` object, which is not returned and therefore only available within the module's outer function contains all the private stuff, although these could just as easily be standalone functions and variables.
+
+Additionally the `priv.performCommonPageSetupTasks();` function is called to perform some page initialisation tasks. Since the module object is created once and once only it can provide a useful place to perform setup code. However, this is a bit of a liberty and does imply some tight coupling between the code and the locations it is used. In this case it ensures that clicking one of the dialogue buttons will close the window.
+
+    AXA.confirmWindow = (function ($) {
+        "use strict";
+
+        var priv = {};
+        var pub = {};
+
+        priv.performCommonPageSetupTasks = function () {
+            $(function () {
+                $(priv.windowContentPlaceholderSelector).on(
+                        "click", ".js-confirm-ok, .js-confirm-cancel", function (event) {
+                    priv.getDialog().dialog("close");
+                });
+            });
+        };
+
+        priv.windowContentPlaceholderSelector = "#windowContentPlaceholder";
+
+        priv.getDialog = function () {
+            return $(priv.windowContentPlaceholderSelector);
+        };
+
+        priv.getWindowContent = function (message, onSuccess) {
+            $.ajax({
+                ...
+            });
+        };
+
+        priv.setButtonEventHandlers = function (onConfirm) {
+            // Detach all previously added handlers which need to be replaced.
+            $(priv.windowContentPlaceholderSelector).off("click", ".js-confirm-ok");
+            // Attach the new ones.
+            $(priv.windowContentPlaceholderSelector).on("click", ".js-confirm-ok", onConfirm);
+        };
+
+        pub.contentMarkupUrl = undefined;
+
+        pub.show = function (message, title, onConfirm) {
+            var windowContentPlaceholder = $(priv.windowContentPlaceholderSelector);
+            priv.getWindowContent(message, function (result) {
+                ...
+            });
+            priv.setButtonEventHandlers(onConfirm);
+        };
+
+        // This call is not actually part of the module pattern but can be convenient.
+        priv.performCommonPageSetupTasks();
+
+        return pub;
+
+    })(jQuery);
+
+The public `contentMarkupUrl` property is set in a base page to a simple ASPX page whose generated content will then be fetched on the fly when the window is shown.
+
+    <script>
+        AXA.confirmWindow.contentMarkupUrl = '<%= GetRouteUrl("ClientConfirmWindow", null) %>';
+    </script>
+
+One place where the window is displayed is if a user tries to cancel a booking:
+
+    AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
+        eval(generatedCancelBookingCode);
+    });
+
+There are many variations of the pattern but all are essentially very similar.
+
+#### <a name="tips-modules-in-es2015">Modules in ES2015
+Modules in ES2015 are a totally different beast and are nothing to do with creating singleton objects.
+
+Instead they provide a mechanism by which programmers can avoids the PHP style situations whereby code in all your thoughtfully separated files is ultimately cobbled together in what is effectively one giant script. You hope that you have defined everything in a correct order and have not defined something repeatedly as a result of a file being included in the output more than once.
+
+The `import` and `export` keywords are at the root of this pattern. When you define a code file you can export one or more classes, functions or standalone variables as you like. Consuming code files can contain import statements which refer to other files and particular entities within those files which you would like to utilise in the current one.
+
+The imports do not result in script being manually "copied and pasted" elsewhare. Instead an `import` statement is effectively like a combination of (a) an assembly reference and (b) a C# `using` directive. This means that (a) the imported code is merely linked to, multiple imports of the same entity will have no further effect, and (b) you can give different names to the imported entities than the names they were originally defined with.
+
+There is now less need to define namespaces and worry about what would previously have been global variables and functions. If there is not `export` method for a particular entity within a file it will only ever be accessible from within that file. Even if it is exported it will only be available within files which import it. This type of "encapsulation via files" seems rather different from "encapsulation via classes" but JavaScript is not a genuinely object-oriented language anyway.
+
+Transpilers, like Babel and TypeScript, are an absolute requirement as not many browsers, if any, support them.
+
+Since this is mainly an ES5 document, and easily runable example would be difficult to create, we will avoid showing examples but they look like a very exciting step forward, certainly in the world of JavaScript.
+
+[MDN - import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+
+[MDN - export](https://developer.mozilla.org/en/docs/web/javascript/reference/statements/export)
+
+[http://www.2ality.com/2014/09/es6-modules-final.html](http://www.2ality.com/2014/09/es6-modules-final.html)
+
 ### <a name="tips-inheritance"></a>Inheritance
-KEEP THIS SHORT
-There is no need to show any example of inheritance using privacy.
-Although can indicate to the user that can modify the module pattern to define objects with private methods and inherit from them. NO SUCH THING AS PROTECTED without convoluted code.
-If can find a link can show that.
-Point the user towards working with prototypes and just prefix private members with underscore
+Prototypical inheritance has already been covered in [](). One downside of defining methods against the prototype of an object defined by a constuctor function is that `private` variables are not realistically possible due to the fact that the object methods are defined externally and not encapsulated within the constructor function. Instead people often resort to a poor man's version of `private` or `protected` by prefixing the names with an underscore (or maybe using more underscores before and after the main part of the name). This is not preventing any form of tampering, merely giving consuming programmers a visual indication.
+
+This is not especially advised but you can achieve genuinely `private` members of objects within a hierarchy. Achieving `protected` variables, certainly without convoluted code, is unrealistic but you can pass "secret" variable from the child to the parent.
+
+    var createVehicle = function (spec, secret) {
+        spec = spec || {};
+        secret = secret || {};
+
+        // These will not be accessible in an object created using createGroundVehicle().
+    		var privateVariable = 999;
+        var privateFuntion = function () {
+    			console.log();    
+        };
+
+        var o = {};
+
+        o.name = spec.name;
+
+        o.getSecret = function () {
+            return secret;
+        };
+
+        return o;
+    };
+
+    var createGroundVehicle = function (spec, secret) {
+        secret = secret || {};
+
+        var o = createVehicle(spec, secret)
+        o.wheelCount = spec.wheelCount;
+        return o;
+    };
+
+    var plane1 = createVehicle({ name: "Spitfire" });
+    console.log(plane1);
+
+    var car1 = createGroundVehicle({ name: "Lotus", wheelCount: 4 }, "My secret message");
+    console.log(car1);
+    console.log(car1.getSecret());
+
+As with the module method you can find lots of little variations on the internet.
+
+The _disadvantage_ here is that, every time one an object is created here using one of these functions, it methods are also defined afresh. Overall it is probably better to use prototypical inheritance if you need to define some hierarchy.
+
 ### <a name="tips-deferred-object"></a>Deferred Object
 POINT TO jquery subsection and also mention that they have added to ES ...
 [https://api.jquery.com/category/deferred-object/](https://api.jquery.com/category/deferred-object/)
@@ -2332,13 +2492,6 @@ There is a Promise built into JavaScript but inferior. [https://developer.mozill
     //console.log(sum);
 
 
-
-
-### <a name="tips-module-patterns"></a>Module Patterns
-Provide a link to the module pattern explained further up
-Then explain about a new module pattern (or whatever the proper name is for it) that is available in TS and ES2015.
-Transpilers are an absolute requirement for this as not many browsers, if any, support it.
-It avoids PHP style JS where all files are ultimately cobbled together in effectively one giant scripte, hopefully where you have defined everything in a correct order and have not defined something repeatedly.
 
 
 
