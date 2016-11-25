@@ -2093,7 +2093,7 @@ Because of the above there is no real need for you to directly include minified 
 *  [Module Patterns](#tips-module-patterns)
   *  [Modules in ES2015](#tips-modules-in-es2015)
 *  [Inheritance](#tips-inheritance)
--  [Deferred Object](#tips-deferred-object)
+*  [Deferred Object](#tips-deferred-object)
 
 ### <a name="tips-modification-of-existing-code"></a>Modification of Existing Code
 It is common sense that make logic changes to existing code comes with a risk of breaking things which were working. In more advanced languages/development tools there are many non-logical changes you may consider making to code which you come across without worry of breaking stuff, e.g. renaming variables or other tokens if they don't appear to explain themselves correctly or extracting some lines of code out into a method of their own.
@@ -2440,60 +2440,48 @@ As with the module method you can find lots of little variations on the internet
 The _disadvantage_ here is that, every time one an object is created here using one of these functions, it methods are also defined afresh. Overall it is probably better to use prototypical inheritance if you need to define some hierarchy.
 
 ### <a name="tips-deferred-object"></a>Deferred Object
-POINT TO jquery subsection and also mention that they have added to ES ...
-[https://api.jquery.com/category/deferred-object/](https://api.jquery.com/category/deferred-object/)
-Uses Promise object. It does NOT use the JS Promise object underneath, only its own Promise.
+Here is a situation with asynchronous calls. You find yourself waiting on the results of two asynchronous calls where a callback function has been defined for each. You have to ensure that both asynchronous calls have been called before executing a `final` piece of code. This is quite fiddly to achieve. One solution might involve you setting a counter which both callbacks increment before then calling the final function. However, this final function has to wrap all its code within an `if` statement which checks that that the counter has reached the required count.
 
-There is a Promise built into JavaScript but inferior. [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+The above code is a bit ugly and can get far more complicated if more asynchronous calls are required. In other situations you can end up up with chains of callbacks nested within callbacks. Often these may involve multiple AJAX calls.
 
+The [jQuery Deferred](https://api.jquery.com/category/deferred-object/) object is a pretty complicated object this document is not going to explain it. However, it can make complication multiple asynchronous call situations much simpler to handle. It allows promises to be returned that allow you to access a functions result at a later time.
 
-
-
-
-
-
+You can try this example in JSFiddle with F12 console open. Make sure you add an external resource for jQuery: https://code.jquery.com/jquery-2.2.4.min.js. `doSomething` later uses a Deferred object to wrap another function that will be called after a certain amount of time. It then returns a Promise object which will allow that inner functions result to be accessed elsewhere. The `$.when()` statement wraps calls to fived deferred functions (called after 1, 2, 3, 4 and 5 seconds). The inner function it contains will only execute once all those functions have finished executing. Within there the results of the wrapped functions are added to gether.
 
     console.clear();
 
     var doSomethingLater = function (fn, time) {
-      var dfd = $.Deferred();
+        var dfd = $.Deferred();
 
-      setTimeout(function () {
-        dfd.resolve(fn());
-      }, time || 0);
+        setTimeout(function () {
+            dfd.resolve(fn());
+        }, time || 0);
 
-      return dfd.promise();
-    }
+        return dfd.promise();
+    };
 
     var makePromise = function (functionNumber) {
       return doSomethingLater(function () {
-        console.log("Function " + functionNumber + " executed after " + functionNumber + " seconds");
+          console.log("Function " + functionNumber + " executed after " + functionNumber +
+                      " seconds");
+          // Return the square.
+          return functionNumber * functionNumber;
       }, functionNumber * 1000);
     };
 
     var promises = [];
-    for (var i = 1; i <= 7; i++) {
-      promises[i] = makePromise(i);
+    for (var i = 1; i <= 5; i++) {
+        promises[i] = makePromise(i);
     }
 
-    $.when(promises[1], promises[2], promises[3], promises[4], promises[5], promises[6], promises[7]).done(function (promise1, promise2) {
-      console.log("All functions completed");
+    $.when(promises[1], promises[2], promises[3], promises[4], promises[5]).
+      done(function (r1, r2, r3, r4, r5) {
+        console.log("All functions completed.");
+        var totalOfAllResults = r1 + r2 + r3 + r4 + r5;       // 55
+        console.log("Total of first two function results is " + totalOfAllResults);
     });
 
-
-    // This one definitely triggers the done() after EITHER completes.
-    /*
-    promise1.then(promise2).done(function(promise1, promise2) {
-      // Handle both XHR objects
-      console.log("One function completed");
-    });
-    */
-
-    //console.log(sum);
-
-
-
-
+JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise))). These are not supported in IE but polyfills are available.
 
 <hr />
 
