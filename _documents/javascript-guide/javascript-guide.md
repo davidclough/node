@@ -2487,57 +2487,190 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 
 ## <a name="tools-and-libraries-contents"></a>Associated Tools and Useful Libraries
 
--  [jQuery](#tools-jquery)
+*  [jQuery](#tools-jquery)
 -  [User Interface Libraries](#tools-ui-libraries)
--  [Forms](#tools-forms)
+*  [Forms](#tools-forms)
 -  [Shims and Polyfills](#tools-shims-and-polyfills)
--  [Functional Programming and Data Manipulation](#tools-functional-and-data)
--  [Transpilers](#tools-transpilers)
--  [Browser Debugging Tools](#tools-browser-debugging-tools)
--  [JSFiddle](#tools-jsfiddle)
--  [Code Editors](#tools-code-editors)
--  [Linting/Hinting](#tools-linting)
++  [Functional Programming and Data Manipulation](#tools-functional-and-data)
+*  [Transpilers](#tools-transpilers)
+*  [Browser Debugging Tools](#tools-browser-debugging-tools)
+*  [JSFiddle](#tools-jsfiddle)
+*  [Code Editors](#tools-code-editors)
+*  [Linting/Hinting](#tools-linting)
 -  [Testing](#tools-testing)
 -  [Documentation Libraries](#tools-documentation-libraries)
--  [Graphics Libraries](#tools-graphics)
--  [MV* Frameworks](#tools-mv-frameworks)
--  [Node.js](#tools-node-js)
++  [Graphics Libraries](#tools-graphics)
+*  [MV* Frameworks](#tools-mv-frameworks)
+++  [Node.js](#tools-node-js)
 
+> This document is JavaScript language guide. In the interests of not going too far off that topic most items within this section have been kept deliberately very short and serve just to highlight the existence of a tool or library with a few useful tips thrown in. Further reading of other documentation will generally be necessary.
 
 ### <a name="tools-jquery"></a>jQuery
+A library which makes traversing, querying and manipulating the DOM a whole lot easier than using native JavaScript. It also removes some of the horrible efficiency traps which exist. Sophisticated selector queries can be built up. Some functionality not related the DOM is also made available, e.g. the Deferred object and making AJAX calls. The functionality works across many browsers including all IE versions which we would generally be expected to support these days.
+
+[http://jquery.com/](http://jquery.com/)
+[http://api.jquery.com/](http://api.jquery.com/)
+
 #### Attaching Event Handlers
+The `on()` method is the most recent way of several to attach event handlers in jQuery. Multiple versions exist but you should **prefer** version where your selector specifies a container for the objects you wish to attach event handlers to. The parameters for this versions are (1) a string to specify which event you want to handle, (2) a selector string relative to the main selector specifying all elements you want to attach the handler to, (3) the event handler code itself. This example attaches a click handler to all `<p class="widget" ...>` elements within the container that has the CSS class `main-content`.
+
+    $(".main-content").on("click", "p.widget", function() {
+      alert($(this).text());
+    });
+
+The reason this version is so useful is that, if further `<p class="widget" ...>` elements are later added to the `main-content` container, e.g. via an AJAX call, they will also handle the click event without any further work.
+
+Binding an event handler to the results of a jQuery result will only bind to those items found at the time of execution and any new ones added via AJAX will not have it:
+
+    // Prefer to use the version above where a container is specified.
+    $(".widget").on("click", function() {
+      console.log($(this).text());
+    });
+
+[http://api.jquery.com/on/](http://api.jquery.com/on/)
+
 #### Creating Plugins
+jQuery allows you to create your own `plugins`. Despit the elaborate name, jQuery plugins are just methods which operate on the result of a selector, e.g. `$(".my-class").myPlugin()`. Here is an example which allows you to scroll to the bottom of a scrollable object.
+
+    $.fn.scrollToBottom = function () {
+        $(this).scrollTop($(this)[0].scrollHeight);
+        return this;
+    };
+
+    // Usage.
+    $("textarea#logFileContent").scrollToBottom();
+
+In this case it was intended to be used with `<testarea>` elements which contained more text than they could actually display and were showing just the initial content when the latest content needed to be shown and that was at the bottom.
+
+    <textarea rows="5" style="width:400px">...</textarea>
+
+> NOTE: When creating a custom jQuery plugin you should almost _always_ return a jQuery result. This will allow a call to another plugin to be chained on to the end of a call to yours, e.g. `$("selector").myPlugin1().myPlugin2()`. Returning `this` will return the result of the jQuery result which the plugin was called on. You would generally do that if your plugin performed some action on the results. If your plugin was more of a filter function it might return the result of an operation on this. For example, `$.fn.getActiveLinks()` might end in `return this.find("a.active");`.
+
 #### Overriding Existing Plugins
+You can change built-in plugins although you need to be careful and also avoid doing this within a publicly available library. The main thing to bear in mind is not to change the behaviour of the original plugins, mere augment them with something extra.
+
+The example below overrides jQuery's `addClass()` method. Firstly the _original_ method is saved. Within the plugin it is then called and its results are returned from the overridden version (it is essential that you do both these things). All the plugin is adding is the raising of a custom event to which some other piece of code can subscribe to.
+
+    var originalAddClassMethod = $.fn.addClass;
+    $.fn.addClass = function () {
+        // Execute the original method.
+        var result = originalAddClassMethod.apply(this, arguments);
+        $(this).trigger("cssClassChanged");
+        // Return the original result.
+        return result;
+    };
+
+> NOTE: If you feel a need to redefine a built-in jQuery plugin make sure that you do not change its behaviour. You can add some additional actions but should always call the original plugin and return its result from your plugin.
+
+Of course alternative thing to do is give the plugin a different name.
+
 #### Deferred Object and Promises
-My sample is in "jq-Deferred-and-Promise-test.js"
+This has already been explained in an [earlier section](#tips-deferred-object).
 
 ### <a name="tools-ui-libraries"></a>User Interface Libraries
 jquery UI - plenty more, many open source, others paid for
+
 ### <a name="tools-forms"></a>Forms
-Forms and validation
-jquery.form.js
-jquery.validate.js
+[jQuery Form Plugin](http://malsup.com/jquery/form/) is lightweight library which allows you to serialize a form and submit it via AJAX.
+
+[jQuery Validation Plugin](https://jqueryvalidation.org/) is another simple library which makes custom client-side form validation very easy.
+
 ### <a name="tools-shims-and-polyfills"></a>Shims and Polyfills
 http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used
 Also known as shivs
 explain difference - String.trim() can do easy shim... - Name an ES2015 feature from react course where polyfill was needed - the import in the file will be at the top
 es5-shim.js
+
 ### <a name="tools-functional-and-data"></a>Functional Programming and Data Manipulation
-lodash, lazy - Functional Programming and Data Maniplulation, immutablejs
-http://adamnengland.com/2013/10/10/benchmarks-underscore-js-vs-lodash-js-vs-lazy-js/
+There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. [Lodash](https://lodash.com/) is a successor to Underscore.js and [Lazy.js](http://danieltao.com/lazy.js/) provides a lazily evaluated equivalent, which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
+
+Here are a couple of Lodash examples:
+
+    var users = [
+      { "name": "barney",  "active": false },
+      { "name": "fred",    "active": false },
+      { "name": "pebbles", "active": true }
+    ];
+
+     // Filter the users.
+    var allBarneys = _.filter(users, function(o) { return o.user == "barney"; });
+    console.log(allBarneys[0]);			// Object {user: "barney", active: false}
+
+    // Select all the names into an array of strings.
+    var names = _.map(users, "name");
+    console.log(names);							// ["barney", "fred", "pebbles"]
+
+Another library called [Immutable](https://facebook.github.io/immutable-js/) provides easy ways to work with immutable data. Many of the functions give the impression of allowing you to something about a data object whilst under the bonnet a new data structure based on the old one is actually generated.
+
+Immutable data objects a big thing in functional programming. Redux, a state container for JavaScript applications, bases it whole operation on its store not being mutated - if some aspect of the data has been changed the store has to be set to a whole new object, rather than just changing the value of a property. Because of that, the applications which use the store can tell if state has changed using a simple `==` comparison of two objects, as opposed to some potentially laborious deep comparison of all the properties.
+<a dummy="_"></a>
+
 ### <a name="tools-transpilers"></a>Transpilers
-Babel/traceur and TS
-Also mention TS language and future ES versions
+The two languages many people would like to be using instead of `ES5` are `ES2015` or `TypeScript`. Since not all browsers support these two languages (IE is the main culprit) it is necessary to use transpilers to convert your code from those languages into ES5 before being sent out in a page request.
+
+#### JavaScript Versions Greater than ES5
+Chrome and Firefox are both kept in line with the latest ES versions they both understand virtually everything in ES2015 ([http://kangax.github.io/compat-table/es6/](http://kangax.github.io/compat-table/es6/)) and most things in ES2016 ([http://kangax.github.io/compat-table/es2016plus/](http://kangax.github.io/compat-table/es2016plus/)).
+
+IE is a waste of space and the main reason why we are forced to use transpilers. Edge is significantly better than IE.
+
+`Babel` is the best transpiler for ES2015 or later. It generates pretty readable ES5. `Traceur` is another transpiler the code it genrates is significantly less readable. See [http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/](http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/) for a comparison.
+
+#### TypeScript
+[TypeScript](https://www.typescriptlang.org/) is a well-respected alternative to future ES versions by Microsoft which is superset of all but the latest ES offerings and provides some type safety. The documentation is excellent and you can see what your code transpiles to online at the [playground](https://www.typescriptlang.org/play/index.html).
+
+There are also tools available in Chrome which allow you to debug TypeScript directly.
+
 ### <a name="tools-browser-debugging-tools"></a>Browser Debugging Tools
-F12
+Virtually every browser has its own set of developer tools, usually available by pressing the F12 key. Along with other things these tools allow you to debug the HTML, CSS and JavaScript with pages. Although individual tools offer much more, the common features include the ability to:
+
+* Examine individual HTML tags modify their attributes
+* Examine and temporarily modify the CSS styles being applied to the tags
+* Step through and debug JavaScript and even change the code within the browser
+* A console to examine values of JavaScript variables, set them to new values and execute extra code that you type in
+* Examine network requests and responses made by code within the page and timescales
+
+The best tools in this category are made by Google and Mozilla. It is probably a good idea to get used to both Chrome and Mozilla tools. Even if you favour one in general, the other may offer some added value in certain areas. Sometimes you may find yourself forced into using IE's inferior tools, perhaps for testing your pages in old IE versions.
+
+More superior documentation than this document could offer already exists elsewhere.
+
+#### Google
+[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is often favoured. It provides tools allowing you to detect events handlers that have been attached to a selected element. The link takes you to some excellent documentation.
+
+[Chrome Canary](https://www.google.com/intl/en/chrome/browser/canary.html) is a version of Chrome which receives nightly updates and therefore offers the very latest developer tools from Google. The only downside is some pages may break because the releases are not always stable.
+
+#### Mozilla
+[Firebug](http://getfirebug.com/) is plugin for Firefox offering development tools. Once the best tools available it is now inferior to Chrome and is also no longer being developed.
+
+[Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools) are built into Firefox and are the tools Mozilla now maintain instead of Firebug..
+
+[Firefox Developer Edition](https://www.mozilla.org/en-GB/firefox/developer/) offers the very latest cutting-edge tools Mozilla have to offer. These will probably be better than Chrome tools in some places at least.
+
 ### <a name="tools-jsfiddle"></a>JSFiddle
-open up and explore. Allows you to specify language (all common JS languages available)
-Use F12 at same time. Most examples in this doc...
-Save your most memorable fiddles, as they call them.
+[JSFiddle](https://jsfiddle.net/) is a website which allows you to create "web page test situations" or `fiddles`. Its main window is split into 4 panes, 3 input panes allow you to specify `HTML`, `CSS` and `JavaScript`. A fourth pain displays what a page would `output` given the 3 inputs. This gets populated when you click the `Run` button.
+
+In the left-hand sidebar there is an `External Resources` link which allows you to paste URLs to a CDN for external JavaScript, e.g. a jQuery CDN.
+
+If you create an account you can save your most useful fiddles.
+
+Most of the examples in this document were intended for the user to paste into JSFiddle, with the F12 console open so you can see what gets logged.
+
 ### <a name="tools-code-editors"></a>Code Editors
-WebStorm is number 1. Atom is commonly used. Visual Studio code already gained good reputation...
+[WebStorm](https://www.jetbrains.com/webstorm/) is regarded as acknowledged as the best development environment for JavaScript. It costs money.
+
+Two free alternatives that are also highly regarded are [Atom](https://atom.io/) and [Visual Studio Code](https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.co.uk%2F).
+
 ### <a name="tools-linting"></a>Linting/Hinting
-It is far better to use these tools as you develop rather than one big audit at end where you change lots of code and things break because they worked but for the wrong reason
+Linting or hinting JavaScript simply means the process of submitting your code to a tool which then examines the code and returns a list of things it thinks are wrong with it. It is similar to submitting C# code to StyleCop.
+
+The linters highlight both errors in the code and code style violations which, in their opinion, are dangerous for development or do not comply with established JavaScript standards. Because JavaScript is not compiled and is dynamically typed linting provides valuable information to developers to help prevent unexpected bugs creeping into their code.
+
+It is _far better_ to use these tools as you develop rather than one big audit at end where you change lots of code and things break because they worked but for the wrong reason.
+
+Linting tools come in two flavours:
+
+  1. One where you navigate to a web page, paste your JavaScript into some text area, run the tool and wait for its results. [JSLint](http://www.jslint.com/) and [JSHint](http://jshint.com/) are two examples.
+  2. Tools which you integrate with your development environment and which will run on any file which you save. [ESLint](http://eslint.org/) is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation will trigger, e.g. "no-inline-comments". You will also be able to automatically configure your environment to perform different actions depending on the results.
+
 ### <a name="tools-testing"></a>Testing
 testing
 <p>    Testing (Simon wrote a wiki article)</p>
@@ -2548,6 +2681,7 @@ Briefly mention some other libraries. Also mention that the big JS frameworks te
 [chimp.js](https://chimp.readme.io/)
 
 ### <a name="tools-documentation-libraries"></a>Documentation Libraries
+JSDocs
 Ask Andrew. Also point to any docs or intranet posts he did.
 <p>    Leave for Andrew</p>
 JSDoc                                ? Will certainly have to if this doc to be finished in time. If got more time then will be able to do by self in conjuction with him.
@@ -2555,60 +2689,26 @@ http://documentation.js.org/         ?
 
 ### <a name="tools-graphics"></a>Graphics Libraries
   Raphaël, three.js (web gl), processjs (2D), velocity js animations, greensock
+
 ### <a name="tools-mv-frameworks"></a>MV* Frameworks
-Mention 3 or 4 prominent ones and there are a million others. Cover different fields...and have different stengths
-Often have there own "preferred testing library",
+There is a long list of JavaScript website frameworks which can replace .NET MVC or often integrated with it. The list looks like it will continue growing forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
+
+[AngularJS](https://angularjs.org/) is the most comprehensive one which looks after more website areas than all the others. It uses dependency inject all over the place.
+
+[React](https://facebook.github.io/react/) is another comprehensive framework. It promotes the insertion of HTML within JavaScript. In actual fact it is JSX, rather than HTML strings, and gets converted by React into JavaScript. This may look dirty but seems to work quite well. It does not use two-way data binding but instead the preference is to use it in conjunction with a data state library like [Redux](http://redux.js.org/docs/basics/UsageWithReact.html). They call it a `unidirectional data flow`. Data flows from the store to the page only. Page events trigger actions which are sent to the store and the store decides what data should be changed as a result of the action. If the data state has changed the page will be notified of the new data. It definitely requires you to write more boiler plate code so the benefits would not be seen with a small website.
+
+Other popular solutions that are more lightweight, which may suit your situations such as a desire to use MVC but avoid Razor, include [Aurelia](http://aurelia.io/), [KnockoutJS](http://knockoutjs.com/) and [Vue](https://vuejs.org/).
+
 ### <a name="tools-node-js"></a>Node.js
+[Node.js](https://nodejs.org/en/)
+Just point out that if you are into your JavaScript, Node.js is for you... pinch a BIT of stuff off page ... ecosystem
 A whole topic of its own - would need separate guide.
 
 
 
-<hr />
-
-
-jQuery below will just be one sub-section.
-MOVE THIS STUFF UP TO tools-jquery
-
-
-1. [jQuery](#jquery)
-	*  [Overview](#jquery-overview)
-	*  [Attaching Event Handlers](#jquery-attaching-event-handlers)
-	*  [Creating Plugins](#jquery-creating-plugins)
-	*  [Overriding Existing Plugins](#jquery-overriding-existing-plugins)
-	*  [Deferred Object and Promises](#jquery-deferred-object)
-
-## <a name="jquery"></a>jQuery
-This is a whole AREA of its own and will not be discussed in detail here, only specific areas of interest.
-### <a name="jquery-overview"></a>Overview
-Give some outline about selectors, plugins...
-### <a name="jquery-attaching-event-handlers"></a>Attaching Event Handlers
-* jQuery binding - bind events via a container, not directly to the object. This means that the events will work even on new objects that have been added to the container via AJAX (need to confirm still the case)
-```
-// Binding directly will not work on new widgets added via AJAX.
-$( ".widget" ).on( "click", function() {
-  console.log( $( this ).text() );
-});
-```
-```
-// Will work...
-$( ".widget-container" ).on( "click", ".widget", function() {
-  console.log( $( this ).text() );
-});
-```
-### <a name="jquery-creating-plugins"></a>Creating Plugins
-### <a name="jquery-overriding-existing-plugins"></a>Overriding Existing Plugins
-
-
-
 
 
 <hr />
-
-CAN POSSIBLY DELETE EVERYTHING BELOW.
-There are enough external reference links.
-JS to big to sum up a list of Gotchas, like CSS guide. Already got Patterns, Tips and Tricks.
-
-CAN PUT THE "code conventions" ones at start of section 3. SAME with gotcha links.
 
 
 
