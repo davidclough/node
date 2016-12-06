@@ -2488,20 +2488,20 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 ## <a name="tools-and-libraries-contents"></a>Associated Tools and Useful Libraries
 
 *  [jQuery](#tools-jquery)
--  [User Interface Libraries](#tools-ui-libraries)
 *  [Forms](#tools-forms)
 -  [Shims and Polyfills](#tools-shims-and-polyfills)
-+  [Functional Programming and Data Manipulation](#tools-functional-and-data)
+*  [Functional Programming and Data Manipulation](#tools-functional-and-data)
 *  [Transpilers](#tools-transpilers)
 *  [Browser Debugging Tools](#tools-browser-debugging-tools)
 *  [JSFiddle](#tools-jsfiddle)
 *  [Code Editors](#tools-code-editors)
 *  [Linting/Hinting](#tools-linting)
 -  [Testing](#tools-testing)
--  [Documentation Libraries](#tools-documentation-libraries)
-+  [Graphics Libraries](#tools-graphics)
+*  [Documentation Tools](#tools-documentation-libraries)
+++  [Graphics Libraries](#tools-graphics)
 *  [MV* Frameworks](#tools-mv-frameworks)
-++  [Node.js](#tools-node-js)
+*  [User Interface Libraries](#tools-ui-libraries)
+*  [Node.js](#tools-node-js)
 
 > This document is JavaScript language guide. In the interests of not going too far off that topic most items within this section have been kept deliberately very short and serve just to highlight the existence of a tool or library with a few useful tips thrown in. Further reading of other documentation will generally be necessary.
 
@@ -2566,9 +2566,6 @@ Of course alternative thing to do is give the plugin a different name.
 
 #### Deferred Object and Promises
 This has already been explained in an [earlier section](#tips-deferred-object).
-
-### <a name="tools-ui-libraries"></a>User Interface Libraries
-jquery UI - plenty more, many open source, others paid for
 
 ### <a name="tools-forms"></a>Forms
 [jQuery Form Plugin](http://malsup.com/jquery/form/) is lightweight library which allows you to serialize a form and submit it via AJAX.
@@ -2636,12 +2633,12 @@ More superior documentation than this document could offer already exists elsewh
 #### Google
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is often favoured. It provides tools allowing you to detect events handlers that have been attached to a selected element. The link takes you to some excellent documentation.
 
-[Chrome Canary](https://www.google.com/intl/en/chrome/browser/canary.html) is a version of Chrome which receives nightly updates and therefore offers the very latest developer tools from Google. The only downside is some pages may break because the releases are not always stable.
+[Chrome Canary](https://www.google.com/intl/en/chrome/browser/canary.html) is a version of Chrome which receives nightly updates and therefore offers the very latest developer tools from Google. The only downside is some pages may occasionally break because the releases are not always stable.
 
 #### Mozilla
-[Firebug](http://getfirebug.com/) is plugin for Firefox offering development tools. Once the best tools available it is now inferior to Chrome and is also no longer being developed.
+[Firebug](http://getfirebug.com/) is a plugin for Firefox offering development tools. Once one of the best tools available it is now inferior to Chrome and is also no longer being developed.
 
-[Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools) are built into Firefox and are the tools Mozilla now maintain instead of Firebug..
+[Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools) are built into Firefox and are the tools Mozilla now maintain instead of Firebug.
 
 [Firefox Developer Edition](https://www.mozilla.org/en-GB/firefox/developer/) offers the very latest cutting-edge tools Mozilla have to offer. These will probably be better than Chrome tools in some places at least.
 
@@ -2680,15 +2677,18 @@ TODO: May need a fifth section. In testing just mention an example of the two ty
 Briefly mention some other libraries. Also mention that the big JS frameworks tend to have their own preferred testing libraries.
 [chimp.js](https://chimp.readme.io/)
 
-### <a name="tools-documentation-libraries"></a>Documentation Libraries
-JSDocs
-Ask Andrew. Also point to any docs or intranet posts he did.
-<p>    Leave for Andrew</p>
-JSDoc                                ? Will certainly have to if this doc to be finished in time. If got more time then will be able to do by self in conjuction with him.
-http://documentation.js.org/         ?
+### <a name="tools-documentation-libraries"></a>Documentation Tools
+If you find yourself writing common code libraries that will be utilised by other people not working on the same project, documentation tools can provide a rich complement to your code.
+
+One example of a documentation tool is [JSDoc](http://usejsdoc.org/). If you add comments alongside the various entities within your code containing special tags JSDoc will then generate some documentation for you. For example, you might add a comment above a function containing an [@function](http://usejsdoc.org/tags-function.html) tag and some [@param](http://usejsdoc.org/tags-param.html) tags. You can also help get across to the user things which you can't restrict within the actual code itself, e.g. if a property of an object is intended to be private or protected.
 
 ### <a name="tools-graphics"></a>Graphics Libraries
-  Raphaël, three.js (web gl), processjs (2D), velocity js animations, greensock
+Here are some examples of libraries which can provide you with some fancy graphics:
+
+[Raphaël](http://dmitrybaranovskiy.github.io/raphael/)
+[three.js](https://threejs.org/) - 3D graphics using WebGL
+[Processing.js](http://processingjs.org/exhibition/) - 2D Graphics
+[Velocity.js](Velocity.js) and [GreenSock](https://greensock.com/get-started-js) - fast animations
 
 ### <a name="tools-mv-frameworks"></a>MV* Frameworks
 There is a long list of JavaScript website frameworks which can replace .NET MVC or often integrated with it. The list looks like it will continue growing forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
@@ -2699,12 +2699,16 @@ There is a long list of JavaScript website frameworks which can replace .NET MVC
 
 Other popular solutions that are more lightweight, which may suit your situations such as a desire to use MVC but avoid Razor, include [Aurelia](http://aurelia.io/), [KnockoutJS](http://knockoutjs.com/) and [Vue](https://vuejs.org/).
 
+### <a name="tools-ui-libraries"></a>User Interface Libraries
+If you aren't planning on using an MV* framework there are lots of other frameworks around which provide you with helpful building blocks for a UI. Some are paid for, like [Kendo]().
+
+[jQuery UI](https://jqueryui.com/) is an example of a free library which all sorts of widgets to help reduce the amount of HTML JavaScript you have to manually put together to construct a decent looking user interface with functionality like draggable or resizable items and accordion widgets.
+
 ### <a name="tools-node-js"></a>Node.js
-[Node.js](https://nodejs.org/en/)
-Just point out that if you are into your JavaScript, Node.js is for you... pinch a BIT of stuff off page ... ecosystem
-A whole topic of its own - would need separate guide.
+If you are into your JavaScript you will almost certainly be drawn to the environment known as [Node.js](https://nodejs.org/en/). Node.js provides the runtime but it is actually [npm](https://www.npmjs.com/) (Node Package Manager) which provides the real power in the form of the
+"largest ecosystem of open source libraries in the world".
 
-
+Here is a link to [most starred npm packages](https://www.npmjs.com/browse/star) where you can gauge some idea of the libraries available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
 
 
 
