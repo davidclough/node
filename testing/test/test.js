@@ -92,7 +92,7 @@ describe("test with jasmine-jquery", function () {
 
     $("input[type=text]").first().addClass("my-class");
 
-    expect($("input[type=text]")[0]).toHaveClass("fruit-juice");
+    expect($("input[type=text]")[0]).toHaveClass("my-class");
   });
 });
 
@@ -132,7 +132,8 @@ describe("event test with jasmine-jquery: addClass(), class does not exist on el
 
     $firstInput.addClass("my-class");
 
-    expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+    //expect("cssClassChanged").toHaveBeenTriggeredOn($firstInput);
+    expect(spyEvent).toHaveBeenTriggered();
   });
 });
 
@@ -145,8 +146,8 @@ describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on el
 
     $firstInput.addClass("existing-class");
 
-    expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
-    //expect(spyEvent).toHaveBeenTriggered();
+    //expect("cssClassChanged").not.toHaveBeenTriggeredOn($firstInput);
+    expect(spyEvent).not.toHaveBeenTriggered();
   });
 });
 

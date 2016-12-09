@@ -95,8 +95,7 @@
         var elementHadClass = $(this).hasClass(arguments[0]);
 
         // Execute the original method.
-        var result = originalAddClassMethod.call(this, "fruit-juice");//arguments);
-        // ******** TODO: remove fruit-juice
+        var result = originalAddClassMethod.apply(this, arguments);
 
         if (!elementHadClass) {
           $(this).trigger("cssClassChanged");

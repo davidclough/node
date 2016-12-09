@@ -2489,16 +2489,16 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 
 *  [jQuery](#tools-jquery)
 *  [Forms](#tools-forms)
--  [Shims and Polyfills](#tools-shims-and-polyfills)
+*  [Shims and Polyfills](#tools-shims-and-polyfills)
 *  [Functional Programming and Data Manipulation](#tools-functional-and-data)
 *  [Transpilers](#tools-transpilers)
 *  [Browser Debugging Tools](#tools-browser-debugging-tools)
 *  [JSFiddle](#tools-jsfiddle)
 *  [Code Editors](#tools-code-editors)
 *  [Linting/Hinting](#tools-linting)
--  [Testing](#tools-testing)
+*  [Testing](#tools-testing)
 *  [Documentation Tools](#tools-documentation-libraries)
-++  [Graphics Libraries](#tools-graphics)
+*  [Graphics Libraries](#tools-graphics)
 *  [MV* Frameworks](#tools-mv-frameworks)
 *  [User Interface Libraries](#tools-ui-libraries)
 *  [Node.js](#tools-node-js)
@@ -2573,10 +2573,13 @@ This has already been explained in an [earlier section](#tips-deferred-object).
 [jQuery Validation Plugin](https://jqueryvalidation.org/) is another simple library which makes custom client-side form validation very easy.
 
 ### <a name="tools-shims-and-polyfills"></a>Shims and Polyfills
-http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used
-Also known as shivs
-explain difference - String.trim() can do easy shim... - Name an ES2015 feature from react course where polyfill was needed - the import in the file will be at the top
-es5-shim.js
+The differences between these items seem to be rather subtle. They are more browser-level things so, rather than just enhancing JavaScript, they will also make HTML and CSS features missing from a browser available to you.
+
+A `shim` (also known as a `shiv`) is a library that brings a new API to an older browser version, using only the means of its environment. For example, even when writing JavaScript using ES5 you may well run into compatibility problems if your code has to work in IE8 you may well run into problems. IE8 does not support many things, e.g. String.prototype.trim(). You can, however, use a library like [es5-shim](https://github.com/es-shims/es5-shim) which will make most of the missing items available to you. In the main it defines missing object methods using JavaScript code from an earlier version than ES5.
+
+A `polyfill` adds something that is missing from a browser altogether. `Babel` is a transpiler commonly used to generate ES5 code from later versions. However, certain things, like Object.assign() are missing from IE altogether and apparently this cannot be recreated efficiently using alternative JavaScript commands that _are_ available. In order to allow Babel-generated ES5 to work with IE you need to use a library called `babel-polyfill`. [http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used](http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used) contains various alternative ways of trying to explain this.
+
+[HTML5 PLEASE](http://html5please.com/) contains a list of polyfills along with recommended use - they are not all perfect and most will have odd things the writers indicate they haven't resolved.
 
 ### <a name="tools-functional-and-data"></a>Functional Programming and Data Manipulation
 There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. [Lodash](https://lodash.com/) is a successor to Underscore.js and [Lazy.js](http://danieltao.com/lazy.js/) provides a lazily evaluated equivalent, which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
@@ -2669,13 +2672,76 @@ Linting tools come in two flavours:
   2. Tools which you integrate with your development environment and which will run on any file which you save. [ESLint](http://eslint.org/) is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation will trigger, e.g. "no-inline-comments". You will also be able to automatically configure your environment to perform different actions depending on the results.
 
 ### <a name="tools-testing"></a>Testing
-testing
-<p>    Testing (Simon wrote a wiki article)</p>
-<p>    QUnit or Jasmine      Mocha</p>
-<p>    Unit testing and behaviour testing (browser testing)</p>
-TODO: May need a fifth section. In testing just mention an example of the two types of test I have done in Jasmine. Mention Karma the test runner and other Jasmine-related things.
-Briefly mention some other libraries. Also mention that the big JS frameworks tend to have their own preferred testing libraries.
-[chimp.js](https://chimp.readme.io/)
+There are many testing frameworks for JavaScript. Most of them allow you to write both unit tests and behaviour-driven tests which test the behaviour of elements on an HTML page. Often these are used from within a Node.js environment although many frameworks have plugins which allow them to work within Visual Studio projects.
+
+Currently the most popular ones are [Mocha](https://mochajs.org/) and [QUnit](https://qunitjs.com/). Many of the MV* frameworks have there own preferred testing frameworks which are tailored towards their particular ways of doing things. For example, [Jest](https://facebook.github.io/jest/) is preferred for working with React.
+
+As well as a testing framework for writing the tests a `test runner` is required to run the tests. The most commonly used runner is [Karma](https://karma-runner.github.io/1.0/index.html). The tests can be run against all major browsers as well as [Headless Browsers](https://en.wikipedia.org/wiki/Headless_browser), like [PhantomJS](http://phantomjs.org/).
+
+You can set your environment up so that files are watched and tests are run on any file as soon as it is saved. Code coverage tools, like [Istanbul](https://github.com/gotwarlost/istanbul), provide you with reports that you can view in a browser which indicate code coverage information and highlight script lines that are not currently covered by any tests.
+
+This example uses [Jasmine](https://jasmine.github.io/) for the test framework and a library called [jasmin-jquery](https://github.com/velesin/jasmine-jquery) which provides extensions to allow you to locate and test elements of a page using jQuery selectors. Firstly, an implementation of an `addClass()` jQuery plugin is shown. Two tests have been written to check the triggering of events, one of which fails. An implementation which makes both tests pass is then shown. Unfortunately this code was written to operate within a Node.js environment so the code cannot be run from within JSFiddle.
+
+Original plugin code:
+
+    var originalAddClassMethod = $.fn.addClass;
+    $.fn.addClass = function () {
+        // Execute the original method.
+        var result = originalAddClassMethod.apply(this, arguments);
+        $(this).trigger("cssClassChanged");
+        // Return the original result.
+        return result;
+    };
+
+HTML fixture for tests:
+
+    <input type="text" />
+    <input type="text" class="existing-class" />
+
+Two tests - one to check the event is triggered if an element does not already have the CSS class, one to check the event is _not_ raised if the element already has the class. When run using the original plugin code defined further up, the first test passes but the second fails because the event is always being triggered.
+
+    describe("event test with jasmine-jquery: addClass(), class does not exist on element", function () {
+      it("cssClassChanged event should be fired", function () {
+        loadFixtures("my-fixture-1.html");
+        var $firstInput = $("input[type=text]").first();
+        var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+        $firstInput.addClass("my-class");
+
+        expect(spyEvent).toHaveBeenTriggered();
+      });
+    });
+
+    describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on element", function () {
+      it("cssClassChanged event should NOT be fired", function () {
+        loadFixtures("my-fixture-1.html");
+        var $firstInput = $("input[type=text].existing-class").first();
+        // String or jQuery object will do for first parameter.
+        var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+
+        $firstInput.addClass("existing-class");
+
+        expect(spyEvent).not.toHaveBeenTriggered();
+      });
+    });
+
+The `$.fn.addClass` plugin was modified until both tests passed:
+
+    var originalAddClassMethod = $.fn.addClass;
+    $.fn.addClass = function () {
+        // Oiginal method must ALWAYS be called.
+        var elementHadClass = $(this).hasClass(arguments[0]);
+
+        // Execute the original method.
+        var result = originalAddClassMethod.apply(this, arguments);
+
+        if (!elementHadClass) {
+          $(this).trigger("cssClassChanged");
+        }
+
+        // Return the original result.
+        return result;
+    };
 
 ### <a name="tools-documentation-libraries"></a>Documentation Tools
 If you find yourself writing common code libraries that will be utilised by other people not working on the same project, documentation tools can provide a rich complement to your code.
@@ -2685,10 +2751,53 @@ One example of a documentation tool is [JSDoc](http://usejsdoc.org/). If you add
 ### <a name="tools-graphics"></a>Graphics Libraries
 Here are some examples of libraries which can provide you with some fancy graphics:
 
-[Raphaël](http://dmitrybaranovskiy.github.io/raphael/)
+[Raphaël](http://dmitrybaranovskiy.github.io/raphael/) - vector graphics
 [three.js](https://threejs.org/) - 3D graphics using WebGL
-[Processing.js](http://processingjs.org/exhibition/) - 2D Graphics
 [Velocity.js](Velocity.js) and [GreenSock](https://greensock.com/get-started-js) - fast animations
+[Processing.js](http://processingjs.org/exhibition/) - fancy graphics
+
+Here is an example drawing an analogue clock on the page using Processing.js. You can use JSFiddle.
+
+First add this URL in the *External Resources* section: `https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.3/processing.min.js`.
+
+Paste the following in the *canvas* pane:
+
+    <canvas id="canvas2" style="width:400px; height:400px;"></canvas>
+
+Paste this in the *JavaScript* pane and click *Run*:
+
+    var canvas2 = document.getElementById("canvas2");
+
+    function drawClock(processing) {
+      // Override draw function. By default it will be called 60 times per second.
+      processing.draw = function() {
+        // Determine center and max clock arm length.
+        var centerX = processing.width / 2, centerY = processing.height / 2;
+        var maxArmLength = Math.min(centerX, centerY);
+        function drawArm(position, lengthScale, weight) {
+          processing.strokeWeight(weight);
+          processing.line(centerX, centerY,
+            centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+            centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+        }
+        // Erase background.
+        processing.background(224);
+        var now = new Date();
+        // Moving hours arm by small increments
+        var hoursPosition = (now.getHours() % 12 + now.getMinutes() / 60) / 12;
+        drawArm(hoursPosition, 0.5, 5);
+        // Moving minutes arm by small increments
+        var minutesPosition = (now.getMinutes() + now.getSeconds() / 60) / 60;
+        drawArm(minutesPosition, 0.80, 3);
+        // Moving hour arm by second increments
+        var secondsPosition = now.getSeconds() / 60;
+        drawArm(secondsPosition, 0.90, 1);
+      };
+    };
+
+    var processingInstance = new Processing(canvas2, drawClock);
+
+OK, it's not the most sophisticated looking clock but it wouldn't take too much more effort to make it look more professional.
 
 ### <a name="tools-mv-frameworks"></a>MV* Frameworks
 There is a long list of JavaScript website frameworks which can replace .NET MVC or often integrated with it. The list looks like it will continue growing forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
