@@ -19,7 +19,7 @@
 *  [Functions](#language-functions)
 *  [Calling Functions](#language-calling-functions)
 *  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
--  [Objects](#language-objects)
+++  [Objects](#language-objects)    TODO: need sub menus
 -  [The this Keyword](#language-this-keyword)
 -  [Types](#language-types)  		DONE ALL DOWN TO Object
 	* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
