@@ -449,48 +449,142 @@ Here is one example of the module pattern. The code is just for demonstration pu
     console.log(AXA.myModule.method1());		// 20
 
 ### <a name="language-objects"></a>Objects
+#### What is an object?
+Described in very simplistic terms an object in JavaScript is like a collection of key-value pairs. There is a bit more to them than that, as will be described later. For example, every object has a `constructor` and a `prototype`.
 
-*** MAKE SURE that use the "function form" when writing a constructor (see getters and setters). Then when you write the line ```Widget.prototype.constructor = Widget;``` it will refer to a named function. When wrote it using the variable form the the `.constructor` property referred to an anonymous function when later queried.
+#### Properties and Methods.
+We will refer to each key-value pair as a `_property`, although they are more like the equivalent of public fields in C#. The dynamic nature of JavaScript means that, as with ordinary variables declared using the `var` keyword, properties have no restriction on their type. Their values can also be change to different values of different types at any point after initialisation. You can also add new properties to an object after it has been initialised by merely referencing a new property name and setting its value.
+
+    var myObject = {
+    	property1: 36
+    };
+
+    myObject.myAdditionalProperty = "Hello";		// Perfectly legal.
+
+A `method` is simply a property that is a function. As with any other property you can add a method against any single object or define it within an object constructor function. However, you would generally define methods against a object that is being used as a `prototype`, as will be explained further down.
+
+Properties and methods can be accessed in two ways:
+
+* Via the `.` notation that you will be used to in other languages.
+* Via hash table or dictionary notation. This may be less familiar to you and means:
+  - 1) You can specify properties that have names which contain otherwise illegal characters, like spaces
+  - 2) You can reflect object properties at runtime either by iteration or by some use of dynamically-created property names
+
+Here are some examples using the `myObject` created in the previous example:
+
+    console.log(myObject.property1);
+    console.log(myObject["property1"]);
+
+    var propertyName = "yet another property";
+    myObject[propertyName] = 100;
+    console.log(myObject[propertyName]);		// 100
+
+#### Creating an Object
+The most fundamental way of creating an object is via `JSON` (JavaScript Object Notation). This allows you to define an object literal. You can specify primitive property values, arrays and properties that are nested objects. Also see the [JSON object](#language-built-in-objects-json) section (this will also explain about serialisation between objects and JSON strings).
+
+    var myObject = {
+      // Primitive property.
+      "prop1": 5,
+      // Array property.
+      "prop2": [ "JavaScript", 12, true, { "val1": 2, "val2": 5 } ],
+      // Complex object property.
+      "prop3": {
+        "firstName": "John",
+        "surname": "Smith",
+        "age": 28
+      }
+    };
+
+Another way to create an object is by calling a `constructor function`. Unlike normal functions, Constructor functions generally have a name beginning with a capital letter. This is done by convention rather than as an absolute requirement. The convention exists for a reason that the `new` keyword _must_ precede a call to a constructor function for the desired effects to be guaranteed. An example of calling a constructor function will be shown further down, when the creation of constructor functions is explained, as most of the built-in JavaScript objects tend to have their own specific syntax for their creation.
+
+Here are some examples of object specifiers that are specific to certain types:
+
+    var myRegex = /\d{3}/g;
+    var myArray = [1, 2, 3];
+
+It is also worth mentioning the Object.create() method. This allows you to create an object where you specify its `prototype` and can optionally define some of its properties (see next section).
+TODO: WHERE EXPLAIN: Object.defineProperties() - this is the basis of the second parameter   LATER SECTION
+
+#### Object Prototypes
+In JavaScript _every_ object has a prototype. The prototype is like the direct parent of the object where extra properties that are not defined directly against the object itself can be defined and then "inherited".
+
+Prototypes are actually just ordinary objects themselves. They themselves have their own prototypes and we get `prototype chains`. There can be any number of links in an inheritance chain. Following the chain of an object upwards via its `__proto__ property` (which all objects have) then __proto__.__proto__, and so on, will usually lead us to an `Object`. Almost all objects ultimately "derive" from Object and the value of its __proto__ is `null`. We will describe the difference between the `__proto__` property of an object and the `prototype` property of a constructor function in a short while.
+TODO: ARE WE WRITE TO STATE LAST SENTENCE OR SHOULD WE HAVE ALREADY MENTION THE PROTOTYPE PROPERTY?
+
+When a property is **written** to an object it is _always_ defined directly against that object itself.
+
+However, when the property of an object is **read**, the value is fetched in the following way:
+
+  * If the property is defined against the object itself, the value of that property is returned.
+  * Otherwise the JavaScript engine then looks in the object that is the __proto__ of the original object. If the property is defined directly against this object, its value is returned.
+  * Otherwise the search carries on if the prototype chain until an object with that property defined against it is found, OR
+  * If the search up the prototype chain eventually leads us to a null object, the value of the property is returned as `undefined`
+
+This is known as `prototypical inheritance`. In traditional, object-oriented languages it is generally _classes_ which inherit from other classes. In ES5, classes do not exist and, instead, it is _objects_ which derive from other objects. Because of this JavaScript is often referred to as _object-based_ rather than object-oriented.
+
+#### Defining an Object Template via a Constructor Function
+To create an object constructor function properly we have to show some appreciation for the prototype chain. Here is a simple but _correct_ example of how to define a custom constructor function for objects which are not part of any complex object hierarchy and just derive from Object.
+
+    var Car = function (wheels) {
+    	this.wheels = wheels || 4;
+    };
+
+    Car.prototype = Object.create(Object.prototype);   // NOT essential in this case.
+    Car.prototype.constructor = Car;
+
+Three essential things are required:
+
+  * The properties an object created using this constructor function are set via the `this` keyword. Within a constructor function `this` is the object that is being created and which is implicitly returned by the function. In this case the number of wheels can be supplied as a parameter to the function. If not supplied it will default to 4. If you wanted you could throw an exception if a sensible value for a parameter is not called.
+  * The `prototype` property of the function needs to be set. In this case Car prototype will be a newly created in-memory object whose prototype is Object. ??? This line is not essential in this case as it will occur by default. However, we are bearing in mind later examples which define more complex prototype chains.
+  * The `prototype.constuctor` property is defined.
+
+The `constructor` property is not automatically assigned via some under-the-bonnet magic. It unfortunately has to be defined manually.
+
+Defining the `constructor` property is good practice. It means you will later be able to "determine the type" of a complex object at a later point. Remember that the `typeof` is only of any real use when dealing with primitive types like bool, number and string. If you call `typeof` for any complex object all that will be returned is "object".   ....constructor
+
+This code constructs on object from the Car function defined above and examines some of its properties:
+
+    var myCar = new Car();
+
+    console.log(myCar.__proto__);								// Car { ... }
+    console.log(typeof myCar);									// "object"
+    console.log(myCar.constructor === Car);			// true
+
+    console.log(myCar.wheels);									// 4
+    console.log(new Car(3).wheels);							// 3
+
+> NOTE: A constructor function _must_ be preceded by the `new` keyword when called. It is this which effectively turns it from an ordinary function into a constructor function.<br />
+Yes, it is rather feeble that this is the case and that the function is actually at the mercy of the caller. That is why it is seen as important to name functions which "should be called with the new keyword" using Pascal case and _all_ other function using camel case.
+
+
+
+
+METHODS - define against prototype
+
+
+
+
+
 
 Mention that defining methods within the ctor, rather than against the prototype, will result in all those functions being recreated EVERY time an instance of the object is declared.
 [https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 Encapsulation is good but we have to bear in mind the efficiency of the code as well.
 
 
-LEAVE THIS SECTION TILL LATER (just add notes to it).
-
-<p>    Objects</p>
-<p>        1: declaration</p>
-<p>        myCar["make"]                   D16</p>
-<p>        http://www.w3schools.com/js/js_properties.asp</p>
-<p>        Prototype</p>
-<p>        toString() and other members in the Object prototype</p>
-<p>        Augmenting with additional methods</p>
-<p>        Adjusting existing methods</p>
-<p>    Arrays</p>
-<p>        1: declaration</p>
-<p>            adding properties after declaration</p>
-<p>    Strings</p>
-
-Hashtable - can access properties via two notations .aaa    ["aaa"]. Can even put spaces in properties via second notation.
-
+>Note: Objects may be a crucial part but there is **no such thing as classes** in this language so do not rely on your understanding of C# classes and objects.
 Constructors instead of classes.
 
 In order to become proficient in JavaScript, a firm understanding of `objects` and `prototypes`, as well as its functional programming concepts, is essential.
 
->Note: Objects may be a crucial part but there is **no such thing as classes** in this language so do not rely on your understanding of C# classes and objects.
-
-TODO: Need to explain enough in this section and WILL therefore need one or more code samples (maybe prefer proper object syntax as that will introduce reader to `this` and `new`).
 
 Objects in JavaScript are mutable keyed collections. In JavaScript, arrays are objects, functions are objects,
-regular expressions are objects, and, of course, objects are objects.
 An object is a container of properties, where a property has a name and a value. A property name can be any string, including the empty string. A property value can be any JavaScript value except for undefined.
 Objects in JavaScript are class-free. There is no constraint
 
 <p>    prototype</p>
 <p>    JSON notation</p>
 
-There is no equivalent of C# classes in JS, just objects and their prototypes.
+There is no equivalent of C# classes in ES5, just objects and their prototypes.
 
 Objects all have a `prototype` property which specifies what object they are based on and this can form a chain... Objects created (1) via direct creation of object using JSON syntax, (2) returned from a function call (which may be an ordinary function or a constructor function, which needs to be preceded by the `new` keyword).
 In theory, members can be removed from an object using the `delete` but "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values."
