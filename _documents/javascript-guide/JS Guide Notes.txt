@@ -1,3 +1,56 @@
+### <a name="language-objects"></a>Objects
+
+#### <a name="language-objects-what"></a>What is an object?
+#### <a name="language-objects-properties"></a>Properties and Methods.
+#### <a name="language-objects-ways-to-create"></a>Ways to Create an Object
+#### <a name="language-objects-prototypes"></a>Object Prototypes
+#### <a name="language-objects-constructors"></a>Defining an Object Template via a Constructor Function
+#### <a name="language-objects-creating-via-constructors"></a>Creating Objects via Constructors
+#### <a name="language-objects-defining-methods"></a>Defining Methods
+#### <a name="language-objects-richer-properties"></a>Richer Properties
+#### <a name="language-objects-richer-objects"></a>Richer Objects
+#### <a name="language-objects-example-inheritance"></a>Example Inhertance Tree
+
+[What is an object?](#language-objects-what)
+[Properties and Methods](#language-objects-properties)
+[Ways to Create an Object](#language-objects-ways-to-create)
+[Object Prototypes](#language-objects-prototypes)
+[Defining an Object Template via a Constructor Function](#language-objects-constructors)
+[Creating Objects via Constructors](#language-objects-creating-via-constructors)
+[Defining Methods](#language-objects-defining-methods)
+[Richer Properties](#language-objects-richer-properties)
+[Richer Objects](#language-objects-richer-objects)
+[Example Inheritance Tree](#language-objects-example-inheritance)
+
+
+
+
+
+
+
+SECTIONS TO FINISH OFF:
+
+TODO        (6)
+Scruffy section right at bottom of document   - remove all but the references - add an extra contnet menu item to the fourth section for "Useful References"
+
+-------------------------------------------------
+Can be done at a later date:
+
+Read through for mistakes.
+Check how looks on page.
+
+
+
+
+
+
+
+
+
+
+
+
+
 PluralSight - Creating JavaScript Objects           Jim Cooper
 ------------------------------------------------
 
@@ -529,84 +582,6 @@ Chimp, jasmine,
 
 
 [JSON](#language-built-in-objects-json)
-
-
-
-
-
-
-SUMMARIZE ALL THIS in language-objects           and introduce sub-headers along the way:
-
-    Using Constructor Functions to Create JavaScript Objects
-        new Animal()                                                                               THINK DONE
-    Using Object.create() to Create JavaScript Objects
-        ** Object.create()
-            prototype + enumerable, writeable, configurable - not as nice to use but got more controls
-    ** give a brief mantion of ES2015 classes
-    
-    
-JavaScript Object Properties
-    Using JavaScript Property Descriptors
-        Object.defineProperty()
-        writeable            - can it be set from outside (only get an error if in strict mode (otherwise silently fails)
-        2:14 - Object.freeze() - can no longer change any of its properties
-    Using the Enumerable Attribute
-        enumerable        - set whether or not it will occur as an iteration within
-            for...each
-            Object.keys()
-            JSON.stringify()
-        Can still access the property though
-    Using the Configurable Attribute
-        configurable   - whether or not can call Object.defineProperty() again to change
-            enumerable
-            configurable
-            delete the property
-            DOESN'T affect writable though
-    Using Getters and Setters                                                               I have covered these in #style-getters-and-setters
-    
-    
-JavaScript Prototypes and Inheritance
-    Getting Started with JavaScript Prototypes
-        He defineProperty a "last" property for an array
-        Then he puts it on Array.prototype
-        Array is actuall just a function
-    What Is a Prototype?
-        Shows that a function has a prototype of {}
-        Shows that the prototype of an object literal in undefined
-        Shows that the same object does have a __proto__ property of Object
-        A function's prototype is the object INSTANCE that will become the prototype for all objects created using this function as a constructor
-        An object's prototype is the object INSTANCE from which the object is inherited.
-        He shows that a func's prototype and the __proto__ property of an object constructed using the function point to the SAME object
-    Instance vs. Prototype Properties
-        He demonstartes how properties are fetched by searching up the inheritance chain
-        hasOwnProperty() -           fluffy.hasOwnProperty("age")
-    A Graphical Overview of Prototypes
-        when a function is declared, JS creates an empty object in memeory and func's prototype prop is pointed to it
-        new KW creates the new object but also adds a __proto__ property
-        if update prototype property, existing objects which don't define their own will see the new value
-    Changing a Function's Prototype
-        Changing a function's prototype to point to a different object - objects that have already been created will still have __proto__ pointing to the old prototype
-    Multiple Levels of Inheritance
-        When going up the prototype chain (he goes via __proto__) you will eventually reach a value of null.
-        Usually you will encounter Object and its prototype is null.
-    Creating Your Own Prototypal Inheritance Chains    (THREE essential components)             All 3 are exactly the same on https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-*        Cat.prototype = Object.create(Animal.prototype);
-        He does above instead of using "new": O.c is NOT going to call the Animal function - we only really want to do that when we want to create Cats.
-            Just sets up the function as the prototype and sets up the prototype chain
-*        The Cat constructor starts with the line          Animal.call(this);
-        instanceof -          "fluffy instanceof Cat" is true, "fluffy instanceof Animal" also true
-*        Cat.prototype.constructor = Cat;          - Constructor was still Animal
-        fluffy.__proto__   is a Cat
-    Creating Prototypes with Classes
-        Creating via "class" and "extends" and "super" produces much the same code as above
-        Two minor differences:
-            fluffy.constructor is now a class rather than a function
-            Members of classes are not enumerable by default - for...each, Object.keys()      hasOwnProperty will still return true
-
-
-
-
-
 
 
 

@@ -19,9 +19,19 @@
 *  [Functions](#language-functions)
 *  [Calling Functions](#language-calling-functions)
 *  [Immediately-invoked Function Expressions](#language-immediately-invoked-function-expressions)
-++  [Objects](#language-objects)    TODO: need sub menus
--  [The this Keyword](#language-this-keyword)
--  [Types](#language-types)  		DONE ALL DOWN TO Object
+*  [Objects](#language-objects)
+	* [What is an object?](#language-objects-what)
+	* [Properties and Methods](#language-objects-properties)
+	* [Ways to Create an Object](#language-objects-ways-to-create)
+	* [Object Prototypes](#language-objects-prototypes)
+	* [Defining an Object Template via a Constructor Function](#language-objects-constructors)
+	* [Creating Objects via Constructors](#language-objects-creating-via-constructors)
+	* [Defining Methods](#language-objects-defining-methods)
+	* [Richer Properties](#language-objects-richer-properties)
+	* [Richer Objects](#language-objects-richer-objects)
+	* [Example Inheritance Tree](#language-objects-example-inheritance)
+*  [The this Keyword](#language-this-keyword)
+*  [Types](#language-types)  		DONE ALL DOWN TO Object
 	* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
 		* [string](#language-types-string)
 		* [number](#language-types-number)
@@ -31,14 +41,14 @@
 	* [Array](#language-types-array)
 	* [Date](#language-types-date)
 	* [RegExp](#language-types-regexp)
-	- [Object](#language-types-object)
+	* [Object](#language-types-object)
 	* [Function](#language-types-function)
 		* [arguments Object](#language-types-arguments-object)
--  [JavaScript Keywords](#language-javascript-keywords)   DONE (apart from object-related ones)
+*  [JavaScript Keywords](#language-javascript-keywords)
 *  [Reserved Words](#language-reserved-words)
 *  [Truthy and Falsy](#language-truthy-and-falsy)
--  [Operators](#language-operators)  										DONE (apart from object ones, which will probably appear in the objects section)
-*  [Commonly Used Built-in Object Methods](#language-built-in-objects)   TODO most object methods
+*  [Operators](#language-operators)
+*  [Commonly Used Built-in Object Methods](#language-built-in-objects)
 	* [Window](#language-built-in-objects-window)
 	* [Document](#language-built-in-objects-document)
 	* [Math](#language-built-in-objects-math)
@@ -448,11 +458,14 @@ Here is one example of the module pattern. The code is just for demonstration pu
     console.log(AXA.myModule.method1());		// 10
     console.log(AXA.myModule.method1());		// 20
 
-### <a name="language-objects"></a>Objects
-#### What is an object?
-Described in very simplistic terms an object in JavaScript is like a collection of key-value pairs. There is a bit more to them than that, as will be described later. For example, every object has a `constructor` and a `prototype`.
 
-#### Properties and Methods.
+### <a name="language-objects"></a>Objects
+The basis of this section has been constructed from a short but easy-to-follow course on  PluralSight: [JavaScript Objects and Prototypes (by Jim Cooper)](https://app.pluralsight.com/library/courses/javascript-objects-prototypes/table-of-contents).
+
+#### <a name="language-objects-what"></a>What is an object?
+Described in very simplistic terms an object in JavaScript is like a mutable collection of key-value pairs. There is a bit more to them than that, as will be described later. For example, every object has a `constructor` and a `prototype`.
+
+#### <a name="language-objects-properties"></a>Properties and Methods
 We will refer to each key-value pair as a `_property`, although they are more like the equivalent of public fields in C#. The dynamic nature of JavaScript means that, as with ordinary variables declared using the `var` keyword, properties have no restriction on their type. Their values can also be change to different values of different types at any point after initialisation. You can also add new properties to an object after it has been initialised by merely referencing a new property name and setting its value.
 
     var myObject = {
@@ -479,7 +492,7 @@ Here are some examples using the `myObject` created in the previous example:
     myObject[propertyName] = 100;
     console.log(myObject[propertyName]);		// 100
 
-#### Creating an Object
+#### <a name="language-objects-ways-to-create"></a>Ways to Create an Object
 The most fundamental way of creating an object is via `JSON` (JavaScript Object Notation). This allows you to define an object literal. You can specify primitive property values, arrays and properties that are nested objects. Also see the [JSON object](#language-built-in-objects-json) section (this will also explain about serialisation between objects and JSON strings).
 
     var myObject = {
@@ -505,24 +518,27 @@ Here are some examples of object specifiers that are specific to certain types:
 It is also worth mentioning the Object.create() method. This allows you to create an object where you specify its `prototype` and can optionally define some of its properties (see next section).
 TODO: WHERE EXPLAIN: Object.defineProperties() - this is the basis of the second parameter   LATER SECTION
 
-#### Object Prototypes
-In JavaScript _every_ object has a prototype. The prototype is like the direct parent of the object where extra properties that are not defined directly against the object itself can be defined and then "inherited".
+#### <a name="language-objects-prototypes"></a>Object Prototypes
+In JavaScript _every_ object has a prototype. The prototype is like the direct parent of the object where extra properties that are not defined directly against the object itself can be defined and then "inherited". You can access any object's prototype via its `__proto__` property. The cryptic name is an indication that ordinary users should not set this property and you will be shown how this property actually gets initialised. It is perfectly valid to read the property.
 
-Prototypes are actually just ordinary objects themselves. They themselves have their own prototypes and we get `prototype chains`. There can be any number of links in an inheritance chain. Following the chain of an object upwards via its `__proto__ property` (which all objects have) then __proto__.__proto__, and so on, will usually lead us to an `Object`. Almost all objects ultimately "derive" from Object and the value of its __proto__ is `null`. We will describe the difference between the `__proto__` property of an object and the `prototype` property of a constructor function in a short while.
-TODO: ARE WE WRITE TO STATE LAST SENTENCE OR SHOULD WE HAVE ALREADY MENTION THE PROTOTYPE PROPERTY?
+Prototypes are actually just ordinary, in-memory objects. They themselves have their own prototypes and we get `prototype chains`. There can be any number of links in an inheritance chain. Following the chain of an object upwards via its `__proto__` property then `__proto__.__proto__`, and so on, will usually lead us to an `Object`. Almost all objects ultimately "derive" from Object and the value of its `__proto__` is `null`. We will describe the difference between the `__proto__` property of an object and the `prototype` property of a constructor function in a short while.
 
-When a property is **written** to an object it is _always_ defined directly against that object itself.
+When a property value is **written** to an object the property will _always_ be then defined directly against that object itself.
 
 However, when the property of an object is **read**, the value is fetched in the following way:
 
   * If the property is defined against the object itself, the value of that property is returned.
   * Otherwise the JavaScript engine then looks in the object that is the __proto__ of the original object. If the property is defined directly against this object, its value is returned.
-  * Otherwise the search carries on if the prototype chain until an object with that property defined against it is found, OR
+  * Otherwise the search carries on up the prototype chain until an object with that property defined against it is found, OR
   * If the search up the prototype chain eventually leads us to a null object, the value of the property is returned as `undefined`
 
 This is known as `prototypical inheritance`. In traditional, object-oriented languages it is generally _classes_ which inherit from other classes. In ES5, classes do not exist and, instead, it is _objects_ which derive from other objects. Because of this JavaScript is often referred to as _object-based_ rather than object-oriented.
 
-#### Defining an Object Template via a Constructor Function
+There is a `hasOwnProperty()` method which will allow you to determine if a property is defined directly against an object if it is inherited from an object further up the prototype chain:.
+
+    myCat.hasOwnProperty("age")
+
+#### <a name="language-objects-constructors"></a>Defining an Object Template via a Constructor Function
 To create an object constructor function properly we have to show some appreciation for the prototype chain. Here is a simple but _correct_ example of how to define a custom constructor function for objects which are not part of any complex object hierarchy and just derive from Object.
 
     var Car = function (wheels) {
@@ -538,9 +554,7 @@ Three essential things are required:
   * The `prototype` property of the function needs to be set. In this case Car prototype will be a newly created in-memory object whose prototype is Object. ??? This line is not essential in this case as it will occur by default. However, we are bearing in mind later examples which define more complex prototype chains.
   * The `prototype.constuctor` property is defined.
 
-The `constructor` property is not automatically assigned via some under-the-bonnet magic. It unfortunately has to be defined manually.
-
-Defining the `constructor` property is good practice. It means you will later be able to "determine the type" of a complex object at a later point. Remember that the `typeof` is only of any real use when dealing with primitive types like bool, number and string. If you call `typeof` for any complex object all that will be returned is "object".   ....constructor
+Defining the `constructor` property is good practice. There may be the odd occasion when an object needs to be able to refer to its own constructor and it is better not to be referring to it explicitly by its name. The property is not automatically assigned via some under-the-bonnet magic. It unfortunately has to be defined manually.
 
 This code constructs on object from the Car function defined above and examines some of its properties:
 
@@ -548,102 +562,199 @@ This code constructs on object from the Car function defined above and examines 
 
     console.log(myCar.__proto__);								// Car { ... }
     console.log(typeof myCar);									// "object"
+    console.log(myCar instanceof Car);			    // true
     console.log(myCar.constructor === Car);			// true
 
     console.log(myCar.wheels);									// 4
     console.log(new Car(3).wheels);							// 3
 
-> NOTE: A constructor function _must_ be preceded by the `new` keyword when called. It is this which effectively turns it from an ordinary function into a constructor function.<br />
-Yes, it is rather feeble that this is the case and that the function is actually at the mercy of the caller. That is why it is seen as important to name functions which "should be called with the new keyword" using Pascal case and _all_ other function using camel case.
+Notice that `typeof myCar` returns "object" and not "Car". For non-primitive objects typeof will only ever return "object".
+
+On the other hand `instanceof` can be used to determine if an object is of a more specific type. Note that the behaviour of `instanceof` is _not_ affected by setting of the `constructor` property.
+
+#### <a name="language-objects-creating-via-constructors"></a>Creating Objects via Constructors
+To create an instance of a `Car` above we simply had to precede the call to the constructor function with the `new` keyword. A constructor function _must_ be preceded by the `new` keyword when called. It is this which effectively turns it from an ordinary function into a constructor function.
+
+Preceding a function call with `new` affects the function itself in _three_ ways:
+
+  1. The function will implicitly create and return a new instance of an object. The function does not need to contain a `return` statement.
+  2. The `this` keyword within the function will refer to the object being created. The constructor function will generally add properties to the object via lines like `this.myProperty = ...`.
+  3. The `__proto__` property of the newly-created object will set to point to the same object instance as the `prototype` property of the function. If you change or add a property to that prototype property the change will therefore be seen in all objects that have already been created using the constructor. Note that, if the function's prototype property was somehow changed to point to something different at a later point in time, only objects created after that point will be affected.
+
+> NOTE: Yes, it is rather feeble that this is the case and that the function is actually at the mercy of the caller. That is why it is seen as important to name functions which "should be called with the new keyword" using Pascal case and _all_ other function using camel case.
+
+#### <a name="language-objects-defining-methods"></a>Defining Methods
+You _could_ define your methods within the constructor function, considering they are just properties that happen to be functions. _However_, this is an inefficient way to do so because the method functions will be newly defined and stored directly against the new object being created _every_ time you call your constructor. This would be highly undesirable in situations where you are planning creating more than just a few instances of an object.
+
+Instead the **correct** way is to define each method just once, against the prototype of the object. Because they have been defined against the prototype, any new objects created will then inherit those definitions via the prototype chain:
+
+    var Circle = function (radius) {
+    	this.radius = radius;
+    };
+
+    Circle.prototype.constructor = Circle;
+
+    Circle.prototype.getArea = function () {
+    	var area = Math.PI * this.radius * this.radius;
+      return area.toFixed(2);
+    };
+
+    var circle1 = new Circle(1);
+    console.log(circle1.getArea());    // 3.14
+
+    var circle2 = new Circle(2);
+    console.log(circle2.getArea());    // 12.57
+
+The code defining the method does not look very nice compared with class-based programming. The methods being declared outside the constructor looks clumsy. However, it does now mean that only one function instance per method is being shared by all the objects you create using the constructor. The `getArea()` used by `circle1` and `circle2` is the same function _instance_. If we had instead defined `this.getArea = ...` within the constructor we would have ended up with two different functions containing exactly the same code.
+
+This link, not just restricted to constructor functions, is old but gives you an indiction of the idea that "encapsulation is good but we have to bear in mind the efficiency of the code as well": [Stop Nesting Functions! (But Not All of Them)](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+
+#### <a name="language-objects-richer-properties"></a>Richer Properties
+You may think that properties are just simple name-value pairs. However, each property does actually a descriptor which specifies some attributes about it. There are three prominent attributes:
+
+  * `writable` - can the property be written to after it has been initialised? The default is `true`.
+  * `enumerable` - (1) will the property appear when you enumerate through all an object's properties, (2) if you serialise to JSON, will this property be serialised, e.g. using JSON.stringify(). The default value for this property is `true`.
+  * `configurable` - can the property's attributes be redefined at a later time, say, using another call to Object.defineProperty()? The default is `true`.
+
+The [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) allows you to define these more enriched properties:
+
+    Object.defineProperty(obj, 'key', {
+      enumerable: false,
+      configurable: false,
+      writable: false,
+      value: 'static'
+    });
+
+You can also define getter and setter accessors for a property:
+
+    var Person = function (firstName, lastName) {
+        this.firstName = firstName,
+        this.lastName = lastName
+    };
+
+    Object.defineProperty(Person.prototype, 'fullName', {
+        get: function() {
+            return this.firstName + " " + this.lastName;
+        }
+    });
+
+    var person1 = new Person("John", "Smith");
+
+    console.log(person1.fullName);			// "John Smith"
+
+If you are defining richer properties against an object constructor, you will need to define them outside the constructor and against the prototype, for the same efficiency reasons as defining methods. It is better to define one property against the prototype than to end up redefining the same property against each individual instance created.
+
+#### <a name="language-objects-richer-objects"></a>Richer Objects
+Here we are merely giving an indication of how flexible JavaScript objects can be and how it is more than possible to just change property values at run time - you can redefine its whole configuration on the fly. This can be done for standalone objects or for object prototypes.
+
+The [MDN Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) page also indicates some methods for placing extra restrictions on objects.
+
+`Object.freeze()` allows you to prevent properties being added to or removed from an object and prevents anyone from reconfiguring existing properties, although the existing properties can still be written to if they are writable.
+
+`Object.seal()` performs a similar function but allows existing properties to be removed.
+
+`Object.preventExtensions()` prevents anyone from adding new properties to an object.
+
+There is also a `delete` keyword which, in theory, allows you to delete a property from an object. However, its results can be a bit unpredictable and inefficient.
+
+#### <a name="language-objects-example-inheritance"></a>Example Inheritance Tree
+The three essential things when creating a constructor function for a derived "type" are:
+
+  1. Make sure the derived constructor calls the base constructor.
+  2. Ensure that the prototype of the derived type is an object that is created from the base prototype.
+  3. Ensure you set the constructor property of the derived prototype.
+
+    var Animal = function (legs, noise) {
+    	this.legs = legs || 4;
+      this.noise = noise;
+    };
+
+    Animal.prototype = Object.create(Object.prototype);
+    Animal.prototype.constructor = Animal;
+
+    Animal.prototype.makeNoise = function () {
+    	console.log(this.noise);
+    };
+
+    var Bird = function (noise) {
+    	// 1. Always call the base constructor within the derived constructor.
+    	Animal.call(this, 2, noise);
+
+      this.birdProperty = 34;
+    };
+
+    // 2. Make sure that we fit the derived prototype into the prototype chain.
+    Bird.prototype = Object.create(Animal.prototype);
+    // 3. Don't forget to set the constructor property of the prototype.
+    Bird.prototype.constructor = Bird;
+
+    Bird.prototype.fly = function () {
+    	console.log("Bird is flying");
+    };
 
 
+    var bird = new Bird("Chirp");
+    bird.makeNoise();
+    bird.fly();
 
+    console.log(bird instanceof Bird);				  // true
+    console.log(bird instanceof Animal);			  // This is also true
 
-METHODS - define against prototype
+    console.log(bird.constructor === Bird);	    // true
+    console.log(bird.constructor === Animal);	  // false
 
+The `Bird` constructor called the `Animal` constructor via the `call()` method. This allowed us to specify that the `this` that is under construction within `Bird` should also be the object `this` is pointing to within `Animal`. Therefore `Animal` will set some properties of the object under construction and then `Bird` will set some more before returning it.
 
+Notice that `instanceof` works in a polymorphic fashion and `bird` is both a `Bird` and an `Animal`.
 
+The above mechanism is the standard JavaScript way of dealing with object definitions. It provides no way of encapsulating properties. This is why you may often see third-party code referring to properties with an unusual syntax for their names, like the use of underscores. For example, if you wanted the `noise` property above to only be accessible to code internal to the Animal or Bird prototypes then you would be out of luck - you would just have to rename it to `_noise` to give other users creating Animals or Birds and indication that it is not intended for them to access this property themselves and they should do so at their own risk - not ideal.
 
-
-
-Mention that defining methods within the ctor, rather than against the prototype, will result in all those functions being recreated EVERY time an instance of the object is declared.
-[https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
-Encapsulation is good but we have to bear in mind the efficiency of the code as well.
-
-
->Note: Objects may be a crucial part but there is **no such thing as classes** in this language so do not rely on your understanding of C# classes and objects.
-Constructors instead of classes.
-
-In order to become proficient in JavaScript, a firm understanding of `objects` and `prototypes`, as well as its functional programming concepts, is essential.
-
-
-Objects in JavaScript are mutable keyed collections. In JavaScript, arrays are objects, functions are objects,
-An object is a container of properties, where a property has a name and a value. A property name can be any string, including the empty string. A property value can be any JavaScript value except for undefined.
-Objects in JavaScript are class-free. There is no constraint
-
-<p>    prototype</p>
-<p>    JSON notation</p>
-
-There is no equivalent of C# classes in ES5, just objects and their prototypes.
-
-Objects all have a `prototype` property which specifies what object they are based on and this can form a chain... Objects created (1) via direct creation of object using JSON syntax, (2) returned from a function call (which may be an ordinary function or a constructor function, which needs to be preceded by the `new` keyword).
-In theory, members can be removed from an object using the `delete` but "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values."
-
-MENTION: Prototype chains - ultimately the chain leads to the Object prototype.
-WHAT EXACTLY IS A PROTOTYPE AND HOW DOES IT DIFFER FROM AN OBJECT? It is an object
-	TO MENTION: (redefine members at any point - when some one reads a prop it will first look at object then at its prototype then along the prototype chain until it finds match - writing always attaches to the object itself, any properties of the same name within the prototype chain will still remain but will not be reached when trying to fetch via the object)
-
-
-Think that now appreciate the use of Object.create(prototype) when using functional style to define objects (because the IIFE returns the PROTOTYPE, with the methods defined in
-
-
-[http://www.w3schools.com/js/js_object_prototypes.asp](http://www.w3schools.com/js/js_object_prototypes.asp)
-
-[https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype)
-
-Object.create(Person.prototype);
-
-[http://thecodeship.com/web-development/methods-within-constructor-vs-prototype-in-javascript/](http://thecodeship.com/web-development/methods-within-constructor-vs-prototype-in-javascript/)
-
-> Beware, if ever want to maintain complex hierarchies, that if not properly maintained the prototype chain can break. No one ever said JavaScript was rock solid, it just needs to be handled with care.
-> [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
-
-
-can dynamically add and delete members of objects. MENTION SOME OF THE THINGS but refer the reader to other sources for this mor advance topic.
-
-
+There are other patterns for allowing some degree of encapsulation which you can find on the internet. The only problem is that, on the one hand, methods are most efficiently added directly against the prototype. However, on the other hand, those methods need to be added outside the constructor, meaning that properties they need to access have to be public.
 
 ### <a name="language-this-keyword"></a>The this Keyword
-The `this` keyword generally refers to the scope that you are in, i.e. the global scope or a function.
-this means (1) the object you are constructing within a ctor fn (EXCEPT), (2) and in an externally created method, (3) the global object, (4) if fn is called with `call` or `apply` then the object represented by `this` is controlled from that call - applications...     see getters and setters:
+The `this` keyword points to an object. However, what this object is depends on the context. This is an attempt to explain those different contexts.
 
+#### 1. Global Scope
+Outside any functions or objects `this` refers to the global object. Within browsers this would be the `window` object.
 
-console.clear();
+Note that "ordinary functions" do not introduce any new meaning to `this`. It will still point to the same object inside the function as it does immediately outside the function. It means that, within non-constructor functions that are directly within the global scope, `this` will still point to the global object. By "ordinary functions", in this case, we mean:
+  1. functions that are _not_ preceded by the `new` keyword when called,
+  2. functions that are not methods of objects
 
-var o = {
-  a: 7,
-  b() {
-    // *** HERE this is referring to o.
-    return this.a + 1;
-  },
-  c(x) {
-    this.a = x / 2;
-  }
-};
+If you use `strict mode` then, for the above situations, `this` will be `undefined` to prevent inadvertent modifications to the global object.
 
-console.log(o.a); // 7
-console.log(o.b()); // 8
-o.c(50);
-console.log(o.a); // 25
+#### 2. Constructor Function
+Within any function that is preceded by the `new` keyword when called `this` refers to the implicit object being constructed.
 
+#### 3. Object Methods
+If a function is an object method, whether it is a standalone object or one being used as a prototype, `this` refers to the object.
 
+    var person1 = { firstName: "Fred", lastName: "Bloggs" };
+    person1.writeFullName = function () {
+    	console.log(this.firstName + " " + this.lastName);
+    }
 
+    person1.writeFullName();			// "Fred Bloggs"
 
+It is also the case if the method has been defined directly within an object literal.
 
-The above example points it out - this within a method of an object initialiser.
+#### 4. <a href="language-this-keyword-call-apply-bind"></a>call, apply or bind
+Whenever a function is called using [call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) or [apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) the caller explicitly specifies what object `this` will refer to and it will **always** override whatever `this` would ordinarily have pointed to.
 
+In the previous example, `writeFullName()` was a method introduced directly against `person1`. Despite the fact that `bobSmith` in example doesn't even have that method we can force `this` to refer to the new object within the method:
 
+    var bobSmith = { firstName: "Bob", lastName: "Smith" };
+    person1.writeFullName.call(bobSmith);           // "Bob Smith"
 
+The [bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) is like call() and apply() but its effects are more permanent. Note that bind() doesn't alter the original function - it returns a copy of the function within which `this` refers to the specified object. In the next example it is used to return a copy of `person1.writeFullName()` where `this` now refers to `bobSmith`.
+
+    var newFunction = person1.writeFullName.bind(bobSmith);
+    newFunction();								// "Bob Smith"
+
+The above examples are rather hypothetical and merely for demonstration. Uses of call(), apply() and bind() tend to be specialised but they are significantly used.
+
+#### 5. A Function That is a DOM Event Handler
+If a function is used as a DOM event handler `this` will refer to the JavaScript object representing the element from which the event was triggered.
 
 ### <a name="language-types"></a>Standard Types
 The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard `prototype` objects built into JavaScript which achieve a similar effect to classes.
@@ -903,6 +1014,7 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 	console.log(d3);										// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
 
 
+TODO:
 -------------
 console.clear();
 
@@ -959,14 +1071,14 @@ Below are a couple of not very sophisticated examples. Note that the `replace()`
 	console.log(convertToSnakeCase("My    object container"));
 
 #### <a name="language-types-object"></a>Object
-FINISH WHEN DONE MORE ON objects
+JavaScript objects have been thoroughly explained in the [Objects](#language-objects) section further up. You can also look at MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object).
 
-If you follow the prototype chain of any object in JavaScript it will ultimately lead back to the `Object`. This means that all objects in JavaScript have access to its members.
+When going up the prototype chain of virtually an object you will eventually reach the `Object`. It provides some basic "instance" methods, like `toString()`, which are therefore available to an object you create. It also provides some methods which, in the C# world, would be classed as static.
 
-NOTE: SOME ARE PROTOTYPE things... which access via the object. OTHER METHODS are used using the `Object` object itself (a bit like static methods). NEED TO BOTTOM THIS.
-
+##### toString()
 It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
 
+##### hasOwnProperty()
 This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the `for ... in` clause (see later) (LINK THEM TO IT).
 
 	// Outputs properties of an object that are defined directly with the object
@@ -983,69 +1095,53 @@ This function iterates through all the properties of an object and uses the `has
 	var obj = {a: 1, b: 2};
 	outputOwnProperties(obj, "obj");
 
-For this simple object, removing the condition containing `hasOwnProperty` will not make any difference BUT CAN THEN SHOW THE PROTOTYPE ONE.
+
+##### getPrototypeOf()
+According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain), "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances.". `getPrototypeOf()` will return the `__proto__` property of the object.
+
+    console.clear();
+
+    var outputOwnProperties = function (obj, objName) {
+      for (var property in obj) {
+        if(obj.hasOwnProperty(property)) {
+          console.log(objName + "." + property + " = " + obj[property]);
+        }
+      }
+    };
+
+    var triangle = {a:1, b:2, c:3};
+
+    // Define the ColouredTriangle and its prototype.
+    function ColouredTriangle() {
+      this.color = "red";
+    }
+    ColouredTriangle.prototype = triangle;
+
+    var ct = new ColouredTriangle();
+
+    console.log(ct);
+    outputOwnProperties(ct, "ct");
+
+    var t = Object.getPrototypeOf(ct);
+    console.log(t);		// Object {a: 1, b: 2, c: 3}
+    outputOwnProperties(t, "t");
+
+    var o = Object.getPrototypeOf(t);
+    console.log(o);		// Object {}
+    outputOwnProperties(o, "o");
 
 
-Although you can easily define properties of an object on the fly using `person.newProperty = "Fred"` or `person["newProperty"] = "Fred"` XXXthe object prototype gives you licence to add,
-define and remove properties (although can add via .fdfg= or ["hhuj"] =
-.........
-WE DELETE PROPERTIES using `delete` keyword. These members are not inherited prototype methods.
-I THINK I SAW SOME ADVICE saying just make the properties null...
+##### create()
+Used to create an object where the caller specifies what that object's prototype is. `myObject` below is not actually an Array. It is an object whose prototype is the same as that of Array.
 
-freezing.    The delete silently fails after the `freeze` call. `Object.preventExtensions()` will prevent anyone from adding new properties, `seal` prevent deletion but not modification...
+    var myObject = Object.create(Array.prototype);
+    myObject.push(666);
+    console.log(myObject[0]);
 
-	var obj = {a: 1, b: 2};
-	outputOwnProperties(obj, "obj");
+It is commonly used when setting the `prototype` property of a constructor function. In the [Example Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
 
-	Object.freeze(obj);
+Also see [MDN - Object.create()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create).
 
-	delete obj.b;
-	obj.a = 58;
-	obj.c = 39;
-	outputOwnProperties(obj, "obj");
-
-  object.create()
-
-
-According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain), "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances."
-
-	console.clear();
-
-	var outputOwnProperties = function (obj, objName) {
-	  for (var property in obj) {
-	    if(obj.hasOwnProperty(property)) {
-	      console.log(objName + "." + property + " = " + obj[property]);
-	    }
-	  }
-	};
-
-	var triangle = {a:1, b:2, c:3};
-
-	// Define the ColouredTriangle and its prototype.
-	function ColouredTriangle() {
-	  this.color = "red";
-	}
-	ColouredTriangle.prototype = triangle;
-
-	var ct = new ColouredTriangle();
-
-	console.log(ct);
-	outputOwnProperties(ct, "ct");
-
-	// MORE RESEARCH NEEDED. See not above code sample.
-	console.log(ct.prototype);
-	// undefined (maybe only for use with constructors)
-
-	var t = Object.getPrototypeOf(ct);
-	console.log(t);		// Object {a: 1, b: 2, c: 3}
-	outputOwnProperties(t, "t");
-
-	var o = Object.getPrototypeOf(t);
-	console.log(o);		// Object {}
-	outputOwnProperties(o, "o");
-
-
-[MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
 
 #### <a name="language-types-function"></a>Function
 As explained above in [Functions](#language-functions), functions are actually objects which have properties and methods of their own.
@@ -1090,18 +1186,14 @@ Here is an example creating a "partially applied" version of another function. C
 
     console.log(addTen(2));
 
+[The this Keyword](#language-this-keyword-call-apply-bind) section further up also shows some examples of these functions being used.
+
 Also see [MDN - Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
 
 ##### <a name="language-types-arguments-object"></a>arguments Object
 This object is explained in the [Handling a Variable Number of Parameters](#language-variable-number-of-parameters) section further up. Note that this is the _arguments object_. It is different from the _arguments property_ of the function object, which is deprecated.
 
 Also see [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments).
-
-
-
-
-
-
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
@@ -1151,9 +1243,6 @@ with (Math) {
   console.log(cos(pi));				// -1
 }
 ```
-
-#### typeof            instanceof ...   any other object-related ones
-TODO: THESE CAN ONLY BE DONE, HERE OR IN THE RELEVANT SECTION ABOVE, WHEN WRITING ABOUT OBJECTS.
 
 
 ### <a name="language-reserved-words"></a>Reserved Words
@@ -1310,21 +1399,36 @@ Numbers could be automatically converted to strings or vice versa. Here the `+` 
 	var x = "5" - 7;     // x.valueOf() is -2,  typeof x is a number
 
 #### typeof
-TODO...
+Returns a string indicating the type of a variable. Note that this is only generally of value for testing primitive types. For objects created via a call to a constructor function `typeof` will only return the value "object".
+
+    var a = "Hello";
+    if (typeof a != "number") {
+    	alert("a is not a number.")
+    }
+
+See [MDN - typeof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) for more information on what types this keyword works with.
+
+Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) section further up.
 
 #### instanceof
-TODO...
+Returns a boolean indicating whether an object has in its prototype chain the prototype property of a constructor.
+
+Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Example Inheritance Tree](#language-objects-example-inheritance) sections further up.
+
+[MDN - instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) provides full documentation.
 
 #### new
+> NOTE: this keyword is probably better explained in the [Creating Objects via Constructors](#language-objects-creating-via-constructors) section further up.
+
 As previously explained, in JavaScript, does not magically created a new instance of an object.
 In realty, it is an operator that, when placed before a call to a function:
 
-*	Implicity creates an object whose PROTOTYPE/CONSTRUCTOR is the function and makes any reference to `this` immediately within the function refer to that object.
+*	Implicity creates an object and makes any reference to `this` immediately within the function refer to that object.
 * That object will be Implicity returned by the function.
 
 This means that the function will have to have written to expect this behaviour. It will then be known as a `constructor function` and these should always be called using the `new` keyword, whereas ordinary functions should _never_ be called using the `new` keyword.
 
-  NOTE: Generally functions are always named using **camelCase**. However, due to what is said in the above paragraph, it is conventional for `constructor functions` to have a name that is **Pascal Case**. This is a visual indication to consumers that it should be preceeded by the `new` keyword when called.
+  NOTE: Generally functions are always named using **camelCase**. However, due to what is said in the above paragraph, it is conventional for `constructor functions` to have a name that is **Pascal Case**. This is a visual indication to consumers that it should be preceded by the `new` keyword when called.
 
 #### Warning About Line Breaks Near Operators
 Put your operators, e.g. with ternary operator and string concatenation, at the **end** of lines they are next to a line break. **Do not** put them at the start of the next line, as is often done with ternary operators in C#. This is because some browsers try to _infer_ a line ending where a semi-colon is missing and may well do it wrongly of the code on a "part line" looks complete. If the operator is at the end the silly browser will be able to work out that there is more to come.
@@ -1607,18 +1711,10 @@ console.table(cities);
 > NOTE: It is important that, once you have finished your debugging you should remove (or, at a push, comment out) your console statements, leaving your code tidy. If you needed some sort of logging or performance recording on a more permanent basis, console would not be the object to use.
 
 
-
-> TODO: Add a there a debugging section? YES. Will also want to mention F12 tools. Can then give a reference to this section. also debugger statement.
-
-
 ### <a name="language-built-in-global-functions"></a>Built-in Global Properties and Functions
-
-GLOBALS      (NOTE that there are many properties and methods of the window object - they are sort of global)
-
-
 [JavaScript Global Reference](http://www.w3schools.com/jsref/jsref_obj_global.asp) explains that there are a few global properties and global functions. They are _not_ attached to any particular objects so they really are just standalone variables and functions, not methods.
 
-Out of those there may be more convenient alternatives, e.g. there a jQuery methods for testing for numeracy.
+Out of those there may be more convenient alternatives, e.g. there are jQuery methods for testing for numeracy.
 
 #### Global Properties
 `Infinity`, `NaN` and `undefined` are the global properties.
@@ -2285,7 +2381,7 @@ It return value will be the first parameter. However, it will first go through a
       title: "Broccoli"
     });
 
-There are various other ways of achieving the same thing. EE2015 provides an `Object.assign()` method. However, this does not work in IE and so can only be used if you transpile your code. Even then you will need a [polyfill](#tools-shims-and-polyfills). Overall the `$.extend()` method does the same thing and is reliable across all browsers.
+There are various other ways of achieving the same thing. ES2015 provides an `Object.assign()` method. However, this does not work in IE and so can only be used if you transpile your code. Even then you will need a [polyfill](#tools-shims-and-polyfills). Overall the `$.extend()` method does the same thing and is reliable across all browsers.
 
 ### <a name="tips-convert-something-to-a-boolean"></a>Convert Something to a Boolean with !!
 Sometimes you may want to convert some object or expression into its equivalent [truthy or falsy](#language-truthy-and-falsy) value as a boolean primitive. I am not sure what these cases are apart from to test which of the two something equates to in order to debug some piece of logic.
