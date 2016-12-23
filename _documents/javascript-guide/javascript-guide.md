@@ -31,7 +31,7 @@
 	* [Richer Objects](#language-objects-richer-objects)
 	* [Example Inheritance Tree](#language-objects-example-inheritance)
 *  [The this Keyword](#language-this-keyword)
-*  [Types](#language-types)  		DONE ALL DOWN TO Object
+*  [Types](#language-types)
 	* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
 		* [string](#language-types-string)
 		* [number](#language-types-number)
@@ -57,11 +57,6 @@
 *  [Built-in Global Properties and Functions](#language-built-in-global-functions)
 
 This is by far the biggest section of the document.
-
-USEFUL LINKS
-[http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0](http://hsablonniere.github.io/markleft/prezas/javascript-101.html#1.0)
-[http://www.w3schools.com/js](http://www.w3schools.com/js)
-
 
 ### <a name="language-document-scope"></a>Document Scope
 This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help people learn the language and techniques that can help tame it.
@@ -715,9 +710,12 @@ The `this` keyword points to an object. However, what this object is depends on 
 #### 1. Global Scope
 Outside any functions or objects `this` refers to the global object. Within browsers this would be the `window` object.
 
-Note that "ordinary functions" do not introduce any new meaning to `this`. It will still point to the same object inside the function as it does immediately outside the function. It means that, within non-constructor functions that are directly within the global scope, `this` will still point to the global object. By "ordinary functions", in this case, we mean:
+The `this` within "ordinary functions" points to the global object. By "ordinary functions", in this case, we mean:
   1. functions that are _not_ preceded by the `new` keyword when called,
   2. functions that are not methods of objects
+  3. the functions could have been declared using function syntax or expression syntax
+
+Note that even if an "ordinary function" is nested within a constructor function or a method function `this` will still point to the global object - don't be fooled into thinking it will point to the object the out constructor or method was for.
 
 If you use `strict mode` then, for the above situations, `this` will be `undefined` to prevent inadvertent modifications to the global object.
 
@@ -1272,12 +1270,18 @@ The concept is best explained by listing all the `falsy` values, i.e. the ones t
 
 **All** other values, including objects that have been initialised, are classed as `truthy` and the runtime will class them as being `true` within a boolean expression.
 
-#### Examples
-*** TODO: Truthy and falsy and really affect boolean detection within conditions. It affects comparison operators less. For example, just because false and null are both falsy does not mean that they are equal when compared with each other, even just for equality:
+#### Truthy and Falsy Don't Work for Comparison
+The concept of truthy and falsy is really only to determine what boolean value is detected if non-boolean variables are evaluated in a boolean fashion.
+
+It does NOT affect comparison operators in the sense that, just because false and null are both falsy does not mean that they are equal when compared with each other, even just for equality:
 
 	console.log(false == null);			// false.
 
+	if (false) { ... }              // condition evaluates to false as false is falsy.
+	if (null) { ... }               // Condition evaluates to false as null is falsy.
 
+
+#### Examples
 ```
 console.log(undefined == null);		 // true
 console.log("" == 0);		           // true
@@ -2398,12 +2402,9 @@ This process is very easy and just involves preceding the expression with two no
     console.log(!!"Hello");
 
 ### <a name="tips-that-or-self-variables"></a>that (or self) Variables
-TODO: THIS EXAMPLE HAS GONE AGAINST MY UNDERSTANDING OF this (IN BOTH CASES)
-      xxNEEDS EDITING WHEN COMPLETE this in SECTION 1
-
 `this` within a function often refers to the function itself. This can cause a problem when working within a nested function. To overcome the problem of needing to access the _outer_ `this` within the inner function the pattern is the record it in a variable called `that` or `self`.
 
-One situation where you may see this pattern is within a callback function or an event handler. This example, pinched off the internet, isn't very realistic but illustrates the idea.
+One situation where you may see this pattern is within a callback function or an event handler. This example, pinched off the internet, isn't very realistic but illustrates the idea. `this` within the nested function points to the global scope (see [The this Keyword](#language-this-keyword)) but `this` in the outer function was captured within `that`.
 
     var car = {};
     car.starter = {};
@@ -2429,32 +2430,6 @@ One situation where you may see this pattern is within a callback function or an
 
     car.start();
     console.log(car.starter.active);
-
-Another academic example shows that, in a function directly within the global namespace, `this` refers to the `Window` object. Even in ordinary functions nested within that function the same is true. However, `this` within the anonymous callback function in the `$.each` refers to the object currently in the `value` parameter. `that` has been used to capture the value of `this` as it is in its parent function.
-
-    console.log("default this: " + this);											// [object Window]
-
-    function outerFunction() {
-      console.log("this within outerFunction: " + this);			// [object Window]
-
-    	function nestedFunction() {
-        console.log("this within nestedFunction: " + this);		// [object Window]
-
-        var that = this;
-    	  $.each([52, 97], function(index, value) {
-          // 52 then 97
-          console.log("this within anonymous $.each callback function: " + this);
-
-          // [object Window] both times. that has captured the value of this within
-          // the outer function.
-          console.log("that within anonymous $.each callback function: " + that);
-        });
-      }
-
-      nestedFunction();
-    }
-
-    outerFunction();
 
 You may occasionally have a need to use this technique and it certainly helps to appreciate the meaning of its presence when reading somebody else code.
 
