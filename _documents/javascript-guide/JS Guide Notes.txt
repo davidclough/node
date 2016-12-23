@@ -30,8 +30,7 @@
 
 SECTIONS TO FINISH OFF:
 
-TODO        (6)
-Scruffy section right at bottom of document   - remove all but the references - add an extra contnet menu item to the fourth section for "Useful References"
+TODO        (4)
 
 -------------------------------------------------
 Can be done at a later date:

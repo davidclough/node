@@ -515,8 +515,6 @@ Here are some examples of object specifiers that are specific to certain types:
     var myRegex = /\d{3}/g;
     var myArray = [1, 2, 3];
 
-It is also worth mentioning the Object.create() method. This allows you to create an object where you specify its `prototype` and can optionally define some of its properties (see next section).
-TODO: WHERE EXPLAIN: Object.defineProperties() - this is the basis of the second parameter   LATER SECTION
 
 #### <a name="language-objects-prototypes"></a>Object Prototypes
 In JavaScript _every_ object has a prototype. The prototype is like the direct parent of the object where extra properties that are not defined directly against the object itself can be defined and then "inherited". You can access any object's prototype via its `__proto__` property. The cryptic name is an indication that ordinary users should not set this property and you will be shown how this property actually gets initialised. It is perfectly valid to read the property.
@@ -1672,7 +1670,7 @@ Also see [w3schools](http://www.w3schools.com/js/js_json.asp) and [MDN](https://
 
 
 #### <a name="language-built-in-objects-console"></a>Console
-The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides. TODO: DEBUGGING IS A SEPARATE SECTION.
+The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides.
 
 ##### Basic Methods
 These methods are called from within your code (when debugging).
@@ -2692,6 +2690,7 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 *  [MV* Frameworks](#tools-mv-frameworks)
 *  [User Interface Libraries](#tools-ui-libraries)
 *  [Node.js](#tools-node-js)
+*  [External References](#tools-external-references)
 
 > This document is JavaScript language guide. In the interests of not going too far off that topic most items within this section have been kept deliberately very short and serve just to highlight the existence of a tool or library with a few useful tips thrown in. Further reading of other documentation will generally be necessary.
 
@@ -3003,48 +3002,30 @@ If you aren't planning on using an MV* framework there are lots of other framewo
 
 [jQuery UI](https://jqueryui.com/) is an example of a free library which all sorts of widgets to help reduce the amount of HTML JavaScript you have to manually put together to construct a decent looking user interface with functionality like draggable or resizable items and accordion widgets.
 
-### <a name="tools-node-js"></a>Node.js
 If you are into your JavaScript you will almost certainly be drawn to the environment known as [Node.js](https://nodejs.org/en/). Node.js provides the runtime but it is actually [npm](https://www.npmjs.com/) (Node Package Manager) which provides the real power in the form of the
 "largest ecosystem of open source libraries in the world".
 
 Here is a link to [most starred npm packages](https://www.npmjs.com/browse/star) where you can gauge some idea of the libraries available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
 
+### <a name="tools-external-references"></a>External References
+Some [slightly random] links to pages which may be of interest.
 
+[W3Schools JavaScript Tutorial](http://www.w3schools.com/js)
 
-<hr />
+[Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml) - useful style guide tips.
 
+[JavaScript 101](http://hsablonniere.github.io/markleft/prezas/javascript-101.html)
 
+[Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
 
+[7 Essential JavaScript Functions](https://davidwalsh.name/essential-javascript-functions)
 
+[Seven JS Concepts You Must Understand Before Your Next Job Interview](https://gist.github.com/ericelliott/263f24b5ad987e2f09d2)
 
+[Stop Nesting Functions! (But Not All of Them)](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 
-1. [References](#references)
+[JavaScript Common Mistakes](http://www.w3schools.com/js/js_mistakes.asp)
 
-## <a name="references"></a>References
+[16 Common JavaScript Gotchas](http://www.standardista.com/javascript/15-common-javascript-gotchas/)
 
-Highlight w3schools and MDN as two excellent reference points. For example, if you want a list of members of a standard object along with information on browswer compatibility.
-
-<a href="http://www.w3schools.com/js" target="_blank">W3Schools JavaScript Tutorial</a><br />
-<a href="https://google.github.io/styleguide/javascriptguide.xml" target="_blank">Google JavaScript Style Guide</a><br />
-<a href="http://hsablonniere.github.io/markleft/prezas/javascript-101.html" target="_blank">JavaScript 101</a><br />
-<a href="http://javascript.crockford.com/code.html" target="_blank">Code Conventions for the JavaScript Programming Language</a><br />
-<a href="" target="_blank"></a><br />
-<a href="" target="_blank"></a><br />
-<a href="" target="_blank"></a><br />
-Crockford book.
-
-[https://davidwalsh.name/essential-javascript-functions](https://davidwalsh.name/essential-javascript-functions)
-[https://gist.github.com/ericelliott/263f24b5ad987e2f09d2](https://gist.github.com/ericelliott/263f24b5ad987e2f09d2)
-[http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
-
-[Stop Nesting Functions! (But Not All of Them)](http://javascriptissexy.com/category/16-important-javascript-concepts/) Ignore the rubbish at the end which (1) states efficiency WINS EVERY TIME over code quality, (2) JS does not explicitly provide for private stuff, so don't bother with the idea of encapsulation full stop.
-
-1. [Gotchas](#gotchas)
-
-## <a name="gotchas"></a>Gotchas
-<p>    http://www.w3schools.com/js/js_mistakes.asp</p>
-<p>    http://www.standardista.com/javascript/15-common-javascript-gotchas/</p>
-
-If can sum these up briefly then can put this somewhere near bottom of document.
-Good: Good, bad, awful but if use the good stuff and structure well then it can be tamed to a large extent...
-There is an appendix for these in Crockford book.
+[JavaScript: The Good Parts Paperback by Douglas Crockford](https://www.amazon.co.uk/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742) - one of the few really good books on ES5 and earlier. We have PDF version.
