@@ -544,7 +544,7 @@ To create an object constructor function properly we have to show some appreciat
 Three essential things are required:
 
   * The properties an object created using this constructor function are set via the `this` keyword. Within a constructor function `this` is the object that is being created and which is implicitly returned by the function. In this case the number of wheels can be supplied as a parameter to the function. If not supplied it will default to 4. If you wanted you could throw an exception if a sensible value for a parameter is not called.
-  * The `prototype` property of the function needs to be set. In this case Car prototype will be a newly created in-memory object whose prototype is Object. ??? This line is not essential in this case as it will occur by default. However, we are bearing in mind later examples which define more complex prototype chains.
+  * The `prototype` property of the function needs to be set. In this case Car prototype will be a newly created in-memory object whose prototype is Object. This line is not essential in this case as it will occur by default. However, we are bearing in mind later examples which define more complex prototype chains.
   * The `prototype.constuctor` property is defined.
 
 Defining the `constructor` property is good practice. There may be the odd occasion when an object needs to be able to refer to its own constructor and it is better not to be referring to it explicitly by its name. The property is not automatically assigned via some under-the-bonnet magic. It unfortunately has to be defined manually.
@@ -553,15 +553,15 @@ This code constructs on object from the Car function defined above and examines 
 
     var myCar = new Car();
 
-    console.log(myCar.__proto__);								// Car { ... }
-    console.log(typeof myCar);									// "object"
+    console.log(myCar.__proto__);					// Car { ... }
+    console.log(typeof myCar);						// "object"
     console.log(myCar instanceof Car);			    // true
     console.log(myCar.constructor === Car);			// true
 
-    console.log(myCar.wheels);									// 4
-    console.log(new Car(3).wheels);							// 3
+    console.log(myCar.wheels);						// 4
+    console.log(new Car(3).wheels);					// 3
 
-Notice that `typeof myCar` returns "object" and not "Car". For non-primitive objects typeof will only ever return "object".
+Notice that `typeof myCar` returns "object" and not "Car". For non-primitive objects `typeof` will only ever return "object".
 
 On the other hand `instanceof` can be used to determine if an object is of a more specific type. Note that the behaviour of `instanceof` is _not_ affected by setting of the `constructor` property.
 
@@ -767,10 +767,10 @@ As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`,
 	var myString = "Hello";
 
 	console.log(typeof myInteger);		    // "number"
-	console.log(typeof myFloat);			    // "number"
+	console.log(typeof myFloat);			// "number"
 	console.log(typeof myHexadecimal);		// "number"
-	console.log(typeof myBool);				    // "boolean"
-	console.log(typeof myString);			    // "string"
+	console.log(typeof myBool);				// "boolean"
+	console.log(typeof myString);			// "string"
 
 You can create them via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
 
@@ -797,8 +797,8 @@ are useful, others not. For simple string processing many are fine. For more com
 	console.clear();
 
 	var words = "The cat sat";
-	console.log(words.length);								// 11
-	console.log(words.indexOf("at"));					// 5
+	console.log(words.length);						// 11
+	console.log(words.indexOf("at"));				// 5
 	console.log(words.lastIndexOf("at"));			// 9
 	console.log(words.toUpperCase());			    // "THE CAT SAT"
 	console.log(words.charCodeAt(5));			    // 97
@@ -807,19 +807,19 @@ are useful, others not. For simple string processing many are fine. For more com
 	// Use regular expressions if want to achieve something more complex.
 	console.log(words.replace("t", ""));			// "The ca sat"
 
-	console.log("*".repeat(10));							// "**********"
+	console.log("*".repeat(10));					// "**********"
 
 	// "hello".
 	// However, trim() is not defined in IE8. You will need to add a shiv.
 	console.log("  hello  ".trim());
 
 	// A string can be treated like an array and has some similar methods and properties.
-	console.log(words[4]);										// "c"
-	console.log(words.split(" "));						// ["The", "cat", "sat"]
+	console.log(words[4]);							// "c"
+	console.log(words.split(" "));					// ["The", "cat", "sat"]
 
 	// Concatenate strings.
 	var myWords = "The " + "quick brown " + "fox"
-	console.log(myWords);											// "The quick brown fox"
+	console.log(myWords);							// "The quick brown fox"
 
 	// Two different strings instances are equal if they contain exactly the same characters.
 	console.log("eggs" === "eggs");
@@ -827,7 +827,7 @@ are useful, others not. For simple string processing many are fine. For more com
 	// Default string comparisons not especially useful.
 	// They rely on the ASCII code of the letters.
 	// This is false because the code for "a" is greater than the code for "Z".
-	console.log("aardvark" < "Zoo");					// false
+	console.log("aardvark" < "Zoo");				// false
 
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
 You can include a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
@@ -898,7 +898,7 @@ Although `null` is said to be a primitive type it is really more a primitive val
 Unlike `undefined`, `null` is a genuine value which can be used within your logic.
 
 It is a value which your code or a third party library will actively assign as the value of a variable or object member, e.g. if a value is optional.
-TO MY KNOWLEDGE no native JavaScript code will generate a null value. It is probably best viewed as a value rather than as a type.
+To my knowledge, no native JavaScript code will generate a null value. It is probably best viewed as a value rather than as a type.
 
 #### <a name="language-types-array"></a>Array
 Declare array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
@@ -994,34 +994,36 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 [MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 	var d = new Date("2015-03-25T12:00:00");
-	console.log(d);										// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
-	console.log(d.getFullYear());			// 2015
+	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
+	console.log(d.getFullYear());			        // 2015
 
 	// This one comes back with 3 for the day!
 	// It immediately highlights a chink in the armour.
-	console.log(d.getDay());					// 3
+	console.log(d.getDay());					    // 3
 
 	// In this constructor the month parameter is 0-based but
 	// the other two are 1-based.
 	var d2 = new Date(2000, 1, 1);
-	console.log(d2);										// Tue Jan 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+	console.log(d2);								// Tue Jan 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
 
 	var d3 = new Date(1474525800000);
-	console.log(d3);										// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
+	console.log(d3);								// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
 
 
 TODO:
 -------------
-console.clear();
+	console.clear();
+	
+    // This one assumed the time zone based on user's computer settings.
+	var d = new Date("2015-06-25T12:00:00");
+	
+	//var d2 = new Date(2015, 6, 25, 12, 0, 0);
+	console.log(d.toUTCString());
+	
+	var d3 = new Date("2015-06-25T12:00:00+00:00");                       // This one ENFORCED UTC
+	console.log(d3);
+	console.log(d3.toUTCString());
 
-var d = new Date("2015-06-25T12:00:00");                              // This one assumed the time zone based on user's computer settingss
-
-//var d2 = new Date(2015, 6, 25, 12, 0, 0);
-console.log(d.toUTCString());
-
-var d3 = new Date("2015-06-25T12:00:00+00:00");                       // This one ENFORCED UTC
-console.log(d3);
-console.log(d3.toUTCString());
 ---------------
 
 
@@ -1233,28 +1235,23 @@ The fact that any type of primitive or object can be thrown means that there wil
 Avoid this. It is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
 This simple example probably doesn't highlight the problem but, if the `with` statement was bigger, the code could become rather confusing.
 Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math` (it is a variable that was declared earlier on in the code) but this is not immediately obvious to the reader. It may reduce the code but also reduces readability. If you wanted to avoid repeating quite a long object name within a section of code you could always declare an alias that had a short, even one letter, name and use that within the section.
-```
-with (Math) {
-	pi = PI;
-  console.log(cos(pi));				// -1
-}
-```
 
+	with (Math) {
+		pi = PI;
+	  console.log(cos(pi));				// -1
+	}
 
 ### <a name="language-reserved-words"></a>Reserved Words
 [http://www.w3schools.com/js/js_reserved.asp](http://www.w3schools.com/js/js_reserved.asp) lists the keywords that are reserved for JavaScript.
 
 They are not necessarily used by the language at present. It may be that they are not used in ES5 but are used in later versions of JavaScript, like ES2015 (the new name for ES6). `float`, `double`, `interface`, `public` and `private` are examples of words that are not used by ES5. The main thing to bear in mind is not to use any of the keywords that your version of JavaScript does not utilise.
 
-```
-Do not use these words as variable or function names. Your code may break if you upgrade to using a later version of JavaScript.
+> Do not use these words as variable or function names. Your code may break if you upgrade to using a later version of JavaScript.
 
-// For example, it may be tempting to use, public or private.
-var public = {
-	...
-};
-```
-
+	// For example, it may be tempting to use, public or private.
+	var public = {
+		...
+	};
 
 ### <a name="language-truthy-and-falsy"></a>Truthy and Falsy
 In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coercion is referred to by the community as `truthy` and `falsy` (or falsey).
@@ -1275,57 +1272,52 @@ The concept of truthy and falsy is really only to determine what boolean value i
 
 It does NOT affect comparison operators in the sense that, just because false and null are both falsy does not mean that they are equal when compared with each other, even just for equality:
 
-	console.log(false == null);			// false.
+	console.log(false == null);		// false.
 
 	if (false) { ... }              // condition evaluates to false as false is falsy.
 	if (null) { ... }               // Condition evaluates to false as null is falsy.
 
 
 #### Examples
-```
-console.log(undefined == null);		 // true
-console.log("" == 0);		           // true
-// Of course, if you use ===, the types of both sides will be equated as well.
-console.log("" === 0);		         // false
-
-// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
-// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
-// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
-// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
-// throwing a runtime error is a better alternative.
-console.log(NaN == NaN);		       // false
-console.log(0 / 0);
-
-// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
-console.log(!!undefined);          // false
-console.log(!!null);  	           // false
-console.log(!!0);	                 // false
-
-// 0 within quotes is a non-empty string and is therefor truthy.
-console.log(!!"0");	               // true
-```
+	console.log(undefined == null);		 // true
+	console.log("" == 0);		         // true
+	// Of course, if you use ===, the types of both sides will be equated as well.
+	console.log("" === 0);		         // false
+	
+	// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
+	// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
+	// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
+	// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
+	// throwing a runtime error is a better alternative.
+	console.log(NaN == NaN);		       // false
+	console.log(0 / 0);
+	
+	// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
+	console.log(!!undefined);          // false
+	console.log(!!null);  	           // false
+	console.log(!!0);	                 // false
+	
+	// 0 within quotes is a non-empty string and is therefor truthy.
+	console.log(!!"0");	               // true
 
 #### Uses
 It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code. It could be used to write some really obscure code that only you can understand but nobody recommends this.
-```
-// Only set the value of any object variable to something different if it does not have a value already.
-// The "know context" here is that obj is only assigned to objects and will never be used to contain a value of another type, e.g. 0 or "".
-obj = obj || newValue;
 
-// A shorthand way of detecting if the length of something is non-zero.
-if ($(".my-class").length)
-```
+	// Only set the value of any object variable to something different if it does not have a value already.
+	// The "know context" here is that obj is only assigned to objects and will never be used to contain a
+    // value of another type, e.g. 0 or "".
+	obj = obj || newValue;
+	
+	// A shorthand way of detecting if the length of something is non-zero.
+	if ($(".my-class").length)
 
 [https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
 
 > NOTE: Truthy and falsy only affect boolean evaluations, e.g. in if statements or ternary expressions. They do not affect comparisons. So, for example, the fact that `null` and `false` are both falsy does not mean that they will ever be equal when compared
 
-```
 	// null, false and 0 are all falsy but when compared with each other they are not equal.
 	console.log(null == false);			// false
 	console.log(0 == undefined);		// false
-```
-
 
 ### <a name="language-operators"></a>Operators
 Same as C#, with the same operator precedence rules with a few exceptions.
@@ -1339,28 +1331,28 @@ There are basically two pairs of these operators.
 
 `==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict.
 
-	console.log(0 == '');							// 1: true
-	console.log('0' == 0);						// 2: true
-	console.log(0 == false);					// 3: true
+	console.log(0 == '');					// 1: true
+	console.log('0' == 0);					// 2: true
+	console.log(0 == false);				// 3: true
 
-	console.log(0 == null);						// 4: false
+	console.log(0 == null);					// 4: false
 	console.log(0 == undefined);			// 5: false
 
 	// Despite the fact that they were both == 0, null and undefined are not ==.
-	console.log(null == undefined);		// 6: true
+	console.log(null == undefined);		    // 6: true
 
 	console.log('true' == true);			// 7: false
-	console.log(3 == '3');						// 8: true
+	console.log(3 == '3');					// 8: true
 
 If both the values being compared are objects then equality is determined by whether or not they refer to the same instance of an object:
 
 	// Two separately created objects have different references,
 	// even if they have the same properties with the same values.
-	console.log({a: 3} == {a: 3});		// false
+	console.log({a: 3} == {a: 3});		    // false
 
 	var x = {myProperty: "hello"};
 	var y = x;
-	console.log(x == y);							// true
+	console.log(x == y);					// true
 
 
 ##### Identity Operators
@@ -1439,7 +1431,7 @@ Put your operators, e.g. with ternary operator and string concatenation, at the 
 Although this document is primarily concerned with ES5 we may as well mention a small number of operators in upcoming versions.
 
 ##### Spread Operator (ES2015)
-`...` is the `spread` operator. It is used for "destructuring arrays", i.e. converts an array into a series of separate values which can be used in situations where a comma-separated series of values are required, most notably parameters to a function call.
+`...` is the `spread` operator. It is used for "destructuring arrays", i.e. converting an array into a series of separate values which can be used in situations where a comma-separated series of values are required, most notably parameters to a function call.
 
 	// Push all the values from one array into another. The push method
 	// only accepts separate arguments, not arrays.
@@ -1694,14 +1686,12 @@ There are some other more sophisticated methods you can use, although the basic 
 
 * `console.table()` works quite nicely if you have a variable that is a collection of homogeneous objects. You could call this line from within your code or via the Console window.
 
-```
-var cities = [
-	{id: 0, name: "London", country: "England"},
-	{id: 1, name: "Paris", country: "France"},
-	{id: 2, name: "Rome", country: "Italy"}
-];
-console.table(cities);
-```
+		var cities = [
+			{id: 0, name: "London", country: "England"},
+			{id: 1, name: "Paris", country: "France"},
+			{id: 2, name: "Rome", country: "Italy"}
+		];
+		console.table(cities);
 
 * `console.time()` and `console.timeEnd()`. Usage of these is simple. From within your code, call `time()` when you want the timer to start and `timeEnd()` when you want to stop timing. The time will automatically be output to the console window. There are also overloads which accept a label so that you can record multiple times in one go.
 
@@ -1740,41 +1730,22 @@ Unless you get to a very advanced standard it is unlikely you will want to write
 
 There is one situation where it can be very useful, however. Executing code that a third party tool, like one from Telerik, has generated and place within the `href` of a link (`<a>`). In this case the code is already within a string. If you want to latch on to this auto-generated code, e.g. to execute the postback that it performs, but from within an event other than the clicking of that link you can "stick it" within an eval. This would be a tidier way than manually copying the output href content and pasting it into your own code. ...you may want to intercept the click of a button and add some custom logic which determines if you should preced with its action...
 
-```
-// Partial code from AXA where the default submit button href code generated by ASP.NET was
-// stored within a variable and replaced with code which displays a confirm popup.
-// Clicking the confirm button within the popup will then result stored code being executed.
-generatedCancelBookingCode = cancelBookingButton.attr("href");
-...
-publicMembers.cancelBookingIfUserConfirmsTheirDecision = function () {
-		AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
-				eval(generatedCancelBookingCode);
-		});
-};
-
-NOTE: This trick is also referred to in tips and tricks.
-```
+	// Partial code from AXA where the default submit button href code generated by ASP.NET was
+	// stored within a variable and replaced with code which displays a confirm popup.
+	// Clicking the confirm button within the popup will then result stored code being executed.
+	generatedCancelBookingCode = cancelBookingButton.attr("href");
+	...
+	publicMembers.cancelBookingIfUserConfirmsTheirDecision = function () {
+			AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
+					eval(generatedCancelBookingCode);
+			});
+	};
+	
+> NOTE: This trick is also referred to in [eval Keyword Trick](#tips-eval-keyword-trick) further down.
 
 #### URI Functions
 There are functions for encoding and decoding URIs. I am not sure how perfect these are. As stated above there may be better alternatives in third-party libraries.
 
-
-1. [Standard Browser Objects](#sbo)
-	*  [document Object](#sbo-document-object)
-	*  [window Object](#sbo-window-object)
-	*  [localStorage and sessionStorage Objects](#sbo-localstorage-and-sessionstorage-objects)
-
-## <a name="sbo"></a>Standard Browser Objects
-### <a name="sbo-document-object"></a>document Object
-<p>    Point them towards jQuery for DOM manipulation</p>
-### <a name="sbo-window-object"></a>window Object
-When working with JavaScript within a browser, the global namespace we have been referring to is actually the  `window` object. So, if not using strict mode, any undeclared variables you use will be added as properties of the window object.
-<br /><a href="http://thanpol.as/javascript/development-using-namespaces" target="_blank">http://thanpol.as/javascript/development-using-namespaces</a><br />
-Window setTimeout() Method
-### <a name="sbo-localstorage-and-sessionstorage-objects"></a>localStorage and sessionStorage Objects
-
-
-<hr dummy="_" />
 
 
 ## <a name="style-contents"></a>Coding Style and Guidelines
@@ -1965,7 +1936,6 @@ There are no fixed rule on the indentation of code after the line break - some p
 
 Here are some examples (using deliberately short lines). The incorrect ones may well be interpreted incorrectly in old browsers. For example, they may interpret the first line as `var sum = a + b;` and then throw a syntax error when trying to interpret the `+ c;`.
 
-```
 	// Incorrect.
 	var sum = a + b
 	            + c;
@@ -1991,15 +1961,12 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 	var suffix = myNumber === 1 ?
 	             "" :
 	             "s";
-```
 
 #### Breaks in Long Strings
 As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error. **Unfortunately**, you will need to align the lines after the break with the left hand side of the page if you do not want new lines to start with spaces, which looks ugly.
 
-```
-    alert(`Some text.
-Some more text right at the start of a new line.`);
-```
+	    alert(`Some text.
+	Some more text right at the start of a new line.`);
 
 In ES2015, template literals, which are enclosed by back ticks \` can also spill on to separate lines.
 
@@ -2245,11 +2212,9 @@ In ES2015 and onwards there is a more sophisticated module pattern which allows 
 ### <a name="style-including-script-files"></a>&lt;script&gt; Tags
 A lot of the time these days you will use ASP.NET bundling to include external CSS and script files which uses a separate syntax. However, you will sometimes find a need to add &lt;script&gt; tags. HTML5 standards state that the MIME type does not have to be specified (in actual fact the actual MIME type should be `application/javascript` and not the commonly-seen `text/javascript`).
 
-```
-<script>
-  ...
-</script>
-```
+	<script>
+	  ...
+	</script>
 
 Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, `async` attribute is only supported in version 10 and above.
 
@@ -2361,26 +2326,26 @@ It return value will be the first parameter. However, it will first go through a
 
     var openWindow = function (settings) {
 
-      settings = $.extend({
-        name: "jquery-ui-window",
-        width: 500,
-        dialogClass: "ui-dialog",
-        showClose: true,
-        title: "",
-        urlOnClose: null,
-        onClosed: null
-      }, settings);
+        settings = $.extend({
+            name: "jquery-ui-window",
+            width: 500,
+            dialogClass: "ui-dialog",
+            showClose: true,
+            title: "",
+            urlOnClose: null,
+            onClosed: null
+        }, settings);
 
-    	console.dir(settings);
-      //...
+        console.dir(settings);
+        //...
     };
 
     openWindow();
 
     openWindow({
-    	name: "super-duper-window",
-      width: 800,
-      title: "Broccoli"
+        name: "super-duper-window",
+        width: 800,
+        title: "Broccoli"
     });
 
 There are various other ways of achieving the same thing. ES2015 provides an `Object.assign()` method. However, this does not work in IE and so can only be used if you transpile your code. Even then you will need a [polyfill](#tools-shims-and-polyfills). Overall the `$.extend()` method does the same thing and is reliable across all browsers.
@@ -2536,7 +2501,7 @@ One place where the window is displayed is if a user tries to cancel a booking:
 
 There are many variations of the pattern but all are essentially very similar.
 
-#### <a name="tips-modules-in-es2015">Modules in ES2015
+#### <a name="tips-modules-in-es2015"></a>Modules in ES2015
 Modules in ES2015 are a totally different beast and are nothing to do with creating singleton objects.
 
 Instead they provide a mechanism by which programmers can avoids the PHP style situations whereby code in all your thoughtfully separated files is ultimately cobbled together in what is effectively one giant script. You hope that you have defined everything in a correct order and have not defined something repeatedly as a result of a file being included in the output more than once.
@@ -2679,7 +2644,7 @@ A library which makes traversing, querying and manipulating the DOM a whole lot 
 The `on()` method is the most recent way of several to attach event handlers in jQuery. Multiple versions exist but you should **prefer** version where your selector specifies a container for the objects you wish to attach event handlers to. The parameters for this versions are (1) a string to specify which event you want to handle, (2) a selector string relative to the main selector specifying all elements you want to attach the handler to, (3) the event handler code itself. This example attaches a click handler to all `<p class="widget" ...>` elements within the container that has the CSS class `main-content`.
 
     $(".main-content").on("click", "p.widget", function() {
-      alert($(this).text());
+        alert($(this).text());
     });
 
 The reason this version is so useful is that, if further `<p class="widget" ...>` elements are later added to the `main-content` container, e.g. via an AJAX call, they will also handle the click event without any further work.
@@ -2688,7 +2653,7 @@ Binding an event handler to the results of a jQuery result will only bind to tho
 
     // Prefer to use the version above where a container is specified.
     $(".widget").on("click", function() {
-      console.log($(this).text());
+        console.log($(this).text());
     });
 
 [http://api.jquery.com/on/](http://api.jquery.com/on/)
@@ -2751,9 +2716,9 @@ There are a number of functional programming libraries which provide a lot of fu
 Here are a couple of Lodash examples:
 
     var users = [
-      { "name": "barney",  "active": false },
-      { "name": "fred",    "active": false },
-      { "name": "pebbles", "active": true }
+        { "name": "barney",  "active": false },
+        { "name": "fred",    "active": false },
+        { "name": "pebbles", "active": true }
     ];
 
      // Filter the users.
@@ -2865,28 +2830,28 @@ HTML fixture for tests:
 Two tests - one to check the event is triggered if an element does not already have the CSS class, one to check the event is _not_ raised if the element already has the class. When run using the original plugin code defined further up, the first test passes but the second fails because the event is always being triggered.
 
     describe("event test with jasmine-jquery: addClass(), class does not exist on element", function () {
-      it("cssClassChanged event should be fired", function () {
-        loadFixtures("my-fixture-1.html");
-        var $firstInput = $("input[type=text]").first();
-        var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+        it("cssClassChanged event should be fired", function () {
+            loadFixtures("my-fixture-1.html");
+            var $firstInput = $("input[type=text]").first();
+            var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
 
-        $firstInput.addClass("my-class");
+            $firstInput.addClass("my-class");
 
-        expect(spyEvent).toHaveBeenTriggered();
-      });
+            expect(spyEvent).toHaveBeenTriggered();
+        });
     });
 
     describe("event test with jasmine-jquery: addClass(), class ALREADY EXISTS on element", function () {
-      it("cssClassChanged event should NOT be fired", function () {
-        loadFixtures("my-fixture-1.html");
-        var $firstInput = $("input[type=text].existing-class").first();
-        // String or jQuery object will do for first parameter.
-        var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
+        it("cssClassChanged event should NOT be fired", function () {
+            loadFixtures("my-fixture-1.html");
+            var $firstInput = $("input[type=text].existing-class").first();
+            // String or jQuery object will do for first parameter.
+            var spyEvent = spyOnEvent($firstInput, "cssClassChanged");
 
-        $firstInput.addClass("existing-class");
+            $firstInput.addClass("existing-class");
 
-        expect(spyEvent).not.toHaveBeenTriggered();
-      });
+            expect(spyEvent).not.toHaveBeenTriggered();
+        });
     });
 
 The `$.fn.addClass` plugin was modified until both tests passed:
@@ -2933,30 +2898,30 @@ Paste this in the *JavaScript* pane and click *Run*:
     var canvas2 = document.getElementById("canvas2");
 
     function drawClock(processing) {
-      // Override draw function. By default it will be called 60 times per second.
-      processing.draw = function() {
-        // Determine center and max clock arm length.
-        var centerX = processing.width / 2, centerY = processing.height / 2;
-        var maxArmLength = Math.min(centerX, centerY);
-        function drawArm(position, lengthScale, weight) {
-          processing.strokeWeight(weight);
-          processing.line(centerX, centerY,
-            centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
-            centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
-        }
-        // Erase background.
-        processing.background(224);
-        var now = new Date();
-        // Moving hours arm by small increments
-        var hoursPosition = (now.getHours() % 12 + now.getMinutes() / 60) / 12;
-        drawArm(hoursPosition, 0.5, 5);
-        // Moving minutes arm by small increments
-        var minutesPosition = (now.getMinutes() + now.getSeconds() / 60) / 60;
-        drawArm(minutesPosition, 0.80, 3);
-        // Moving hour arm by second increments
-        var secondsPosition = now.getSeconds() / 60;
-        drawArm(secondsPosition, 0.90, 1);
-      };
+        // Override draw function. By default it will be called 60 times per second.
+        processing.draw = function() {
+            // Determine center and max clock arm length.
+            var centerX = processing.width / 2, centerY = processing.height / 2;
+            var maxArmLength = Math.min(centerX, centerY);
+            function drawArm(position, lengthScale, weight) {
+                processing.strokeWeight(weight);
+                processing.line(centerX, centerY,
+                  centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+                  centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+            }
+            // Erase background.
+            processing.background(224);
+            var now = new Date();
+            // Moving hours arm by small increments
+            var hoursPosition = (now.getHours() % 12 + now.getMinutes() / 60) / 12;
+            drawArm(hoursPosition, 0.5, 5);
+            // Moving minutes arm by small increments
+            var minutesPosition = (now.getMinutes() + now.getSeconds() / 60) / 60;
+            drawArm(minutesPosition, 0.80, 3);
+            // Moving hour arm by second increments
+            var secondsPosition = now.getSeconds() / 60;
+            drawArm(secondsPosition, 0.90, 1);
+        };
     };
 
     var processingInstance = new Processing(canvas2, drawClock);
