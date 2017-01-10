@@ -92,29 +92,18 @@ Needless to say, the more good bits you harness and the less bad, the better you
 ### <a name="language-global-namespace"></a>Global Namespace
 In JavaScript everything belongs to a containing object apart from the `global namespace` (or `global scope`).
 
-If you declare free-standing variables or functions, that are not contained within anything else, they will then belong to the global namespace. This means that they are publicly available from anywhere in your code This lack of encapsulation is generally a very bad practice.
+If you declare free-standing variables or functions, that are not contained within anything else, either a function or an object definition of some sort, they will then belong to the global namespace. This means that they are publicly available from anywhere in your code This lack of encapsulation is generally a very bad practice.
 
 In browser programming the global namespace is the **window** object. Any free-standing variables (functions are variables) you declare will be **directly** contained within the window object. Since all your JavaScript code is automatically nested within the window object those free-standing variables will be available everywhere in the code. Declaring variables in this manner is known as *polluting the global namespace*. Also, these variables will only go out of scope and be destroyed when the window object itself is destroyed.
 
 If you just refer to a global variable that has not been declared using `var` (strict mode will be explained later) it would actually become a property of the window object.
 
-Running this example in [JSFiddle](https://jsfiddle.net/) below highlights how not declaring `freeStandingVariable` using the `var` keyword means that it becomes a property of the `window` object. Also, here, the `this` keyword refers to the global namespace.
+The code below highlights how declaring `freeStandingVariable` within the global namespace means that it becomes a property of the `window` object. Also, here, the `this` keyword refers to the global namespace. Using the console in the F12 browser developer tools, first paste the first line to set the variable. Pasting and running either the second or third line will show that you did not just declare a `variable`, you actually defined a property of the global object.
 
-	freeStandingVariable = 666;
-	console.log(window.freeStandingVariable);
-	console.log(this.freeStandingVariable);
+	var freeStandingVariable = 666;
 
-If you had used `var freeStandingVariable = 666;` it would have become a "private variable" of the global namespace, which is, in effect, the very opposite of private. Whereas this is better than the example, it is still nasty.
-
-
-MUCH OF THIS STUFF CAN BE EXPLAINED IN LATER SECTIONS
-
-The `global namespace` (or `global scope`) refers to the **object** to which those free-standing variables are attached as properties. NEED AMENDING for VAR
-In browser development that object is the `window` object
-Variables declared in the GN will not go out of scope until the GN and will therefore not be destroyed. Declaring more than a few ... is referred to a s polluting the global namespace. is very bad practice and can lead to  "hard to debug" errors caused by unintentional side effects.
-
-"use strict" BUT EVEN MORE SO:
-* Modules or classes - never have free-standing variables and functions
+	window.freeStandingVariable;
+	this.freeStandingVariable;
 
 ### <a name="language-variables"></a>Variables
 Variables are declared in JavaScript using the `var` keyword.
@@ -130,7 +119,11 @@ Their type can be changed without any form of type declaration. For example, one
 You can declare multiple variables on one line using one `var` with multiple declarations and assignments separated by commas, e.g. `var x = 3, y = 7, z = 8;`, just as you can in C#. Often you will see this style in JavaScript snippets on the web. Some will even tout declaring all your local variables for a particular scope in one big, comma-separated declaration statement as a recommended good practice. However, there is nothing at all to be gained by using this syntax.
 
 #### Using Variables that You Have Not Declared
+Basically, if you are using strict mode, an exception will be thrown if you try to fetch or set the value of any variable which you have not declared.
 
+If you are not using strict mode and the variable has not been declared then it will be implicitly created for you. If you have declared a variable and then make typo when referring to that variable at a later point you will end up with two different variables and maybe some confusing problems.
+
+Note that the same is not true for properties of an object. In this case you can refer to _any_ property of an object you like without error, irrespective of strict mode.
 
 #### Scope
 In many C-based languages variable scope is much richer than in JavaScript. For example, in C#, almost any declaration of a variable within a particular block statement will mean that it can only be accessed from within that same block, or nested blocks, after it has been declared, e.g. a method, an if statement condition or any form of loop. In C we can even introduce a scope just by wrapping a group of lines within an extra set of braces.
@@ -139,16 +132,9 @@ In JavaScript, there are effectively only two scopes, `global` and `function`.
 
 If you declare a variable that is not inside a function it becomes part of the global scope, is available anywhere and, if it has already been declared, in your code or a third party library, will wipe it out and re-initialise it.
 
-> AVOID declaring variables within the global scope. Only outer `namespace`s (generally just the one), which act as containers for all your code, should be declared in the global scope. More on these later.
+> **Avoid** declaring variables within the global scope. Only outer `namespaces` (generally just the one), which act as containers for all your code, should be declared in the global scope. More on these later.
 
 Any variable declared inside a function will be visible within that function and all nested functions and objects. As will be explained later, this is your ticket to encapsulation in JavaScript. That said, we are not pretending that it will match up to the encapsulation available in other languages.
-
-MOVED FROM global-namespace
-If you declare a variable using the `var` keyword it will be a variable that is private to the object in which it was declared, e.g. a function.
-If you do not use the `var` keyword it will become a property of the object and will be accessible from outside the object.
-
-
-
 
 ### <a name="language-hoisting"></a>Variable Hoisting
 In many modern languages it is considered good practice to declare variables at the point, or as near as possible, where they are used.
@@ -157,38 +143,75 @@ They also allow variables to be declared within finer grained scopes which mean 
 
 As explained above, JavaScript only allows variables to be declared at the level of the containing function (if we dismiss global scope).
 
-It also has a nasty feature called `hoisting` which means that, although you can also declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. This means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions.
+It also has a nasty feature called `hoisting` which means that, although you can declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. In reality, the position of the declarations is not _actually_ being moved but some sort of memory allocation process takes place. It means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions.
 
-Note that, if you declare a variable and assign a value to it, the variable declaration will be hoisted at runtime but the assignment will remain where it is.
+> Note that, if you declare a variable and assign a value to it, the variable declaration will be hoisted at runtime but the assignment will remain where it is.
 
-With functions also being variables, hoisting also applies to functions.
+This example uses strict mode to highlight that the variable `x` really does exist before the first `console.log()` (if you comment the `var` declaration out you will get an error).
 
-> Note: For these reasons it is universally recommended that you depart from the C# mentality and declare all your variables and nested functions (not methods) at the start of the immediate parent function.
+	(function () {
+		"use strict";
+		
+		console.log(x);			// undefined
+		
+		var x = 66;
+		
+		console.log(x);			// 66
+	}());
+
+> Note: For the reasons explained above it is universally recommended that you depart from the C# mentality and declare all your variables and nested functions (not methods) at the start of the immediate parent function.
+
+With functions also being variables, hoisting also applies to functions. However, there is a subtle difference between using function declarations and function expressions.
+
+With **function declaration syntax** (`function myFunc() { ... }`) both the declaration of `myFunc` and the function assigned to it will be hoisted.
+
+	function function1() {
+  		// Although function2 is defined later, hoisting will ensure that it is
+    	// ready to call at this point anyway.
+		function2();
+	};
+	
+	function1();
+	
+	function function2() {
+		console.log("Hello from function2");
+	};
+
+With **function expression syntax** (`var myFunc = function () { ... };`) only the declaration of `myFunc` will be hoisted to the top of the containing function. The creation of the function that is assigned to the variable will occur at exactly the same point in the code where programmer has defined it. If the `myFunc` is called before the definition it will have a value of `undefined` and the call will not work.
+
+	var function1 = function () {
+    	// Here function2 exists but nothing has been assigned to it.
+    	// An exception complaining that function2 is not a function occurs.
+		function2();
+	};
+	
+	function1();
+	
+	var function2 = function () {
+		console.log("Hello from function2");
+	};
+
+Function declaration syntax is certainly more forgiving as it does allow us to worry less about the order in which we declare our functions. However, be careful about relying on this. In a somewhat primitive language like ES5 it is still better to physically organise your code such that things are declared and functions are explicitly defined before they are referenced.
 
 > Avoiding writing code based on your expert knowledge of hoisting will avoid confusing less experience JavaScript programmers and, as will be seen in the next section, will make your code clearer.
 
-TODO: Subtle difference between function declarations and function expressions.
-Include in sample but point reader to further down.
-
-CODE SAMPLES: declaration, type changing (all samples in the one code block initially). Also do function examples.
-
-> NOTE: In later versions of JavaScript the `let` keyword is introduced as an improved alternative to `var`. This has main effects. The first is to prevent hoisting. `let` will also ensure that the variable is scoped to the containing `block`, rather than the containing function, and cannot be referenced before it has been declared. This is more like the behaviour you would expect in most C-based languages.
-
-> NOTE: Later versions of JavaScript also introduce the `const` keyword which is similar to `let` but also ensures that a variable's value must be set in the declaration and cannot be modified later. This does _not_ mean that its value has to be set to a literal, e.g. 3.14 - it can still be the result of an expression.
-
 You can see recommended coding styles related to this issue later in <a href="#style-declarations">Declarations</a>.
+
+#### ES2015 Onwards
+
+In later versions of JavaScript the `let` keyword is introduced as an improved alternative to `var`. This has main effects. The first is to prevent hoisting. `let` will also ensure that the variable is scoped to the containing `block`, rather than the containing function, and cannot be referenced before it has been declared. This is more like the behaviour you would expect in most C-based languages.
+
+Later versions of JavaScript also introduce the `const` keyword which is similar to `let` but also ensures that a variable's value must be set in the declaration and cannot be modified later. This does _not_ mean that its value has to be set to a literal, e.g. 3.14 - it can still be the result of an expression.
 
 ### <a name="language-sequential"></a>Top-down Evaluation
 #### Variables
 JavaScript is run using `top-down evaluation`. Put simply, variables must have been declared before they are used.
 
-TO MOVE (to function section): Whilst the above statement is true you have to bear in mind the effects of hoisting. In particular functions which have been declared below where they are called, using `function declaration syntax`, will still work because hoisting moves both the declaration of the function variable and its assignment to the top of the nearest parent function. Whilst this may look highly convenient it can lead to sloppiness.
+The above is certainly true in strict mode. If you are not using strict mode the rules are more relaxed but you may end up with some "hard to detect" errors.
 
-WRITE YOUR CODE WITH THE INTENTION OF IT BEING EVALUATED LIKE THIS, do not rely on hoisting tricks to "make your life easier".
+Write your code with the intention of it being evaluated like this. Do not rely on hoisting tricks to "make your life easier".
 
-> Note that although functions need to be declared before they are called execution order will not affect methods, i.e. properties of objects that are functions, unless they are called as part of the construction process.
-
-> You should stick with the idea of declaring functions before they are called. Using function expression syntax helps...
+> It is safest to stick with the idea of physically declaring functions before they are called. Using function expression syntax helps as, although the function variable declaration may end up being hoisted, its initialisation will remain in the same location and you should see that the function is undefined if you try to use it before you have initialised it.
 
 > If you are not using `strict mode` ([more](#style-strict-mode) about this later) the runtime will implicitly create the variable for you, a situation can cause "hard to find" errors and which sensible people want to avoid.
 
@@ -985,7 +1008,7 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 
 
 #### <a name="language-types-date"></a>Date
-The `Date` object allows you to create the equivalent of the C# `DateTime`s. Given the constant problems we have experienced with dates, times, time zones and cultures, even in more sophisticated languages and frameworks, we will not over-elaborate, just highlight its existence.
+The `Date` object allows you to create the equivalent of the C# `DateTime`s. Given the constant problems we have experienced with dates, times, time zones and cultures, even in more sophisticated languages and frameworks, we will not over-elaborate, just highlight its existence. You can read about it more at the links below:
 
 [w3schools - JavaScriptDate Reference](http://www.w3schools.com/jsref/jsref_obj_date.asp)
 
@@ -993,38 +1016,37 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 
 [MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
+Some examples. As you can see, you can use various initialisers to create a date but they can each come with there own little problems:
+
 	var d = new Date("2015-03-25T12:00:00");
 	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
-	console.log(d.getFullYear());			        // 2015
+	console.log(d.getFullYear());					// 2015
 
 	// This one comes back with 3 for the day!
-	// It immediately highlights a chink in the armour.
+	// It immediately highlights a chink in the armour, parsing our initialisati9on test 
+    // using U.S. date format.
 	console.log(d.getDay());					    // 3
 
 	// In this constructor the month parameter is 0-based but
 	// the other two are 1-based.
 	var d2 = new Date(2000, 1, 1);
-	console.log(d2);								// Tue Jan 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+	console.log(d2);								// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
 
 	var d3 = new Date(1474525800000);
 	console.log(d3);								// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
 
+You can also work with time zones. Again, don't expect perfection:
 
-TODO:
--------------
 	console.clear();
 	
     // This one assumed the time zone based on user's computer settings.
 	var d = new Date("2015-06-25T12:00:00");
-	
-	//var d2 = new Date(2015, 6, 25, 12, 0, 0);
 	console.log(d.toUTCString());
 	
-	var d3 = new Date("2015-06-25T12:00:00+00:00");                       // This one ENFORCED UTC
+    // You can also specify the time zone explicitly. This one enforces UTC.
+	var d3 = new Date("2015-06-25T12:00:00+00:00");
 	console.log(d3);
 	console.log(d3.toUTCString());
-
----------------
 
 
 One of the more sophisticated third-party libraries available for JavaScript is [moment.js](http://momentjs.com/). It does cater for:
