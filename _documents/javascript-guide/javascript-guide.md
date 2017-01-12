@@ -132,7 +132,7 @@ In JavaScript, there are effectively only two scopes, `global` and `function`.
 
 If you declare a variable that is not inside a function it becomes part of the global scope, is available anywhere and, if it has already been declared, in your code or a third party library, will wipe it out and re-initialise it.
 
-> **Avoid** declaring variables within the global scope. Only outer `namespaces` (generally just the one), which act as containers for all your code, should be declared in the global scope. More on these later.
+> **Avoid** declaring variables within the global scope. Only outer `namespaces`, generally just the one, which act as containers for all your code, should be declared in the global scope. More on these later.
 
 Any variable declared inside a function will be visible within that function and all nested functions and objects. As will be explained later, this is your ticket to encapsulation in JavaScript. That said, we are not pretending that it will match up to the encapsulation available in other languages.
 
@@ -151,11 +151,11 @@ This example uses strict mode to highlight that the variable `x` really does exi
 
 	(function () {
 		"use strict";
-		
+
 		console.log(x);			// undefined
-		
+
 		var x = 66;
-		
+
 		console.log(x);			// 66
 	}());
 
@@ -170,9 +170,9 @@ With **function declaration syntax** (`function myFunc() { ... }`) both the decl
     	// ready to call at this point anyway.
 		function2();
 	};
-	
+
 	function1();
-	
+
 	function function2() {
 		console.log("Hello from function2");
 	};
@@ -184,9 +184,9 @@ With **function expression syntax** (`var myFunc = function () { ... };`) only t
     	// An exception complaining that function2 is not a function occurs.
 		function2();
 	};
-	
+
 	function1();
-	
+
 	var function2 = function () {
 		console.log("Hello from function2");
 	};
@@ -239,7 +239,7 @@ Every time this line of code is encountered by the JavaScript engine a new varia
 ##### Function Expression
     var addNumbers = function (x1, x2) {
         return x1 + x2;
-	  };
+    };
 
 The space after the function keyword is deliberate. It is a convention which clearly states to an readers that the `function` keyword has been used as part of an expression, rather than being a declaration.
 
@@ -274,7 +274,7 @@ We can now name our function expressions as below. The IE9-compatible Array map 
   	console.log(o);
 
 #### <a name="language-functions-nested"></a>Nested Functions
-This example demonstrates a nested function. `calculateSquare` is effectively a private function that is only available within `addSquaresOfNumbers`. The choice of functions in this example is purely for demonstration
+This example demonstrates a nested function. `calculateSquare` is effectively a private function that is only available within `addSquaresOfNumbers`. The choice of functions in this example is purely for demonstration.
 
     var addSquaresOfNumbers = function (x1, x2) {
       var calculateSquare = function (x) {
@@ -789,11 +789,11 @@ As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`,
 	var myBool = true;
 	var myString = "Hello";
 
-	console.log(typeof myInteger);		    // "number"
-	console.log(typeof myFloat);			// "number"
-	console.log(typeof myHexadecimal);		// "number"
-	console.log(typeof myBool);				// "boolean"
-	console.log(typeof myString);			// "string"
+	console.log(typeof myInteger);		 // "number"
+	console.log(typeof myFloat);			 // "number"
+	console.log(typeof myHexadecimal); // "number"
+	console.log(typeof myBool);				 // "boolean"
+	console.log(typeof myString);			 // "string"
 
 You can create them via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
 
@@ -820,25 +820,25 @@ are useful, others not. For simple string processing many are fine. For more com
 	console.clear();
 
 	var words = "The cat sat";
-	console.log(words.length);						// 11
-	console.log(words.indexOf("at"));				// 5
-	console.log(words.lastIndexOf("at"));			// 9
-	console.log(words.toUpperCase());			    // "THE CAT SAT"
-	console.log(words.charCodeAt(5));			    // 97
+	console.log(words.length);						 // 11
+	console.log(words.indexOf("at"));			 // 5
+	console.log(words.lastIndexOf("at"));	 // 9
+	console.log(words.toUpperCase());		   // "THE CAT SAT"
+	console.log(words.charCodeAt(5));			 // 97
 
 	// This one is case-sensitive and will only replace the first occurrence.
 	// Use regular expressions if want to achieve something more complex.
-	console.log(words.replace("t", ""));			// "The ca sat"
+	console.log(words.replace("t", ""));	 // "The ca sat"
 
-	console.log("*".repeat(10));					// "**********"
+	console.log("*".repeat(10));					 // "**********"
 
 	// "hello".
 	// However, trim() is not defined in IE8. You will need to add a shiv.
 	console.log("  hello  ".trim());
 
 	// A string can be treated like an array and has some similar methods and properties.
-	console.log(words[4]);							// "c"
-	console.log(words.split(" "));					// ["The", "cat", "sat"]
+	console.log(words[4]);							  // "c"
+	console.log(words.split(" "));				// ["The", "cat", "sat"]
 
 	// Concatenate strings.
 	var myWords = "The " + "quick brown " + "fox"
@@ -874,10 +874,10 @@ The hexadecimal initialisation will store the number in base 10. However, you ca
 
 There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (Not a Number) and negative zero `-0`. You will do not get "divide by zero" errors in the code below:
 
-	console.log(1 / 0);		     // Infinity
-	console.log(-1 / 0);		 // -Infinity
-	console.log(0 / 0);		     // NaN
-	console.log(-0.0);		     // -0
+	console.log(1 / 0);		       // Infinity
+	console.log(-1 / 0);		     // -Infinity
+	console.log(0 / 0);		       // NaN
+	console.log(-0.0);		       // -0
 	console.log(-1 / Infinity);	 // -0
 
 	// Infinity === Infinity
@@ -901,7 +901,7 @@ Boolean does not add any particularly useful methods beyond `toString()`, which 
 
 	var myVariable;
 
-	console.log(typeof myVariable);	// "undefined"
+	console.log(typeof myVariable);	 // "undefined"
 
 	// You could use == here if you really wanted, given that typeof returns a string.
 	if (typeof myVariable === "undefined") {
@@ -951,7 +951,7 @@ You can mix the types held within the array:
 Multi-dimensional arrays in JavaScript are rather like jagged arrays in C#. A two dimensional array is more like an array of arrays:
 
 	var twoDimensionalArray = [[1, 2], [3, 4], [5, 6]];
-	console.log(twoDimensionalArray[1][1]);				// 4
+	console.log(twoDimensionalArray[1][1]);			// 4
 	console.log(twoDimensionalArray[2]);				// [5, 6]
 
 	// This syntax should not be used. It does not error but, instead, only
@@ -968,7 +968,7 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 	var fruits = ["Apple", "Banana"];
 	var newLength = fruits.push("Orange");
 	console.log(fruits);					       // ["Apple", "Banana", "Orange"]
-	console.log(newLength);				           // 3
+	console.log(newLength);				       // 3
 
 	var itemRemoved = fruits.shift();
 	console.log(fruits);					       // ["Banana", "Orange"]
@@ -1016,33 +1016,33 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 
 [MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
-Some examples. As you can see, you can use various initialisers to create a date but they can each come with there own little problems:
+Here are some examples. As you can see, you can use various initialisers to create a date but they can each come with there own little problems:
 
-	var d = new Date("2015-03-25T12:00:00");
-	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
-	console.log(d.getFullYear());					// 2015
+  	var d = new Date("2015-03-25T12:00:00");
+  	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
+  	console.log(d.getFullYear());		// 2015
 
-	// This one comes back with 3 for the day!
-	// It immediately highlights a chink in the armour, parsing our initialisati9on test 
+  	// This one comes back with 3 for the day!
+  	// It immediately highlights a chink in the armour, parsing our initialisati9on test
     // using U.S. date format.
-	console.log(d.getDay());					    // 3
+  	console.log(d.getDay());				// 3
 
-	// In this constructor the month parameter is 0-based but
-	// the other two are 1-based.
-	var d2 = new Date(2000, 1, 1);
-	console.log(d2);								// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+  	// In this constructor the month parameter is 0-based but
+  	// the other two are 1-based.
+  	var d2 = new Date(2000, 1, 1);
+  	console.log(d2);								// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
 
-	var d3 = new Date(1474525800000);
-	console.log(d3);								// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
+  	var d3 = new Date(1474525800000);
+  	console.log(d3);								// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
 
 You can also work with time zones. Again, don't expect perfection:
 
 	console.clear();
-	
+
     // This one assumed the time zone based on user's computer settings.
 	var d = new Date("2015-06-25T12:00:00");
 	console.log(d.toUTCString());
-	
+
     // You can also specify the time zone explicitly. This one enforces UTC.
 	var d3 = new Date("2015-06-25T12:00:00+00:00");
 	console.log(d3);
@@ -1099,7 +1099,7 @@ When going up the prototype chain of virtually an object you will eventually rea
 It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
 
 ##### hasOwnProperty()
-This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the `for ... in` clause (see later) (LINK THEM TO IT).
+This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the [for...in](#language-javascript-keywords-for-in) clause (see later).
 
 	// Outputs properties of an object that are defined directly with the object
 	// and not inherited from the prototype chain.
@@ -1218,7 +1218,7 @@ Also see [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
-#### for...in
+#### <a name="language-javascript-keywords-for-in"></a>for...in
 `for...in` loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain the an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
 
 	// Iterate through an array. Not nice.
@@ -1296,16 +1296,16 @@ It does NOT affect comparison operators in the sense that, just because false an
 
 	console.log(false == null);		// false.
 
-	if (false) { ... }              // condition evaluates to false as false is falsy.
-	if (null) { ... }               // Condition evaluates to false as null is falsy.
+	if (false) { ... }            // condition evaluates to false as false is falsy.
+	if (null) { ... }             // Condition evaluates to false as null is falsy.
 
 
 #### Examples
-	console.log(undefined == null);		 // true
+	console.log(undefined == null);	 // true
 	console.log("" == 0);		         // true
 	// Of course, if you use ===, the types of both sides will be equated as well.
-	console.log("" === 0);		         // false
-	
+	console.log("" === 0);		       // false
+
 	// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
 	// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
 	// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
@@ -1313,12 +1313,12 @@ It does NOT affect comparison operators in the sense that, just because false an
 	// throwing a runtime error is a better alternative.
 	console.log(NaN == NaN);		       // false
 	console.log(0 / 0);
-	
+
 	// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
 	console.log(!!undefined);          // false
 	console.log(!!null);  	           // false
 	console.log(!!0);	                 // false
-	
+
 	// 0 within quotes is a non-empty string and is therefor truthy.
 	console.log(!!"0");	               // true
 
@@ -1329,7 +1329,7 @@ It is really only used for writing less cluttered code **but** in places where t
 	// The "know context" here is that obj is only assigned to objects and will never be used to contain a
     // value of another type, e.g. 0 or "".
 	obj = obj || newValue;
-	
+
 	// A shorthand way of detecting if the length of something is non-zero.
 	if ($(".my-class").length)
 
@@ -1353,28 +1353,28 @@ There are basically two pairs of these operators.
 
 `==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict.
 
-	console.log(0 == '');					// 1: true
-	console.log('0' == 0);					// 2: true
-	console.log(0 == false);				// 3: true
+	console.log(0 == '');					    // 1: true
+	console.log('0' == 0);			    	// 2: true
+	console.log(0 == false);			    // 3: true
 
-	console.log(0 == null);					// 4: false
-	console.log(0 == undefined);			// 5: false
+	console.log(0 == null);				    // 4: false
+	console.log(0 == undefined);	    // 5: false
 
 	// Despite the fact that they were both == 0, null and undefined are not ==.
-	console.log(null == undefined);		    // 6: true
+	console.log(null == undefined);		// 6: true
 
 	console.log('true' == true);			// 7: false
-	console.log(3 == '3');					// 8: true
+	console.log(3 == '3');					  // 8: true
 
 If both the values being compared are objects then equality is determined by whether or not they refer to the same instance of an object:
 
 	// Two separately created objects have different references,
 	// even if they have the same properties with the same values.
-	console.log({a: 3} == {a: 3});		    // false
+	console.log({a: 3} == {a: 3});		 // false
 
 	var x = {myProperty: "hello"};
 	var y = x;
-	console.log(x == y);					// true
+	console.log(x == y);					     // true
 
 
 ##### Identity Operators
@@ -1527,8 +1527,6 @@ The following built-in objects are related to JavaScript types and are explained
 * `Math`
 * `Date`
 * `RegExp`
-
-IN THESE OBJECTS AND ONES IN TYPES: Do not try to give a detailed explanation of every method which looks useful. Could just do a list of notable ones with some examples afterwards.
 
 #### <a name="language-built-in-objects-window"></a>Window
 The `window` object is the global object when operating with JavaScript within a browser. This means that any global variables or functions which you define become properties or methods of the window object. This example does not appear to work as expected in jsfiddle - it displays `undefined`. However, you can also run JavaScript from the console window within the F12 tools in your browser. If you paste the two lines into the console window, next to the `>` symbol and press the enter key, an alert window with the value `4` will be displayed, showing that `myFreeStandingVariable` is actually a property of `window`.
@@ -1762,7 +1760,7 @@ There is one situation where it can be very useful, however. Executing code that
 					eval(generatedCancelBookingCode);
 			});
 	};
-	
+
 > NOTE: This trick is also referred to in [eval Keyword Trick](#tips-eval-keyword-trick) further down.
 
 #### URI Functions
