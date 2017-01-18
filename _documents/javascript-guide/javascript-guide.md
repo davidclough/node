@@ -10,6 +10,8 @@
 
 ## <a name="language-contents"></a>JavaScript Language (ECMAScript 5)
 
+This is by far the biggest section of the document.
+
 *  [Document Scope](#language-document-scope)
 *  [Language Overview](#language-overview)
 *  [Global Namespace](#language-global-namespace)
@@ -32,7 +34,7 @@
 	* [Example Inheritance Tree](#language-objects-example-inheritance)
 *  [The this Keyword](#language-this-keyword)
 *  [Types](#language-types)
-	* [Primitive Types (string, number, boolean, undefined, null)](#language-types-primitive)
+	* [Primitive Types](#language-types-primitive)
 		* [string](#language-types-string)
 		* [number](#language-types-number)
 		* [boolean](#language-types-boolean)
@@ -56,16 +58,12 @@
 	* [Console](#language-built-in-objects-console)
 *  [Built-in Global Properties and Functions](#language-built-in-global-functions)
 
-This is by far the biggest section of the document.
-
 ### <a name="language-document-scope"></a>Document Scope
-This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help people learn the language and techniques that can help tame it.
+This document focuses on ECMAScript 5 (ES5) which works in IE8 and above, Chrome and Firefox. Only occasionally will there be references ES2015/ES6. It is not intended to argue for or against the use of JavaScript but to help people learn the language and highlight techniques that can help tame it.
 
-In interests of this document not becoming too bloated explanations may be quite short. It will be intended to cover more essential areas that are different from other languages and avoid going over things that will be more obvious to an experienced programmer. Some code samples may be over-simplified for the sake of more clearly explaining a concept.
+In the interests of this document not becoming too bloated, explanations may be quite short. It is intended to cover more essential areas and features that are different from other languages and avoid going over things that will be more obvious to an experienced programmer. Some code samples may be over-simplified for the sake of more clearly explaining a concept.
 
-It is intended to get you started, to explain many of the concepts that do not become immediately obvious when trying to google it as you go along, and will not be a complete reference. There are other more established sources from which you can obtain more detail.
-
-If you have a desire to learn JavaScript properly, you would helping yourself if you avoid continually trying to think in terms of C#. Although many of the standard instructions, like the flow of control keywords, operate in a very similar way to other C-based languages some, like the `new` and `this` keywords operate in a fundamentally different manner and it would be beneficial not to assume that, just because something looks the same as in C#, it is.
+If you have a desire to learn JavaScript properly, you would be helping yourself if you avoid continually trying to think in terms of C#. Although many of the standard instructions, like the flow of control keywords, operate in a very similar way to other C-based languages some, like the `new` and `this` keywords operate in a fundamentally different manner. It would be beneficial not to assume that, just because something looks the same as in C#, it is.
 
 > Note: The word **property** will be used throughout the document. It is actually referring to what in C# would be considered a field and not to something that has getter and setter methods. With functions being first-class objects in JavaScript (see next section), the word **properties** may also refer to an object's fields and methods. This is standard terminology in JavaScript.
 
@@ -83,9 +81,9 @@ It uses dynamic typing, meaning that variables do not have to remain assigned to
 <br /><a href="http://c2.com/cgi/wiki?BenefitsOfDynamicTyping">http://c2.com/cgi/wiki?BenefitsOfDynamicTyping</a>
 <br /><a href="http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing" target="_blank" dummy="_">http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing</a>
 
-These features make it a very flexible, multi-paradigm language. For example, it supports both object-oriented and functional programming, although it is not necessarily as good in any given paradigm as certain other languages.
+However, it is a very flexible, multi-paradigm language. For example, it supports both object-oriented and functional programming, although it is not necessarily as good in any given paradigm as certain other languages.
 
-Even the biggest proponents of the language accept that it has many fundamental flaws. It contains significant bad features, some utterly awful, which came about through a poor initial design, e.g. global variables. However, there are many really good features, like closures, not all of which were originally intended. LINK TO BOTTOM.
+Even the biggest proponents of the language accept that it has many fundamental flaws. It contains significant bad features, some utterly awful, which came about through a poor initial design, e.g. global variables. However, there are many really good features, like closures, not all of which were originally intended.
 
 Needless to say, the more good bits you harness and the less bad, the better your user experience will be.
 
@@ -94,11 +92,11 @@ In JavaScript everything belongs to a containing object apart from the `global n
 
 If you declare free-standing variables or functions, that are not contained within anything else, either a function or an object definition of some sort, they will then belong to the global namespace. This means that they are publicly available from anywhere in your code This lack of encapsulation is generally a very bad practice.
 
-In browser programming the global namespace is the **window** object. Any free-standing variables (functions are variables) you declare will be **directly** contained within the window object. Since all your JavaScript code is automatically nested within the window object those free-standing variables will be available everywhere in the code. Declaring variables in this manner is known as *polluting the global namespace*. Also, these variables will only go out of scope and be destroyed when the window object itself is destroyed.
+In browser programming the global namespace is the **window** object. Any free-standing variables (functions are variables) you declare will be **directly** contained within the window object. Since all your JavaScript code is automatically nested within the window object those free-standing variables will be available everywhere in your code. Declaring variables in this manner is known as *polluting the global namespace*. Also, these variables will only go out of scope and be destroyed when the window object itself is destroyed.
 
-If you just refer to a global variable that has not been declared using `var` (strict mode will be explained later) it would actually become a property of the window object.
+If you set the value of a global variable that has not been declared using `var` ([strict mode](#style-strict-mode) will be explained later) it will actually become a property of the window object.
 
-The code below highlights how declaring `freeStandingVariable` within the global namespace means that it becomes a property of the `window` object. Also, here, the `this` keyword refers to the global namespace. Using the console in the F12 browser developer tools, first paste the first line to set the variable. Pasting and running either the second or third line will show that you did not just declare a `variable`, you actually defined a property of the global object.
+The code below highlights how declaring `freeStandingVariable` within the global namespace means that it becomes a property of the `window` object. Also, here, the `this` keyword refers to the global namespace. Using the console in the F12 browser developer tools, paste and execute the first line to set the variable. Pasting and running either the second or third line will show that you did not just declare a `variable`, you actually defined a property of the global object.
 
 	var freeStandingVariable = 666;
 
@@ -110,23 +108,21 @@ Variables are declared in JavaScript using the `var` keyword.
 
     var myLocalVariable = 0;
 
->Note: We are not referring to properties of objects here.
-
->Note: This section only concerns itself with variables which you explicitly declare. Usage of variables which haven't been declared and of `strict mode` will be dealt with later.
+>Note: This section only concerns itself with variables which you explicitly declare. Usage of variables which haven't been declared and `strict mode` will be dealt with later.
 
 Their type can be changed without any form of type declaration. For example, one variable can be set to a string at some point, a number at a later point, a custom object even later and so on. We cannot do anything about that unless we just use another language (see TypeScript). As previously stated, this can can bring great flexibility but JavaScript, especially that which has not been written in a rigorous and strict manner, can easily become fragile.
 
 You can declare multiple variables on one line using one `var` with multiple declarations and assignments separated by commas, e.g. `var x = 3, y = 7, z = 8;`, just as you can in C#. Often you will see this style in JavaScript snippets on the web. Some will even tout declaring all your local variables for a particular scope in one big, comma-separated declaration statement as a recommended good practice. However, there is nothing at all to be gained by using this syntax.
 
 #### Using Variables that You Have Not Declared
-Basically, if you are using strict mode, an exception will be thrown if you try to fetch or set the value of any variable which you have not declared.
+Basically, if you are using [strict mode](#style-strict-mode), an exception will be thrown if you try to fetch or set the value of any variable which you have not declared.
 
 If you are not using strict mode and the variable has not been declared then it will be implicitly created for you. If you have declared a variable and then make typo when referring to that variable at a later point you will end up with two different variables and maybe some confusing problems.
 
 Note that the same is not true for properties of an object. In this case you can refer to _any_ property of an object you like without error, irrespective of strict mode.
 
 #### Scope
-In many C-based languages variable scope is much richer than in JavaScript. For example, in C#, almost any declaration of a variable within a particular block statement will mean that it can only be accessed from within that same block, or nested blocks, after it has been declared, e.g. a method, an if statement condition or any form of loop. In C we can even introduce a scope just by wrapping a group of lines within an extra set of braces.
+In many C-based languages variable scope is much richer than in JavaScript. For example, in C#, almost any declaration of a variable within a particular block statement will mean that it can only be accessed from within that same block, e.g. a method, an if statement condition or any form of loop, or nested blocks. In C we can even introduce a scope just by wrapping a group of lines within an extra set of braces. Also a variable can only be referenced after it has been declared.
 
 In JavaScript, there are effectively only two scopes, `global` and `function`.
 
@@ -137,17 +133,17 @@ If you declare a variable that is not inside a function it becomes part of the g
 Any variable declared inside a function will be visible within that function and all nested functions and objects. As will be explained later, this is your ticket to encapsulation in JavaScript. That said, we are not pretending that it will match up to the encapsulation available in other languages.
 
 ### <a name="language-hoisting"></a>Variable Hoisting
-In many modern languages it is considered good practice to declare variables at the point, or as near as possible, where they are used.
+In many modern languages it is considered good practice to declare variables as near as possible to the point where they are first used.
 
-They also allow variables to be declared within finer grained scopes which mean that it cannot be accessed from outside the block in which it has been declared.
+They also allow variables to be declared within finer grained scopes which measn that it cannot be accessed from outside the block in which it has been declared.
 
 As explained above, JavaScript only allows variables to be declared at the level of the containing function (if we dismiss global scope).
 
-It also has a nasty feature called `hoisting` which means that, although you can declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. In reality, the position of the declarations is not _actually_ being moved but some sort of memory allocation process takes place. It means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions.
+It also has a nasty feature called `hoisting` which means that, although you can declare variables (with the `var` keyword) at the point where they are first used, those declarations are moved at runtime to the top of the closest parent function that contains them. In reality, the positions of the declarations are not _actually_ being moved but some sort of memory allocation process takes place. It means that, although JavaScript lets you declare variables at their first point of use and within non-function blocks, you should not be deceived into thinking you achieved any form of encapsulation. The only way to achieve this would be to introduce nested functions.
 
 > Note that, if you declare a variable and assign a value to it, the variable declaration will be hoisted at runtime but the assignment will remain where it is.
 
-This example uses strict mode to highlight that the variable `x` really does exist before the first `console.log()` (if you comment the `var` declaration out you will get an error).
+This example uses strict mode to highlight that the variable `x` really does exist before the first `console.log()` (if you comment out the `var` declaration you will get an error).
 
 	(function () {
 		"use strict";
@@ -159,7 +155,7 @@ This example uses strict mode to highlight that the variable `x` really does exi
 		console.log(x);			// 66
 	}());
 
-> Note: For the reasons explained above it is universally recommended that you depart from the C# mentality and declare all your variables and nested functions (not methods) at the start of the immediate parent function.
+> Note: For the reasons explained above it is often recommended that you declare all your variables and nested functions (not methods) at the start of the immediate parent function. However, there is still some extra readability value to be gained by declaring variables at the point of use.
 
 With functions also being variables, hoisting also applies to functions. However, there is a subtle difference between using function declarations and function expressions.
 
@@ -193,13 +189,13 @@ With **function expression syntax** (`var myFunc = function () { ... };`) only t
 
 Function declaration syntax is certainly more forgiving as it does allow us to worry less about the order in which we declare our functions. However, be careful about relying on this. In a somewhat primitive language like ES5 it is still better to physically organise your code such that things are declared and functions are explicitly defined before they are referenced.
 
-> Avoiding writing code based on your expert knowledge of hoisting will avoid confusing less experience JavaScript programmers and, as will be seen in the next section, will make your code clearer.
+> Avoiding writing code based on your expert knowledge of hoisting will avoid confusing less experience JavaScript programmers and, as will be seen in the next section, make your code clearer.
 
-You can see recommended coding styles related to this issue later in <a href="#style-declarations">Declarations</a>.
+You can see recommended coding styles related to this issue later, in <a href="#style-declarations">Declarations</a>.
 
 #### ES2015 Onwards
 
-In later versions of JavaScript the `let` keyword is introduced as an improved alternative to `var`. This has main effects. The first is to prevent hoisting. `let` will also ensure that the variable is scoped to the containing `block`, rather than the containing function, and cannot be referenced before it has been declared. This is more like the behaviour you would expect in most C-based languages.
+In later versions of JavaScript the `let` keyword is introduced as an improved alternative to `var`. This has two main effects. The first is to prevent hoisting. `let` will also ensure that the variable is scoped to the containing `block`, rather than the containing function, and cannot be referenced before it has been declared. This is more like the behaviour you would expect in most C-based languages.
 
 Later versions of JavaScript also introduce the `const` keyword which is similar to `let` but also ensures that a variable's value must be set in the declaration and cannot be modified later. This does _not_ mean that its value has to be set to a literal, e.g. 3.14 - it can still be the result of an expression.
 
@@ -207,18 +203,16 @@ Later versions of JavaScript also introduce the `const` keyword which is similar
 #### Variables
 JavaScript is run using `top-down evaluation`. Put simply, variables must have been declared before they are used.
 
-The above is certainly true in strict mode. If you are not using strict mode the rules are more relaxed but you may end up with some "hard to detect" errors.
+The above is certainly true in strict mode. If you are not using strict mode, hoisting makes things more relaxed but you may end up with some "hard to detect" errors.
 
 Write your code with the intention of it being evaluated like this. Do not rely on hoisting tricks to "make your life easier".
 
-> It is safest to stick with the idea of physically declaring functions before they are called. Using function expression syntax helps as, although the function variable declaration may end up being hoisted, its initialisation will remain in the same location and you should see that the function is undefined if you try to use it before you have initialised it.
-
-> If you are not using `strict mode` ([more](#style-strict-mode) about this later) the runtime will implicitly create the variable for you, a situation can cause "hard to find" errors and which sensible people want to avoid.
+> If you are not using `strict mode` ([more](#style-strict-mode) about this later) the runtime will implicitly create the variable for you, a situation that can cause "hard to find" errors and which sensible people want to avoid.
 
 #### File Organisation
 Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls.
 
-It is as though the contents of all the files have been concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
+It is as though the contents of all the files get concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
 
 ### <a name="language-functions"></a>Functions
 A function allows you to define a piece of functionality which accepts parameters and returns a value. In JavaScript they are actually objects. Three of the most important methods of the Function object are `call()`, `apply()` and `bind()` (see [MDN - Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)). We will see how these are used later.
@@ -234,7 +228,7 @@ This does *not* result in the function being defined in some one-off, optimised 
 
 Every time this line of code is encountered by the JavaScript engine a new variable will be created and assigned to a newly defined function.
 
-`Variable hoisting` will ensure that _both_ the function variable _and_ its assignment will be moved to the top of the current scope at run time.
+>`Variable hoisting` will ensure that _both_ the function variable _and_ its assignment will be moved to the top of the current scope at run time.
 
 ##### Function Expression
     var addNumbers = function (x1, x2) {
@@ -247,25 +241,23 @@ The space after the function keyword is deliberate. It is a convention which cle
 
 Unlike with function declarations the actual function variable declaration is hoisted to the top of the current scope but the location where function is defined and assigned to that variable stays exactly where it is. The function will be `undefined` until that point.
 
-> Note: Expression syntax has been preferred over declaration syntax in this document due to a combination of `top-down Evaluation` and `hoisting` (explained earlier). It helps to keep you inline with the practice of always declaring something before you use it. If you haven't then hoisting will move the declaration of the function to the top of its scope but it will remain undefined until the point where _you_ actually defined it and you will get an exception if you call it before that point. Keeping to strict practices when writing JavaScript is an extra aid to helping you write robust code.
-
 ##### Function as a Method
 This is exactly like a function expression but the function is assigned to a property of an object.
 
     var myObject = {};
     myObject.addNumbers = function (x1, x2) {
         return x1 + x2;
-	};
+    };
 
 #### Anonymous Functions
-There are situations where you may want to define a function _without_ explicitly assigning it to a variable. For example, just the right hand side of the above example may be directly supplied as a parameter in a function call, e.g. specifying a callback method or assigning an event handler. In this example the callback function defined as the first parameter is called once after 2 seconds.
+There are situations where you may want to define a function _without_ explicitly assigning it to a variable. For example, you may want to specify a callback method or assign an event handler. In this example the callback function defined as the first parameter is called once after 2 seconds.
 
     setTimeout(function () {
       alert("Boo!");
     }, 2000);
 
 ##### Named Function Expressions
-We can now name our function expressions as below. The IE9-compatible Array map was used for convenience of demonstration, although ES5 shim will make it usable in lower versions). The only advantage here is that our callback function (named `factorial`) can now call itself. In reality the function could have been defined separately from the statement it has been included in.
+We can now name our function expressions as below. The IE9-compatible Array map() was used for convenience of demonstration, although an ES5 shim will make it usable in lower versions). The only advantage here is that our callback function (named `factorial`) can now call itself. In reality the function could have been defined separately from the statement it has been included in.
 
   	var o =	[1,2,3,4,5].map(function factorial (n) {
   		return !(n > 1) ? 1 : factorial(n - 1) * n;
@@ -289,7 +281,7 @@ This example demonstrates a nested function. `calculateSquare` is effectively a 
 
 Here `calculateSquare` is too general to be available only available within the containing function but are plenty of situations where nested functions are of great value.
 
-A more important thing to note is that the function it is assigned to is **recreated** every time `addSquaresOfNumbers` is called and destroyed when the `addSquaresOfNumbers` exits.
+A more important thing to note is that the function that is assigned to it is **recreated** every time `addSquaresOfNumbers` is called and destroyed when the `addSquaresOfNumbers` exits.
 
 > Note: For the above reason, it is imperative that you do not define nest functions within functions within any form of loop or iterator. This mistake could easily be made from within the callback parameter of a call to a jQuery `each()` method, e.g. `$("li").each(function { ... })`. Here, if you decided you wanted to encapsulate a piece of UI manipulation logic into a function which stated what it was doing, instead of just a series of jQuery calls, you should make sure it is define outside the `each` statement.
 
@@ -298,11 +290,12 @@ Technically, a closure is a function held together with captured parts of the en
 
 They are nested functions that reference variables that were defined in an enclosing scope. These functions "remember" the environment/context in which they were created.
 
-Function parameters and variables, either declared inside or outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function.
+Function parameters and referenced variables that are outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function.
 
     var createIndicateHowManyTimesCalledFunction = function () {
       var counter = 0;
 
+      // Nested function.
       var indicateHowManyTimesCalledFunction = function () {
         counter += 1;
         return counter;
@@ -365,7 +358,7 @@ You can also supply **more** parameters to simulate the equivalent of a C# _para
     console.log(sum(-10, 1, 1, 1, 1, 1));   // -5
     console.log(sum());                     // 0
 
-`arguments` is only an array-like object. You can check its `length` property and access individual items but, if you find yourself requiring a _genuine_ array you will need to convert it to one. In ES5 you would generally call one of these lines. The `Array,prototype.slice` method does accept this array-like object but returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments you can also supply the parameter indicating the first item index to slice from.
+`arguments` is only an array-like object. You can check its `length` property and access individual items but. However, you cannot call any of the array methods. If you find yourself requiring a _genuine_ array you will need to convert it to one. In ES5 you would generally do this. The `Array.prototype.slice` method actually this array-like object and returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments you can also supply the parameter indicating the first item index to slice from.
 
     var myFunc = function (fixedParam1, fixedParam2) {
       var allArgs = Array.prototype.slice.call(arguments);
@@ -397,12 +390,13 @@ Call `object constructor` functions by preceding the call with the `new` keyword
 
 	var myFather = new Person("Michael", "Jackson");
 
-> Generally functions are named using camelCase. However, object constructor functions are conventionally named using Pascal case strictly as a visual instruction that calls to them should be preceded by `new`. More on those later.<br />
+Generally functions are named using camelCase. However, object constructor functions are conventionally named using Pascal case strictly as a visual instruction that calls to them should be preceded by `new`. More on those later.
+
 > It is important that you stick to the above convention. It should override any notions of consistency. For example, later you will see patterns where a function is _effectively_ a constructor, in that its purpose is to create a particular object, but it is not in the form of object constructor above and a call to it should not be preceded by the `new` keyword. In this case it should have a camelCase name.
 
 #### <a name="language-call-and-apply"></a>Via `call` or `apply` Keywords
 Both these **methods of the function prototype** allow you to call the function by specifying what `this` will be referring to within that function.
-For both of these, the object which represents `this` is supplied as the first parameter. The difference is that `apply` accepts an array containing all the arguments to be supplied to the function call as its only other parameter whereas `call` accepts each parameter individually.
+For both of these, the object which represents `this` is supplied as the first parameter. The only difference is that `apply` accepts an array containing all the arguments to be supplied to the function call as its only other parameter whereas `call` accepts each parameter individually.
 
     myFunction.apply(thisArg, [argsArray])
     myFunction.call(thisArg[, arg1[, arg2[, ...]]])
@@ -426,14 +420,16 @@ Also known as `IIFE`s, they are just anonymous function expressions that are dec
 
 Although make things look overly complicated, the outer parentheses are there partly by convention and partly to make sure that browsers know it contains an expression to prevent errors (a function declaration statement, as opposed to a function expression, cannot be immediately invoked).
 
+Here are some of the things IIFEs are used for:
+
 #### Privacy
-One major benefit of IIFEs is the ability to encapsulate variables. Because they can be scoped at function level any variables declared inside are private. Because the code above uses is within an IIFE we can declare "free-standing" variables and functions without any worries. It is effectively like a block in C# but just looks a bit more convoluted than a pair of braces. If it was not wrapped in an IIFE then `privateVariable` and `privateFunction` would be global.
+One major benefit of IIFEs is the ability to encapsulate variables. Because they can be scoped at function level, any variables declared inside are private. Because the code above is within an IIFE we can declare "free-standing" variables and functions without any worries. It is effectively like a block in C# but just looks a bit more convoluted than a pair of braces. If they were not wrapped in an IIFE then `privateVariable` and `privateFunction` would be global.
 
 #### Strict Mode
-Another use for IIFEs is as a container for all code within a file because it advised to declare `"use strict";` at function level and not file level. If the outer IIFE starts with a `"use strict";` we have effectively achieved strict mode at file level. Of course we can nest other IIFEs within our outer IIFE `:D`.
+Another use for IIFEs is as a container for all code within a file. This is because it advised to declare `"use strict";` at function level and not at file level. If the outer IIFE starts with a `"use strict";` we have effectively achieved strict mode at file level. Of course we can nest other IIFEs within our outer IIFE `:D`.
 
 #### Local Copies of More Global Objects
-The example below shows how parameters can be define and passed in to allow us to work with local copies of global objects. Here `$` refers to the `jQuery` object within the IIFE. This would be useful if another library has also declared their own meaning for `S`. The second parameter was not supplied in the call so we now know the `undefined` really is undefined. Note that you are not obliged to use these parameters everywhere but they may help you overcome a problem you come across. The global `undefined` property can, unbelievably, be set to any value but, if it has, some part of your code is likely to break anyway.
+The example below shows how parameters can be define and passed in to allow us to work with local copies of global objects. Here `$` refers to the `jQuery` object within the IIFE. This would be useful if another library has also declared their own meaning for `$`. The second parameter was not supplied in the call so we now know the `undefined` really is undefined. Note that you are not obliged to use these parameters everywhere but they may help you overcome a problem you come across. The global `undefined` property can, unbelievably, be set to any value but, if it has, some part of your code is likely to break anyway.
 
     (function ($, undefined) {
       // $ now refers the jQuery object within here. We can avoid clashes
@@ -443,9 +439,10 @@ The example below shows how parameters can be define and passed in to allow us t
 
 #### Module Pattern
 One common pattern used in JavaScript ES5 is the module pattern. A module here is effectively a singleton object which exposes properties and methods. However, it can also contain private members.
-Because the public object it returns is only created once we do not have to worry about the efficiency of not adding methods against its prototype.
 
-Because we are not building against a prototype we can use private members. Closures mean that the private variables do not get disposed of after the IIFE has finished executing because properties in the object it returns hold references to them (or there is a chain of references to each item).
+Because the public object it returns is only created once we do not have to worry about the inefficiency of not adding methods against its prototype (this is explained in the Objects section next).
+
+A module can have its own private members. Closures mean that the private variables do not get disposed of after the IIFE has finished executing because properties in the object it returns hold references to them (or there is a chain of references to each item).
 
 Here is one example of the module pattern. The code is just for demonstration purposes. There are quite a lot of variations of this pattern, mostly quite similar.
 
