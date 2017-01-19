@@ -475,13 +475,13 @@ Here is one example of the module pattern. The code is just for demonstration pu
 
 
 ### <a name="language-objects"></a>Objects
-The basis of this section has been constructed from a short but easy-to-follow course on  PluralSight: [JavaScript Objects and Prototypes (by Jim Cooper)](https://app.pluralsight.com/library/courses/javascript-objects-prototypes/table-of-contents).
+The basis of this section has been formed from a short but easy-to-follow course on  PluralSight: [JavaScript Objects and Prototypes (by Jim Cooper)](https://app.pluralsight.com/library/courses/javascript-objects-prototypes/table-of-contents).
 
 #### <a name="language-objects-what"></a>What is an object?
-Described in very simplistic terms an object in JavaScript is like a mutable collection of key-value pairs. There is a bit more to them than that, as will be described later. For example, every object has a `constructor` and a `prototype`.
+Described in very simplistic terms an object in JavaScript is like a mutable collection of key-value pairs. There is a bit more to them than that. For example, every object has a `constructor` and a `prototype`.
 
 #### <a name="language-objects-properties"></a>Properties and Methods
-We will refer to each key-value pair as a `_property`, although they are more like the equivalent of public fields in C#. The dynamic nature of JavaScript means that, as with ordinary variables declared using the `var` keyword, properties have no restriction on their type. Their values can also be change to different values of different types at any point after initialisation. You can also add new properties to an object after it has been initialised by merely referencing a new property name and setting its value.
+We will refer to each key-value pair as a `property`, although they are more like the equivalent of public `fields in C#`. The dynamic nature of JavaScript means that, as with ordinary variables declared using the `var` keyword, properties have no restriction on their type. Their values can also be change to different values of different types at any point after initialisation. You can also add new properties to an object after it has been initialised by merely referencing a new property name and setting its value.
 
     var myObject = {
     	property1: 36
@@ -495,8 +495,8 @@ Properties and methods can be accessed in two ways:
 
 * Via the `.` notation that you will be used to in other languages.
 * Via hash table or dictionary notation. This may be less familiar to you and means:
-  - 1) You can specify properties that have names which contain otherwise illegal characters, like spaces
-  - 2) You can reflect object properties at runtime either by iteration or by some use of dynamically-created property names
+  1) You can specify properties that have names which contain otherwise illegal characters, like spaces
+  2) You can reflect object properties at runtime either by iteration or by some use of dynamically-created property names
 
 Here are some examples using the `myObject` created in the previous example:
 
@@ -523,9 +523,11 @@ The most fundamental way of creating an object is via `JSON` (JavaScript Object 
       }
     };
 
-Another way to create an object is by calling a `constructor function`. Unlike normal functions, Constructor functions generally have a name beginning with a capital letter. This is done by convention rather than as an absolute requirement. The convention exists for a reason that the `new` keyword _must_ precede a call to a constructor function for the desired effects to be guaranteed. An example of calling a constructor function will be shown further down, when the creation of constructor functions is explained, as most of the built-in JavaScript objects tend to have their own specific syntax for their creation.
+Another way to create an object is by calling a `constructor function`. The `new` keyword _must_ precede a call to a constructor function for the desired effects to be guaranteed. Unlike normal functions, constructor functions generally have a name beginning with a capital letter purely as a visual indication of how they should be called.
 
-Here are some examples of object specifiers that are specific to certain types:
+    var myPerson = new Person("John", "Smith");
+
+Most of the built-in JavaScript objects tend to have their own specific syntax for object creation and you do not need to call a constructor function. For example:
 
     var myRegex = /\d{3}/g;
     var myArray = [1, 2, 3];
@@ -534,28 +536,28 @@ Here are some examples of object specifiers that are specific to certain types:
 #### <a name="language-objects-prototypes"></a>Object Prototypes
 In JavaScript _every_ object has a prototype. The prototype is like the direct parent of the object where extra properties that are not defined directly against the object itself can be defined and then "inherited". You can access any object's prototype via its `__proto__` property. The cryptic name is an indication that ordinary users should not set this property and you will be shown how this property actually gets initialised. It is perfectly valid to read the property.
 
-Prototypes are actually just ordinary, in-memory objects. They themselves have their own prototypes and we get `prototype chains`. There can be any number of links in an inheritance chain. Following the chain of an object upwards via its `__proto__` property then `__proto__.__proto__`, and so on, will usually lead us to an `Object`. Almost all objects ultimately "derive" from Object and the value of its `__proto__` is `null`. We will describe the difference between the `__proto__` property of an object and the `prototype` property of a constructor function in a short while.
+Prototypes are actually just ordinary, in-memory objects. They themselves have their own prototypes and we get `prototype chains`. There can be any number of links in an inheritance chain. Following the chain of an object upwards via its `__proto__` property then `__proto__.__proto__`, and so on, will usually lead us to an `Object` object. Almost all objects ultimately "derive" from Object and the value of its `__proto__` is `null`. We will describe the difference between the `__proto__` property of an object and the `prototype` property of a constructor function in a short while.
 
 When a property value is **written** to an object the property will _always_ be then defined directly against that object itself.
 
 However, when the property of an object is **read**, the value is fetched in the following way:
 
   * If the property is defined against the object itself, the value of that property is returned.
-  * Otherwise the JavaScript engine then looks in the object that is the __proto__ of the original object. If the property is defined directly against this object, its value is returned.
+  * Otherwise the JavaScript engine then looks in the object that is the `__proto__` of the original object. If the property is defined directly against this object, its value is returned.
   * Otherwise the search carries on up the prototype chain until an object with that property defined against it is found, OR
   * If the search up the prototype chain eventually leads us to a null object, the value of the property is returned as `undefined`
 
-This is known as `prototypical inheritance`. In traditional, object-oriented languages it is generally _classes_ which inherit from other classes. In ES5, classes do not exist and, instead, it is _objects_ which derive from other objects. Because of this JavaScript is often referred to as _object-based_ rather than object-oriented.
+This is known as `prototypical inheritance`. In traditional, object-oriented languages it is generally _classes_ which inherit from other classes. In ES5, classes do not exist and, instead, it is _objects_ which derive from other objects. For that reason JavaScript is often referred to as _object-based_ rather than object-oriented.
 
 There is a `hasOwnProperty()` method which will allow you to determine if a property is defined directly against an object if it is inherited from an object further up the prototype chain:.
 
     myCat.hasOwnProperty("age")
 
 #### <a name="language-objects-constructors"></a>Defining an Object Template via a Constructor Function
-To create an object constructor function properly we have to show some appreciation for the prototype chain. Here is a simple but _correct_ example of how to define a custom constructor function for objects which are not part of any complex object hierarchy and just derive from Object.
+To create an object constructor function properly we have to show some appreciation of the prototype chain. Here is a simple example of how to define a custom constructor function for objects which are not part of any complex object hierarchy and just derive from Object.
 
     var Car = function (wheels) {
-    	this.wheels = wheels || 4;
+    	this.wheels = wheels || 4;     // Default to 4 if parameter not supplied.
     };
 
     Car.prototype = Object.create(Object.prototype);   // NOT essential in this case.
@@ -563,23 +565,23 @@ To create an object constructor function properly we have to show some appreciat
 
 Three essential things are required:
 
-  * The properties an object created using this constructor function are set via the `this` keyword. Within a constructor function `this` is the object that is being created and which is implicitly returned by the function. In this case the number of wheels can be supplied as a parameter to the function. If not supplied it will default to 4. If you wanted you could throw an exception if a sensible value for a parameter is not called.
+  * The properties of an object created using this constructor function are set via the `this` keyword. Within a constructor function `this` is the object that is being created and which is implicitly returned by the function. In this case the number of wheels can be supplied as a parameter to the function. If not supplied it will default to 4. If you wanted you could throw an exception if a sensible value for a parameter is not supplied.
   * The `prototype` property of the function needs to be set. In this case Car prototype will be a newly created in-memory object whose prototype is Object. This line is not essential in this case as it will occur by default. However, we are bearing in mind later examples which define more complex prototype chains.
   * The `prototype.constuctor` property is defined.
 
-Defining the `constructor` property is good practice. There may be the odd occasion when an object needs to be able to refer to its own constructor and it is better not to be referring to it explicitly by its name. The property is not automatically assigned via some under-the-bonnet magic. It unfortunately has to be defined manually.
+Defining the `constructor` property is good practice. There may be the odd occasion when an object needs to be able to refer to its own constructor and it is better not to refer to it explicitly by its name. The property is not automatically assigned via some under-the-bonnet magic. It has to be defined manually, unfortunately.
 
-This code constructs on object from the Car function defined above and examines some of its properties:
+This code constructs an object from the Car function defined above and examines some of its properties:
 
     var myCar = new Car();
 
-    console.log(myCar.__proto__);					// Car { ... }
-    console.log(typeof myCar);						// "object"
+    console.log(myCar.__proto__);					      // Object { ... }
+    console.log(typeof myCar);						      // "object"
     console.log(myCar instanceof Car);			    // true
     console.log(myCar.constructor === Car);			// true
 
     console.log(myCar.wheels);						// 4
-    console.log(new Car(3).wheels);					// 3
+    console.log(new Car(3).wheels);				// 3
 
 Notice that `typeof myCar` returns "object" and not "Car". For non-primitive objects `typeof` will only ever return "object".
 
@@ -594,7 +596,7 @@ Preceding a function call with `new` affects the function itself in _three_ ways
   2. The `this` keyword within the function will refer to the object being created. The constructor function will generally add properties to the object via lines like `this.myProperty = ...`.
   3. The `__proto__` property of the newly-created object will set to point to the same object instance as the `prototype` property of the function. If you change or add a property to that prototype property the change will therefore be seen in all objects that have already been created using the constructor. Note that, if the function's prototype property was somehow changed to point to something different at a later point in time, only objects created after that point will be affected.
 
-> NOTE: Yes, it is rather feeble that this is the case and that the function is actually at the mercy of the caller. That is why it is seen as important to name functions which "should be called with the new keyword" using Pascal case and _all_ other function using camel case.
+> NOTE: Yes, it is rather feeble that the invocation of a constructor function is actually at the mercy of the caller. That is why it is seen as important to name functions which "should be called with the new keyword" using Pascal case and _all_ other function using camel case.
 
 #### <a name="language-objects-defining-methods"></a>Defining Methods
 You _could_ define your methods within the constructor function, considering they are just properties that happen to be functions. _However_, this is an inefficient way to do so because the method functions will be newly defined and stored directly against the new object being created _every_ time you call your constructor. This would be highly undesirable in situations where you are planning creating more than just a few instances of an object.
@@ -623,7 +625,7 @@ The code defining the method does not look very nice compared with class-based p
 This link, not just restricted to constructor functions, is old but gives you an indiction of the idea that "encapsulation is good but we have to bear in mind the efficiency of the code as well": [Stop Nesting Functions! (But Not All of Them)](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 
 #### <a name="language-objects-richer-properties"></a>Richer Properties
-You may think that properties are just simple name-value pairs. However, each property does actually a descriptor which specifies some attributes about it. There are three prominent attributes:
+You may think that properties are just simple name-value pairs. However, each property does actually have a descriptor which specifies some attributes about it. There are three prominent attributes:
 
   * `writable` - can the property be written to after it has been initialised? The default is `true`.
   * `enumerable` - (1) will the property appear when you enumerate through all an object's properties, (2) if you serialise to JSON, will this property be serialised, e.g. using JSON.stringify(). The default value for this property is `true`.
@@ -655,10 +657,10 @@ You can also define getter and setter accessors for a property:
 
     console.log(person1.fullName);			// "John Smith"
 
-If you are defining richer properties against an object constructor, you will need to define them outside the constructor and against the prototype, for the same efficiency reasons as defining methods. It is better to define one property against the prototype than to end up redefining the same property against each individual instance created.
+If you are defining richer properties against an object constructor, you will need to define them outside the constructor and against the prototype for the same efficiency reasons as when defining methods. It is better to define one property against the prototype than to end up redefining the same property against each individual instance created.
 
 #### <a name="language-objects-richer-objects"></a>Richer Objects
-Here we are merely giving an indication of how flexible JavaScript objects can be and how it is more than possible to just change property values at run time - you can redefine its whole configuration on the fly. This can be done for standalone objects or for object prototypes.
+Here we are merely giving an indication of how flexible JavaScript objects can be and how it is possible to change more than just the value of a property at run time - you can redefine its whole configuration on the fly. This can be done for standalone objects or for object prototypes.
 
 The [MDN Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) page also indicates some methods for placing extra restrictions on objects.
 
@@ -670,7 +672,7 @@ The [MDN Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Referen
 
 There is also a `delete` keyword which, in theory, allows you to delete a property from an object. However, its results can be a bit unpredictable and inefficient.
 
-#### <a name="language-objects-example-inheritance"></a>Example Inheritance Tree
+#### <a name="language-objects-example-inheritance"></a>Sample Inheritance Tree
 The three essential things when creating a constructor function for a derived "type" are:
 
   1. Make sure the derived constructor calls the base constructor.
@@ -707,8 +709,8 @@ The three essential things when creating a constructor function for a derived "t
 
 
     var bird = new Bird("Chirp");
-    bird.makeNoise();
-    bird.fly();
+    bird.makeNoise();                           // "Chirp"
+    bird.fly();                                 // "Bird is flying"
 
     console.log(bird instanceof Bird);				  // true
     console.log(bird instanceof Animal);			  // This is also true
@@ -735,7 +737,7 @@ The `this` within "ordinary functions" points to the global object. By "ordinary
   2. functions that are not methods of objects
   3. the functions could have been declared using function syntax or expression syntax
 
-Note that even if an "ordinary function" is nested within a constructor function or a method function `this` will still point to the global object - don't be fooled into thinking it will point to the object the out constructor or method was for.
+Note that even if an "ordinary function" is nested within a constructor function or a method function `this` will still point to the global object - don't be fooled into thinking it will point to the same object that the constructor or method was pointing to.
 
 If you use `strict mode` then, for the above situations, `this` will be `undefined` to prevent inadvertent modifications to the global object.
 
@@ -746,6 +748,7 @@ Within any function that is preceded by the `new` keyword when called `this` ref
 If a function is an object method, whether it is a standalone object or one being used as a prototype, `this` refers to the object.
 
     var person1 = { firstName: "Fred", lastName: "Bloggs" };
+
     person1.writeFullName = function () {
     	console.log(this.firstName + " " + this.lastName);
     }
@@ -757,7 +760,7 @@ It is also the case if the method has been defined directly within an object lit
 #### 4. <a href="language-this-keyword-call-apply-bind"></a>call, apply or bind
 Whenever a function is called using [call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) or [apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) the caller explicitly specifies what object `this` will refer to and it will **always** override whatever `this` would ordinarily have pointed to.
 
-In the previous example, `writeFullName()` was a method introduced directly against `person1`. Despite the fact that `bobSmith` in example doesn't even have that method we can force `this` to refer to the new object within the method:
+In the previous example, `writeFullName()` was a method introduced directly against `person1`. Despite the fact that `bobSmith` below doesn't even have that method we can force `this` to refer to that object within the method:
 
     var bobSmith = { firstName: "Bob", lastName: "Smith" };
     person1.writeFullName.call(bobSmith);           // "Bob Smith"
@@ -767,7 +770,7 @@ The [bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/G
     var newFunction = person1.writeFullName.bind(bobSmith);
     newFunction();								// "Bob Smith"
 
-The above examples are rather hypothetical and merely for demonstration. Uses of call(), apply() and bind() tend to be specialised but they are significantly used.
+The above examples are rather hypothetical and merely for demonstration. Uses of call(), apply() and bind() tend to be specialised but they are used significantly.
 
 #### 5. A Function That is a DOM Event Handler
 If a function is used as a DOM event handler `this` will refer to the JavaScript object representing the element from which the event was triggered.
@@ -776,9 +779,9 @@ If a function is used as a DOM event handler `this` will refer to the JavaScript
 The word `type` has been used but, as mentioned, there are no classes. However, there are certain standard `prototype` objects built into JavaScript which achieve a similar effect to classes.
 
 #### <a name="language-types-primitive"></a>Primitive Types (string, number, boolean, undefined, null)
-As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`, `undefined` and `null`. Primitives are only things that will be copied/referenced by value. All other "types" are objects. If you make one object equal to another they will effectively be pointers to the same object.
+As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`, `undefined` and `null`. Primitives are only things that will be copied/referenced by value. All other "types" are objects. If you make one object equal to another they will effectively be pointers to the same object. If you make something equal to a primitive its value will be copied and stored against the new variable.
 
-`boolean`, `number` and `string` have their own special forms of constructor. They actually have their own object constructor equivalents (`Boolean`, `String` and `Number`). JavaScript will readily coerce between these primitives and object wrappers behind the scenes but you can detect their type using `tyepof`:
+With primitives you can also detect their type using `tyepof`:
 
 	var myInteger = 5;
 	var myFloat = 6.7;
@@ -792,7 +795,7 @@ As well as objects, ES5 has five primitive types: `boolean`, `number`, `string`,
 	console.log(typeof myBool);				 // "boolean"
 	console.log(typeof myString);			 // "string"
 
-You can create them via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
+They actually have their own object constructor equivalents (`Boolean`, `String` and `Number`) although you would not generally use these directly. JavaScript will readily coerce between these primitives and object wrappers behind the scenes. You can create the above via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
 
 	// Don't use these.
 
@@ -811,7 +814,7 @@ Technically, primitives do not have members. However, because of the object wrap
 
 There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them. You can also see the String global object in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String).
 
-You can browse view the different methods made available via the String object prototype. Some
+You can view the different methods made available via the String object prototype. Some
 are useful, others not. For simple string processing many are fine. For more complex stuff you may want to use the methods which work with RegExp objects (explained in [RegExp](language-types-regexp) further down). You could alternatively some third party library, like string.js, or pinch something off Stack Overflow. Here are some examples:
 
 	console.clear();
@@ -852,7 +855,7 @@ are useful, others not. For simple string processing many are fine. For more com
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
 You can include a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
 
-> `ES2015`: As well as using either single or double quotes you can also put a string within a `literal template` (surrounded by back ticks). These can span multiple lines without the need for string concatenation. You can also put expressions within the template and there calculated value will be used within the string that is output.
+> `ES2015`: As well as using either single or double quotes you can also put a string within a `literal template` (surrounded by back ticks). These can span multiple lines without the need for string concatenation. You can also put expressions within the template and their calculated value will be used within the string that is output.
 
 	var person = { firstName: "John", surname: "Smith" };
 	var message = `Hello ${person.firstName} ${person.surname}`;
@@ -864,7 +867,7 @@ You can include a [shim](https://github.com/es-shims/es5-shim) at the start of y
 As you can see `number` covers both integers and floating point numbers.
 Numbers are always 64 bit floating point values (according to [w3schools](http://www.w3schools.com/js/js_numbers.asp)).
 
-The hexadecimal initialisation will store the number in base 10. However, you can still continue to use that notation for value comparisons or bitwise logical operations like this bitwise or:
+The hexadecimal initialisation will store the number in base 10. However, you can still continue to use that notation for value comparisons or bitwise logical operations like this `bitwise or`:
 
 	var myHexadecimal = 0xf0;
 	console.log(myHexadecimal | 0x0f);		// 255    (i.e. 0xff)
@@ -910,18 +913,20 @@ Boolean does not add any particularly useful methods beyond `toString()`, which 
 One of the many mistakes in the JavaScript language is that, certainly in older browsers, `undefined` can be manually set to _any_ value. For this reason you may see code which mentions `void(0)` (as this is always undefined). You may also see code which employs the trick of declaring a final function parameter called `undefined` but does not supply that parameter when calling the function.
 
 ##### <a name="language-types-null"></a>null
-Although `null` is said to be a primitive type it is really more a primitive value for an object. Its type is object. However, this is only because of a bug in ES5. In ES6 it has been fixed and null is more like a genuine primitive type.
+Although `null` is said to be a primitive type it is really more a primitive value for an object. Its type is object. However, this is only because of a bug in ES5.
 
 	var myNull = null;
 	console.log(typeof myNull);				// "object"
 
+In ES6 it has been fixed and null is more like a genuine primitive type.
+
 Unlike `undefined`, `null` is a genuine value which can be used within your logic.
 
 It is a value which your code or a third party library will actively assign as the value of a variable or object member, e.g. if a value is optional.
-To my knowledge, no native JavaScript code will generate a null value. It is probably best viewed as a value rather than as a type.
+To my knowledge, no native JavaScript code will generate a null value.
 
 #### <a name="language-types-array"></a>Array
-Declare array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
+Declare an array using the array literal syntax, with square brackets. A maximum size for the array cannot be specified.
 
 When accessing member of the array, specify a zero-base index within square brackets. If you try to access an index which the array does not contain a value for there will be no error, `undefined` is returned.
 
@@ -939,7 +944,7 @@ When accessing member of the array, specify a zero-base index within square brac
 	var emptyArray = [];
 
 
-Although you can use the use Array constructor directly e.g. `new Array(4, 5, 6)` this is untidier, error-prone and strictly advised against. There is a constructor which accepts an initial length but it does not prevent you from getting and setting indexes outside that length.
+Although you can use the use Array constructor directly, e.g. `new Array(4, 5, 6)`. This approach is untidier, error-prone and strictly advised against. There is a constructor which accepts an initial length but it does not prevent you from getting and setting indexes outside that length.
 
 You can mix the types held within the array:
 
@@ -976,7 +981,7 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 	var fruits = ["Apple", "Banana"];
 	var shallowCopy = fruits.slice();
 	fruits[0] = "Orange";
-	console.log(shallowCopy[0]);				   // "Apple"
+	console.log(shallowCopy[0]);				 // "Apple"
 
 It looks like the `splice` method was named after the process of splicing film reels. It allows you to split an array into two separate arrays by removing items from the original array at a particular index and returning them in a second array. There are effectively _three_ overloads. All require you specify the index from which to start removing items. A second, optional parameter allows you to specify how many items to remove, as in this example:
 
@@ -997,9 +1002,9 @@ Thirdly, you can specify any number of array items which you would like to be in
     console.log(array2);					   // [4, 5, 6]
 
 ##### Functional Programming Libraries
-There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js](http://danieltao.com/lazy.js/), which add far richer, functional-style data manipulation of arrays (and other objects in general. Here is a simple example (although there are JavaScript map and reduce methods which work in IE9):
+There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js](http://danieltao.com/lazy.js/), which add far richer, functional-style data manipulation of arrays (and other objects). Here is a simple example, although there are JavaScript `map` and `reduce` equivalents, which work in IE9:
 
-	_.map([1, 2, 3], function (n) { return n * 3; });	// [3, 6, 9]
+	_.map([1, 2, 3], function (n) { return n * 3; });	  // [3, 6, 9]
 
 <a dummy="_"></a>
 
@@ -1015,12 +1020,19 @@ The `Date` object allows you to create the equivalent of the C# `DateTime`s. Giv
 
 Here are some examples. As you can see, you can use various initialisers to create a date but they can each come with there own little problems:
 
+    // Set to a UTC time.
   	var d = new Date("2015-03-25T12:00:00");
+
+    // What gets output here depends on the time zone the hosting computer is set to.
+    // If not in GMT the UTC time would be converted to the appropriate time when output.
+    // For example, if you set to Moscow time zone, the getHours() will return 3.
+
   	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
+    console.log(d.getHours());      // 12
   	console.log(d.getFullYear());		// 2015
 
   	// This one comes back with 3 for the day!
-  	// It immediately highlights a chink in the armour, parsing our initialisati9on test
+  	// It immediately highlights a chink in the armour: our initialisation text gets parsed
     // using U.S. date format.
   	console.log(d.getDay());				// 3
 
@@ -1059,13 +1071,13 @@ One of the more sophisticated third-party libraries available for JavaScript is 
 For anything other than basic usage it is probably best to use something like this above the built-in functionality.
 
 #### <a name="language-types-regexp"></a>RegExp
-`RegExp` objects allow you to perform more complex string parsing and manipulation, via regular expressions, than you can with most of the `String` object methods. Note that the `String` object contains a handful of methods designed to work with `RegExp` objects, notably `match()` and `replace()`.
+`RegExp` objects allow you to perform more complex string parsing and manipulation, via regular expressions, than you can with most of the `String` object methods. Note that the `String` object contains a handful of methods designed to work with `RegExp` objects, most notably `match()` and `replace()`.
 
-This document is no about regular expressions is given here. Plenty of information exists online, e.g. at [Regular-Expressions.info](http://www.regular-expressions.info/). A good testing environment can be found at [regex101.com](https://regex101.com/).
+This document is not about regular expressions is given here but plenty of information exists online, e.g. at [Regular-Expressions.info](http://www.regular-expressions.info/). A good testbed environment can be found at [regex101.com](https://regex101.com/).
 
-There is a special syntax for declaring [RegExp](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp) literal (so there is no need to create one using `new RegExp("...")` syntax. It involves use of the `/` character as a delimiter: `var myRegexp = /<regexp text>/`. Additional `flag` characters may be included at the end (after the closing `/`) to modify its behavior, e.g. /.../`g` for a global match (find _all_ occurrences) or /.../`i` to specify that case should be ignore.  
+There is a special syntax for declaring [RegExp](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp) literal, so there is no need to create one using `new RegExp("...")` syntax. It involves use of the `/` character as a delimiter: `var myRegexp = /<regexp text>/`. Additional `flag` characters may be included at the end (after the closing `/`) to modify its behavior, e.g. /.../`g` for a global match (find _all_ occurrences) or /.../`i` to specify that character case should be ignored.  
 
-Below are a couple of not very sophisticated examples. Note that the `replace()` method is capable of accepting a function through which the user can implement a more sophisticated replacement algorithm, and takes into account what was found, than just globally replacing all matches with a static string.
+Below are a couple of not very sophisticated examples. Note that the `replace()` method is capable of accepting a function through which the user can implement a more involved replacement algorithm which takes into account what was found rather than just globally replacing all matches with a static string.
 
 	console.clear();
 
@@ -1088,15 +1100,15 @@ Below are a couple of not very sophisticated examples. Note that the `replace()`
 	console.log(convertToSnakeCase("My    object container"));
 
 #### <a name="language-types-object"></a>Object
-JavaScript objects have been thoroughly explained in the [Objects](#language-objects) section further up. You can also look at MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object).
+JavaScript objects have been thoroughly explained in the [Objects](#language-objects) section further up. You can also look at [MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object).
 
-When going up the prototype chain of virtually an object you will eventually reach the `Object`. It provides some basic "instance" methods, like `toString()`, which are therefore available to an object you create. It also provides some methods which, in the C# world, would be classed as static.
+When going up the prototype chain of virtually any object you will eventually reach the `Object`. It provides some basic "instance" methods, like `toString()`, which are therefore available to any object you create. It also provides some methods which, in the C# world, would be classed as static.
 
 ##### toString()
-It does have a `toString()` method, although this is not particularly useful. Other more specific object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
+It has a `toString()` method, although this is not particularly useful. Other derived object prototypes define their own, more specific versions, e.g. Array will return all its item values in a comma-separated string.
 
 ##### hasOwnProperty()
-This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. It also contains one of the few generally accepted uses of the [for...in](#language-javascript-keywords-for-in) clause (see later).
+This function iterates through all the properties of an object and uses the `hasOwnProperty` method to log information about the ones which belong to the object itself and are not inherited via the prototype chain. The code below contains one of the few generally accepted uses of the [for...in](#language-javascript-keywords-for-in) clause (see later).
 
 	// Outputs properties of an object that are defined directly with the object
 	// and not inherited from the prototype chain.
@@ -1114,7 +1126,7 @@ This function iterates through all the properties of an object and uses the `has
 
 
 ##### getPrototypeOf()
-According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain), "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances.". `getPrototypeOf()` will return the `__proto__` property of the object.
+According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain): "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances". `getPrototypeOf()` will return the `__proto__` property of the object.
 
     console.clear();
 
@@ -1126,34 +1138,38 @@ According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_a
       }
     };
 
-    var triangle = {a:1, b:2, c:3};
+    var triangleBase = {a:1, b:2, c:3};
 
     // Define the ColouredTriangle and its prototype.
     function ColouredTriangle() {
       this.color = "red";
     }
-    ColouredTriangle.prototype = triangle;
+    ColouredTriangle.prototype = triangleBase;
 
-    var ct = new ColouredTriangle();
+    var colouredTriangle = new ColouredTriangle();
 
-    console.log(ct);
-    outputOwnProperties(ct, "ct");
+    console.log(colouredTriangle);							// ColouredTriangle {color: "red"}
+    outputOwnProperties(colouredTriangle, "colouredTriangle");
 
-    var t = Object.getPrototypeOf(ct);
-    console.log(t);		// Object {a: 1, b: 2, c: 3}
-    outputOwnProperties(t, "t");
+    var triangle = Object.getPrototypeOf(colouredTriangle);
+    console.log(triangle);											// Object {a: 1, b: 2, c: 3}
+    outputOwnProperties(triangle, "triangle");
 
-    var o = Object.getPrototypeOf(t);
-    console.log(o);		// Object {}
+    var o = Object.getPrototypeOf(triangle);
+    console.log(o);															// Object {}
     outputOwnProperties(o, "o");
 
-
 ##### create()
-Used to create an object where the caller specifies what that object's prototype is. `myObject` below is not actually an Array. It is an object whose prototype is the same as that of Array.
+Used to create an object where the caller specifies what that object's prototype is. `myObject` below is an object which inherits all the properties of `defaultArray`.
 
-    var myObject = Object.create(Array.prototype);
+    var defaultArray = [10, 20, 30];
+    var myObject = Object.create(defaultArray);
+    console.log(myObject instanceof Array);		// true
+
     myObject.push(666);
-    console.log(myObject[0]);
+    console.log(myObject[0]);									// 10
+    console.log(myObject[3]);									// 666
+    console.log(myObject.length);							// 4
 
 It is commonly used when setting the `prototype` property of a constructor function. In the [Example Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
 
@@ -1165,11 +1181,11 @@ As explained above in [Functions](#language-functions), functions are actually o
 
 The main three properties of interest are `call()`, `apply()` and `bind()`. `call()` and `apply()` allow you to specify what `this` refers to within a function when it is executed on a particular occasion and are explained in [this section](#language-call-and-apply) further up.
 
-The `bind()` method creates a _new function_ that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called. It works in all good browsers and IE9 and above.
+The `bind()` method creates a _new function_ that, when called, has its `this` keyword set to the object set in the original bind() call. It works in all good browsers and IE9 and above.
 
-It is rather a specialist method that you won't use commonly but may need in certain situations were you need a copy of a function where the value of `this` within the function has been permanently altered. Optionally you can also make sure that the first few parameters are permanently set and the parameters supply when that new function is called are appended afterwards.
+It is rather a specialist method that you won't use commonly but may need in certain situations were you need a copy of a function where the value of `this` within that function has been permanently altered. Optionally you can also specify some parameters to prepend to any parameters provided whenever somebody calls the function.
 
-One such real world specialist area is commonly used pattern when defining event handlers using ES2015 in React. Here is a partial sample. Don't worry too much about trying to understand it. The fact is that in the `onClickSave()` method `this` is not automatically bound to the CoursesPage class instance. Without the `bind()` call within the constructor to ensure that that _is_ now the case, the `this` in `onClickSave()` would actually refer to the `<input />` object that had just been clicked.
+One such real world specialist area is commonly used pattern when defining event handlers using ES2015 in React. Here is a partial sample. Don't worry too much about trying to understand it. The fact is that in the `onClickSave()` method `this` is not automatically bound to the CoursesPage class instance. Without the `bind()` call within the constructor to ensure that that _is_ now the case, the `this` in `onClickSave()` would actually refer to the `<input />` object that the user has just clicked.
 
     class CoursesPage extends React.Component {
       constructor(props, context) {
