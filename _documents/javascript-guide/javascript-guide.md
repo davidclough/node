@@ -1232,7 +1232,7 @@ Also see [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
 
 #### <a name="language-javascript-keywords-for-in"></a>for...in
-`for...in` loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain the an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
+`for...in` loops are not as nice as they are in C#. The iterator object within the clause does _not_ contain an object that is within the object/map/hash/array being iterated through. It contains the `key`. You then need to use that key to access the value. For this reason `for` loops are often preferred for processing arrays. The use of `for...in` generally being restricted to a few conventional situations, like iterating through all the properties of an object.
 
 	// Iterate through an array. Not nice.
 	var myArray = ["The", "quick", "brown", "fox"];
@@ -1264,12 +1264,15 @@ This is just for your information, it is not generally wise to omit break statem
 You throw _any_ object, primitive or complex. There is no conventional structure like the Exception in C#.
 
 #### try...catch...finally
-The fact that any type of primitive or object can be thrown means that there will be _at most_ one `catch` clause and the code within it will deal with the structure of any exceptions that could be thrown within the `try` clause. This is as opposed to the multiple catch clauses you can add in C#.
+The fact that any type of primitive or object can be thrown means that there will be _at most_ one `catch` clause and the code within it will deal with the structure of all exceptions that could be thrown within the `try` clause. This is as opposed to the multiple catch clauses you can add in C#.
 
 #### with
-Avoid this. It is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.      Use of "with" keyword is generally intensely disapproved of as . It is also deprecated.
+Avoid this. It is like the Visual Basic equivalent and allows the user to avoid making repeated mentions of an object within a block of code.
+
+Use of "with" keyword is widely disapproved of as it leads to code that is difficult to read. It is also deprecated.
+
 This simple example probably doesn't highlight the problem but, if the `with` statement was bigger, the code could become rather confusing.
-Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math` (it is a variable that was declared earlier on in the code) but this is not immediately obvious to the reader. It may reduce the code but also reduces readability. If you wanted to avoid repeating quite a long object name within a section of code you could always declare an alias that had a short, even one letter, name and use that within the section.
+Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math`,it is a variable that was declared earlier on in the code. However, the reader could be left wondering which of the tokens is actually a variable and which are properties of `Math`. `with` may reduce the amount of code but it also reduces readability. If you wanted to avoid repeating quite a long object name within a section of code you could always declare an alias that has a short, even one letter, name and use that within the section.
 
 	with (Math) {
 		pi = PI;
@@ -1281,7 +1284,7 @@ Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _no
 
 They are not necessarily used by the language at present. It may be that they are not used in ES5 but are used in later versions of JavaScript, like ES2015 (the new name for ES6). `float`, `double`, `interface`, `public` and `private` are examples of words that are not used by ES5. The main thing to bear in mind is not to use any of the keywords that your version of JavaScript does not utilise.
 
-> Do not use these words as variable or function names. Your code may break if you upgrade to using a later version of JavaScript.
+> Do not use these words as variable or function names. Your code may break if you later upgrade to use a later version of JavaScript.
 
 	// For example, it may be tempting to use, public or private.
 	var public = {
@@ -1289,9 +1292,9 @@ They are not necessarily used by the language at present. It may be that they ar
 	};
 
 ### <a name="language-truthy-and-falsy"></a>Truthy and Falsy
-In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coercion is referred to by the community as `truthy` and `falsy` (or falsey).
+In JavaScript we have the values `true` and `false`. However, _any_ variable can be used within boolean logic without giving an error. An implicitly-generated boolean value will be used. This coerced values are referred to by the community as `truthy` and `falsy` (or falsey).
 
-The concept is best explained by listing all the `falsy` values, i.e. the ones the runtime classes as `false` first:
+The concept is best explained by first listing all the `falsy` values, i.e. the ones the runtime classes as `false`:
 
 *	false
 *	null
@@ -1302,41 +1305,31 @@ The concept is best explained by listing all the `falsy` values, i.e. the ones t
 
 **All** other values, including objects that have been initialised, are classed as `truthy` and the runtime will class them as being `true` within a boolean expression.
 
+    if (0) { ... }                   // Condition evaluates to false as 0 is falsy.
+    if (null) { ... }                // Condition evaluates to false as null is falsy.
+    if ({}) { ... }                  // Condition evaluates to true - empty object is truthy.
+
+If you are unsure you can check whether a value is truthy or falsey by preceding it with two `!` operators - the first "nots" the value and returns a boolean, the second "nots it back" but as a boolean rather than the original value:
+
+    // Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
+    console.log(!!undefined);          // false
+    console.log(!!null);  	           // false
+    console.log(!!0);	                 // false
+
+    // 0 within quotes is a non-empty string and is therefor truthy.
+    console.log(!!"0");	               // true
+
 #### Truthy and Falsy Don't Work for Comparison
 The concept of truthy and falsy is really only to determine what boolean value is detected if non-boolean variables are evaluated in a boolean fashion.
 
-It does NOT affect comparison operators in the sense that, just because false and null are both falsy does not mean that they are equal when compared with each other, even just for equality:
+It does NOT affect comparison operators in the sense that, just because false and null are both falsy does not mean that they are equal when compared with each other, even when using just the equality operator rather than the identity operator:
 
-	console.log(false == null);		// false.
+	console.log(0 == null);		       // false.
 
-	if (false) { ... }            // condition evaluates to false as false is falsy.
-	if (null) { ... }             // Condition evaluates to false as null is falsy.
-
-
-#### Examples
-	console.log(undefined == null);	 // true
-	console.log("" == 0);		         // true
-	// Of course, if you use ===, the types of both sides will be equated as well.
-	console.log("" === 0);		       // false
-
-	// An exception: There is an extra IEEE standard which states that NaN can never equal itself.
-	// This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
-	// of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
-	// Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may says that
-	// throwing a runtime error is a better alternative.
-	console.log(NaN == NaN);		       // false
-	console.log(0 / 0);
-
-	// Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
-	console.log(!!undefined);          // false
-	console.log(!!null);  	           // false
-	console.log(!!0);	                 // false
-
-	// 0 within quotes is a non-empty string and is therefor truthy.
-	console.log(!!"0");	               // true
+See [Comparison Operators & Equality](language-comparison-operators), further down, for more information on how values of different types are compared..
 
 #### Uses
-It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code. It could be used to write some really obscure code that only you can understand but nobody recommends this.
+It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code.
 
 	// Only set the value of any object variable to something different if it does not have a value already.
 	// The "know context" here is that obj is only assigned to objects and will never be used to contain a
@@ -1358,7 +1351,7 @@ It is really only used for writing less cluttered code **but** in places where t
 Same as C#, with the same operator precedence rules with a few exceptions.
 [MDN - Operator Precedence](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
 
-#### Comparison Operators & Equality
+#### <a name="language-comparison-operators"></a>Comparison Operators & Equality
 There are basically two pairs of these operators.
 
 ##### Equality Operators
@@ -1389,6 +1382,20 @@ If both the values being compared are objects then equality is determined by whe
 	var y = x;
 	console.log(x == y);					     // true
 
+Some more examples:
+
+    console.log(undefined == null);	 // true
+    console.log("" == 0);		         // true
+    // Of course, if you use ===, the types of both sides will be equated as well.
+    console.log("" === 0);		       // false (see Identity Operators)
+
+    // An exception: There is an extra IEEE standard which states that NaN can never equal itself.
+    // This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
+    // of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
+    // Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may say that
+    // throwing a runtime error is a better alternative.
+    console.log(NaN == NaN);		     // false
+    console.log(0 / 0);              // NaN
 
 ##### Identity Operators
 `===` and `!==` are the identity operators.
