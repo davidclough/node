@@ -1348,7 +1348,8 @@ It is really only used for writing less cluttered code **but** in places where t
 	console.log(0 == undefined);		// false
 
 ### <a name="language-operators"></a>Operators
-Same as C#, with the same operator precedence rules with a few exceptions.
+These are mostly the same as in C# with the same operator precedence rules.
+
 [MDN - Operator Precedence](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
 
 #### <a name="language-comparison-operators"></a>Comparison Operators & Equality
@@ -1357,20 +1358,21 @@ There are basically two pairs of these operators.
 ##### Equality Operators
 > NOTE: Avoid these in favour of the `identity operators` further down unless you know what you are doing.
 
-`==` and `!=` are the equality operators. They only compare two values and not their types. In actual fact, if they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict.
+`==` and `!=` are the equality operators. They only compare two values and not their types. If they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict. The numbers in the comments are matched in the sample code for the identity operators further down.
 
-	console.log(0 == '');					    // 1: true
-	console.log('0' == 0);			    	// 2: true
-	console.log(0 == false);			    // 3: true
+    console.log(0 == '');					    // 1: true
+    console.log('0' == 0);			    	// 2: true
+    console.log(0 == false);			    // 3: true
 
-	console.log(0 == null);				    // 4: false
-	console.log(0 == undefined);	    // 5: false
+    console.log(0 == null);				    // 4: false
+    console.log(0 == undefined);	    // 5: false
 
-	// Despite the fact that they were both == 0, null and undefined are not ==.
-	console.log(null == undefined);		// 6: true
+    // Despite the fact that they were both == 0, null and undefined are not ==
+    // to each other.
+    console.log(null == undefined);		// 6: true
 
-	console.log('true' == true);			// 7: false
-	console.log(3 == '3');					  // 8: true
+    console.log('true' == true);			// 7: false
+    console.log(3 == '3');					  // 8: true
 
 If both the values being compared are objects then equality is determined by whether or not they refer to the same instance of an object:
 
@@ -1383,11 +1385,6 @@ If both the values being compared are objects then equality is determined by whe
 	console.log(x == y);					     // true
 
 Some more examples:
-
-    console.log(undefined == null);	 // true
-    console.log("" == 0);		         // true
-    // Of course, if you use ===, the types of both sides will be equated as well.
-    console.log("" === 0);		       // false (see Identity Operators)
 
     // An exception: There is an extra IEEE standard which states that NaN can never equal itself.
     // This is because the value NaN is designed to propogate throughout a calcultaion, i.e. if some part
@@ -1447,14 +1444,23 @@ See [MDN - typeof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) section further up.
 
 #### instanceof
-Returns a boolean indicating whether an object has in its prototype chain the prototype property of a constructor.
+Returns a boolean indicating whether an object has in its prototype chain the prototype property of a constructor:
+
+    object instanceof constructor
+
+Example:
+
+    var myArray = [1, 2];
+    console.log(myArray instanceof Array);	   // true
+    console.log(myArray instanceof Object);	   // true
+    console.log(myArray instanceof Function);	 // false
 
 Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Example Inheritance Tree](#language-objects-example-inheritance) sections further up.
 
 [MDN - instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) provides full documentation.
 
 #### new
-> NOTE: this keyword is probably better explained in the [Creating Objects via Constructors](#language-objects-creating-via-constructors) section further up.
+> NOTE: This keyword is probably better explained in the [Creating Objects via Constructors](#language-objects-creating-via-constructors) section further up.
 
 As previously explained, in JavaScript, does not magically created a new instance of an object.
 In realty, it is an operator that, when placed before a call to a function:
@@ -1462,9 +1468,9 @@ In realty, it is an operator that, when placed before a call to a function:
 *	Implicity creates an object and makes any reference to `this` immediately within the function refer to that object.
 * That object will be Implicity returned by the function.
 
-This means that the function will have to have written to expect this behaviour. It will then be known as a `constructor function` and these should always be called using the `new` keyword, whereas ordinary functions should _never_ be called using the `new` keyword.
+This means that the function will have to have been written to expect this behaviour. It will then be known as a `constructor function` and these should always be called using the `new` keyword, whereas ordinary functions should _never_ be called using the `new` keyword.
 
-  NOTE: Generally functions are always named using **camelCase**. However, due to what is said in the above paragraph, it is conventional for `constructor functions` to have a name that is **Pascal Case**. This is a visual indication to consumers that it should be preceded by the `new` keyword when called.
+> Note: Generally functions are always named using **camelCase**. However, due to what is said in the above paragraph, it is conventional for `constructor functions` to have a name that is **Pascal Case**. This is a visual indication to consumers that a call to it should be preceded by the `new` keyword when called.
 
 #### Warning About Line Breaks Near Operators
 Put your operators, e.g. with ternary operator and string concatenation, at the **end** of lines they are next to a line break. **Do not** put them at the start of the next line, as is often done with ternary operators in C#. This is because some browsers try to _infer_ a line ending where a semi-colon is missing and may well do it wrongly of the code on a "part line" looks complete. If the operator is at the end the silly browser will be able to work out that there is more to come.
@@ -1473,7 +1479,7 @@ Put your operators, e.g. with ternary operator and string concatenation, at the 
 Although this document is primarily concerned with ES5 we may as well mention a small number of operators in upcoming versions.
 
 ##### Spread Operator (ES2015)
-`...` is the `spread` operator. It is used for "destructuring arrays", i.e. converting an array into a series of separate values which can be used in situations where a comma-separated series of values are required, most notably parameters to a function call.
+`...` is the `spread` operator. It is used for "destructuring arrays", i.e. converting an array into a series of separate values. It can be used in many situations, e.g. supplying an array in a call to a function which is expecting a number of parameters.
 
 	// Push all the values from one array into another. The push method
 	// only accepts separate arguments, not arrays.
@@ -1493,7 +1499,7 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 
 
 ##### Rest Operator (ES2015)
-`...` is also the `rest` operator. The context of its usage is different from the spread operator.  It can be applied to the last parameter of a function definition to turn that into the equivalent of a C# params array argument. It means that any number of arguments can be supplied when the function is called (in a sense, this acts in the opposite direction to the spread operator). Once all the preceding parameters have been catered for, the rest will form an array and be represented by the `rest argument`.
+`...` is also the `rest` operator. The context of its usage is different from the spread operator.  It can be applied to the last parameter of a function definition to turn that into the equivalent of a C# params array argument. It means that any number of arguments can be supplied when the function is called. In a sense, this acts in the opposite direction to the spread operator. Once all the preceding parameters have been catered for, the rest will form an array and be represented by the `rest argument`.
 
 	function sumAggregator(total, num) {
 	  return total + num;
@@ -1507,7 +1513,7 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
 	console.log(percentageOfTotal);         // 40
 
-Of course, we can call a JavaScript function with any number of parameters already. We can currently achieve the same effect in a less elegant manner by manually processing the `arguments` property within the function code. Also numbers is a _genuine_ array whereas `arguments` is only "array-like". You can iterate though the values in a `for` loop. However, you have to convert it into a genuine array in order to be able to use the `reduce` array:
+Of course, we can call a JavaScript function with any number of parameters already. We can currently achieve the same effect in a less elegant manner in ES5 by manually processing the `arguments` property within the function code. Also numbers is a _genuine_ array whereas `arguments` is only "array-like". You can iterate though the values in a `for` loop. However, you have to convert it into a genuine array in order to be able to use the `reduce` array:
 
 	function sumAggregator(total, num) {
 	  return total + num;
@@ -1529,7 +1535,6 @@ Of course, we can call a JavaScript function with any number of parameters alrea
 `**` and `**=` will become available in ES2016.
 
 In the meantime you will have to make do with go0d old `Match.pow(x, y)`. In the future you will be able to use `x ** y`.
-
 
 
 ### <a name="language-built-in-objects"></a>Commonly Used Built-in Object Methods
@@ -1554,21 +1559,23 @@ The `window` object is the global object when operating with JavaScript within a
 	var myFreeStandingVariable = 4;
 	alert(window.myFreeStandingVariable);
 
-The window object also contains some useful properties and methods, some of which are mentioned below. [w3schools](http://www.w3schools.com/jsref/obj_window.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window) contain more information.
+The window object also contains some useful properties and methods, some of which are mentioned below. [w3schools - The Window Object](http://www.w3schools.com/jsref/obj_window.asp) and [MDN - Window](https://developer.mozilla.org/en-US/docs/Web/API/Window) contain more information.
 
 ##### window Properties
 `document` gives you access to the document object described in the [section below](#language-built-in-objects-document).
 
-`location` give you access the the (Location object)[http://www.w3schools.com/jsref/obj_location.asp] which allows you to access and manipulate things related to the current URL. `history` gives access to the history object which holds information about and allows you to navigate to URLs accessible in the current tab via the `Go Back` and `Go Forward` buttons in the browser.
+`location` gives you access the [Location object](http://www.w3schools.com/jsref/obj_location.asp) which allows you to access and manipulate things related to the current URL.
 
-If you have a page that is being displayed within an `<iframe>` within another page its JavaScript will only affect the nested page (or window) by default. `parent` gives you access to the parent window. This can be useful if you have markup that is being held within an `<iframe>` and you need to manipulate the page in which the iframe is being held. For example, you may have an input form held within an iframe on a page and may then want to refresh or redirect the main page when the data has been entered. If the window is topmost in the hierarchy the parent will be equal to the window itself (not null or undefined). `top` is the window that is topmost in the hierarchy (if you want iframes within iframes) and `self` is equal to the window itself.
+`history` gives you access to the history object which holds information about and allows you to navigate to URLs accessible in the current tab via the `Go Back` and `Go Forward` buttons in the browser.
+
+If you have a page that is being displayed within an `<iframe>` within another page its JavaScript will only affect the nested page (its window object) by default. `parent` gives you access to the parent window. This can be useful if you have markup that is being held within an `<iframe>` and you need to manipulate the page in which the iframe is being held. For example, you may have an input form held within an iframe on a page and may then want to refresh or redirect the main page when the data has been entered. If the window is topmost in the hierarchy the parent will be equal to the window itself (not null or undefined). `top` is the window that is topmost in the hierarchy (if you want iframes within iframes) and `self` is equal to the window itself.
 
 	// We can safely use == as we know both objects are windows (and both are read-only).
 	alert(window.top == window.self ? "In topmost window" : "In nested window");
 
 The `navigator` property will give you access to the navigator object where you can find out some information about the browser which sent the request.
 
-`screen` gives a little bit of information about the user's screen, e.g. the dimensions of the browser window. There are also `scrollTo()` and `scrollBy()` methods to allow you to scroll the window content, although these are a bit primitive. It is likely that you will use some other library to perform more useful scrolling. For example, this jquery plugin allows you to ensure that the screen performs an animated scroll ensure that the first item matched is brought into view at the top of the screen.
+`screen` gives a little bit of information about the user's screen, e.g. the dimensions of the browser window. There are also `scrollTo()` and `scrollBy()` methods to allow you to scroll the window content, although these are a bit primitive. It is likely that you will use some other library to perform more useful scrolling. For example, this jquery plugin allows you to ensure that the screen performs an animated scroll to ensure that the first item matched is brought into view at the top of the screen.
 
 	(function ($) {
 	    $.fn.goTo = function () {
@@ -1579,13 +1586,13 @@ The `navigator` property will give you access to the navigator object where you 
 	    };
 	})(jQuery);
 
-Of course this example will throw an exception if there are no matches. This could be called if a large form fails validation to scroll the the first failing item:
+Of course this example will throw an exception if there are no matches. It could be called if a large form fails validation to scroll the first failing item:
 
 	$(".validation-error").goTo();
 
-`localStorage` allows you to use HTML5 local storage to store _primitive_ values in key value pairs. It works in IE8. Advantage over using cookies include a bigger storage capacity (5 megabytes) and the fact that the information is not transmitted to the server in requests. One usage is to persist settings so that, when the user comes back to a particular page, certain elements can be pre-populated with the values that the user last entered.
+`localStorage` allows you to use HTML5 local storage to store _primitive_ values in key value pairs. It works in IE8. Advantages over using cookies include a bigger storage capacity (5 megabytes) and the fact that the information is not transmitted to the server in requests. One usage is to persist settings so that, when the user comes back to a particular page, certain elements can be pre-populated with the values that the user last entered.
 
-There are `setItem()`, `getItem()`, `removeItem()` and `clear()` methods. Also items can be set and retrieved using square brackets notation. The values in localStarage are accessible on a "per origin" basis and do not expire by default.
+The localStorage object has `setItem()`, `getItem()`, `removeItem()` and `clear()` methods. Also items can be set and retrieved using square brackets notation. The values in localStarage are accessible on a "per origin" basis and do not expire by default.
 
 	localStorage["myPersistedSetting"] = "12345";
 	console.log(localStorage["myPersistedSetting"]);
@@ -1603,7 +1610,7 @@ If you find yourself wanting to store more complex objects you can always make u
 	setLocalStorage("person", { "firstName": "Fred", "surname": "Funk" });
 	console.log(getLocalStorage("person").surname);
 
-`sessionStorage` is very similar to localStorage except the storage is only temporary - it will be cleared when the session ends. A session lasts for as long as the browser is open and survives over page reloads and restores. Opening the same page in a new browser tab will start a new session.
+`sessionStorage` is very similar to localStorage. The storage is only temporary - it will be cleared when the session ends. A session lasts for as long as the browser is open and survives over page reloads and restores. Opening the same page in a new browser tab will start a new session.
 
 
 ##### window Methods
@@ -1629,11 +1636,11 @@ The `document` object is a property of the `window` object. Because the window o
 
 It does not provide any _essential_ properties or methods. You may use the `title` to modify the `<title>` content of the document or the `writeln()` could be used for testing purposes (certainly not for generating your actual page content).
 
-There are also a number of methods available to query and modify the DOM. The DOM (Document Object Model) is a programming interface aimed at HTML and XML document content. However, you would generally use some other library these days for doing this, rather than the `document` object from within plain JavaScript. It is also notoriously difficult to work with. In this case the DOM is to blame, not JavaScript. _"The DOM is poorly specified and inconsistently
+There are also a number of methods available to query and modify the DOM. The DOM (Document Object Model) is a programming interface aimed at HTML and XML document content. However, you would generally use some other library these days for doing this rather than manipulating via the `document` object from within plain JavaScript. It is also notoriously difficult to work with. In this case the DOM is to blame, not JavaScript. _"The DOM is poorly specified and inconsistently
 implemented...I think writing a
 Good Parts book about the DOM would be extremely challenging."_ is a quote from the book `JavaScript - The Good Parts` by Douglas Crockford.
 
-[jQuery](https://jquery.com/) is one library that has made DOM manipulation much more convenient.
+[jQuery](https://jquery.com/) is one library that has made DOM manipulation much easier and less error-prone.
 
 
 #### <a name="language-built-in-objects-math"></a>Math
@@ -1658,9 +1665,9 @@ JSON (JavaScript Object Notation) allows you to define JavaScript object via a s
 * Arrays - a sequence of values surrounded by square brackets, e.g. <br />
 	`["apple", "orange", "banana", false, 23]`
 
-Technically the property keys should be surrounded by `double quotes` for the JSON to be valid. See [http://www.jsonlint.com/](http://www.jsonlint.com/). Often you will not need to do this but it is somthing to bear in mind.
+Technically the property keys should be surrounded by `double quotes` for the JSON to be valid (see [http://www.jsonlint.com/](http://www.jsonlint.com/)). Often you will not need to do this but it is something to bear in mind.
 
-You can nest objects and arrays within other objects or arrays. In the example below we have cheated, to avoid an ugly example, and used a `template literal` as the JSON container instead of a string.
+You can nest objects and arrays within other objects or arrays. In the example below we have cheated, to avoid an ugly example, and used an ES2015 `template literal` as the JSON container instead of a string.
 
 	var myJsonObject = `{
 		"prop1": 5,
@@ -1672,13 +1679,13 @@ You can nest objects and arrays within other objects or arrays. In the example b
 		}
 	}`;
 
->	NOTE: In ES2015 you could use `template literals` (surround the text with back ticks rather than single quotes) to make the above example nicer to read. As well as allowing you to specify placeholders for expression values within the text, as in String.Format() statements in C#, they also allow multiline text to be specified without the ugly concatenations. See [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals).
+>	NOTE: In ES2015 you can use `template literals` (surround the text with back ticks rather than single quotes) to make the above example nicer to read. As well as allowing you to specify placeholders for expression values within the text, as in String.Format() statements in C#, they also allow multiline text to be specified without the ugly concatenations. See [MDN - Template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals).
 
-You don't necessarily have to specify an _object_ as you outer object. You can specify an array or a primitive value, e.g. `33`, `false`, `null`, `"A string value"`.
+You don't necessarily have to specify an _object_ as your outer object. You can specify an array or a primitive value, e.g. `33`, `false`, `null`, `"A string value"`.
 
 The `JSON object` only provides two methods to help you convert between JSON strings and the objects they represent. They are effectively like static methods in C#.
 
-* `JSON.parse()` allows you to convert a valid JSON string into the actual JavaScript object it represents. Trailing comma, after the last item of an array, will cause an error in here.
+* `JSON.parse()` allows you to convert a valid JSON string into the actual JavaScript object it represents. Note that a trailing comma after the last item of an array would cause an error in here.
 
 
 	// This example uses ordinary strings which need to be concatenated
@@ -1702,22 +1709,24 @@ The JSON string would not normally be defined within the code, it would come fro
 	// This outputs: {"name": "Spain","population": 47000000}
 	console.log(countryJson);
 
-Also see [w3schools](http://www.w3schools.com/js/js_json.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+Also see [w3schools - JavaScript JSON](http://www.w3schools.com/js/js_json.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+
+> Note: [Json.NET](http://www.newtonsoft.com/json) is a popular third party library for JSON manipulation.
 
 
 #### <a name="language-built-in-objects-console"></a>Console
-The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides.
+The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually used in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides.
 
 ##### Basic Methods
-These methods are called from within your code (when debugging).
+These methods are called from within your code. They should only exist in your code when you are debugging.
 
  * `console.log()` is used often in this document and lets you log a message or the value of a variable to the console.
 
  * `console.assert()` is very similar but takes an initial boolean expression. The log will only occur if the expression evaluates to false.
 
- * `console.clear()` can be useful if you find yourself logging many things or having to change and re-run your code a lot.
+ * `console.clear()` can be useful if you find yourself logging many things or having to change and re-running your code a lot.
 
-* `debugger;` is not a console method but it worth mentioning here. Rather than trying to find code and add a breakpoint via the F12 tools you can just add a line containing this to your code and re-run. It also maintains the breakpoint in the correct position if you add or remove lines to your code (breakpoints remaining on exactly the same line number has been a problem in Firefox). You should take to care to ensure that debugger lines are only added temporarily.
+* `debugger;` is not a console method but it worth mentioning here. Rather than trying to find code and add a breakpoint via the F12 tools you can just add a line containing this to your code and re-run. It also maintains the breakpoint in the correct position if you add or remove lines to your code (breakpoints remaining on exactly the same line number after you have edited your code has been a problem in Firefox). You should take care to ensure that debugger lines are only added **temporarily**.
 
 ##### Other Methods
 There are some other more sophisticated methods you can use, although the basic ones will often be enough. [Beyond Console Debugging Tricks](https://medium.com/outsystems-experts/beyond-console-debugging-tricks-f7d0d7f5df4#.pmwwd5e9g) is a web page which explains these pretty nicely.
@@ -1737,7 +1746,7 @@ There are some other more sophisticated methods you can use, although the basic 
 
 * `console.profile()` and `console.profileEnd()` work in a very similar way to the time() methods except they record more detailed metrics of each function call. The results are not seen in the Console window - you can see them in the `Profiles` tab of your F12 tools. It is advisable to supply a value for the `profileName` parameter of both methods. This will avoid multiple anonymously named profiles being created every time you run your code. The results of multiple runs will be retained.
 
-* `console.dir()` and `console.dirxml()`. These are useful when called from your code to record the state of more complex objects to the console. It means that you can avoid having to breakpoint your code in order to manually examine the value of a variable. Because of that have your code run in real time, e.g. if user interaction is involved, and output the state of an object at various points. You can try these with the above "cities" example, instead of calling table().
+* `console.dir()` and `console.dirxml()`. These are useful when called from your code to record the state of more complex objects to the console. It means that you can avoid having to breakpoint your code in order to manually examine the value of a variable. Because of that your code can run in real time, e.g. if user interaction is involved, and output the state of an object at various points. You can try these with the above "cities" example, instead of calling table().
 
 
 > NOTE: It is important that, once you have finished your debugging you should remove (or, at a push, comment out) your console statements, leaving your code tidy. If you needed some sort of logging or performance recording on a more permanent basis, console would not be the object to use.
