@@ -1798,6 +1798,8 @@ There are functions for encoding and decoding URIs. I am not sure how perfect th
 
 ## <a name="style-contents"></a>Coding Style and Guidelines
 
+The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
+
 *  [Namespaces](#style-namespaces)
 *  [Naming Conventions](#style-naming-conventions)
 *  [Declarations](#style-declarations)
@@ -1825,8 +1827,6 @@ There are functions for encoding and decoding URIs. I am not sure how perfect th
 *  [Use Bundling](#style-use-bundling)
 
 
-The first section of this document concerned itself primarily with explaining the JavaScript language. In this section coding style and good practices are highlighted.
-
 ### <a name="style-namespaces"></a>Namespaces
 Remove the problem of declaring global variables right at the start by declaring an object to act as a namespace for all the code you write.
 
@@ -1834,15 +1834,16 @@ The word `namespace` is just a convenient word for us to use. It is really just 
 
 The name of your namespace should be:
 
-* Short. It may seem like a good idea to use a descriptive name for your namespace but this is only the outer object. Unless you have a small codebase you will very likely introduce other objects or modules within the namespace which then have their own properties and methods. Your code will become cluttered with references to things like `proactEnterprisePortal.performanceAndCapacity.populateMultiSelect()`. Soon you may not be able to see the wood for the trees. In ES5 the only way to simulate a C# `using` statement is using a the, strictly taboo, `with` keyword.
-* Designed to avoid any clash whatsoever with existing global items (properties of the window object when programming in the browser) and potential global objects or namespace introduce by third-party libraries, e.g. `$` would not be the best idea.
+* Short. It may seem like a good idea to use a descriptive name for your namespace but this is only the outer object. Unless you have a small codebase you will very likely introduce other objects or modules within the namespace which then have their own properties and methods. Your code will become cluttered with references to things like `proactEnterprisePortal.performanceAndCapacity.populateMultiSelect()`. Soon you may not be able to see the wood for the trees. In ES5 the only way to simulate a C# `using` statement is using the, strictly taboo, `with` keyword.
+* Designed to avoid any clash whatsoever with existing global items and potential global objects or namespaces introduced by third-party libraries, e.g. `$` would not be the best idea.
 * Often 3 to 5 capitalised letters will achieve the above. This is not an absolute rule, just a recommendation.
 
 
-	// People will soon get used to something like this and know what it means.
+	// People will soon get used to something like this
+	// and will know what it means.
 	var PEP = {};
 
-Capitalised letters are often used in ES5 as a crude way of indicating that users should not change the value of an object.
+Capitalised letters are often used in ES5 as a crude way of indicating that users should not change the value of an object, i.e. constants.
 
 Avoid the `var PEP = PEP || {};` notation - this syntax says "if PEP has already been declared use that value otherwise set it to a new object" and, in this context, it only encourages liberal declarations of PEP all over the place. Instead of plastering that line all over the place, secure in the knowledge that you will never overwrite it once created, prefer to ensure your code is organised. Just **make sure** that your namespace declaration is the first line in the first file of your code. It may be that you introduce a file which contains nothing more than your namespace declaration.
 
@@ -1850,11 +1851,11 @@ Any code you subsequently write should then either be a property of your outer n
 
 
 ### <a name="style-naming-conventions"></a>Naming Conventions
-Try to use descriptive but need to avoid code clutter. Without the array of tools at your disposal that you have in C# you could be doing yourself more harm than favour by giving a function some super-descriptive name which, when preceded by a namespace and object name takes up more than half a line, particularly if it is called a lot. This can cause your code to become cluttered.
+You should try to use descriptive names but you need to avoid code clutter. Without the array of tools at your disposal that you have in C# you could be doing yourself more harm than good by giving a function some super-descriptive name which, when preceded by a namespace and object name takes up more than half a line, particularly if it is called a lot. This can cause your code to become difficult to read.
 
 In a nutshell, virtually every token name in JavaScript (ES5) uses **camelCase** by convention.
 
-Here are the exceptions. They are all written differently with the indication of sending a message out to people utilising the tokens, due to the lower toolset quality of many JavaScript development environments.
+Here are the exceptions. They are written differently with the intention of sending a message out to people utilising the tokens, due to the lower toolset quality of many JavaScript development environments.
 
   * `Namespaces` - explained in previous section.
 
@@ -1864,7 +1865,7 @@ Here are the exceptions. They are all written differently with the indication of
 
   * `Private/protected properties and methods` - **_camelCase** (beginning with an underscore) is not a universal convention but one that is widely adopted, including by writers of many reputable libraries. In JavaScript there are many patterns for creating objects with `private members`. You can create an object that has its own private properties and function without writing overly-convoluted code and can create hierarchies that have degrees of encapsulation, e.g. shared secrets. However, there are at least two problems (below) which have caused people to "accept defeat" and just go with a convention whereby consumers will know that something is not intended to be publicly accessible and should accept any unexpected consequences by doing so. In return you get "pseudo-encapsulation" and efficient objects. You may well have come across these when examining objects within the debugger.
 
-      - To achieve true encapsulation you need to move away from the standard constructor pattern, where methods are attached **once**, to the prototype of a constructor. You would end up with the same methods being created repeatedly for every instance of the object.
+      - To achieve true encapsulation you need to move away from the standard constructor pattern, where methods are attached **once** to the prototype of a constructor.
       - Achieving genuinely `protected` members is very difficult. If it is protected members, which are accessible to children within a hierarchy but not to outsiders, is possible the code will be very convoluted and/or inefficient.
 
 
