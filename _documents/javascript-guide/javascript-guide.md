@@ -17,6 +17,7 @@ This is by far the biggest section of the document.
 *  [Global Namespace](#language-global-namespace)
 *  [Variables](#language-variables)
 *  [Variable Hoisting](#language-hoisting)
+*  [Strict Mode](#language-strict-mode)
 *  [Top-down Evaluation](#language-sequential)
 *  [Functions](#language-functions)
 *  [Calling Functions](#language-calling-functions)
@@ -94,7 +95,7 @@ If you declare free-standing variables or functions, that are not contained with
 
 In browser programming the global namespace is the **window** object. Any free-standing variables (functions are variables) you declare will be **directly** contained within the window object. Since all your JavaScript code is automatically nested within the window object those free-standing variables will be available everywhere in your code. Declaring variables in this manner is known as *polluting the global namespace*. Also, these variables will only go out of scope and be destroyed when the window object itself is destroyed.
 
-If you set the value of a global variable that has not been declared using `var` ([strict mode](#style-strict-mode) will be explained later) it will actually become a property of the window object.
+If you set the value of a global variable that has not been declared using `var` ([strict mode](#language-strict-mode) will be explained later) it will actually become a property of the window object.
 
 The code below highlights how declaring `freeStandingVariable` within the global namespace means that it becomes a property of the `window` object. Also, here, the `this` keyword refers to the global namespace. Using the console in the F12 browser developer tools, paste and execute the first line to set the variable. Pasting and running either the second or third line will show that you did not just declare a `variable`, you actually defined a property of the global object.
 
@@ -115,7 +116,7 @@ Their type can be changed without any form of type declaration. For example, one
 You can declare multiple variables on one line using one `var` with multiple declarations and assignments separated by commas, e.g. `var x = 3, y = 7, z = 8;`, just as you can in C#. Often you will see this style in JavaScript snippets on the web. Some will even tout declaring all your local variables for a particular scope in one big, comma-separated declaration statement as a recommended good practice. However, there is nothing at all to be gained by using this syntax.
 
 #### Using Variables that You Have Not Declared
-Basically, if you are using [strict mode](#style-strict-mode), an exception will be thrown if you try to fetch or set the value of any variable which you have not declared.
+Basically, if you are using [strict mode](#language-strict-mode), an exception will be thrown if you try to fetch or set the value of any variable which you have not declared.
 
 If you are not using strict mode and the variable has not been declared then it will be implicitly created for you. If you have declared a variable and then make typo when referring to that variable at a later point you will end up with two different variables and maybe some confusing problems.
 
@@ -132,10 +133,15 @@ If you declare a variable that is not inside a function it becomes part of the g
 
 Any variable declared inside a function will be visible within that function and all nested functions and objects. As will be explained later, this is your ticket to encapsulation in JavaScript. That said, we are not pretending that it will match up to the encapsulation available in other languages.
 
+
+
+
+
+
 ### <a name="language-hoisting"></a>Variable Hoisting
 In many modern languages it is considered good practice to declare variables as near as possible to the point where they are first used.
 
-They also allow variables to be declared within finer grained scopes which measn that it cannot be accessed from outside the block in which it has been declared.
+They also allow variables to be declared within finer grained scopes which means that it cannot be accessed from outside the block in which it has been declared.
 
 As explained above, JavaScript only allows variables to be declared at the level of the containing function (if we dismiss global scope).
 
@@ -199,6 +205,35 @@ In later versions of JavaScript the `let` keyword is introduced as an improved a
 
 Later versions of JavaScript also introduce the `const` keyword which is similar to `let` but also ensures that a variable's value must be set in the declaration and cannot be modified later. This does _not_ mean that its value has to be set to a literal, e.g. 3.14 - it can still be the result of an expression.
 
+### <a name="language-strict-mode"></a>Strict Mode
+Prefer to use strict mode in code you write. This can be done with the line below:
+
+	"use strict";
+
+Strict mode provides some extra code enforcement features which may help you avoid errors by throwing an early exception when it comes across a number of things which you may well have written by mistake. Without strict mode these would not stop code execution:
+
+* Variables which are accessed or set but have not been declared. This includes variables which have been declared after they have been referenced, i.e. it does not allow for variable hoisting.
+* Setting a property which has been marked as read-only.
+* Attempts to deleted undeletable properties.
+* Repeating the same property name in an object literal.
+* Repeating the same parameter name in a function definition.
+*	When a function is called via `call`, `apply` or `bind` any references to `this` can never refer to the `window`. Also, if the `this` parameter was not supplied and, if a primitive is supplied as the `this` parameter, no boxing will occur, `this` inside the function will still refer to a genuine primitive and not a primitive wrapped inside an object.
+* Code contained within eval() cannot create variables within the scope that they are being executed in.
+
+The last two are more security features.
+
+Strict mode can be applied either at **script level** by putting the line before all other statements at the top of a script. Its use is discouraged because of problems caused when concatenating scripts that are a mixture of strict and non-strict (don't forget you will often include third-party scripts in your code).
+
+You can also specify strict mode at **function level**. When specified as the first line within a function all code nested within that function operates in strict mode. You can therefore execute your code within an IIFE or module pattern. Because you can safely concatenate code within here with non-safe code elsewhere, you should prefer this over script level strict mode.
+
+	(function strictCodeContainer(){
+	  "use strict";
+
+		// All code within here will be run in strict mode.
+	}());
+
+Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) for a lot more information, as well as fuller explanations of the above.
+
 ### <a name="language-sequential"></a>Top-down Evaluation
 #### Variables
 JavaScript is run using `top-down evaluation`. Put simply, variables must have been declared before they are used.
@@ -207,7 +242,7 @@ The above is certainly true in strict mode. If you are not using strict mode, ho
 
 Write your code with the intention of it being evaluated like this. Do not rely on hoisting tricks to "make your life easier".
 
-> If you are not using `strict mode` ([more](#style-strict-mode) about this later) the runtime will implicitly create the variable for you, a situation that can cause "hard to find" errors and which sensible people want to avoid.
+> If you are not using `strict mode` the runtime will implicitly create the variable for you, a situation that can cause "hard to find" errors and which sensible people want to avoid.
 
 #### File Organisation
 Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls.
@@ -1870,40 +1905,24 @@ Here are the exceptions. They are written differently with the intention of send
 
 
 ### <a name="style-declarations"></a>Declarations
-* Always use declare local variables by using `var`. Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
+* Always declare local variables by using `var`. Do not rely on them being implicitly created on first usage. Using strict mode will enforce this.
 * Avoid declaring global variables, i.e. a `var` declaration that is not within a function.
-* It is often recommended to declare all local variables at the top of the scope (function) it is within to help with code readability and error prevention. This is as opposed to the C# style of declaring variables only where they are about to be used. Remember variable hoisting in JavaScript means that the declarations will be moved to the top of the function at runtime anyway so it could help to reduce confusion by moving declarations to the point where they will be hoisted to (the top of the function).
+* It is often recommended to declare all local variables at the top of the scope (function) it is within to help with code readability and error prevention. This is as opposed to the C# style of declaring variables only when they are about to be used. Remember that variable hoisting in JavaScript means the declarations will be moved to the top of the containing function at runtime anyway, so it could help to reduce confusion by moving declarations to the point where they will be hoisted to, i.e. the top of the containing function.
 
 Also see [w3schools - JavaScript Best Practices](http://www.w3schools.com/js/js_best_practices.asp).
 
 ### <a name="style-strict-mode"></a>Strict Mode
-Prefer to use strict mode in code you write. This can be done with the line below. Prefer to apply it at function level (see further down).
+Prefer to use [strict mode](#language-strict-mode), as described earlier. It helps you to avoid some silly and/or dangerous mistakes.
 
-	"use strict";
+Prefer to declare strict mode at function level as declaring it at file level runs the risk of breaking some third-party libraries which may not have been written using strict mode.
 
-Strict mode provides some extra code enforcement features which may help you avoid errors by throwing an early exception when it comes across a number of things which you may well have written by mistake. Without strict mode these would not stop code execution. These include:
-
-* Variables which are accessed or set but have not been declared. This includes variables which have been declared after they have been referenced, i.e. it does not allow for variable hoisting.
-* Setting a property which has been marked as read-only.
-* Attempts to deleted undeletable properties.
-* Repeating the same property name in an object literal.
-* Repeating the same parameter name in a function definition.
-*	When a function is called via `call`, `apply` or `bind` any references to `this` can never refer to the `window`. Also, if the `this` parameter was not supplied and, if a primitive is supplied as the `this` parameter, no boxing will occur, `this` inside the function will still refer to a genuine primitive and not a primitive wrapped inside an object.
-* Code contained within eval() cannot create variables within the scope that they are being executed in.
-
-The last two are more security features.
-
-Strict mode can be applied either at **script level** by putting the line before all other statements at the top of a script. Its use is discouraged because of problems caused when concatenating scripts that are a mixture of strict and non-strict (don't forget you also often include third-party scripts in your code).
-
-You can also specify strict mode at **function level**. When specified as the first line within a function all code nested within that function operates in strict mode. You can therefore execute your code within an IIFE or module pattern. Because you can safely concatenate code within here with non-safe code elsewhere you should prefer this over script level strict mode.
+One common pattern is to wrap all the code within a file inside a containing IIFE. If you do this you can then declare strict mode at the top of that function:
 
 	(function strictCodeContainer(){
 	  "use strict";
 
 		// All code within here will be run in strict mode.
 	}());
-
-Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) for a lot more information, as well as fuller explanations of the above.
 
 ### <a name="style-initialising-variables"></a>Initialising Variables
 For certain standard types, including `number`, `string`, `boolean`, `object`, `array`, `regexp`, never use the object constructor. It can cause unexpected behaviour. Instead use the `literal syntaxes` built into JavaScript.
@@ -1930,10 +1949,10 @@ Other standard objects, e.g. `Date`, do not have a literal so you will have no c
 
     var d2 = new Date(2000, 1, 1);
 
-> NOTE: It is not necessary to initialise a variable at the point at which it is declared. It will have the value `undefined` until it has been set.
+> NOTE: It is not necessary to initialise a variable at the point at which it is declared. However, it will have the value of `undefined` until it has been set.
 
 #### Trailing Commas in Objects and Arrays
-Although perfectly acceptable in C#, don't put a `,` after the last item in an object or array definition. Some parsers may fail here as it not spec. Certainly, for an array, you will generally end up with an extra `undefined` item at the end.
+Although perfectly acceptable in C#, don't put a `,` after the last item in an object or array definition. Some parsers, e.g. JSON parsers, may fail here as it not in the specification. Certainly when declaring an array you will generally end up with an extra `undefined` item at the end.
 
 ### <a name="style-checking-for-equality"></a>Checking for Equality
 Prefer the `identity operators` (`===` and `!==`) when testing for equality. They ensure that the types of the two arguments are the same as well as the values.
@@ -1956,7 +1975,7 @@ Bear in mind that, if you test for _exact_ equality, the results may be unexpect
 ### <a name="style-keywords-to-avoid"></a>Keywords to Avoid
 Avoid using `with` altogether.
 
-Avoid `for...in` for anything other than iterating through properties of an object. Do not use it to iterate through collections of objects it is not as convenient to use as the `foreach` statement in C#. ES2015 introduces `for...of` which behaves mush more like foreach.
+Avoid `for...in` for anything other than iterating through properties of an object. Do not use it to iterate through collections of objects it is not as convenient to use as the `foreach` statement in C#. ES2015 introduces `for...of` which behaves much more like foreach.
 
 See [JavaScript Keywords](#language-javascript-keywords) for more information on `with` and `for...in`.
 
@@ -1965,7 +1984,7 @@ Keep usage of the `eval()` function to a minimum. If there is an alternative whi
 ### <a name="style-operators-to-avoid"></a>Operators to Avoid
 Avoid inline variable assignments completely unless you are writing a `for` statement. By inline variable assignment we mean assigning a value to one or more variables on a line of code which also performs some other action. Bearing in mind in JavaScript's tendency to "do something", rather than throw a compile time error, going with this policy may help you avoid writing errors.
 
-For the above reason, avoid `++` and `--` operators. They are also a form of inline assignment. However, they are made even trickier because less experienced developers may not fully appreciate the difference between these operators being applie `pre` (`++i`) and `post` (`i++`). Their arcane nature means they are known gateways to errors in JavaScript. There is no real reason why you cannot write `a += 1;` on a line of its own. It is also more expressive.
+For the above reason, avoid `++` and `--` operators. They are also a form of inline assignment. However, they are made even trickier because less experienced developers may not fully appreciate the difference between these operators being applied `pre` (`++i`) and `post` (`i++`). Their arcane nature means they are known gateways to errors in JavaScript. There is no real reason why you cannot write `a += 1;` on a line of its own. It is also more expressive.
 
 Of course its sheer ubiquity means there is no reason why you can't break both the above rules within a `for` statement:
 
@@ -1977,15 +1996,15 @@ Of course its sheer ubiquity means there is no reason why you can't break both t
 End statements with semicolons, as you do in C#. Theoretically they are optional - your code may still work perfectly well. However, whatever engine is running your JavaScript will try to guess where statements end and will sometimes guess wrongly. Also different browsers, particularly older ones, may guess differently.
 
 ### <a name="style-long-lines"></a>Breaking Long Lines
-Try to avoid excessively long lines without any line breaks. When a statement will not fit nicely on a single line, it may be necessary to break it.
+For the sake of readability, try to avoid excessively long lines without any line breaks. When a statement will not fit nicely on a single line, it may be necessary to break it.
 
 For this reason it is best that the line break occur after: any type of bracket, a comma, any kind of operator.
 
-There are no fixed rule on the indentation of code after the line break - some prefer an indentation of a standard size, other prefer some sort of alignment.
+There are no fixed rules on the indentation of code after the line break - some prefer an indentation of a standard size, others prefer some sort of alignment.
 
 Here are some examples (using deliberately short lines). The incorrect ones may well be interpreted incorrectly in old browsers. For example, they may interpret the first line as `var sum = a + b;` and then throw a syntax error when trying to interpret the `+ c;`.
 
-	// Incorrect.
+	// INCORRECT.
 	var sum = a + b
 	            + c;
 
@@ -2000,7 +2019,7 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 	return
 	    answer;
 
-	// Correct.						
+	// CORRECT.						
 	var sum = a + b +
 	          c;
 
@@ -2012,12 +2031,19 @@ Here are some examples (using deliberately short lines). The incorrect ones may 
 	             "s";
 
 #### Breaks in Long Strings
-As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error. **Unfortunately**, you will need to align the lines after the break with the left hand side of the page if you do not want new lines to start with spaces, which looks ugly.
+As an alternative to closing a string adding a `+` operator and reopening the string after the line break you can use `\`. Without it this code would result in a syntax error. **Unfortunately**, you will need to align the lines after the break with the left hand side of the page if you do not want unintended spaces within your text. This makes the code look a bit ugly.
 
-	    alert(`Some text.
-	Some more text right at the start of a new line.`);
+The following code will output the text on two lines, i.e. it will keep the line break that is within the string:
 
-In ES2015, template literals, which are enclosed by back ticks \` can also spill on to separate lines.
+    alert(`Some text.
+    Some more text right at the start of a new line.`);
+
+In this code the `\` results in the newline being output as a space, i.e. the text is all on one line:
+
+    alert(`Some text.\
+    Some more text right at the start of a new line.`);
+
+> In ES2015, template literals, which are enclosed by back ticks \` can also spill on to separate lines.
 
 ### <a name="style-whitespace"></a>Whitespace
 Use linespaces to group logically related lines of code or to generally improve readability.
@@ -2033,14 +2059,14 @@ Do not add spaces inside brackets.
     var bbb = [1, 2, 3];      // Good.
 
 ### <a name="style-quotation-marks"></a>Quotation Marks
-Either single or double quotes can be used to delimit strings. There is no community-wide preference to be found. Consistent use of the for one or the other is all that is asked for.
+Either single or double quotes can be used to delimit strings. There is no community-wide preference to be found. Consistent usage of one or the other is all that is asked for.
 
 ### <a name="style-comments"></a>Comments
 You can use both the `// ...` and `/* ... */` syntaxes for comments. The first is generally preferred although the second can be used over multiple lines and can be useful for commenting out code when debugging within a primitive environment.
 
 Help other developers by adding comments to your code where necessary. Unless overused, with lots of comments explaining very obvious things, they usually enhance the readability of your code. Broadly speaking, there are two types of comments: those explaining what a piece of code is doing and those explaining why something was done.
 
-We know that comments explaining what your code does can be largely reduced with use of self-explaining variable and function names. If you find yourself adding a comment explaining what a group of lines does you could consider moving that group of lines into a separate function with a descriptive name, even if it only gets called in one place.
+We know that comments explaining what your code does can be largely reduced via use of self-explaining variable and function names. If you find yourself adding a comment explaining what a group of lines does you could consider moving that group of lines into a separate function with a descriptive name, even if it only gets called in one place.
 
 Where comments are especially useful is when it comes to explaining _why_ something was done in a certain way, particularly if this was not the expected way. Function names explaining why the code they contain has been written in a certain way could end up being very long and less readable than some conventional text.
 
@@ -2053,23 +2079,23 @@ Where comments are especially useful is when it comes to explaining _why_ someth
 ### <a name="style-callback-functions"></a>Callback Functions
 Many functions have parameters that are functions themselves and will be called at some point, like an event handler. For example, jQuery's `$.ajax()` method allows you to specify up to six callback functions in its `settings` parameter object, including a `success` function that allows you to indicate what should be done with the data received from a successful AJAX call.
 
-You should consider declaring the callback functions as separate named functions that have a descriptive name. Also bear in mind that anonymous functions, ones that have no name and have been declared inline within another statement, will not show up with a meaningful name within any stack trace.
+You should consider declaring the callback functions as separate named functions that have a descriptive name. Also bear in mind that anonymous functions, ones that have no name and have been declared inline within another statement, will not show up with any meaningful name within any stack trace.
 
 Definitely avoid gigantic lines which specify several callback functions declared anonymously.
 
-In ES2015 arrow functions can make inline function declarations neater.
+>Important: Be very careful to avoid declaring functions within callback functions. The nested functions will recreated every time the callback function is called. If the callback function was for a jQuery `$.forEach()` this could be very inefficient.
 
-Be very careful about declaring functions within callback functions. The nested functions will recreated every time the callback function is called. If the callback function was for a jQuery `$.forEach()` this could be rather inefficient.
+>In ES2015 arrow functions can make inline function declarations neater.
 
 ### <a name="style-blocks"></a>Blocks
 As you will probably know, blocks in C-based languages are lines of code enclosed by braces. They are often used in association with some outer statement like a `for` or `if` statement but they can exist on their own and not associated with an outer statement.
 
 #### Block Scope
-In many languages, including ES2015, you can declare variables within a block and they will not be accessible from outside that block (or within the block but before the declaration) and they are accessible to any nested blocks.
+In many languages, including ES2015, you can declare variables within a block and they will not be accessible from outside that block (or within the block but before the declaration). They are also accessible within any nested blocks.
 
-In ES5 this is **not** the case. Variable **hoisting** means that any declarations are effectively moved up to the level of the containing function at runtime (although any assignment made on a declaration line remains in the same position). As a result you cannot have variables scoped at an level finer than the containing function. Even if you declare it near the end of a function and nested in child blocks it will still be accessible on the first line of the function.
+In ES5 this is **not** the case. Variable **hoisting** means that any declarations are effectively moved up to the level of the containing function at runtime, although any assignment made on a declaration line remains in the same position. As a result you cannot have variables scoped at any level finer than the containing function. Even if you declare it near the end of a function and nested within child blocks it will still be accessible on the first line of the function.
 
-This example shows that even use of strict mode fails to flag an error here. Even though it looks like `a` is being referenced before has been declared, its declaration has actually been hoisted to the start of the function. The alert window will show a 3. The `var a = 17;` statement is even within a block that will never be executed. If you deleted the declaration line, strict mode will then flag an error.
+This example shows that even use of strict mode fails to flag an error here. Even though it looks like `a` is being referenced before has been declared, its declaration has actually been hoisted to the start of the function. The alert window will show a 3. The `var a = 17;` statement declaring `a` is even within a block that will never be executed. If you deleted the declaration line, strict mode will then flag an error.
 
     (function () {
       "use strict";
@@ -2083,13 +2109,13 @@ This example shows that even use of strict mode fails to flag an error here. Eve
 
 #### Hanging Opening Braces
 *Never* put opening braces on a new line. They should be hanging at the end of the previous line.
-The style is not as nice (in my opinion) as opening brace on a separate line but it is the convention throughout the community and being used to it helps to understand, for example, code samples on the web.
+The style is not as nice, in many people's opinion, as opening brace on a separate line but it is the convention throughout the community and being used to it helps to understand, for example, code samples on the web.
 
 #### Brace Usage
-Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation got out of sync.
+Always use braces after `if` or loop statements, even when there is only one line in the block. Do not the braceless one line block syntax - doing this just increases the chances of someone else misreading your code, particularly if the indentation gets out of sync.
 
 ### <a name="style-immediately-invoked-function-expressions"></a>Immediately-invoked Function Expressions
-The syntax is really quite straightforward when you get used to it. The outer brackets are used to indicate to parsers, mainly older ones, that `function` is part of an expression and is not a function _declaration_. If it interpreted it as a declaration, an error would occur as a function declaration requires the name of the function to be specified.
+The syntax for these is really quite straightforward when you get used to it. The outer brackets are used to indicate to parsers, mainly older ones, that `function` is part of an expression and is not a function _declaration_. If it interpreted it as a declaration, an error would occur as a function declaration requires the name of the function to be specified.
 
 Just follow this template. If the IIFE is being used as a container for all or most of the code within a file you can include a `"use strict";` statement as the first line of the contained code.
 
@@ -2098,7 +2124,7 @@ Just follow this template. If the IIFE is being used as a container for all or m
     }());
 
 ### <a name="style-deferred-actions-within-loops"></a>Deferred Actions within Loops
-Beware of deferred actions defines within loops. This includes things code defined within callback functions within the loop, most notably the addition of event handlers. If a variable that the loop iterates through is referenced in a callback function there is a risk that the function will actually use a later value of the variable.
+Beware of deferred actions defined within loops. This includes things defined within callback functions within the loop, most notably the addition of event handlers. If a variable that the loop iterates through is referenced in a callback function there is a risk that the function will actually use a later value of the variable.
 
 This erroneous example uses a call to `setTimeout()`. However, it would be more likely that a real world situation would involve an event handler which relies on user interaction, e.g. the attaching of a click event to multiple elements.
 
@@ -2130,20 +2156,20 @@ In ES2015 we can simply use the `let` keyword to define the loop variable instea
 [https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
 
 ### <a name="style-redefining-properties-within-prototypes-of-standard-types"></a>Redefining Properties within Prototypes of Standard Types
-Modifying methods of the built-in JavaScript object prototypes, like Object.prototype and Array.prototype is **strictly forbidden**. Even if it is only for code consumed within a particular application of yours it causes a high error risk if other people are unaware of the change or if you yourself forget after a period of working on another project. No further explanation is necessary in the case that you are writing library code that is more publicly available.
+Modifying methods of the built-in JavaScript object prototypes, like Object.prototype and Array.prototype is **strictly forbidden**. Even if it is only for code consumed within a particular application of yours, it causes a high error risk if other people are unaware of the change or if you yourself forget after a period of working on another project. No further explanation is necessary in the case that you are writing library code that is more publicly available.
 
 Of course you may inherit from the prototype of a built-in object and make changes.
 
 Also follow this rule for objects that are defined within third-party libraries which your code utilises.
 
 #### Polyfills and Shiv/Shim Libraries
-There are occasions where a particular member may not be available on a particular object in certain browsers. For example, `String.trim()` is not available in IE8. Rather than defining this yourself, you can include a polyfill which will add in methods that are missing to objects within whatever browser your code is opened in. Note that these libraries will be certain to first make sure that a particular method does not exist before than adding it to the prototype.
+There are occasions where a particular member may not be available on a built-in object in certain browsers. For example, `String.trim()` is not available in IE8. Rather than defining this yourself, you can include a polyfill which will add in methods that are missing to objects within whatever browser your code is opened in. Note that these libraries will first make sure that a particular method does not already exist before then adding it to the prototype.
 
 ### <a name="style-augmenting-prototypes-of-standard-types-with-additional-properties"></a>Augmenting Prototypes of Standard Types with Additional Properties
 
 The rules about _adding_ extra properties to prototypes of built in objects are less strict. You may augment the existing methods with some useful ones of your own.
 
-It is probably not a good idea to add too many of your own properties. If there are too many create a new class whose prototype is the class you wish to extend.
+It is probably not a good idea to add too many of your own properties. If there are too many you can create a new object prototype whose prototype is the class you wish to extend.
 
 It is also a good idea to only add the property if it has not been added already. If it turns out that if someone else has added the same property, and that one works in a slightly different way, you will not end up breaking some other code.
 
@@ -2177,7 +2203,7 @@ Of course, you can always add the same method against the object type. This is l
 ### <a name="style-accessing-array-items-via-strings"></a>Accessing Array Items via Strings
 Only use numbers to reference members of an array. Often you can use numbers in strings although the results will not be as expected in older versions of IE.
 
-If you want the equivalent of a **Dictionary** you can use an object as a string to object hash table and get and set items using `["propertyKey"]` notation:
+If you want the equivalent of a **Dictionary** you can use an object as a "string to object hash table" and get and set items using `["propertyKey"]` notation:
 
     var myDictionary = {};
     myDictionary["red"] = "#f00";
@@ -2189,13 +2215,13 @@ If you want the equivalent of a **Dictionary** you can use an object as a string
 
 Note that the above only really works with strings. You are allowed to put any type of object within the brackets but only the `.toString()` text will be used as the key. This means that if you try to use two different complex objects then `[object Object]` will be used as the key, unless toString() has been overridden, meaning that they will refer to the same value.       
 
-ES2015 introduces several new collection types, including `Map`. `Map` _does_ allow you to use any type of object as the key.
+>ES2015 introduces several new collection types, including `Map`. `Map` _does_ allow you to use any type of object as the key.
 
 
 ### <a name="style-getters-and-setters"></a>Getters and Setters
 ES5 does allow for getters and setters to be defined. They will only work in IE9 and above though.
 
-C# programmers may be tempted to use these as standard instead of using ordinary, "field-like" properties. However, although they can add some real value in places, their overuse in ES5 is strongly discouraged as, in a language like, JavaScript, it is likely to just add extra layers of confusion to your code. This is especially true if the majority of getter/setter pairs merely retrieve the value of a private variable or set its value without anything further - these add an extra layer of indirection without any real value.
+C# programmers may be tempted to use these as standard instead of using ordinary, "field-like" properties. However, although they can add some real value in places, their overuse in ES5 is strongly discouraged as, in a language like, JavaScript, it is likely to just add extra layers of confusion to your code. This is especially true if the majority of getter/setter pairs merely retrieve the value of a private variable or set its value without anything further - these certainly add an extra layer of indirection without any real value.
 
 As in C# they are really just methods that are called via a special syntax.
 
@@ -2240,23 +2266,23 @@ As in C# they are really just methods that are called via a special syntax.
 Also see [MDN - Defining getters and setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters).
 
 ### <a name="style-separate-files-for-javascript"></a>Put Your JavaScript in Separate Files from Your Markup
-This is an important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place in markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
+This is an important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place within markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
 
-**From the start of a project** you should keep your JavaScript in separate files from HTML and other markup. Do start with the mentality that, because much of your earlier code may have some degree of experimentation about it, you can work in a less strict manner and refactor everything later. Refactoring is not as easy as in C#. Migrating your code into different files, or moving your free-standing functions and variables into more organised modules or objects, at later date risks introducing many bugs. Not having a compiler to help you means that your code refactoring will have to be thoroughly tested.
+**From the start of a project** you should keep your JavaScript in separate files from HTML and other markup. Don't begin with the mentality that, because much of your earlier code may have some degree of experimentation about it, you can work in a less strict manner and refactor everything later. Refactoring is not as easy as in C#. Migrating your code into different files, or moving your free-standing functions and variables into more organised modules or objects, at a later date risks introducing many bugs. Not having a compiler to help you means that your code refactoring will have to be thoroughly tested.
 
 Sometimes you will need to take advantage of some particular ASP.NET syntax, e.g. script binding or data binding tags or a piece of razor syntax, and will _have_ to put that JavaScript within a page, control or view. In these situations keep the code to a minimum. You could limit the code that is mixed in with markup just to lines setting the values of object or module properties via the ASP.NET tags. Other code which utilises those properties can still be held within separate `.js` files.
 
 Be especially careful about putting script code directly within controls or partial views. If these entities are included somewhere else multiple times, e.g. as part of a list, the scripts in them will be included multiple times. In case it needs pointing out, mysterious errors and side-effects may occur.
 
 #### Tightly-coupled Script
-Although we have suggested keeping JavaScript in separate files from markup it _must_ be appreciated that very often some JavaScript gets written that is very specific to some particular control, view or HTML. It is important that these tightly coupled pieces of script are placed in files that give some indication that it very specialised to some area. This could be in a file that is in the same location as the markup file or within the scripts folder in some appropriately named folder and/or file. Putting JavaScript that is very specific to a certain piece of markup in some generic "scripts.js" file where people have to hunt it down would actually be _worse_ than putting it in a &lt;script&gt; tag just below the HTML.
+Although we have suggested keeping JavaScript in separate files from markup it _must_ be appreciated that very often some JavaScript gets written that is very specific to some particular control, view or HTML. It is important that these tightly coupled pieces of script are placed in files that give some indication that it very specialised to some area. This could be in a file that is in the same location as the markup file or within the scripts folder in some appropriately named subfolder and/or file. Putting JavaScript that is very specific to a certain piece of markup in some generic "scripts.js" file where people have to hunt it down would actually be **worse** than putting it in a &lt;script&gt; tag just below the HTML.
 
 In [React’s JSX: The Other Side of the Coin](https://medium.com/@housecor/react-s-jsx-the-other-side-of-the-coin-2ace7ab62b98#.b5vs0bs70) (_just_ the Phase 1: Unobtrusive JavaScript) section it is highlighted how separating script from markup can actually be counterproductive.
 
 #### IIFEs
-It is often a good idea, in ES5, to wrap all the code in one file within one immediately-invoked function expression whise first line is `"use strict";`. Then you can take advantage of function-level strict mode. This is as opposed to using file-level strict mode which may cause problems if third-party libraries you use have not been written in strict mode.
+It is often a good idea, in ES5, to wrap all the code in one file within one immediately-invoked function expression whose first line is `"use strict";`. Then you can take advantage of function-level strict mode. This is as opposed to using file-level strict mode which may cause problems if third-party libraries you use have not been written in strict mode.
 
-In ES2015 and onwards there is a more sophisticated module pattern which allows you to export items of code and then import them elsewhere in as many places as you like. This mechanism also requires the use of transpilers as many browser do not currently support it.
+>In ES2015 and onwards there is a more sophisticated module pattern which allows you to export items of code and then import them elsewhere in as many places as you like. This mechanism also requires the use of transpilers as many browser do not currently support it.
 
 ### <a name="style-including-script-files"></a>&lt;script&gt; Tags
 A lot of the time these days you will use ASP.NET bundling to include external CSS and script files which uses a separate syntax. However, you will sometimes find a need to add &lt;script&gt; tags. HTML5 standards state that the MIME type does not have to be specified (in actual fact the actual MIME type should be `application/javascript` and not the commonly-seen `text/javascript`).
@@ -2265,23 +2291,23 @@ A lot of the time these days you will use ASP.NET bundling to include external C
 	  ...
 	</script>
 
-Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, `async` attribute is only supported in version 10 and above.
+Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, the `async` attribute is only supported in version 10 and above.
 
 #### Common Code Files
 You will want to include third-party libraries before your own code.
 
-Make sure that, if you have declared a namespace for your code that this is the first file containing your own code to be included.
+Make sure that, if you have declared a namespace for your code that this at the top of the first file containing your own code to be included.
 
 After those, some of your script files may contain common variables or other common code. For example, you may have code that overrides certain Kendo functionality and makes certain features behave the way you want them to or you may have variables whose value you may want to bind to ASP.NET tags or razor variables. Include these files next.
 
 ### <a name="style-use-bundling"></a>Use Bundling
 Bundling is where certain files, e.g. scripts and styles, are gathered together in one `bundle`. It helps improve performance by reducing the number of separate requests that need to be served when a page is opened in somebody's browser.
 
-There are easy-to-use facilities in ASP.NET for bundling. You can define your bundles for different areas of your applications so that only the necessary scripts and styles are served, rather and avoid serving a lot of content that will not be used.
+There are easy-to-use facilities in ASP.NET for bundling. You can define your bundles for different areas of your applications so that only the necessary scripts and styles are served, rather than serving up a lot of content that will not be used.
 
-`minification` of bundles makes the requesting of pages within your application even more efficient. ASP.NET bundling makes this very easy. You can switch minification off when in debug mode, e.g. when working locally or deploying to a Dev server, you can still step through script code. Minification will only occur not in debug mode, e.g. on Live or Staging environments, or when you specifically demand it.
+`minification` of bundles makes the requesting of pages within your application even more efficient. ASP.NET bundling makes this very easy. You can switch minification off when in debug mode, e.g. when working locally or deploying to a Dev server, meaning you can still step through script code. Minification will only occur when not in debug mode, e.g. on Live or Staging environments, or when you specifically demand it.
 
-Because of the above there is no real need for you to directly include minified versions of common libraries, like jQuery, directly. You then do not have the inconvenience of a JavaScript exception occurring in some mysterious minified code when you are developing.
+Because of the above there is no real need for you to directly include minified versions of common libraries, like jQuery, directly. You then do not have the inconvenience of a JavaScript exception occurring in some mysteriously minified code when you are developing.
 
 
 <hr />
