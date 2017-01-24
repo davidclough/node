@@ -2328,13 +2328,13 @@ Because of the above there is no real need for you to directly include minified 
 *  [Deferred Object](#tips-deferred-object)
 
 ### <a name="tips-modification-of-existing-code"></a>Modification of Existing Code
-It is common sense that make logic changes to existing code comes with a risk of breaking things which were working. In more advanced languages/development tools there are many non-logical changes you may consider making to code which you come across without worry of breaking stuff, e.g. renaming variables or other tokens if they don't appear to explain themselves correctly or extracting some lines of code out into a method of their own.
+In more advanced languages/development tools there are many non-logical changes you may consider making to code without worry of breaking stuff, e.g. renaming variables or other tokens if they don't appear to explain themselves correctly or extracting some lines of code out into a method of their own.
 
-JavaScript is not such an environment and greater care needs to be taken when do something even as simple as renaming a method.
+JavaScript is not such an environment and greater care needs to be taken when doing something even as simple as renaming a token.
 
-One particular thing to note is that [linting/hinting tools](#tools-linting) may give out useful information for highlighting code problems. It is best to use these tools _as you develop_ code, at reasonable intervals and not in one big go right at the end.
+One particular thing to note is that [linting/hinting tools](#tools-linting) may give out useful information for highlighting code problems. It is best to use these tools **as you develop** code, at reasonable intervals and **not** in one big go right at the end.
 
-Linting code which is maybe already live is a perfectly valid thing to do. However, in this situation you should very careful about trying to eradicate all the linting errors. It is very possible that code which fails linting may actually work properly but for the wrong reasons and "fixing" it may actually introduce a bug.
+Linting code which is already live is a perfectly valid thing to do. However, in this situation you should very careful about trying to eradicate _every_ linting error you come across. It is very possible that code which fails linting may actually be working properly but for the wrong reasons. "Fixing" it may actually introduce a bug.
 
 An example would be the use of `if (myVar == null)` in a line of code. The code may actually have worked because myVar was actually `undefined` and that is `== null`. The linter may instruct you to replace the `==` with `===`. Following this recommendation stands a good chance of breaking the code because `undefined` is not `=== null`.
 
@@ -2342,9 +2342,9 @@ An example would be the use of `if (myVar == null)` in a line of code. The code 
 The `guard` operator is not an _actual_ operator in its own right. It describes the practice of an expression consisting of two or more values separated by `&&` operators. It also uses the idea of
 [truthy and falsy](#language-truthy-and-falsy).
 
-An expression consisting of guard operators will be evaluated from left to right and the first `falsy` value encountered will be the result of the expression. If none are encountered the expression will equal the final value in the clause.
+An expression consisting of guard operators will be evaluated from left to right. The first `falsy` value encountered will be considered the result of the expression. If none are encountered the expression will equal the final value in the clause.
 
-One common use case is to achieve something similar to the C# Elvis operator to avoid having to use the ternary operator to check if an object has been initialised before accessing one of its properties. The example below will log the  
+One common use case is to achieve something similar to the C# Elvis operator to avoid having to use the ternary operator to check if an object has been initialised before accessing one of its properties.  
 
     var person = { firstName: "Elvis", lastName: "Presley" };
     // This object is truthy. Therefore the lastName property is evaluated.
@@ -2352,21 +2352,21 @@ One common use case is to achieve something similar to the C# Elvis operator to 
 
     var person2 = null;
     // This object is falsy so the evaluation below returns the first item
-    // without bothering to evaluate the second one.
+    // without bothering to evaluate the second one. The result is null.
     console.log(person2 && person2.lastName);
 
     var contract = { startDate: new Date(2016, 11, 5) };
     // Specifying more than one guard operator.
     console.log(contract && contract.startDate && contract.startDate.getFullYear());
 
-It is not quite as succinct as the Elvis operator but it still [maybe] beats having to use condition statements or ternary operators.
+It is not quite as succinct as the Elvis operator but it still beats being forced to use condition statements or ternary operators.
 
-There are many uses for it but one thing you do have bear in mind is that, if falsy does cover quite a number of values other than the `null` and `undefined`. You need to ensure that `0` and `""` are not legitimate, non-empty values in your context so you will generally be working with non-primitive objects.
+There are many uses for it. One thing you do have bear in mind is that is that falsy does cover quite a number of values other than `null` and `undefined`. You need to ensure that `0` and `""` are not legitimate, non-empty values in your context so you will generally be working with non-primitive objects.
 
 ### <a name="tips-default-operator"></a>"default" Operator, Using ||
 The `default` operator is along the same lines as the guard operator above but the values in the expression are separated by `||` operators.
 
-Also going from left to right the first `truthy` value encountered will be the value of the expression. If none are encountered then the value of the last item will be used.
+Also going from left to right, the first `truthy` value encountered will be the value of the expression. If none are encountered then the value of the last item will be used.
 
 One very common usage of this operator is to ensure that a variable defaults to a particular value if it has not been properly set. This may apply if a parameter to a function is intended to be optional so that some default value is used if it is not supplied.
 
@@ -2384,9 +2384,9 @@ You may want to ensure that an object has been initialised but to avoid overwrit
     //...
     myObject = myObject || {};
 
-Due to falsy covering a range of different values (see [truthy and falsy](#language-truthy-and-falsy)) you do have to be careful when using this syntax that no more than one of the falsy values is a legitimate value for the variable.
+Due to falsy covering a range of different values (see [truthy and falsy](#language-truthy-and-falsy)) you do have to be careful when using this syntax that no more than one of the falsy values is a legitimate value for the variable and, if there is one, it is the value that is defaulted to.
 
-In ES2015 default parameters provide a better experience:
+In ES2015 `default parameters` provide a better experience:
 
     function logErrorMessage(message = "An error has occurred") {
       console.log(message);
@@ -2395,9 +2395,9 @@ In ES2015 default parameters provide a better experience:
 ### <a name="tips-too-many-function-parameters"></a>Too Many Function Parameters
 Sometimes, when defining a function, you may have more parameters than you feel comfortable with. In this case you can switch to using just one object parameter whose properties are then utilised within the function.
 
-The biggest problem here is communicating to a caller what the properties of the object parameter are, given that ES5 does not use class definitions. Another problem is default values of optional parameters. The jQuery `$.extend()` method accepts any number of object parameters.
+The biggest problem here is communicating to a caller what the properties of the object parameter are, given that ES5 does not use class definitions. Another problem is the default values of optional parameters. The jQuery `$.extend()` method can be used to set the defaults.
 
-It return value will be the first parameter. However, it will first go through all the subsequent parameters one-by-one. For each one it will add/overwrite properties in the return object with each property in the parameter being processed. In the example below the defaults are specified in the first parameter and the caller is free to overwrite those by specifying new properties in the object parameter supplied to the function.
+`$.extend()` accepts any number of object parameters. Its return value will be the first parameter. However, it will first go through all the subsequent parameters one-by-one. For each one it will add/overwrite properties in the return object corresponding to each property in the parameter being processed. In the example below the defaults are specified in the first parameter and the caller is free to overwrite those by specifying new properties in the object parameter supplied to the function.
 
     var openWindow = function (settings) {
 
@@ -2426,7 +2426,7 @@ It return value will be the first parameter. However, it will first go through a
 There are various other ways of achieving the same thing. ES2015 provides an `Object.assign()` method. However, this does not work in IE and so can only be used if you transpile your code. Even then you will need a [polyfill](#tools-shims-and-polyfills). Overall the `$.extend()` method does the same thing and is reliable across all browsers.
 
 ### <a name="tips-convert-something-to-a-boolean"></a>Convert Something to a Boolean with !!
-Sometimes you may want to convert some object or expression into its equivalent [truthy or falsy](#language-truthy-and-falsy) value as a boolean primitive. I am not sure what these cases are apart from to test which of the two something equates to in order to debug some piece of logic.
+Sometimes you may want to convert some object or expression into its equivalent [truthy or falsy](#language-truthy-and-falsy) value as a boolean primitive. I am not sure what these cases are, apart from to test which of the two something equates to in order to debug some piece of logic.
 
 This process is very easy and just involves preceding the expression with two not operators `!!`.
 
@@ -2442,9 +2442,9 @@ This process is very easy and just involves preceding the expression with two no
     console.log(!!"Hello");
 
 ### <a name="tips-that-or-self-variables"></a>that (or self) Variables
-`this` within a function often refers to the function itself. This can cause a problem when working within a nested function. To overcome the problem of needing to access the _outer_ `this` within the inner function the pattern is the record it in a variable called `that` or `self`.
+Sometimes within a nested function you may need to access the `this` object as it is within the containing function but, in the nested function, `this` is now pointing to something else. To overcome this problem the simple trick is the record it in another variable called `that` or `self`.
 
-One situation where you may see this pattern is within a callback function or an event handler. This example, pinched off the internet, isn't very realistic but illustrates the idea. `this` within the nested function points to the global scope (see [The this Keyword](#language-this-keyword)) but `this` in the outer function was captured within `that`.
+Situations where you may see this pattern include within a callback function or an event handler. This example, pinched off the internet, isn't very realistic but illustrates the idea. `this` within the nested function points to the global scope (see [The this Keyword](#language-this-keyword)) but `this` in the outer function was captured within `that`.
 
     var car = {};
     car.starter = {};
@@ -2471,7 +2471,7 @@ One situation where you may see this pattern is within a callback function or an
     car.start();
     console.log(car.starter.active);
 
-You may occasionally have a need to use this technique and it certainly helps to appreciate the meaning of its presence when reading somebody else code.
+You may occasionally have a need to use this technique and it certainly helps to appreciate the meaning of its presence when reading somebody else's code.
 
 ### <a name="tips-code-lines-which-aid-debugging"></a>Code Lines Which Aid Debugging
 These consist of the `Console` object methods and the `debugger` statement and are explained in [this  section further up](#language-built-in-objects-console).
