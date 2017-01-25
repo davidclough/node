@@ -2479,9 +2479,9 @@ These consist of the `Console` object methods and the `debugger` statement and a
 Avoid leaving these lines within your code once you have finished debugging.
 
 ### <a name="tips-eval-keyword-trick"></a>eval Keyword Trick
-The `eval` should generally be very much avoided as it executes code from within a string (see [Keywords to Avoid](#style-keywords-to-avoid)).
+The `eval` should usually be very much avoided as it executes code that is held within a string (see [Keywords to Avoid](#style-keywords-to-avoid)).
 
-There is one situation where use of eval is a real help. When working with frameworks which generate HTML markup. Some of these frameworks create HTML elements containing postback JavaScript which they have generated.
+There is one situation where use of eval offers a real help - when working with frameworks which generate HTML markup. Some of these frameworks create HTML elements containing postback JavaScript which they have generated.
 
 For example ASP.NET Web Forms renders its `<LinkButton>` controls as `<a>` tags where the `href` contains some JavaScript. Usually a postback to the server will occur when the user clicks on that link, something along the lines of the example below. Often other controls are referred to using Web Forms generated encoding, e.g. `ctl00$ctl00$ctl00$ctl00$ContentPlaceHolderMain$Cont...`.
 
@@ -2489,7 +2489,7 @@ For example ASP.NET Web Forms renders its `<LinkButton>` controls as `<a>` tags 
       Perform Action
     </a>
 
-Sometimes you may wish to latch on to that auto-generated postback code and call it from somewhare else. This could be if some other client-side action should trigger the same postback or if you wish to intercept the could with, say, a confirmation window where the postback is only performed if the user confirms.
+Sometimes you may wish to latch on to that auto-generated postback code and call it from somewhere else. This could be if some other client-side action should trigger the same postback or if you wish to intercept a submit click with a confirmation window where the postback is only performed if the user confirms.
 
 You could copy the generated href content and manually call that. This is rather fragile but, if you don't change the names of any controls, it will probably work.
 
@@ -2500,7 +2500,7 @@ Another way is to call the href JavaScript via an `eval` statement. The first li
     ...
     eval(generatedCancelBookingCode);
 
- Now it doesn't matter if page or control is later edited as long as the control has the same CSS class.
+ Now it doesn't matter if the page or control is later edited as long as the control has the same CSS class.
 
 ### <a name="tips-module-patterns"></a>Module Patterns
 The module pattern in ES5 effectively creates a single instance of an object which has access to its own set of genuinely private variables and functions.
@@ -2509,7 +2509,7 @@ Because only one instance of the object is ever defined there is no need to worr
 
 Here is a cut-down example of a module from one of our projects. The object only has one public method but often there will be more. The `pub` object is eventually returned by the module. The `priv` object, which is not returned and therefore only available within the module's outer function contains all the private stuff, although these could just as easily be standalone functions and variables.
 
-Additionally the `priv.performCommonPageSetupTasks();` function is called to perform some page initialisation tasks. Since the module object is created once and once only it can provide a useful place to perform setup code. However, this is a bit of a liberty and does imply some tight coupling between the code and the locations it is used. In this case it ensures that clicking one of the dialogue buttons will close the window.
+Additionally the `priv.performCommonPageSetupTasks();` function is called to perform some page initialisation tasks. Since the module object is created once and once only it can provide a useful place to perform setup code. However, this is a bit of a liberty and does imply some tight coupling between the code and the locations it is used. In this case it ensures that clicking one of the dialogue buttons will close the window that contains it.
 
     AXA.confirmWindow = (function ($) {
         "use strict";
@@ -2579,17 +2579,23 @@ There are many variations of the pattern but all are essentially very similar.
 #### <a name="tips-modules-in-es2015"></a>Modules in ES2015
 Modules in ES2015 are a totally different beast and are nothing to do with creating singleton objects.
 
-Instead they provide a mechanism by which programmers can avoids the PHP style situations whereby code in all your thoughtfully separated files is ultimately cobbled together in what is effectively one giant script. You hope that you have defined everything in a correct order and have not defined something repeatedly as a result of a file being included in the output more than once.
+Instead they provide a mechanism by which programmers can avoid the PHP style situations whereby code in all your thoughtfully separated files is ultimately cobbled together in what is effectively one giant script. You hope that you have defined everything in a correct order and have not defined something repeatedly as a result of a file being included in the output more than once.
 
-The `import` and `export` keywords are at the root of this pattern. When you define a code file you can export one or more classes, functions or standalone variables as you like. Consuming code files can contain import statements which refer to other files and particular entities within those files which you would like to utilise in the current one.
+The `import` and `export` keywords are at the root of this mechanism. When you define code within a file you can export as many classes, functions or standalone variables as you like. Consuming code files can contain `import` statements which refer to other files and particular entities within those files which you would like to utilise in the current one.
 
-The imports do not result in script being manually "copied and pasted" elsewhare. Instead an `import` statement is effectively like a combination of (a) an assembly reference and (b) a C# `using` directive. This means that (a) the imported code is merely linked to, multiple imports of the same entity will have no further effect, and (b) you can give different names to the imported entities than the names they were originally defined with.
+The imports do _not_ result in script being manually "copied and pasted" elsewhere. Instead an `import` statement is effectively like a combination of
+  - (a) an assembly reference, and
+  - (b) a C# `using` directive.
+
+This means that
+  - (a) the imported code is merely linked to (multiple imports of the same entity will have no further effect), and
+  - (b) you can give different names to the imported entities than the names they were originally defined with.
 
 There is now less need to define namespaces and worry about what would previously have been global variables and functions. If there is not `export` method for a particular entity within a file it will only ever be accessible from within that file. Even if it is exported it will only be available within files which import it. This type of "encapsulation via files" seems rather different from "encapsulation via classes" but JavaScript is not a genuinely object-oriented language anyway.
 
-Transpilers, like Babel and TypeScript, are an absolute requirement as not many browsers, if any, support them.
+Transpilers, like Babel and TypeScript, are an absolute requirement as not many browsers support exporting and importing at the moment.
 
-Since this is mainly an ES5 document, and easily runable example would be difficult to create, we will avoid showing examples but they look like a very exciting step forward, certainly in the world of JavaScript.
+Since this is mainly an ES5 document and an "easily-runnable" example would be difficult to create, we will avoid showing examples but the mechanism looks like a very exciting step forward, certainly in the world of JavaScript.
 
 [MDN - import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
 
@@ -2598,9 +2604,9 @@ Since this is mainly an ES5 document, and easily runable example would be diffic
 [http://www.2ality.com/2014/09/es6-modules-final.html](http://www.2ality.com/2014/09/es6-modules-final.html)
 
 ### <a name="tips-inheritance"></a>Inheritance
-Prototypical inheritance has already been covered in [](). One downside of defining methods against the prototype of an object defined by a constuctor function is that `private` variables are not realistically possible due to the fact that the object methods are defined externally and not encapsulated within the constructor function. Instead people often resort to a poor man's version of `private` or `protected` by prefixing the names with an underscore (or maybe using more underscores before and after the main part of the name). This is not preventing any form of tampering, merely giving consuming programmers a visual indication.
+Prototypical inheritance has already been covered in [Object Prototypes](#language-objects-prototypes). One downside to defining methods against the prototype of an object defined by a constuctor function is that `private` variables are not realistically possible due to the fact that the object methods are defined externally and not encapsulated within the constructor function. Instead people often resort to a poor man's version of `private` or `protected` by prefixing the names with an underscore (or maybe using more underscores before and after the main part of the name). This does not prevent any form of tampering, it merely gives consuming programmers a visual indication.
 
-This is not especially advised but you can achieve genuinely `private` members of objects within a hierarchy. Achieving `protected` variables, certainly without convoluted code, is unrealistic but you can pass "secret" variable from the child to the parent.
+Whereas you not especially advised to go down this route, you can achieve genuinely `private` members of objects within a hierarchy. Achieving `protected` variables, certainly without convoluted code, is unrealistic but you can pass "secret" variables from the child to the parent.
 
     var createVehicle = function (spec, secret) {
         spec = spec || {};
@@ -2638,29 +2644,29 @@ This is not especially advised but you can achieve genuinely `private` members o
     console.log(car1);
     console.log(car1.getSecret());
 
-As with the module method you can find lots of little variations on the internet.
+As with the module pattern you can find lots of little variations on the internet.
 
-The _disadvantage_ here is that, every time one an object is created here using one of these functions, it methods are also defined afresh. Overall it is probably better to use prototypical inheritance if you need to define some hierarchy.
+The _disadvantage_ here is that, every time one an object is created here using one of the creation functions, its methods are also defined afresh directly against the new object alone rather than in a one-off manner against a prototype. Overall it is probably better to use prototypical inheritance if you need to define some hierarchy.
 
 ### <a name="tips-deferred-object"></a>Deferred Object
-Here is a situation with asynchronous calls. You find yourself waiting on the results of two asynchronous calls where a callback function has been defined for each. You have to ensure that both asynchronous calls have been called before executing a `final` piece of code. This is quite fiddly to achieve. One solution might involve you setting a counter which both callbacks increment before then calling the final function. However, this final function has to wrap all its code within an `if` statement which checks that that the counter has reached the required count.
+Here we will define a situation that involves asynchronous calls. You find yourself waiting for the results of two asynchronous calls where a callback function has been defined for each. You have to ensure that both asynchronous calls have been called before executing a `final` piece of code. This is quite fiddly to achieve. One solution might involve you setting a counter which both callbacks increment before then calling the final function. However, this final function has to wrap all its code within an `if` statement which checks that that the counter has reached the required count.
 
-The above code is a bit ugly and can get far more complicated if more asynchronous calls are required. In other situations you can end up up with chains of callbacks nested within callbacks. Often these may involve multiple AJAX calls.
+The pseudo-code described above is a bit ugly and can get far more complicated if more asynchronous calls are required. In other situations you can end up with chains of callbacks nested within callbacks. Often these may involve multiple AJAX calls.
 
-The [jQuery Deferred](https://api.jquery.com/category/deferred-object/) object is a pretty complicated object this document is not going to explain it. However, it can make complication multiple asynchronous call situations much simpler to handle. It allows promises to be returned that allow you to access a functions result at a later time.
+The [jQuery Deferred](https://api.jquery.com/category/deferred-object/) object is a pretty complicated object and this document is not going to explain it. However, it can make complicated multiple asynchronous call situations much simpler to handle. It allows promises to be returned that allow you to access a function's result at a later time.
 
-You can try this example in JSFiddle with F12 console open. Make sure you add an external resource for jQuery: https://code.jquery.com/jquery-2.2.4.min.js. `doSomething` later uses a Deferred object to wrap another function that will be called after a certain amount of time. It then returns a Promise object which will allow that inner functions result to be accessed elsewhere. The `$.when()` statement wraps calls to fived deferred functions (called after 1, 2, 3, 4 and 5 seconds). The inner function it contains will only execute once all those functions have finished executing. Within there the results of the wrapped functions are added to gether.
+You can try this example in JSFiddle with F12 console open. Make sure you add an external resource for jQuery: https://code.jquery.com/jquery-2.2.4.min.js. `doSomethingLater` uses a Deferred object to wrap another function that will be called after a certain amount of time. It then returns a Promise object which will allow that inner functions result to be accessed elsewhere. The `$.when()` statement wraps calls to fived deferred functions (called after 1, 2, 3, 4 and 5 seconds). The inner function it contains will only execute once all those functions have finished executing. Within there the results of the wrapped functions are added to gether.
 
     console.clear();
 
     var doSomethingLater = function (fn, time) {
-        var dfd = $.Deferred();
+        var deferredObject = $.Deferred();
 
         setTimeout(function () {
-            dfd.resolve(fn());
+            deferredObject.resolve(fn());
         }, time || 0);
 
-        return dfd.promise();
+        return deferredObject.promise();
     };
 
     var makePromise = function (functionNumber) {
@@ -2681,10 +2687,10 @@ You can try this example in JSFiddle with F12 console open. Make sure you add an
       done(function (r1, r2, r3, r4, r5) {
         console.log("All functions completed.");
         var totalOfAllResults = r1 + r2 + r3 + r4 + r5;       // 55
-        console.log("Total of first two function results is " + totalOfAllResults);
+        console.log("Total of all function results is " + totalOfAllResults);
     });
 
-JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise))). These are not supported in IE but polyfills are available.
+JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)). However, it is not supported in IE, although polyfills are available.
 
 <hr />
 
@@ -2716,13 +2722,19 @@ A library which makes traversing, querying and manipulating the DOM a whole lot 
 [http://api.jquery.com/](http://api.jquery.com/)
 
 #### Attaching Event Handlers
-The `on()` method is the most recent way of several to attach event handlers in jQuery. Multiple versions exist but you should **prefer** version where your selector specifies a container for the objects you wish to attach event handlers to. The parameters for this versions are (1) a string to specify which event you want to handle, (2) a selector string relative to the main selector specifying all elements you want to attach the handler to, (3) the event handler code itself. This example attaches a click handler to all `<p class="widget" ...>` elements within the container that has the CSS class `main-content`.
+The `on()` method is the most recent way of several to attach event handlers in jQuery. Multiple versions exist but you should **prefer** version where your selector specifies a container for the objects you wish to attach event handlers to. The parameters for this versions are:
+
+  - 1) a string to specify which event you want to handle,
+  - 2) a selector string relative to the main selector specifying all elements you want to attach the handler to,
+  - 3) the event handler code itself.
+
+This example attaches a click handler to all `<p class="widget" ...>` elements within the container that has the CSS class `main-content`.
 
     $(".main-content").on("click", "p.widget", function() {
         alert($(this).text());
     });
 
-The reason this version is so useful is that, if further `<p class="widget" ...>` elements are later added to the `main-content` container, e.g. via an AJAX call, they will also handle the click event without any further work.
+The reason this version is so useful is that, if further `<p class="widget" ...>` elements are later added to the `main-content` container, e.g. via an AJAX call, they will also handle the click event without any further work. Other method "overloads" will only attach handlers to the elements that exist at the time of the method call.
 
 Binding an event handler to the results of a jQuery result will only bind to those items found at the time of execution and any new ones added via AJAX will not have it:
 
@@ -2734,7 +2746,7 @@ Binding an event handler to the results of a jQuery result will only bind to tho
 [http://api.jquery.com/on/](http://api.jquery.com/on/)
 
 #### Creating Plugins
-jQuery allows you to create your own `plugins`. Despit the elaborate name, jQuery plugins are just methods which operate on the result of a selector, e.g. `$(".my-class").myPlugin()`. Here is an example which allows you to scroll to the bottom of a scrollable object.
+jQuery allows you to create your own `plugins`. Despite the elaborate name, jQuery plugins are just methods which operate on the result of a selector, e.g. `$(".my-class").myPlugin()`. Here is an example which allows you to scroll to the bottom of a scrollable object.
 
     $.fn.scrollToBottom = function () {
         $(this).scrollTop($(this)[0].scrollHeight);
@@ -2748,25 +2760,26 @@ In this case it was intended to be used with `<testarea>` elements which contain
 
     <textarea rows="5" style="width:400px">...</textarea>
 
-> NOTE: When creating a custom jQuery plugin you should almost _always_ return a jQuery result. This will allow a call to another plugin to be chained on to the end of a call to yours, e.g. `$("selector").myPlugin1().myPlugin2()`. Returning `this` will return the result of the jQuery result which the plugin was called on. You would generally do that if your plugin performed some action on the results. If your plugin was more of a filter function it might return the result of an operation on this. For example, `$.fn.getActiveLinks()` might end in `return this.find("a.active");`.
+> NOTE: When creating a custom jQuery plugin you should almost _always_ return a jQuery result. This will allow a call to another plugin to be chained on to the end of a call to yours, e.g. `$("selector").myPlugin1().myPlugin2()`. Returning `this` will return the result of the jQuery result which the plugin was called on. You would generally do that if your plugin performed some action on the results. If your plugin was more of a filter function it might return the result of an operation on `this`. For example, `$.fn.getActiveLinks()` might end in `return this.find("a.active");`.
 
 #### Overriding Existing Plugins
-You can change built-in plugins although you need to be careful and also avoid doing this within a publicly available library. The main thing to bear in mind is not to change the behaviour of the original plugins, mere augment them with something extra.
+You can change built-in plugins, although you need to be careful and also avoid doing this within a publicly available library. The main thing to bear in mind is not to change the behaviour of the original plugins, merely to augment them with something extra.
 
-The example below overrides jQuery's `addClass()` method. Firstly the _original_ method is saved. Within the plugin it is then called and its results are returned from the overridden version (it is essential that you do both these things). All the plugin is adding is the raising of a custom event to which some other piece of code can subscribe to.
+The example below overrides jQuery's `addClass()` method. Firstly the _original_ method is saved. Within the newly-defined plugin it is then called and its results are returned from the overridden version. It is essential that you do both these things. All this plugin is adding is the raising of a custom event to which some other piece of code can subscribe to.
 
     var originalAddClassMethod = $.fn.addClass;
     $.fn.addClass = function () {
         // Execute the original method.
         var result = originalAddClassMethod.apply(this, arguments);
+
+        // Perform something extra.
         $(this).trigger("cssClassChanged");
-        // Return the original result.
+
+        // Return the result from the call to the original plugin.
         return result;
     };
 
-> NOTE: If you feel a need to redefine a built-in jQuery plugin make sure that you do not change its behaviour. You can add some additional actions but should always call the original plugin and return its result from your plugin.
-
-Of course alternative thing to do is give the plugin a different name.
+> NOTE: If you feel a need to redefine a built-in jQuery plugin make sure that you do not change its behaviour. You can add some additional actions but should always call the original plugin and return its result from your plugin. Of course, an alternative thing to do is give the plugin a different name.
 
 #### Deferred Object and Promises
 This has already been explained in an [earlier section](#tips-deferred-object).
@@ -2779,16 +2792,18 @@ This has already been explained in an [earlier section](#tips-deferred-object).
 ### <a name="tools-shims-and-polyfills"></a>Shims and Polyfills
 The differences between these items seem to be rather subtle. They are more browser-level things so, rather than just enhancing JavaScript, they will also make HTML and CSS features missing from a browser available to you.
 
-A `shim` (also known as a `shiv`) is a library that brings a new API to an older browser version, using only the means of its environment. For example, even when writing JavaScript using ES5 you may well run into compatibility problems if your code has to work in IE8 you may well run into problems. IE8 does not support many things, e.g. String.prototype.trim(). You can, however, use a library like [es5-shim](https://github.com/es-shims/es5-shim) which will make most of the missing items available to you. In the main it defines missing object methods using JavaScript code from an earlier version than ES5.
+A `shim` (also known as a `shiv`) is a library that brings a new API to an older browser version, using only the means of its environment. For example, even when writing JavaScript using ES5 you may well run into compatibility problems if your code has to work in IE8. IE8 does not support many things, e.g. String.prototype.trim(). You can, however, use a library like [es5-shim](https://github.com/es-shims/es5-shim) which will make most of the missing items available to you. In the main it defines missing object methods using JavaScript code from an earlier version than ES5.
 
-A `polyfill` adds something that is missing from a browser altogether. `Babel` is a transpiler commonly used to generate ES5 code from later versions. However, certain things, like Object.assign() are missing from IE altogether and apparently this cannot be recreated efficiently using alternative JavaScript commands that _are_ available. In order to allow Babel-generated ES5 to work with IE you need to use a library called `babel-polyfill`. [http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used](http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used) contains various alternative ways of trying to explain this.
+A `polyfill` adds something that is missing from a browser altogether. `Babel` is a transpiler commonly used to generate ES5 code from later versions. However, certain things, like Object.assign() are missing from IE altogether and apparently this cannot be recreated efficiently using alternative JavaScript commands that _are_ available. In order to allow Babel-generated ES5 to work with IE you need to use a library called `babel-polyfill`.
 
-[HTML5 PLEASE](http://html5please.com/) contains a list of polyfills along with recommended use - they are not all perfect and most will have odd things the writers indicate they haven't resolved.
+[http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used](http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used) contains various alternative ways of trying to explain the above.
+
+[HTML5 PLEASE](http://html5please.com/) contains a list of polyfills along with recommended use. They are not all perfect and most will have odd things which the writers indicate they haven't resolved.
 
 ### <a name="tools-functional-and-data"></a>Functional Programming and Data Manipulation
-There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. [Lodash](https://lodash.com/) is a successor to Underscore.js and [Lazy.js](http://danieltao.com/lazy.js/) provides a lazily evaluated equivalent, which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
+There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. [Lodash](https://lodash.com/) is a successor to Underscore.js and [Lazy.js](http://danieltao.com/lazy.js/) provides a lazily evaluated equivalent which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
 
-Here are a couple of Lodash examples:
+Here are a couple of Lodash examples. You will need to add an external resource for a LoDash CDN source if running this in JSFiddle.
 
     var users = [
         { "name": "barney",  "active": false },
@@ -2797,45 +2812,46 @@ Here are a couple of Lodash examples:
     ];
 
      // Filter the users.
-    var allBarneys = _.filter(users, function(o) { return o.user == "barney"; });
+    var allBarneys = _.filter(users, function(o) { return o.name == "barney"; });
     console.log(allBarneys[0]);			// Object {user: "barney", active: false}
 
     // Select all the names into an array of strings.
     var names = _.map(users, "name");
     console.log(names);							// ["barney", "fred", "pebbles"]
 
-Another library called [Immutable](https://facebook.github.io/immutable-js/) provides easy ways to work with immutable data. Many of the functions give the impression of allowing you to something about a data object whilst under the bonnet a new data structure based on the old one is actually generated.
-
-Immutable data objects a big thing in functional programming. Redux, a state container for JavaScript applications, bases it whole operation on its store not being mutated - if some aspect of the data has been changed the store has to be set to a whole new object, rather than just changing the value of a property. Because of that, the applications which use the store can tell if state has changed using a simple `==` comparison of two objects, as opposed to some potentially laborious deep comparison of all the properties.
 <a dummy="_"></a>
+
+Another library called [Immutable](https://facebook.github.io/immutable-js/) provides easy ways to work with immutable data. Many of the functions give the impression of allowing you to change something about a data object whilst, under the bonnet, a new data structure based on the old one is actually generated.
+
+Immutable data objects a big thing in functional programming. `Redux`, a state container for JavaScript applications, bases it whole operation on its store not being mutated. If some aspect of the data has been changed, the store has to be set to a whole new object, rather than just changing the value of a property. Because of that, the applications which use the store can tell if state has changed using a simple `==` comparison of two objects, as opposed to some potentially laborious deep comparison of all the properties.
 
 ### <a name="tools-transpilers"></a>Transpilers
 The two languages many people would like to be using instead of `ES5` are `ES2015` or `TypeScript`. Since not all browsers support these two languages (IE is the main culprit) it is necessary to use transpilers to convert your code from those languages into ES5 before being sent out in a page request.
 
 #### JavaScript Versions Greater than ES5
-Chrome and Firefox are both kept in line with the latest ES versions they both understand virtually everything in ES2015 ([http://kangax.github.io/compat-table/es6/](http://kangax.github.io/compat-table/es6/)) and most things in ES2016 ([http://kangax.github.io/compat-table/es2016plus/](http://kangax.github.io/compat-table/es2016plus/)).
+Chrome and Firefox are both kept in line with the latest ES versions. They both understand virtually everything in ES2015 ([http://kangax.github.io/compat-table/es6/](http://kangax.github.io/compat-table/es6/)) and most things in ES2016 ([http://kangax.github.io/compat-table/es2016plus/](http://kangax.github.io/compat-table/es2016plus/)).
 
 IE is a waste of space and the main reason why we are forced to use transpilers. Edge is significantly better than IE.
 
-`Babel` is the best transpiler for ES2015 or later. It generates pretty readable ES5. `Traceur` is another transpiler the code it genrates is significantly less readable. See [http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/](http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/) for a comparison.
+`Babel` is the best transpiler for ES2015 or later. It generates pretty readable ES5. `Traceur` is another transpiler. The code it generates is significantly less readable. See [http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/](http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/) for a comparison.
 
 #### TypeScript
-[TypeScript](https://www.typescriptlang.org/) is a well-respected alternative to future ES versions by Microsoft which is superset of all but the latest ES offerings and provides some type safety. The documentation is excellent and you can see what your code transpiles to online at the [playground](https://www.typescriptlang.org/play/index.html).
+[TypeScript](https://www.typescriptlang.org/) is a well-respected alternative to future ES versions by Microsoft. It is superset of all but the latest ES offerings and provides some type safety. The documentation is excellent and you can see what your code transpiles to online at the [playground](https://www.typescriptlang.org/play/index.html).
 
 There are also tools available in Chrome which allow you to debug TypeScript directly.
 
 ### <a name="tools-browser-debugging-tools"></a>Browser Debugging Tools
-Virtually every browser has its own set of developer tools, usually available by pressing the F12 key. Along with other things these tools allow you to debug the HTML, CSS and JavaScript with pages. Although individual tools offer much more, the common features include the ability to:
+Virtually every browser has its own set of developer tools, usually available by pressing the F12 key. Along with other things these tools allow you to debug the HTML, CSS and JavaScript within pages. Although individual tools offer much more, the common features include the ability to:
 
-* Examine individual HTML tags modify their attributes
+* Examine individual HTML tags and modify their attributes
 * Examine and temporarily modify the CSS styles being applied to the tags
 * Step through and debug JavaScript and even change the code within the browser
 * A console to examine values of JavaScript variables, set them to new values and execute extra code that you type in
-* Examine network requests and responses made by code within the page and timescales
+* Examine network requests and responses made by code within the page and their timescales
 
 The best tools in this category are made by Google and Mozilla. It is probably a good idea to get used to both Chrome and Mozilla tools. Even if you favour one in general, the other may offer some added value in certain areas. Sometimes you may find yourself forced into using IE's inferior tools, perhaps for testing your pages in old IE versions.
 
-More superior documentation than this document could offer already exists elsewhere.
+More superior documentation than this document can offer already exists elsewhere.
 
 #### Google
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is often favoured. It provides tools allowing you to detect events handlers that have been attached to a selected element. The link takes you to some excellent documentation.
@@ -2850,16 +2866,16 @@ More superior documentation than this document could offer already exists elsewh
 [Firefox Developer Edition](https://www.mozilla.org/en-GB/firefox/developer/) offers the very latest cutting-edge tools Mozilla have to offer. These will probably be better than Chrome tools in some places at least.
 
 ### <a name="tools-jsfiddle"></a>JSFiddle
-[JSFiddle](https://jsfiddle.net/) is a website which allows you to create "web page test situations" or `fiddles`. Its main window is split into 4 panes, 3 input panes allow you to specify `HTML`, `CSS` and `JavaScript`. A fourth pain displays what a page would `output` given the 3 inputs. This gets populated when you click the `Run` button.
+[JSFiddle](https://jsfiddle.net/) is a website which allows you to create "web page test situations" or `fiddles`. Its main window is split into 4 panes: 3 input panes allow you to specify `HTML`, `CSS` and `JavaScript`. A fourth pain displays what a page would `output` given the 3 inputs. This gets populated when you click the `Run` button.
 
-In the left-hand sidebar there is an `External Resources` link which allows you to paste URLs to a CDN for external JavaScript, e.g. a jQuery CDN.
+In the left-hand sidebar there is an `External Resources` link which allows you to paste URLs to a CDN for external JavaScript libraries, e.g. a jQuery CDN.
 
 If you create an account you can save your most useful fiddles.
 
 Most of the examples in this document were intended for the user to paste into JSFiddle, with the F12 console open so you can see what gets logged.
 
 ### <a name="tools-code-editors"></a>Code Editors
-[WebStorm](https://www.jetbrains.com/webstorm/) is regarded as acknowledged as the best development environment for JavaScript. It costs money.
+[WebStorm](https://www.jetbrains.com/webstorm/) is regarded as the best development environment for JavaScript. It costs money.
 
 Two free alternatives that are also highly regarded are [Atom](https://atom.io/) and [Visual Studio Code](https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.co.uk%2F).
 
@@ -2868,23 +2884,23 @@ Linting or hinting JavaScript simply means the process of submitting your code t
 
 The linters highlight both errors in the code and code style violations which, in their opinion, are dangerous for development or do not comply with established JavaScript standards. Because JavaScript is not compiled and is dynamically typed linting provides valuable information to developers to help prevent unexpected bugs creeping into their code.
 
-It is _far better_ to use these tools as you develop rather than one big audit at end where you change lots of code and things break because they worked but for the wrong reason.
+It is _far better_ to use these tools as you develop rather than having one big audit at end where you change lots of code and things break because they worked before but for the wrong reason.
 
 Linting tools come in two flavours:
 
   1. One where you navigate to a web page, paste your JavaScript into some text area, run the tool and wait for its results. [JSLint](http://www.jslint.com/) and [JSHint](http://jshint.com/) are two examples.
-  2. Tools which you integrate with your development environment and which will run on any file which you save. [ESLint](http://eslint.org/) is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation will trigger, e.g. "no-inline-comments". You will also be able to automatically configure your environment to perform different actions depending on the results.
+  2. Tools which you integrate with your development environment and which will run on any file which you save. [ESLint](http://eslint.org/) is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation, e.g. "no-inline-comments", will be highlighted. You will also be able to automatically configure your environment to perform different actions depending on the results.
 
 ### <a name="tools-testing"></a>Testing
-There are many testing frameworks for JavaScript. Most of them allow you to write both unit tests and behaviour-driven tests which test the behaviour of elements on an HTML page. Often these are used from within a Node.js environment although many frameworks have plugins which allow them to work within Visual Studio projects.
+There are many testing frameworks for JavaScript. Most of them allow you to write both unit tests and behaviour-driven tests, which test the behaviour of elements on an HTML page. Often these are used from within a Node.js environment although many frameworks have plugins which allow them to work within Visual Studio projects.
 
 Currently the most popular ones are [Mocha](https://mochajs.org/) and [QUnit](https://qunitjs.com/). Many of the MV* frameworks have there own preferred testing frameworks which are tailored towards their particular ways of doing things. For example, [Jest](https://facebook.github.io/jest/) is preferred for working with React.
 
-As well as a testing framework for writing the tests a `test runner` is required to run the tests. The most commonly used runner is [Karma](https://karma-runner.github.io/1.0/index.html). The tests can be run against all major browsers as well as [Headless Browsers](https://en.wikipedia.org/wiki/Headless_browser), like [PhantomJS](http://phantomjs.org/).
+As well as a testing framework for writing the tests, a `test runner` is required to run them. The most commonly used runner is [Karma](https://karma-runner.github.io/1.0/index.html). The tests can be run against all major browsers as well as [Headless Browsers](https://en.wikipedia.org/wiki/Headless_browser), like [PhantomJS](http://phantomjs.org/).
 
 You can set your environment up so that files are watched and tests are run on any file as soon as it is saved. Code coverage tools, like [Istanbul](https://github.com/gotwarlost/istanbul), provide you with reports that you can view in a browser which indicate code coverage information and highlight script lines that are not currently covered by any tests.
 
-This example uses [Jasmine](https://jasmine.github.io/) for the test framework and a library called [jasmin-jquery](https://github.com/velesin/jasmine-jquery) which provides extensions to allow you to locate and test elements of a page using jQuery selectors. Firstly, an implementation of an `addClass()` jQuery plugin is shown. Two tests have been written to check the triggering of events, one of which fails. An implementation which makes both tests pass is then shown. Unfortunately this code was written to operate within a Node.js environment so the code cannot be run from within JSFiddle.
+This example uses [Jasmine](https://jasmine.github.io/) for the test framework and a library called [jasmin-jquery](https://github.com/velesin/jasmine-jquery), which provides extensions to allow you to locate and test elements of a page using jQuery selectors. Firstly, an implementation of an `addClass()` jQuery plugin is shown. Two tests have been written to check the triggering of events, one of which fails. An implementation which makes both tests pass is then shown. Unfortunately this code was written to operate within a Node.js environment so it cannot be run from within JSFiddle.
 
 Original plugin code:
 
@@ -2964,11 +2980,11 @@ Here is an example drawing an analogue clock on the page using Processing.js. Yo
 
 First add this URL in the *External Resources* section: `https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.3/processing.min.js`.
 
-Paste the following in the *canvas* pane:
+Paste the following into the *HTML* pane:
 
     <canvas id="canvas2" style="width:400px; height:400px;"></canvas>
 
-Paste this in the *JavaScript* pane and click *Run*:
+Paste this into the *JavaScript* pane and click *Run*:
 
     var canvas2 = document.getElementById("canvas2");
 
@@ -3004,23 +3020,23 @@ Paste this in the *JavaScript* pane and click *Run*:
 OK, it's not the most sophisticated looking clock but it wouldn't take too much more effort to make it look more professional.
 
 ### <a name="tools-mv-frameworks"></a>MV* Frameworks
-There is a long list of JavaScript website frameworks which can replace .NET MVC or often integrated with it. The list looks like it will continue growing forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
+There is a long list of JavaScript website frameworks which can replace .NET MVC or be integrated with it. The list looks like it will continue to grow forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
 
 [AngularJS](https://angularjs.org/) is the most comprehensive one which looks after more website areas than all the others. It uses dependency inject all over the place.
 
-[React](https://facebook.github.io/react/) is another comprehensive framework. It promotes the insertion of HTML within JavaScript. In actual fact it is JSX, rather than HTML strings, and gets converted by React into JavaScript. This may look dirty but seems to work quite well. It does not use two-way data binding but instead the preference is to use it in conjunction with a data state library like [Redux](http://redux.js.org/docs/basics/UsageWithReact.html). They call it a `unidirectional data flow`. Data flows from the store to the page only. Page events trigger actions which are sent to the store and the store decides what data should be changed as a result of the action. If the data state has changed the page will be notified of the new data. It definitely requires you to write more boiler plate code so the benefits would not be seen with a small website.
+[React](https://facebook.github.io/react/) is another comprehensive framework. It promotes the insertion of HTML within JavaScript. In actual fact it is JSX, rather than HTML strings, and gets converted by React into JavaScript. This may look dirty but seems to work quite well. It does not use two-way data binding but instead the preference is to use it in conjunction with a data state library like, [Redux](http://redux.js.org/docs/basics/UsageWithReact.html). They call it a `unidirectional data flow`. Data flows from the store to the page only. Page events trigger actions which are sent to the store and the store decides what data should be changed as a result of the action. If the data state has changed the page will be notified of the new data. It definitely requires you to write more boiler plate code so the benefits would not be seen when writing a small website.
 
-Other popular solutions that are more lightweight, which may suit your situations such as a desire to use MVC but avoid Razor, include [Aurelia](http://aurelia.io/), [KnockoutJS](http://knockoutjs.com/) and [Vue](https://vuejs.org/).
+Other popular solutions that are more lightweight include [Aurelia](http://aurelia.io/), [KnockoutJS](http://knockoutjs.com/) and [Vue](https://vuejs.org/). These could serve your needs better, e.g. if you want to use ASP.NET MVC but would like to write your views in something other than Razor.
 
 ### <a name="tools-ui-libraries"></a>User Interface Libraries
 If you aren't planning on using an MV* framework there are lots of other frameworks around which provide you with helpful building blocks for a UI. Some are paid for, like [Kendo]().
 
-[jQuery UI](https://jqueryui.com/) is an example of a free library which all sorts of widgets to help reduce the amount of HTML JavaScript you have to manually put together to construct a decent looking user interface with functionality like draggable or resizable items and accordion widgets.
+[jQuery UI](https://jqueryui.com/) is an example of a free library which contains all sorts of widgets to help reduce the amount of HTML and JavaScript you have to manually put together to construct a decent looking user interface. It includes functionality such as draggable or resizable items and accordion widgets.
 
-If you are into your JavaScript you will almost certainly be drawn to the environment known as [Node.js](https://nodejs.org/en/). Node.js provides the runtime but it is actually [npm](https://www.npmjs.com/) (Node Package Manager) which provides the real power in the form of the
+If you like your JavaScript you will almost certainly be drawn to the environment known as [Node.js](https://nodejs.org/en/). Node.js provides the runtime but it is actually [npm](https://www.npmjs.com/) (Node Package Manager) which provides the real power in the form of the
 "largest ecosystem of open source libraries in the world".
 
-Here is a link to [most starred npm packages](https://www.npmjs.com/browse/star) where you can gauge some idea of the libraries available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
+Here is a link to [most starred npm packages](https://www.npmjs.com/browse/star) where you can gauge some idea of the facilities available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
 
 ### <a name="tools-external-references"></a>External References
 Some [slightly random] links to pages which may be of interest.
