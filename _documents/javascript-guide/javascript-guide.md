@@ -227,7 +227,7 @@ Strict mode can be applied either at **script level** by putting the line before
 You can also specify strict mode at **function level**. When specified as the first line within a function all code nested within that function operates in strict mode. You can therefore execute your code within an IIFE or module pattern. Because you can safely concatenate code within here with non-safe code elsewhere, you should prefer this over script level strict mode.
 
 	(function strictCodeContainer(){
-	  "use strict";
+	    "use strict";
 
 		// All code within here will be run in strict mode.
 	}());
@@ -444,7 +444,7 @@ Also known as `IIFE`s, they are just anonymous function expressions that are dec
       "use strict";
 
       // Can access this variable only within this IIFE.
-    	var privateVariable = 0;
+      var privateVariable = 0;
 
       var privateFunction = function () {
         // Can access or modify privateVariable in here.
@@ -467,7 +467,7 @@ Another use for IIFEs is as a container for all code within a file. This is beca
 The example below shows how parameters can be define and passed in to allow us to work with local copies of global objects. Here `$` refers to the `jQuery` object within the IIFE. This would be useful if another library has also declared their own meaning for `$`. The second parameter was not supplied in the call so we now know the `undefined` really is undefined. Note that you are not obliged to use these parameters everywhere but they may help you overcome a problem you come across. The global `undefined` property can, unbelievably, be set to any value but, if it has, some part of your code is likely to break anyway.
 
     (function ($, undefined) {
-      // $ now refers the jQuery object within here. We can avoid clashes
+      // $ now refers the jQuery object within here. We can avoid clashes.
       //
       ...
     }(jQuery));
@@ -487,7 +487,7 @@ Here is one example of the module pattern. The code is just for demonstration pu
     AXA.myModule = (function () {
       "use strict";
 
-    	var privateCounter = 0;
+      var privateCounter = 0;
 
       var privateFunction = function () {
         privateCounter += 1;
@@ -610,13 +610,13 @@ This code constructs an object from the Car function defined above and examines 
 
     var myCar = new Car();
 
-    console.log(myCar.__proto__);					      // Object { ... }
-    console.log(typeof myCar);						      // "object"
-    console.log(myCar instanceof Car);			    // true
-    console.log(myCar.constructor === Car);			// true
+    console.log(myCar.__proto__);				// Object { ... }
+    console.log(typeof myCar);					// "object"
+    console.log(myCar instanceof Car);			// true
+    console.log(myCar.constructor === Car);		// true
 
-    console.log(myCar.wheels);						// 4
-    console.log(new Car(3).wheels);				// 3
+    console.log(myCar.wheels);					// 4
+    console.log(new Car(3).wheels);             // 3
 
 Notice that `typeof myCar` returns "object" and not "Car". For non-primitive objects `typeof` will only ever return "object".
 
@@ -639,14 +639,14 @@ You _could_ define your methods within the constructor function, considering the
 Instead the **correct** way is to define each method just once, against the prototype of the object. Because they have been defined against the prototype, any new objects created will then inherit those definitions via the prototype chain:
 
     var Circle = function (radius) {
-    	this.radius = radius;
+        this.radius = radius;
     };
 
     Circle.prototype.constructor = Circle;
 
     Circle.prototype.getArea = function () {
-    	var area = Math.PI * this.radius * this.radius;
-      return area.toFixed(2);
+        var area = Math.PI * this.radius * this.radius;
+        return area.toFixed(2);
     };
 
     var circle1 = new Circle(1);
@@ -714,44 +714,44 @@ The three essential things when creating a constructor function for a derived "t
   2. Ensure that the prototype of the derived type is an object that is created from the base prototype.
   3. Ensure you set the constructor property of the derived prototype.
 
-    var Animal = function (legs, noise) {
-    	this.legs = legs || 4;
-      this.noise = noise;
-    };
+        var Animal = function (legs, noise) {
+            this.legs = legs || 4;
+            this.noise = noise;
+        };
 
-    Animal.prototype = Object.create(Object.prototype);
-    Animal.prototype.constructor = Animal;
+        Animal.prototype = Object.create(Object.prototype);
+        Animal.prototype.constructor = Animal;
 
-    Animal.prototype.makeNoise = function () {
-    	console.log(this.noise);
-    };
+        Animal.prototype.makeNoise = function () {
+        	console.log(this.noise);
+        };
 
-    var Bird = function (noise) {
-    	// 1. Always call the base constructor within the derived constructor.
-    	Animal.call(this, 2, noise);
+        var Bird = function (noise) {
+            // 1. Always call the base constructor within the derived constructor.
+            Animal.call(this, 2, noise);
 
-      this.birdProperty = 34;
-    };
+            this.birdProperty = 34;
+        };
 
-    // 2. Make sure that we fit the derived prototype into the prototype chain.
-    Bird.prototype = Object.create(Animal.prototype);
-    // 3. Don't forget to set the constructor property of the prototype.
-    Bird.prototype.constructor = Bird;
+        // 2. Make sure that we fit the derived prototype into the prototype chain.
+        Bird.prototype = Object.create(Animal.prototype);
+        // 3. Don't forget to set the constructor property of the prototype.
+        Bird.prototype.constructor = Bird;
 
-    Bird.prototype.fly = function () {
-    	console.log("Bird is flying");
-    };
+        Bird.prototype.fly = function () {
+        	console.log("Bird is flying");
+        };
 
 
-    var bird = new Bird("Chirp");
-    bird.makeNoise();                           // "Chirp"
-    bird.fly();                                 // "Bird is flying"
+        var bird = new Bird("Chirp");
+        bird.makeNoise();                           // "Chirp"
+        bird.fly();                                 // "Bird is flying"
 
-    console.log(bird instanceof Bird);				  // true
-    console.log(bird instanceof Animal);			  // This is also true
+        console.log(bird instanceof Bird);          // true
+        console.log(bird instanceof Animal);        // This is also true
 
-    console.log(bird.constructor === Bird);	    // true
-    console.log(bird.constructor === Animal);	  // false
+        console.log(bird.constructor === Bird);	    // true
+        console.log(bird.constructor === Animal);   // false
 
 The `Bird` constructor called the `Animal` constructor via the `call()` method. This allowed us to specify that the `this` that is under construction within `Bird` should also be the object `this` is pointing to within `Animal`. Therefore `Animal` will set some properties of the object under construction and then `Bird` will set some more before returning it.
 
@@ -798,12 +798,12 @@ Whenever a function is called using [call()](https://developer.mozilla.org/en-US
 In the previous example, `writeFullName()` was a method introduced directly against `person1`. Despite the fact that `bobSmith` below doesn't even have that method we can force `this` to refer to that object within the method:
 
     var bobSmith = { firstName: "Bob", lastName: "Smith" };
-    person1.writeFullName.call(bobSmith);           // "Bob Smith"
+    person1.writeFullName.call(bobSmith);       // "Bob Smith"
 
 The [bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) is like call() and apply() but its effects are more permanent. Note that bind() doesn't alter the original function - it returns a copy of the function within which `this` refers to the specified object. In the next example it is used to return a copy of `person1.writeFullName()` where `this` now refers to `bobSmith`.
 
     var newFunction = person1.writeFullName.bind(bobSmith);
-    newFunction();								// "Bob Smith"
+    newFunction();                              // "Bob Smith"
 
 The above examples are rather hypothetical and merely for demonstration. Uses of call(), apply() and bind() tend to be specialised but they are used significantly.
 
@@ -824,28 +824,28 @@ With primitives you can also detect their type using `tyepof`:
 	var myBool = true;
 	var myString = "Hello";
 
-	console.log(typeof myInteger);		 // "number"
-	console.log(typeof myFloat);			 // "number"
-	console.log(typeof myHexadecimal); // "number"
-	console.log(typeof myBool);				 // "boolean"
-	console.log(typeof myString);			 // "string"
+	console.log(typeof myInteger);       // "number"
+	console.log(typeof myFloat);         // "number"
+	console.log(typeof myHexadecimal);   // "number"
+	console.log(typeof myBool);          // "boolean"
+	console.log(typeof myString);        // "string"
 
 They actually have their own object constructor equivalents (`Boolean`, `String` and `Number`) although you would not generally use these directly. JavaScript will readily coerce between these primitives and object wrappers behind the scenes. You can create the above via their object constructor equivalents although their type will then be `object`. Actually, for whatever arcane reason, calling any of those 3 contructors _without_ the new keyword _will_ result in them having the correct type. However, there is nothing to be gained by doing so. **You are advised not to use these constructors directly**. Stick to the styles which use the more intuitive literals that are in the above example, not the one below.
 
 	// Don't use these.
 
 	var myString1 = new String("Hello");
-	console.log(typeof myString1);			// "object"
+	console.log(typeof myString1);       // "object"
 
 	// Without the new!
 	var myString2 = String("Hello");
-	console.log(typeof myString2);			// "string"
+	console.log(typeof myString2);       // "string"
 
 ##### <a name="language-types-string"></a>string
 Technically, primitives do not have members. However, because of the object wrappers, you do have access to members of those objects:
 
 	var myString = "Hello";
-	console.log(myString.length);			// 5
+	console.log(myString.length);        // 5
 
 There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them. You can also see the String global object in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String).
 
@@ -855,29 +855,29 @@ are useful, others not. For simple string processing many are fine. For more com
 	console.clear();
 
 	var words = "The cat sat";
-	console.log(words.length);						 // 11
-	console.log(words.indexOf("at"));			 // 5
-	console.log(words.lastIndexOf("at"));	 // 9
-	console.log(words.toUpperCase());		   // "THE CAT SAT"
-	console.log(words.charCodeAt(5));			 // 97
+	console.log(words.length);               // 11
+	console.log(words.indexOf("at"));        // 5
+	console.log(words.lastIndexOf("at"));    // 9
+	console.log(words.toUpperCase());        // "THE CAT SAT"
+	console.log(words.charCodeAt(5));        // 97
 
 	// This one is case-sensitive and will only replace the first occurrence.
 	// Use regular expressions if want to achieve something more complex.
-	console.log(words.replace("t", ""));	 // "The ca sat"
+	console.log(words.replace("t", ""));     // "The ca sat"
 
-	console.log("*".repeat(10));					 // "**********"
+	console.log("*".repeat(10));             // "**********"
 
 	// "hello".
 	// However, trim() is not defined in IE8. You will need to add a shiv.
 	console.log("  hello  ".trim());
 
 	// A string can be treated like an array and has some similar methods and properties.
-	console.log(words[4]);							  // "c"
-	console.log(words.split(" "));				// ["The", "cat", "sat"]
+	console.log(words[4]);                   // "c"
+	console.log(words.split(" "));           // ["The", "cat", "sat"]
 
 	// Concatenate strings.
 	var myWords = "The " + "quick brown " + "fox"
-	console.log(myWords);							// "The quick brown fox"
+	console.log(myWords);                    // "The quick brown fox"
 
 	// Two different strings instances are equal if they contain exactly the same characters.
 	console.log("eggs" === "eggs");
@@ -885,7 +885,7 @@ are useful, others not. For simple string processing many are fine. For more com
 	// Default string comparisons not especially useful.
 	// They rely on the ASCII code of the letters.
 	// This is false because the code for "a" is greater than the code for "Z".
-	console.log("aardvark" < "Zoo");				// false
+	console.log("aardvark" < "Zoo");         // false
 
 > Note: Be careful with browser compatibility when using these methods. Nearly all of them are fully compatible. One notable exception is `String.prototype.trim()`, which is only compatible in IE9. Bear this in mind if you need to support IE8.<br />
 You can include a [shim](https://github.com/es-shims/es5-shim) at the start of your code to overcome this or use jQuery, e.g. `$.trim("    hello, how are you?    ")`
@@ -895,7 +895,7 @@ You can include a [shim](https://github.com/es-shims/es5-shim) at the start of y
 	var person = { firstName: "John", surname: "Smith" };
 	var message = `Hello ${person.firstName} ${person.surname}`;
 
-	console.log(message);			// "Hello John Smith"
+	console.log(message);                    // "Hello John Smith"
 
 
 ##### <a name="language-types-number"></a>number
@@ -905,15 +905,15 @@ Numbers are always 64 bit floating point values (according to [w3schools](http:/
 The hexadecimal initialisation will store the number in base 10. However, you can still continue to use that notation for value comparisons or bitwise logical operations like this `bitwise or`:
 
 	var myHexadecimal = 0xf0;
-	console.log(myHexadecimal | 0x0f);		// 255    (i.e. 0xff)
+	console.log(myHexadecimal | 0x0f);       // 255    (i.e. 0xff)
 
 There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (Not a Number) and negative zero `-0`. You will do not get "divide by zero" errors in the code below:
 
-	console.log(1 / 0);		       // Infinity
-	console.log(-1 / 0);		     // -Infinity
-	console.log(0 / 0);		       // NaN
-	console.log(-0.0);		       // -0
-	console.log(-1 / Infinity);	 // -0
+	console.log(1 / 0);          // Infinity
+	console.log(-1 / 0);         // -Infinity
+	console.log(0 / 0);          // NaN
+	console.log(-0.0);           // -0
+	console.log(-1 / Infinity);  // -0
 
 	// Infinity === Infinity
 	if (10 / 0 === 50 / 0) {
@@ -923,8 +923,8 @@ There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (
 The [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) prototype object provides far fewer useful methods for numbers than the String object does for strings.
 
 	var x = 127.5678;
-	console.log(x.toFixed(2));					// 127.57
-	console.log(x.toExponential(2));		// 1.28e+2
+	console.log(x.toFixed(2));          // 127.57
+	console.log(x.toExponential(2));    // 1.28e+2
 
 The [Math](#language-built-in-objects-math) object (defined in the "Commonly Used Built-in Object Methods" section) provides a lot of mathematical functions.
 
@@ -936,7 +936,7 @@ Boolean does not add any particularly useful methods beyond `toString()`, which 
 
 	var myVariable;
 
-	console.log(typeof myVariable);	 // "undefined"
+	console.log(typeof myVariable);    // "undefined"
 
 	// You could use == here if you really wanted, given that typeof returns a string.
 	if (typeof myVariable === "undefined") {
@@ -951,7 +951,7 @@ One of the many mistakes in the JavaScript language is that, certainly in older 
 Although `null` is said to be a primitive type it is really more a primitive value for an object. Its type is object. However, this is only because of a bug in ES5.
 
 	var myNull = null;
-	console.log(typeof myNull);				// "object"
+	console.log(typeof myNull);       // "object"
 
 In ES6 it has been fixed and null is more like a genuine primitive type.
 
@@ -966,15 +966,15 @@ Declare an array using the array literal syntax, with square brackets. A maximum
 When accessing member of the array, specify a zero-base index within square brackets. If you try to access an index which the array does not contain a value for there will be no error, `undefined` is returned.
 
 	var languages = ["French", "German", "English", "Spanish"];
-	console.log(languages[2]);										// "English"
-	console.log(languages[9]);										// undefined
+	console.log(languages[2]);                      // "English"
+	console.log(languages[9]);                      // undefined
 
     // However, we can set an index that was not in the original definition.
 	languages[9] = "Chinese";
-	console.log(languages[9]);										// "Chinese"
+	console.log(languages[9]);                      // "Chinese"
 
-	console.log(typeof languages);		            // "object"
-	console.log(languages instanceof Array);		  // true
+	console.log(typeof languages);                  // "object"
+	console.log(languages instanceof Array);        // true
 
 	var emptyArray = [];
 
@@ -988,12 +988,12 @@ You can mix the types held within the array:
 Multi-dimensional arrays in JavaScript are rather like jagged arrays in C#. A two dimensional array is more like an array of arrays:
 
 	var twoDimensionalArray = [[1, 2], [3, 4], [5, 6]];
-	console.log(twoDimensionalArray[1][1]);			// 4
-	console.log(twoDimensionalArray[2]);				// [5, 6]
+	console.log(twoDimensionalArray[1][1]);         // 4
+	console.log(twoDimensionalArray[2]);            // [5, 6]
 
 	// This syntax should not be used. It does not error but, instead, only
 	// the last number is used, so it is like twoDimensionalArray[0]
-	console.log(twoDimensionalArray[1, 666, 0]);		// [1, 2]
+	console.log(twoDimensionalArray[1, 666, 0]);    // [1, 2]
 
 When you create an array you create an object which has the Array object as its prototype. This object gives you access to the `length` property and many useful methods.
 
@@ -1004,19 +1004,19 @@ See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 
 	var fruits = ["Apple", "Banana"];
 	var newLength = fruits.push("Orange");
-	console.log(fruits);					       // ["Apple", "Banana", "Orange"]
-	console.log(newLength);				       // 3
+	console.log(fruits);                       // ["Apple", "Banana", "Orange"]
+	console.log(newLength);                    // 3
 
 	var itemRemoved = fruits.shift();
-	console.log(fruits);					       // ["Banana", "Orange"]
-	console.log(itemRemoved);					   // "Apple"
+	console.log(fruits);                       // ["Banana", "Orange"]
+	console.log(itemRemoved);                  // "Apple"
 
 `slice` creates a shallow copy. Not sure why they called it that.
 
 	var fruits = ["Apple", "Banana"];
 	var shallowCopy = fruits.slice();
 	fruits[0] = "Orange";
-	console.log(shallowCopy[0]);				 // "Apple"
+	console.log(shallowCopy[0]);               // "Apple"
 
 It looks like the `splice` method was named after the process of splicing film reels. It allows you to split an array into two separate arrays by removing items from the original array at a particular index and returning them in a second array. There are effectively _three_ overloads. All require you specify the index from which to start removing items. A second, optional parameter allows you to specify how many items to remove, as in this example:
 
@@ -1062,22 +1062,22 @@ Here are some examples. As you can see, you can use various initialisers to crea
     // If not in GMT the UTC time would be converted to the appropriate time when output.
     // For example, if you set to Moscow time zone, the getHours() will return 3.
 
-  	console.log(d);									// Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
-    console.log(d.getHours());      // 12
-  	console.log(d.getFullYear());		// 2015
+  	console.log(d);                     // Wed Mar 25 2015 12:00:00 GMT+0000 (GMT Standard Time)
+    console.log(d.getHours());          // 12
+  	console.log(d.getFullYear());       // 2015
 
   	// This one comes back with 3 for the day!
   	// It immediately highlights a chink in the armour: our initialisation text gets parsed
     // using U.S. date format.
-  	console.log(d.getDay());				// 3
+  	console.log(d.getDay());            // 3
 
   	// In this constructor the month parameter is 0-based but
   	// the other two are 1-based.
   	var d2 = new Date(2000, 1, 1);
-  	console.log(d2);								// Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
+  	console.log(d2);                    // Tue Feb 01 2000 00:00:00 GMT+0000 (GMT Standard Time)
 
   	var d3 = new Date(1474525800000);
-  	console.log(d3);								// Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
+  	console.log(d3);                    // Thu Sep 22 2016 07:30:00 GMT+0100 (GMT Summer Time)
 
 You can also work with time zones. Again, don't expect perfection:
 
@@ -1125,10 +1125,10 @@ Below are a couple of not very sophisticated examples. Note that the `replace()`
 
 	// replace().
 	var convertToSnakeCase = function (text) {
-		// Define a RegExp with the global modifier which finds all non-word characters.
-	  var regexp = /\W+/g;
-		var snakeCase = text.toLowerCase().replace(regexp, "-");
-		return snakeCase;
+	    // Define a RegExp with the global modifier which finds all non-word characters.
+	    var regexp = /\W+/g;
+	    var snakeCase = text.toLowerCase().replace(regexp, "-");
+	    return snakeCase;
 	};
 
 	// This outputs "my-object-container".
@@ -1183,15 +1183,15 @@ According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_a
 
     var colouredTriangle = new ColouredTriangle();
 
-    console.log(colouredTriangle);							// ColouredTriangle {color: "red"}
+    console.log(colouredTriangle);                               // ColouredTriangle {color: "red"}
     outputOwnProperties(colouredTriangle, "colouredTriangle");
 
     var triangle = Object.getPrototypeOf(colouredTriangle);
-    console.log(triangle);											// Object {a: 1, b: 2, c: 3}
+    console.log(triangle);                                       // Object {a: 1, b: 2, c: 3}
     outputOwnProperties(triangle, "triangle");
 
     var o = Object.getPrototypeOf(triangle);
-    console.log(o);															// Object {}
+    console.log(o);                                              // Object {}
     outputOwnProperties(o, "o");
 
 ##### create()
@@ -1199,12 +1199,12 @@ Used to create an object where the caller specifies what that object's prototype
 
     var defaultArray = [10, 20, 30];
     var myObject = Object.create(defaultArray);
-    console.log(myObject instanceof Array);		// true
+    console.log(myObject instanceof Array);     // true
 
     myObject.push(666);
-    console.log(myObject[0]);									// 10
-    console.log(myObject[3]);									// 666
-    console.log(myObject.length);							// 4
+    console.log(myObject[0]);                   // 10
+    console.log(myObject[3]);                   // 666
+    console.log(myObject.length);               // 4
 
 It is commonly used when setting the `prototype` property of a constructor function. In the [Example Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
 
@@ -1272,7 +1272,7 @@ Most the of the language keywords in JavaScript behave pretty much the same as i
 	// Iterate through an array. Not nice.
 	var myArray = ["The", "quick", "brown", "fox"];
 	for (var key in myArray) {
-		  // In this case key is the array index. You then need to fetch the object.
+	    // In this case key is the array index. You then need to fetch the object.
 	    console.log(myArray[key]);
 	}
 
@@ -1281,8 +1281,8 @@ Most the of the language keywords in JavaScript behave pretty much the same as i
 	// Remember that an object in JavaScript is a collection of properties.
 	for (var property in obj) {
 	    if(obj.hasOwnProperty(property)) {
-			    console.log(objName + "." + property + " = " + obj[property]);
-		  }
+	        console.log(objName + "." + property + " = " + obj[property]);
+	    }
 	}
 
 ES2015 introduces an alternative `for...of` which provides behaviour that is more like the C# `for...each`. You can also use jQuery's $.each() statement.
@@ -1310,8 +1310,8 @@ This simple example probably doesn't highlight the problem but, if the `with` st
 Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _not_ a property of `Math`,it is a variable that was declared earlier on in the code. However, the reader could be left wondering which of the tokens is actually a variable and which are properties of `Math`. `with` may reduce the amount of code but it also reduces readability. If you wanted to avoid repeating quite a long object name within a section of code you could always declare an alias that has a short, even one letter, name and use that within the section.
 
 	with (Math) {
-		pi = PI;
-	  console.log(cos(pi));				// -1
+	    pi = PI;
+	    console.log(cos(pi));				// -1
 	}
 
 ### <a name="language-reserved-words"></a>Reserved Words
@@ -1395,29 +1395,29 @@ There are basically two pairs of these operators.
 
 `==` and `!=` are the equality operators. They only compare two values and not their types. If they are of different types and are not both objects, the runtime will try to coerce the type of the value on one side into the type that the other side is and then compare them. This can lead to errors that are difficult to detect. Rather than make some pointless attempt to explain how this coercion works we will just present some examples. With type coercion taking place the results are hard to predict. The numbers in the comments are matched in the sample code for the identity operators further down.
 
-    console.log(0 == '');					    // 1: true
-    console.log('0' == 0);			    	// 2: true
-    console.log(0 == false);			    // 3: true
+    console.log(0 == '');               // 1: true
+    console.log('0' == 0);              // 2: true
+    console.log(0 == false);            // 3: true
 
-    console.log(0 == null);				    // 4: false
-    console.log(0 == undefined);	    // 5: false
+    console.log(0 == null);             // 4: false
+    console.log(0 == undefined);        // 5: false
 
     // Despite the fact that they were both == 0, null and undefined are not ==
     // to each other.
-    console.log(null == undefined);		// 6: true
+    console.log(null == undefined);     // 6: true
 
-    console.log('true' == true);			// 7: false
-    console.log(3 == '3');					  // 8: true
+    console.log('true' == true);        // 7: false
+    console.log(3 == '3');              // 8: true
 
 If both the values being compared are objects then equality is determined by whether or not they refer to the same instance of an object:
 
 	// Two separately created objects have different references,
 	// even if they have the same properties with the same values.
-	console.log({a: 3} == {a: 3});		 // false
+	console.log({a: 3} == {a: 3});      // false
 
 	var x = {myProperty: "hello"};
 	var y = x;
-	console.log(x == y);					     // true
+	console.log(x == y);                // true
 
 Some more examples:
 
@@ -1426,8 +1426,8 @@ Some more examples:
     // of an expression equates to NaN, e.g. 0 / 0, the whole expression will equate to NaN.
     // Not allowing NaN to equal itself was seen as a means of avoiding obscure errors. Others may say that
     // throwing a runtime error is a better alternative.
-    console.log(NaN == NaN);		     // false
-    console.log(0 / 0);              // NaN
+    console.log(NaN == NaN);            // false
+    console.log(0 / 0);                 // NaN
 
 ##### Identity Operators
 `===` and `!==` are the identity operators.
@@ -1486,9 +1486,9 @@ Returns a boolean indicating whether an object has in its prototype chain the pr
 Example:
 
     var myArray = [1, 2];
-    console.log(myArray instanceof Array);	   // true
-    console.log(myArray instanceof Object);	   // true
-    console.log(myArray instanceof Function);	 // false
+    console.log(myArray instanceof Array);     // true
+    console.log(myArray instanceof Object);    // true
+    console.log(myArray instanceof Function);  // false
 
 Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Example Inheritance Tree](#language-objects-example-inheritance) sections further up.
 
@@ -1819,9 +1819,9 @@ The example below contains partial code from AXA where the default submit button
 	generatedCancelBookingCode = cancelBookingButton.attr("href");
 	...
 	publicMembers.cancelBookingIfUserConfirmsTheirDecision = function () {
-			AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
-					eval(generatedCancelBookingCode);
-			});
+	    AXA.confirmWindow.show("Are you sure you want to delete this booking?", "Cancel Booking", function (event) {
+		    eval(generatedCancelBookingCode);
+	    });
 	};
 
 > NOTE: This trick is also referred to in [eval Keyword Trick](#tips-eval-keyword-trick) further down.
@@ -1919,9 +1919,9 @@ Prefer to declare strict mode at function level as declaring it at file level ru
 One common pattern is to wrap all the code within a file inside a containing IIFE. If you do this you can then declare strict mode at the top of that function:
 
 	(function strictCodeContainer(){
-	  "use strict";
+        "use strict";
 
-		// All code within here will be run in strict mode.
+        // All code within here will be run in strict mode.
 	}());
 
 ### <a name="style-initialising-variables"></a>Initialising Variables
@@ -2450,7 +2450,7 @@ Situations where you may see this pattern include within a callback function or 
     car.starter = {};
 
     car.start = function () {
-    		// Record the current value of 'this'.
+        // Record the current value of 'this'.
         var that = this;
 
         // you can access car.starter inside this method with 'this'
@@ -2613,9 +2613,9 @@ Whereas you not especially advised to go down this route, you can achieve genuin
         secret = secret || {};
 
         // These will not be accessible in an object created using createGroundVehicle().
-    		var privateVariable = 999;
+        var privateVariable = 999;
         var privateFuntion = function () {
-    			console.log();    
+    	    console.log();    
         };
 
         var o = {};
@@ -2685,10 +2685,10 @@ You can try this example in JSFiddle with F12 console open. Make sure you add an
 
     $.when(promises[1], promises[2], promises[3], promises[4], promises[5]).
       done(function (r1, r2, r3, r4, r5) {
-        console.log("All functions completed.");
-        var totalOfAllResults = r1 + r2 + r3 + r4 + r5;       // 55
-        console.log("Total of all function results is " + totalOfAllResults);
-    });
+          console.log("All functions completed.");
+          var totalOfAllResults = r1 + r2 + r3 + r4 + r5;       // 55
+          console.log("Total of all function results is " + totalOfAllResults);
+      });
 
 JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)). However, it is not supported in IE, although polyfills are available.
 
@@ -2956,7 +2956,7 @@ The `$.fn.addClass` plugin was modified until both tests passed:
         var result = originalAddClassMethod.apply(this, arguments);
 
         if (!elementHadClass) {
-          $(this).trigger("cssClassChanged");
+            $(this).trigger("cssClassChanged");
         }
 
         // Return the original result.
@@ -2997,8 +2997,8 @@ Paste this into the *JavaScript* pane and click *Run*:
             function drawArm(position, lengthScale, weight) {
                 processing.strokeWeight(weight);
                 processing.line(centerX, centerY,
-                  centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
-                  centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+                    centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+                    centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
             }
             // Erase background.
             processing.background(224);
