@@ -32,7 +32,7 @@ This is by far the biggest section of the document.
 	* [Defining Methods](#language-objects-defining-methods)
 	* [Richer Properties](#language-objects-richer-properties)
 	* [Richer Objects](#language-objects-richer-objects)
-	* [Example Inheritance Tree](#language-objects-example-inheritance)
+	* [Sample Inheritance Tree](#language-objects-example-inheritance)
 *  [The this Keyword](#language-this-keyword)
 *  [Types](#language-types)
 	* [Primitive Types](#language-types-primitive)
@@ -245,7 +245,7 @@ Write your code with the intention of it being evaluated like this. Do not rely 
 > If you are not using `strict mode` the runtime will implicitly create the variable for you, a situation that can cause "hard to find" errors and which sensible people want to avoid.
 
 #### File Organisation
-Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via <a href="#style-script-tag">&lt;script&gt; tags</a> or by including bundles using .NET `Scripts.Render` calls.
+Generally you will separate the JavaScript you write into separate files. In a web page, the contents of JavaScript files will be evaluated in the order in which they have been referenced, e.g. via [&lt;script&gt; Tags](#style-including-script-files) or by including bundles using .NET `Scripts.Render` calls.
 
 It is as though the contents of all the files get concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
 
@@ -468,7 +468,6 @@ The example below shows how parameters can be define and passed in to allow us t
 
     (function ($, undefined) {
       // $ now refers the jQuery object within here. We can avoid clashes.
-      //
       ...
     }(jQuery));
 
@@ -1206,7 +1205,7 @@ Used to create an object where the caller specifies what that object's prototype
     console.log(myObject[3]);                   // 666
     console.log(myObject.length);               // 4
 
-It is commonly used when setting the `prototype` property of a constructor function. In the [Example Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
+It is commonly used when setting the `prototype` property of a constructor function. In the [Sample Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
 
 Also see [MDN - Object.create()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create).
 
@@ -1254,7 +1253,7 @@ Here is an example creating a "partially applied" version of another function. C
 
     console.log(addTen(2));
 
-[The this Keyword](#language-this-keyword-call-apply-bind) section further up also shows some examples of these functions being used.
+[The this Keyword](#language-this-keyword) section further up also shows some examples of these functions being used.
 
 Also see [MDN - Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
 
@@ -1347,12 +1346,12 @@ The concept is best explained by first listing all the `falsy` values, i.e. the 
 If you are unsure you can check whether a value is truthy or falsey by preceding it with two `!` operators - the first "nots" the value and returns a boolean, the second "nots it back" but as a boolean rather than the original value:
 
     // Find the equivalent boolean value of an expression. You can do this by "not"ing a value twice.
-    console.log(!!undefined);          // false
-    console.log(!!null);  	           // false
-    console.log(!!0);	                 // false
+    console.log(!!undefined);   // false
+    console.log(!!null);        // false
+    console.log(!!0);           // false
 
     // 0 within quotes is a non-empty string and is therefor truthy.
-    console.log(!!"0");	               // true
+    console.log(!!"0");         // true
 
 #### Truthy and Falsy Don't Work for Comparison
 The concept of truthy and falsy is really only to determine what boolean value is detected if non-boolean variables are evaluated in a boolean fashion.
@@ -1361,7 +1360,7 @@ It does NOT affect comparison operators in the sense that, just because false an
 
 	console.log(0 == null);		       // false.
 
-See [Comparison Operators & Equality](language-comparison-operators), further down, for more information on how values of different types are compared..
+See [Comparison Operators & Equality](#language-comparison-operators), further down, for more information on how values of different types are compared.
 
 #### Uses
 It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code.
@@ -1490,7 +1489,7 @@ Example:
     console.log(myArray instanceof Object);    // true
     console.log(myArray instanceof Function);  // false
 
-Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Example Inheritance Tree](#language-objects-example-inheritance) sections further up.
+Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Sample Inheritance Tree](#language-objects-example-inheritance) sections further up.
 
 [MDN - instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) provides full documentation.
 
@@ -1597,7 +1596,7 @@ The `window` object is the global object when operating with JavaScript within a
 The window object also contains some useful properties and methods, some of which are mentioned below. [w3schools - The Window Object](http://www.w3schools.com/jsref/obj_window.asp) and [MDN - Window](https://developer.mozilla.org/en-US/docs/Web/API/Window) contain more information.
 
 ##### window Properties
-`document` gives you access to the document object described in the [section below](#language-built-in-objects-document).
+`document` gives you access to the document object described in this [section below](#language-built-in-objects-document).
 
 `location` gives you access the [Location object](http://www.w3schools.com/jsref/obj_location.asp) which allows you to access and manipulate things related to the current URL.
 
@@ -1880,7 +1879,7 @@ The name of your namespace should be:
 
 Capitalised letters are often used in ES5 as a crude way of indicating that users should not change the value of an object, i.e. constants.
 
-Avoid the `var PEP = PEP || {};` notation - this syntax says "if PEP has already been declared use that value otherwise set it to a new object" and, in this context, it only encourages liberal declarations of PEP all over the place. Instead of plastering that line all over the place, secure in the knowledge that you will never overwrite it once created, prefer to ensure your code is organised. Just **make sure** that your namespace declaration is the first line in the first file of your code. It may be that you introduce a file which contains nothing more than your namespace declaration.
+Avoid the `var PEP = PEP || {};` notation - this syntax says, "if PEP has already been declared use that value otherwise set it to a new object" and, in this context, it only encourages liberal declarations of PEP all over the place. Instead of plastering that line all over the place, secure in the knowledge that you will never overwrite it once created, prefer to ensure your code is organised. Just **make sure** that your namespace declaration is the first line in the first file of your code. It may be that you introduce a file which contains nothing more than your namespace declaration.
 
 Any code you subsequently write should then either be a property of your outer namespace object or nested within other modules or objects. If your code grows you could introduce sub-namespaces.
 
@@ -1965,7 +1964,7 @@ Avoid using the `equality operators` (`==` and `!=`). They only compare values. 
     // typeof always returns a string.
     console.log(typeof 3 == "number");
 
-See [Language - Operators](#language-operators) further up for more information.
+See [Operators](#language-operators) further up for more information.
 
 #### Comparing Numbers for Equality
 
@@ -2710,7 +2709,6 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 *  [Graphics Libraries](#tools-graphics)
 *  [MV* Frameworks](#tools-mv-frameworks)
 *  [User Interface Libraries](#tools-ui-libraries)
-*  [Node.js](#tools-node-js)
 *  [External References](#tools-external-references)
 
 > This document is JavaScript language guide. In the interests of not going too far off that topic most items within this section have been kept deliberately very short and serve just to highlight the existence of a tool or library with a few useful tips thrown in. Further reading of other documentation will generally be necessary.

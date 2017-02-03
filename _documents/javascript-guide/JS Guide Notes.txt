@@ -1,3 +1,18 @@
+Inertnal links which are incorrect:
+
+                                                                                                                e.g. via <script> tags or by including bundles
+                                                                                                                The this Keyword section further up also 
+                                                                                                                console.log(!!0);                                                                  NOT A LINK
+                                                                                                                See Comparison Operators & Equality, further down, for more information on how values of different types are compared..
+
+Node.js                 in 4th section menu
+
+
+
+
+
+-------------------------------------------------
+
 ### <a name="language-objects"></a>Objects
 
 #### <a name="language-objects-what"></a>What is an object?
