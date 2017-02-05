@@ -8,7 +8,7 @@ void Main()
 		"[description](http://def.com)",
 	};
 	
-	var newLinks = originalLinks.Select(s => GenerateAnchorLinkWithTargetBlank(s));;
+	var newLinks = originalLinks.Select(s => GenerateAnchorLinkWithTargetBlank(s));
 	
 	//originalLinks.Dump();
 	newLinks.Dump();
