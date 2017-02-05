@@ -2,19 +2,28 @@
 
 void Main()
 {
-	string text = "text";
-	string url = "http://abc.com";
-	var original = String.Format("[{0}]({1})", text, url);
+	string[] originalLinks =
+	{
+		"[text](http://abc.com)",
+		"[description](http://def.com)",
+	};
 	
-	var match = Regex.Match(original, @"\[(?<text>.+)\]\((?<url>.+)\)");
+	var newLinks = originalLinks.Select(s => GenerateAnchorLinkWithTargetBlank(s));;
+	
+	//originalLinks.Dump();
+	newLinks.Dump();
+}
+
+private string GenerateAnchorLinkWithTargetBlank(string markdownLink)
+{
+	var match = Regex.Match(markdownLink, @"\[(?<text>.+)\]\((?<url>.+)\)");
 	if (match.Success)
 	{
 		var newMarkup = String.Format("<a href=\"{0}\" target=\"_blank\">{1}</a>",
 									  match.Groups["url"].Captures[0].Value,
 									  match.Groups["text"].Captures[0].Value);
-		
-		original.Dump();
-		newMarkup.Dump();
+		return newMarkup;
 	}
+	return "CANNOT CONVERT";
 }
 
