@@ -300,11 +300,11 @@ We can now name our function expressions as below. The IE9-compatible Array map(
 This example demonstrates a nested function. `calculateSquare` is effectively a private function that is only available within `addSquaresOfNumbers`. The choice of functions in this example is purely for demonstration.
 
     var addSquaresOfNumbers = function (x1, x2) {
-      var calculateSquare = function (x) {
-        return x * x;
-      };
+        var calculateSquare = function (x) {
+            return x * x;
+        };
 
-      return calculateSquare(x1) + calculateSquare(x2);
+        return calculateSquare(x1) + calculateSquare(x2);
     };
 
     // This line outputs 25.
@@ -324,17 +324,17 @@ They are nested functions that reference variables that were defined in an enclo
 Function parameters and referenced variables that are outside the function, which would normally go out of scope and get destroyed are "held on to" if they are referenced by a nested function.
 
     var createIndicateHowManyTimesCalledFunction = function () {
-      var counter = 0;
+        var counter = 0;
 
-      // Nested function.
-      var indicateHowManyTimesCalledFunction = function () {
-        counter += 1;
-        return counter;
-      };
+        // Nested function.
+        var indicateHowManyTimesCalledFunction = function () {
+            counter += 1;
+            return counter;
+        };
 
-      // Note that there are no brackets after the function.
-      // This is because we are returning the function itself.
-      return indicateHowManyTimesCalledFunction;
+        // Note that there are no brackets after the function.
+        // This is because we are returning the function itself.
+        return indicateHowManyTimesCalledFunction;
     };
 
     var indicateHowManyTimesCalled = createIndicateHowManyTimesCalledFunction();
@@ -362,12 +362,12 @@ Much of the time you would intend a function to be called with the same paramete
 If you call a function supplying **fewer** parameters than is in its definition the values of the surplus parameters will be `undefined`. One use of this concept is to provide optional parameters for which a default value may be used within the function if the parameter is not supplied. This document does not recommend wide usage of this technique since there are other ways to achieve this behaviour without having a varying number of parameters, e.g. a function accepting one object parameter whose properties will be set to certain defaults if undefined.
 
     var academicExample = function (optionalArg) {
-      // More about undefined later.
-      if (typeof optionalArg === "undefined") {
-        optionalArg = "default value";
-      }
+        // More about undefined later.
+        if (typeof optionalArg === "undefined") {
+            optionalArg = "default value";
+        }
 
-      console.log(optionalArg);
+        console.log(optionalArg);
     };
 
     academicExample("Broccoli");
@@ -378,11 +378,11 @@ If you call a function supplying **fewer** parameters than is in its definition 
 You can also supply **more** parameters to simulate the equivalent of a C# _params_ argument. For this you will need to access the `arguments` variable that is available within any function, which will allow you to access each parameter via an array-like object.
 
     var sum = function () {
-      var result = 0;
-      for (var i = 0; i < arguments.length; i++) {
-        result += arguments[i];
-      }
-      return result;
+        var result = 0;
+        for (var i = 0; i < arguments.length; i++) {
+          result += arguments[i];
+        }
+        return result;
     };
 
     console.log(sum(1, 2, 3));              // 6
@@ -392,9 +392,9 @@ You can also supply **more** parameters to simulate the equivalent of a C# _para
 `arguments` is only an array-like object. You can check its `length` property and access individual items but. However, you cannot call any of the array methods. If you find yourself requiring a _genuine_ array you will need to convert it to one. In ES5 you would generally do this. The `Array.prototype.slice` method actually this array-like object and returns a genuine array object. If you have a number of fixed parameters you may not want to slice all of the arguments you can also supply the parameter indicating the first item index to slice from.
 
     var myFunc = function (fixedParam1, fixedParam2) {
-      var allArgs = Array.prototype.slice.call(arguments);
-      var optionalArgs = Array.prototype.slice.call(arguments, 2);
-      ...
+        var allArgs = Array.prototype.slice.call(arguments);
+        var optionalArgs = Array.prototype.slice.call(arguments, 2);
+        ...
     };
 
 In ES2015 you could also make use of the spread operator: `var args = [...arguments];`. Or you could make use of `destructuring`:
@@ -437,16 +437,16 @@ For both of these, the object which represents `this` is supplied as the first p
 Also known as `IIFE`s, they are just anonymous function expressions that are declared and then executed immediately afterwards.
 
     (function () {
-      "use strict";
+        "use strict";
 
-      // Can access this variable only within this IIFE.
-      var privateVariable = 0;
+        // Can access this variable only within this IIFE.
+        var privateVariable = 0;
 
-      var privateFunction = function () {
-        // Can access or modify privateVariable in here.
-      };
+        var privateFunction = function () {
+            // Can access or modify privateVariable in here.
+        };
 
-      // Can call privateFunction only within this IIFE.
+        // Can call privateFunction only within this IIFE.
     }());
 
 Although make things look overly complicated, the outer parentheses are there partly by convention and partly to make sure that browsers know it contains an expression to prevent errors (a function declaration statement, as opposed to a function expression, cannot be immediately invoked).
@@ -463,8 +463,8 @@ Another use for IIFEs is as a container for all code within a file. This is beca
 The example below shows how parameters can be define and passed in to allow us to work with local copies of global objects. Here `$` refers to the `jQuery` object within the IIFE. This would be useful if another library has also declared their own meaning for `$`. The second parameter was not supplied in the call so we now know the `undefined` really is undefined. Note that you are not obliged to use these parameters everywhere but they may help you overcome a problem you come across. The global `undefined` property can, unbelievably, be set to any value but, if it has, some part of your code is likely to break anyway.
 
     (function ($, undefined) {
-      // $ now refers the jQuery object within here. We can avoid clashes.
-      ...
+        // $ now refers the jQuery object within here. We can avoid clashes.
+        ...
     }(jQuery));
 
 #### Module Pattern
@@ -480,24 +480,24 @@ Here is one example of the module pattern. The code is just for demonstration pu
     var AXA = {};
 
     AXA.myModule = (function () {
-      "use strict";
+        "use strict";
 
-      var privateCounter = 0;
+        var privateCounter = 0;
 
-      var privateFunction = function () {
-        privateCounter += 1;
-        return privateCounter * 10;
-      };
+        var privateFunction = function () {
+            privateCounter += 1;
+            return privateCounter * 10;
+        };
 
-      var publicMembers = {};
+        var publicMembers = {};
 
-      publicMembers.colourCode = "";
+        publicMembers.colourCode = "";
 
-      publicMembers.method1 = function () {
-      	return privateFunction();
-      };
+        publicMembers.method1 = function () {
+      	    return privateFunction();
+        };
 
-      return publicMembers;
+        return publicMembers;
     }());
 
     console.log(AXA.myModule.method1());		// 10
@@ -541,16 +541,16 @@ Here are some examples using the `myObject` created in the previous example:
 The most fundamental way of creating an object is via `JSON` (JavaScript Object Notation). This allows you to define an object literal. You can specify primitive property values, arrays and properties that are nested objects. Also see the [JSON object](#language-built-in-objects-json) section (this will also explain about serialisation between objects and JSON strings).
 
     var myObject = {
-      // Primitive property.
-      "prop1": 5,
-      // Array property.
-      "prop2": [ "JavaScript", 12, true, { "val1": 2, "val2": 5 } ],
-      // Complex object property.
-      "prop3": {
-        "firstName": "John",
-        "surname": "Smith",
-        "age": 28
-      }
+        // Primitive property.
+        "prop1": 5,
+        // Array property.
+        "prop2": [ "JavaScript", 12, true, { "val1": 2, "val2": 5 } ],
+        // Complex object property.
+        "prop3": {
+            "firstName": "John",
+            "surname": "Smith",
+            "age": 28
+        }
     };
 
 Another way to create an object is by calling a `constructor function`. The `new` keyword _must_ precede a call to a constructor function for the desired effects to be guaranteed. Unlike normal functions, constructor functions generally have a name beginning with a capital letter purely as a visual indication of how they should be called.
@@ -664,10 +664,10 @@ You may think that properties are just simple name-value pairs. However, each pr
 The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties" target="_blank" dummy="_">Object.defineProperty()</a> allows you to define these more enriched properties:
 
     Object.defineProperty(obj, 'key', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: 'static'
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: 'static'
     });
 
 You can also define getter and setter accessors for a property:
@@ -911,9 +911,9 @@ There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (
 	console.log(-1 / Infinity);  // -0
 
 	// Infinity === Infinity
-	if (10 / 0 === 50 / 0) {
-			console.log("10 / 0 === 50 / 0");
-	}
+    if (10 / 0 === 50 / 0) {
+        console.log("10 / 0 === 50 / 0");
+    }
 
 The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank" dummy="_">Number</a> prototype object provides far fewer useful methods for numbers than the String object does for strings.
 
@@ -935,7 +935,7 @@ Boolean does not add any particularly useful methods beyond `toString()`, which 
 
 	// You could use == here if you really wanted, given that typeof returns a string.
 	if (typeof myVariable === "undefined") {
-	  console.log("myVariable has not been given a value");
+	    console.log("myVariable has not been given a value");
 	}
 
 > NOTE: The above example uses the **standard** method for testing if something is undefined. This is particularly good because browsers will not throw an exception if the variable has not been declared, as may be the case if you had used `if (myVariable === undefined)`.
@@ -1143,11 +1143,11 @@ This function iterates through all the properties of an object and uses the `has
 	// Outputs properties of an object that are defined directly with the object
 	// and not inherited from the prototype chain.
 	var outputOwnProperties = function (obj, objName) {
-	  for (var property in obj) {
-	    if(obj.hasOwnProperty(property)) {
-	      console.log(objName + "." + property + " = " + obj[property]);
+	    for (var property in obj) {
+	        if(obj.hasOwnProperty(property)) {
+	            console.log(objName + "." + property + " = " + obj[property]);
+	        }
 	    }
-	  }
 	};
 
 	console.clear();
@@ -1161,18 +1161,18 @@ According to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Inher
     console.clear();
 
     var outputOwnProperties = function (obj, objName) {
-      for (var property in obj) {
-        if(obj.hasOwnProperty(property)) {
-          console.log(objName + "." + property + " = " + obj[property]);
+        for (var property in obj) {
+            if(obj.hasOwnProperty(property)) {
+                console.log(objName + "." + property + " = " + obj[property]);
+            }
         }
-      }
     };
 
     var triangleBase = {a:1, b:2, c:3};
 
     // Define the ColouredTriangle and its prototype.
     function ColouredTriangle() {
-      this.color = "red";
+        this.color = "red";
     }
     ColouredTriangle.prototype = triangleBase;
 
@@ -1218,25 +1218,25 @@ It is rather a specialist method that you won't use commonly but may need in cer
 One such real world specialist area is commonly used pattern when defining event handlers using ES2015 in React. Here is a partial sample. Don't worry too much about trying to understand it. The fact is that in the `onClickSave()` method `this` is not automatically bound to the CoursesPage class instance. Without the `bind()` call within the constructor to ensure that that _is_ now the case, the `this` in `onClickSave()` would actually refer to the `<input />` object that the user has just clicked.
 
     class CoursesPage extends React.Component {
-      constructor(props, context) {
-        super(props, context);
+        constructor(props, context) {
+            super(props, context);
 
-        this.onClickSave = this.onClickSave.bind(this);
-      }
+            this.onClickSave = this.onClickSave.bind(this);
+        }
 
-      onClickSave() {
-        this.props.dispatch(courseActions.createCourse(this.state.course));
-      }
+        onClickSave() {
+            this.props.dispatch(courseActions.createCourse(this.state.course));
+        }
 
-      render() {
-        debugger;
-        return (
-          <div>
-            ...
-            <input type="submit" value="Save" onClick={this.onClickSave} />
-          </div>
-        );
-      }
+        render() {
+            debugger;
+            return (
+                <div>
+                    ...
+                    <input type="submit" value="Save" onClick={this.onClickSave} />
+                </div>
+            );
+        }
     }
 
 Here is an example creating a "partially applied" version of another function. Calling `addTen(y)` will return the result of a call to `add(10, y)`. The `this` keyword not used and so a value does not need to be supplied in the `bind()` call.
@@ -1532,13 +1532,13 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 `...` is also the `rest` operator. The context of its usage is different from the spread operator.  It can be applied to the last parameter of a function definition to turn that into the equivalent of a C# params array argument. It means that any number of arguments can be supplied when the function is called. In a sense, this acts in the opposite direction to the spread operator. Once all the preceding parameters have been catered for, the rest will form an array and be represented by the `rest argument`.
 
 	function sumAggregator(total, num) {
-	  return total + num;
+	    return total + num;
 	}
 
-	var calculatePercentageOfTotal = function (percentage, ...numbers) {
-		var total = numbers.reduce(sumAggregator);
-	  return total * percentage / 100;
-	};
+    var calculatePercentageOfTotal = function (percentage, ...numbers) {
+        var total = numbers.reduce(sumAggregator);
+        return total * percentage / 100;
+    };
 
 	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
 	console.log(percentageOfTotal);         // 40
@@ -1546,16 +1546,16 @@ Although this document is primarily concerned with ES5 we may as well mention a 
 Of course, we can call a JavaScript function with any number of parameters already. We can currently achieve the same effect in a less elegant manner in ES5 by manually processing the `arguments` property within the function code. Also numbers is a _genuine_ array whereas `arguments` is only "array-like". You can iterate though the values in a `for` loop. However, you have to convert it into a genuine array in order to be able to use the `reduce` array:
 
 	function sumAggregator(total, num) {
-	  return total + num;
+	    return total + num;
 	}
 
-	var calculatePercentageOfTotal = function (percentage) {
-	  // Extract all but the first memeber of arguments into a genuine array.
-	  var numbers = Array.prototype.slice.call(arguments, 1);
+    var calculatePercentageOfTotal = function (percentage) {
+        // Extract all but the first memeber of arguments into a genuine array.
+        var numbers = Array.prototype.slice.call(arguments, 1);
 
-		var total = numbers.reduce(sumAggregator);
-	  return total * percentage / 100;
-	};
+        var total = numbers.reduce(sumAggregator);
+        return total * percentage / 100;
+    };
 
 	var percentageOfTotal = calculatePercentageOfTotal(10, 50, 150, 200)
 	console.log(percentageOfTotal);         // 40
@@ -1984,7 +1984,7 @@ For the above reason, avoid `++` and `--` operators. They are also a form of inl
 Of course its sheer ubiquity means there is no reason why you can't break both the above rules within a `for` statement:
 
     for (var i = 0; i < 10; i++) {
-      ...
+        ...
     }
 
 ### <a name="style-semicolons"></a>Semicolons
@@ -2093,13 +2093,13 @@ In ES5 this is **not** the case. Variable **hoisting** means that any declaratio
 This example shows that even use of strict mode fails to flag an error here. Even though it looks like `a` is being referenced before has been declared, its declaration has actually been hoisted to the start of the function. The alert window will show a 3. The `var a = 17;` statement declaring `a` is even within a block that will never be executed. If you deleted the declaration line, strict mode will then flag an error.
 
     (function () {
-      "use strict";
+        "use strict";
 
-      a = 3;
-      alert(a);
-      if (false) {
-        var a = 17;
-      }
+        a = 3;
+        alert(a);
+        if (false) {
+            var a = 17;
+        }
     }());
 
 #### Hanging Opening Braces
@@ -2115,7 +2115,7 @@ The syntax for these is really quite straightforward when you get used to it. Th
 Just follow this template. If the IIFE is being used as a container for all or most of the code within a file you can include a `"use strict";` statement as the first line of the contained code.
 
     (function () {
-      …
+        …
     }());
 
 ### <a name="style-deferred-actions-within-loops"></a>Deferred Actions within Loops
@@ -2125,7 +2125,7 @@ This erroneous example uses a call to `setTimeout()`. However, it would be more 
 
     // This outputs 5 (5 times) after one second.
     for (var i = 0; i < 5; i++) {
-      setTimeout(function () { console.log(i); }, 1000);
+        setTimeout(function () { console.log(i); }, 1000);
     }
 
 This is often known as an "access to modified closure". In C# it can be resolve by introducing a local variable within the loop and setting it to the iterated variable. However, JavaScript's variable hoisting would prevent this solution from working.
@@ -2134,18 +2134,18 @@ One solution in ES5 would be to wrap the code within an extra function which wou
 
     // This outputs 0, 1, 2, 3 and 4.
     for (var i = 0; i < 5; i++) {
-      (function (x) {
-        // The current value of i has now been captured in its own scope.
-        // When the callback eventually executes it will be called with that value.
-        setTimeout(function () { console.log(x); }, 1000);
-      }(i));
+        (function (x) {
+            // The current value of i has now been captured in its own scope.
+            // When the callback eventually executes it will be called with that value.
+            setTimeout(function () { console.log(x); }, 1000);
+        }(i));
     }
 
 In ES2015 we can simply use the `let` keyword to define the loop variable instead of `var`. Unlike in an equivalent C# statement `i` now acts as though it has been declared _within_ the scope of the code executing _inside_ the loop, rather than at the level of the `for` statement. Hence there is no need to declare an extra variable inside the looped code to record `i`'s value at the time.
 
     // This outputs 0, 1, 2, 3 and 4.
     for (let i = 0; i < 5; i++) {
-      setTimeout(function () { console.log(i); }, 1000);
+        setTimeout(function () { console.log(i); }, 1000);
     }
 
 <a href="https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315" target="_blank" dummy="_">https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315</a>
@@ -2223,13 +2223,13 @@ As in C# they are really just methods that are called via a special syntax.
 #### Type 1 - Adding Getters and Setters via an Object Initialiser
 
     var o = {
-      a: 7,
-      get b() {
-        return this.a + 1;
-      },
-      set b(x) {
-        this.a = x / 2;
-      }
+        a: 7,
+        get b() {
+            return this.a + 1;
+        },
+        set b(x) {
+            this.a = x / 2;
+        }
     };
 
     console.log(o.a);   // 7
@@ -2241,15 +2241,15 @@ As in C# they are really just methods that are called via a special syntax.
 
     // Define an object constructor.
     function Widget() {
-      this._a = 0;
+        this._a = 0;
     };
 
     Widget.prototype.constructor = Widget;
 
     // Add getter and setter properties to its prototype..
     Object.defineProperties(Widget.prototype, {
-      "b": { get: function () { return this._a + 1; } },
-      "c": { set: function (x) { this._a = x / 2; } }
+        "b": { get: function () { return this._a + 1; } },
+        "c": { set: function (x) { this._a = x / 2; } }
     });
 
     var w = new Widget();
@@ -2283,7 +2283,7 @@ It is often a good idea, in ES5, to wrap all the code in one file within one imm
 A lot of the time these days you will use ASP.NET bundling to include external CSS and script files which uses a separate syntax. However, you will sometimes find a need to add &lt;script&gt; tags. HTML5 standards state that the MIME type does not have to be specified (in actual fact the actual MIME type should be `application/javascript` and not the commonly-seen `text/javascript`).
 
 	<script>
-	  ...
+	    ...
 	</script>
 
 Generally these tags and JavaScript file references should be included as low down in the &lt;body&gt; tag as possible to help with page loading times. If the `async` attribute is not set the script will be loaded synchronously, causing page loading to be delayed. In IE, the `async` attribute is only supported in version 10 and above.
@@ -2366,8 +2366,8 @@ Also going from left to right, the first `truthy` value encountered will be the 
 One very common usage of this operator is to ensure that a variable defaults to a particular value if it has not been properly set. This may apply if a parameter to a function is intended to be optional so that some default value is used if it is not supplied.
 
     function logErrorMessage(message) {
-    	message = message || "An error has occurred";
-      console.log(message);
+        message = message || "An error has occurred";
+        console.log(message);
     }
 
     logErrorMessage();
@@ -2384,7 +2384,7 @@ Due to falsy covering a range of different values (see [truthy and falsy](#langu
 In ES2015 `default parameters` provide a better experience:
 
     function logErrorMessage(message = "An error has occurred") {
-      console.log(message);
+        console.log(message);
     }
 
 ### <a name="tips-too-many-function-parameters"></a>Too Many Function Parameters
@@ -2481,7 +2481,7 @@ There is one situation where use of eval offers a real help - when working with 
 For example ASP.NET Web Forms renders its `<LinkButton>` controls as `<a>` tags where the `href` contains some JavaScript. Usually a postback to the server will occur when the user clicks on that link, something along the lines of the example below. Often other controls are referred to using Web Forms generated encoding, e.g. `ctl00$ctl00$ctl00$ctl00$ContentPlaceHolderMain$Cont...`.
 
     <a href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(...)"..>
-      Perform Action
+        Perform Action
     </a>
 
 Sometimes you may wish to latch on to that auto-generated postback code and call it from somewhere else. This could be if some other client-side action should trigger the same postback or if you wish to intercept a submit click with a confirmation window where the postback is only performed if the user confirms.
@@ -2665,12 +2665,12 @@ You can try this example in JSFiddle with F12 console open. Make sure you add an
     };
 
     var makePromise = function (functionNumber) {
-      return doSomethingLater(function () {
-          console.log("Function " + functionNumber + " executed after " + functionNumber +
+        return doSomethingLater(function () {
+            console.log("Function " + functionNumber + " executed after " + functionNumber +
                       " seconds");
-          // Return the square.
-          return functionNumber * functionNumber;
-      }, functionNumber * 1000);
+            // Return the square.
+            return functionNumber * functionNumber;
+        }, functionNumber * 1000);
     };
 
     var promises = [];
