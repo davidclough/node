@@ -104,12 +104,26 @@ Intertal links which are incorrect:
 [Velocity.js](Velocity.js)
 [GreenSock](https://greensock.com/get-started-js)
 [Processing.js](http://processingjs.org/exhibition/)
-
-
-
-
-
-
+[AngularJS](https://angularjs.org/)
+[React](https://facebook.github.io/react/)
+[Redux](http://redux.js.org/docs/basics/UsageWithReact.html)
+[Aurelia](http://aurelia.io/)
+[KnockoutJS](http://knockoutjs.com/)
+[Vue](https://vuejs.org/)
+[jQuery UI](https://jqueryui.com/)
+[Node.js](https://nodejs.org/en/)
+[npm](https://www.npmjs.com/)
+[most starred npm packages](https://www.npmjs.com/browse/star)
+[W3Schools JavaScript Tutorial](http://www.w3schools.com/js)
+[Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml)
+[JavaScript 101](http://hsablonniere.github.io/markleft/prezas/javascript-101.html)
+[Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
+[7 Essential JavaScript Functions](https://davidwalsh.name/essential-javascript-functions)
+[Seven JS Concepts You Must Understand Before Your Next Job Interview](https://gist.github.com/ericelliott/263f24b5ad987e2f09d2)
+[Stop Nesting Functions! (But Not All of Them)](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+[JavaScript Common Mistakes](http://www.w3schools.com/js/js_mistakes.asp)
+[16 Common JavaScript Gotchas](http://www.standardista.com/javascript/15-common-javascript-gotchas/)
+[JavaScript: The Good Parts Paperback by Douglas Crockford](https://www.amazon.co.uk/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742)
 
 
 
