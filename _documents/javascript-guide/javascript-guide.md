@@ -79,7 +79,7 @@ JavaScript makes extensive use of functions and closures.
 
 It uses dynamic typing, meaning that variables do not have to remain assigned to values of a particular type. Many fans see this as a very powerful feature, providing lots of flexibility and smaller code size. However, we all know there are downsides that go with it, particularly if the code base starts to grow, brittleness of code being the main one, performance being another. There is also less ability to restrict other programmers and prevent people who are less proficient in the language and/or have a lesser experience of a particular system from inadvertently doing bad things.
 
-<br /><a href="http://c2.com/cgi/wiki?BenefitsOfDynamicTyping">http://c2.com/cgi/wiki?BenefitsOfDynamicTyping</a>
+<br /><a href="http://c2.com/cgi/wiki?BenefitsOfDynamicTyping" target="_blank" dummy="_">http://c2.com/cgi/wiki?BenefitsOfDynamicTyping</a>
 <br /><a href="http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing" target="_blank" dummy="_">http://programmers.stackexchange.com/questions/122205/what-is-the-supposed-productivity-gain-of-dynamic-typing</a>
 
 However, it is a very flexible, multi-paradigm language. For example, it supports both object-oriented and functional programming, although it is not necessarily as good in any given paradigm as certain other languages.
@@ -132,10 +132,6 @@ If you declare a variable that is not inside a function it becomes part of the g
 > **Avoid** declaring variables within the global scope. Only outer `namespaces`, generally just the one, which act as containers for all your code, should be declared in the global scope. More on these later.
 
 Any variable declared inside a function will be visible within that function and all nested functions and objects. As will be explained later, this is your ticket to encapsulation in JavaScript. That said, we are not pretending that it will match up to the encapsulation available in other languages.
-
-
-
-
 
 
 ### <a name="language-hoisting"></a>Variable Hoisting
@@ -232,7 +228,7 @@ You can also specify strict mode at **function level**. When specified as the fi
 		// All code within here will be run in strict mode.
 	}());
 
-Also see [MDN - Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) for a lot more information, as well as fuller explanations of the above.
+Also see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" target="_blank" dummy="_">MDN - Strict mode</a> for a lot more information, as well as fuller explanations of the above.
 
 ### <a name="language-sequential"></a>Top-down Evaluation
 #### Variables
@@ -250,7 +246,7 @@ Generally you will separate the JavaScript you write into separate files. In a w
 It is as though the contents of all the files get concatenated into one big file which is then evaluated using in the top-down manner mentioned earlier.
 
 ### <a name="language-functions"></a>Functions
-A function allows you to define a piece of functionality which accepts parameters and returns a value. In JavaScript they are actually objects. Three of the most important methods of the Function object are `call()`, `apply()` and `bind()` (see [MDN - Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)). We will see how these are used later.
+A function allows you to define a piece of functionality which accepts parameters and returns a value. In JavaScript they are actually objects. Three of the most important methods of the Function object are `call()`, `apply()` and `bind()` (see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" dummy="_">MDN - Function</a>). We will see how these are used later.
 
 #### Ways to Declare Functions
 
@@ -407,7 +403,7 @@ In ES2015 you could also make use of the spread operator: `var args = [...argume
     // You can leave the first two array items empty if you aren't going to use them.
     var [ , , ...args] = arguments;
 
-Also see [MDN - Arguments Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments).
+Also see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" dummy="_">MDN - Arguments Object</a>.
 
 ### <a name="language-calling-functions"></a>Calling Functions
 Below are brief explanations of the different ways that a function can actually be called. We will not go into too much detail as, other than for the first method, we will need to understand about objects in JavaScript and the `this` keyword.
@@ -509,7 +505,7 @@ Here is one example of the module pattern. The code is just for demonstration pu
 
 
 ### <a name="language-objects"></a>Objects
-The basis of this section has been formed from a short but easy-to-follow course on  PluralSight: [JavaScript Objects and Prototypes (by Jim Cooper)](https://app.pluralsight.com/library/courses/javascript-objects-prototypes/table-of-contents).
+The basis of this section has been formed from a short but easy-to-follow course on  PluralSight: <a href="https://app.pluralsight.com/library/courses/javascript-objects-prototypes/table-of-contents" target="_blank" dummy="_">JavaScript Objects and Prototypes (by Jim Cooper)</a>.
 
 #### <a name="language-objects-what"></a>What is an object?
 Described in very simplistic terms an object in JavaScript is like a mutable collection of key-value pairs. There is a bit more to them than that. For example, every object has a `constructor` and a `prototype`.
@@ -656,7 +652,7 @@ Instead the **correct** way is to define each method just once, against the prot
 
 The code defining the method does not look very nice compared with class-based programming. The methods being declared outside the constructor looks clumsy. However, it does now mean that only one function instance per method is being shared by all the objects you create using the constructor. The `getArea()` used by `circle1` and `circle2` is the same function _instance_. If we had instead defined `this.getArea = ...` within the constructor we would have ended up with two different functions containing exactly the same code.
 
-This link, not just restricted to constructor functions, is old but gives you an indiction of the idea that "encapsulation is good but we have to bear in mind the efficiency of the code as well": [Stop Nesting Functions! (But Not All of Them)](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+This link, not just restricted to constructor functions, is old but gives you an indiction of the idea that "encapsulation is good but we have to bear in mind the efficiency of the code as well": <a href="https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315" target="_blank" dummy="_">Stop Nesting Functions! (But Not All of Them)</a>
 
 #### <a name="language-objects-richer-properties"></a>Richer Properties
 You may think that properties are just simple name-value pairs. However, each property does actually have a descriptor which specifies some attributes about it. There are three prominent attributes:
@@ -665,7 +661,7 @@ You may think that properties are just simple name-value pairs. However, each pr
   * `enumerable` - (1) will the property appear when you enumerate through all an object's properties, (2) if you serialise to JSON, will this property be serialised, e.g. using JSON.stringify(). The default value for this property is `true`.
   * `configurable` - can the property's attributes be redefined at a later time, say, using another call to Object.defineProperty()? The default is `true`.
 
-The [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) allows you to define these more enriched properties:
+The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties" target="_blank" dummy="_">Object.defineProperty()</a> allows you to define these more enriched properties:
 
     Object.defineProperty(obj, 'key', {
       enumerable: false,
@@ -696,7 +692,7 @@ If you are defining richer properties against an object constructor, you will ne
 #### <a name="language-objects-richer-objects"></a>Richer Objects
 Here we are merely giving an indication of how flexible JavaScript objects can be and how it is possible to change more than just the value of a property at run time - you can redefine its whole configuration on the fly. This can be done for standalone objects or for object prototypes.
 
-The [MDN Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) page also indicates some methods for placing extra restrictions on objects.
+The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" dummy="_">MDN Object</a> page also indicates some methods for placing extra restrictions on objects.
 
 `Object.freeze()` allows you to prevent properties being added to or removed from an object and prevents anyone from reconfiguring existing properties, although the existing properties can still be written to if they are writable.
 
@@ -792,14 +788,14 @@ If a function is an object method, whether it is a standalone object or one bein
 It is also the case if the method has been defined directly within an object literal.
 
 #### 4. <a href="language-this-keyword-call-apply-bind"></a>call, apply or bind
-Whenever a function is called using [call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) or [apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) the caller explicitly specifies what object `this` will refer to and it will **always** override whatever `this` would ordinarily have pointed to.
+Whenever a function is called using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" dummy="_">call()</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" dummy="_">apply()</a> the caller explicitly specifies what object `this` will refer to and it will **always** override whatever `this` would ordinarily have pointed to.
 
 In the previous example, `writeFullName()` was a method introduced directly against `person1`. Despite the fact that `bobSmith` below doesn't even have that method we can force `this` to refer to that object within the method:
 
     var bobSmith = { firstName: "Bob", lastName: "Smith" };
     person1.writeFullName.call(bobSmith);       // "Bob Smith"
 
-The [bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) is like call() and apply() but its effects are more permanent. Note that bind() doesn't alter the original function - it returns a copy of the function within which `this` refers to the specified object. In the next example it is used to return a copy of `person1.writeFullName()` where `this` now refers to `bobSmith`.
+The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" dummy="_">bind()</a> is like call() and apply() but its effects are more permanent. Note that bind() doesn't alter the original function - it returns a copy of the function within which `this` refers to the specified object. In the next example it is used to return a copy of `person1.writeFullName()` where `this` now refers to `bobSmith`.
 
     var newFunction = person1.writeFullName.bind(bobSmith);
     newFunction();                              // "Bob Smith"
@@ -846,7 +842,7 @@ Technically, primitives do not have members. However, because of the object wrap
 	var myString = "Hello";
 	console.log(myString.length);        // 5
 
-There are quite a number of particularly useful String member links. The following [w3schools link](http://www.w3schools.com/jsref/jsref_obj_string.asp) link lists them. You can also see the String global object in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String).
+There are quite a number of particularly useful String member links. The following <a href="http://www.w3schools.com/jsref/jsref_obj_string.asp" target="_blank" dummy="_">w3schools link</a> link lists them. You can also see the String global object in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" dummy="_">MDN</a>.
 
 You can view the different methods made available via the String object prototype. Some
 are useful, others not. For simple string processing many are fine. For more complex stuff you may want to use the methods which work with RegExp objects (explained in [RegExp](language-types-regexp) further down). You could alternatively some third party library, like string.js, or pinch something off Stack Overflow. Here are some examples:
@@ -899,7 +895,7 @@ You can include a [shim](https://github.com/es-shims/es5-shim) at the start of y
 
 ##### <a name="language-types-number"></a>number
 As you can see `number` covers both integers and floating point numbers.
-Numbers are always 64 bit floating point values (according to [w3schools](http://www.w3schools.com/js/js_numbers.asp)).
+Numbers are always 64 bit floating point values (according to <a href="http://www.w3schools.com/js/js_numbers.asp" target="_blank" dummy="_">w3schools</a>).
 
 The hexadecimal initialisation will store the number in base 10. However, you can still continue to use that notation for value comparisons or bitwise logical operations like this `bitwise or`:
 
@@ -919,7 +915,7 @@ There are also some special values for numbers: `Infinity`, `-Infinity`, `NaN` (
 			console.log("10 / 0 === 50 / 0");
 	}
 
-The [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) prototype object provides far fewer useful methods for numbers than the String object does for strings.
+The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank" dummy="_">Number</a> prototype object provides far fewer useful methods for numbers than the String object does for strings.
 
 	var x = 127.5678;
 	console.log(x.toFixed(2));          // 127.57
@@ -996,8 +992,8 @@ Multi-dimensional arrays in JavaScript are rather like jagged arrays in C#. A tw
 
 When you create an array you create an object which has the Array object as its prototype. This object gives you access to the `length` property and many useful methods.
 
-See [MDN - Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) or
-[w3schools - Array](http://www.w3schools.com/jsref/jsref_obj_array.asp) for more information on members of the Array object. We will limit our examples here.
+See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank" dummy="_">MDN - Array</a> or
+<a href="http://www.w3schools.com/jsref/jsref_obj_array.asp" target="_blank" dummy="_">w3schools - Array</a> for more information on members of the Array object. We will limit our examples here.
 
 `push` and `pop` allow you to add or remove items to the end of the array. In a similar way `unshift` and `shift` (correspondingly) allow you to do the same but at the beginning of the array.
 
@@ -1036,7 +1032,7 @@ Thirdly, you can specify any number of array items which you would like to be in
     console.log(array2);					   // [4, 5, 6]
 
 ##### Functional Programming Libraries
-There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js](http://danieltao.com/lazy.js/), which add far richer, functional-style data manipulation of arrays (and other objects). Here is a simple example, although there are JavaScript `map` and `reduce` equivalents, which work in IE9:
+There are third party libraries, like <a href="https://lodash.com/" target="_blank" dummy="_">lodash</a> and <a href="http://danieltao.com/lazy.js/" target="_blank" dummy="_">Lazy.js</a>, which add far richer, functional-style data manipulation of arrays (and other objects). Here is a simple example, although there are JavaScript `map` and `reduce` equivalents, which work in IE9:
 
 	_.map([1, 2, 3], function (n) { return n * 3; });	  // [3, 6, 9]
 
@@ -1046,11 +1042,11 @@ There are third party libraries, like [lodash](https://lodash.com/) and [lazy.js
 #### <a name="language-types-date"></a>Date
 The `Date` object allows you to create the equivalent of the C# `DateTime`s. Given the constant problems we have experienced with dates, times, time zones and cultures, even in more sophisticated languages and frameworks, we will not over-elaborate, just highlight its existence. You can read about it more at the links below:
 
-[w3schools - JavaScriptDate Reference](http://www.w3schools.com/jsref/jsref_obj_date.asp)
+<a href="http://www.w3schools.com/jsref/jsref_obj_date.asp" target="_blank" dummy="_">w3schools - JavaScriptDate Reference</a>
 
-[w3schools - JavaScript Date Formats](http://www.w3schools.com/js/js_date_formats.asp)
+<a href="http://www.w3schools.com/js/js_date_formats.asp" target="_blank" dummy="_">w3schools - JavaScript Date Formats</a>
 
-[MDN - Date](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date)
+<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" dummy="_">MDN - Date</a>
 
 Here are some examples. As you can see, you can use various initialisers to create a date but they can each come with there own little problems:
 
@@ -1092,7 +1088,7 @@ You can also work with time zones. Again, don't expect perfection:
 	console.log(d3.toUTCString());
 
 
-One of the more sophisticated third-party libraries available for JavaScript is [moment.js](http://momentjs.com/). It does cater for:
+One of the more sophisticated third-party libraries available for JavaScript is <a href="http://momentjs.com/" target="_blank" dummy="_">moment.js</a>. It does cater for:
 
 * String parsing
 * Comparisons and differences
@@ -1107,9 +1103,9 @@ For anything other than basic usage it is probably best to use something like th
 #### <a name="language-types-regexp"></a>RegExp
 `RegExp` objects allow you to perform more complex string parsing and manipulation, via regular expressions, than you can with most of the `String` object methods. Note that the `String` object contains a handful of methods designed to work with `RegExp` objects, most notably `match()` and `replace()`.
 
-This document is not about regular expressions is given here but plenty of information exists online, e.g. at [Regular-Expressions.info](http://www.regular-expressions.info/). A good testbed environment can be found at [regex101.com](https://regex101.com/).
+This document is not about regular expressions is given here but plenty of information exists online, e.g. at <a href="http://www.regular-expressions.info/" target="_blank" dummy="_">Regular-Expressions.info</a>. A good testbed environment can be found at <a href="https://regex101.com/" target="_blank" dummy="_">regex101.com</a>.
 
-There is a special syntax for declaring [RegExp](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp) literal, so there is no need to create one using `new RegExp("...")` syntax. It involves use of the `/` character as a delimiter: `var myRegexp = /<regexp text>/`. Additional `flag` characters may be included at the end (after the closing `/`) to modify its behavior, e.g. /.../`g` for a global match (find _all_ occurrences) or /.../`i` to specify that character case should be ignored.  
+There is a special syntax for declaring <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/RegExp" target="_blank" dummy="_">RegExp</a> literal, so there is no need to create one using `new RegExp("...")` syntax. It involves use of the `/` character as a delimiter: `var myRegexp = /<regexp text>/`. Additional `flag` characters may be included at the end (after the closing `/`) to modify its behavior, e.g. /.../`g` for a global match (find _all_ occurrences) or /.../`i` to specify that character case should be ignored.  
 
 Below are a couple of not very sophisticated examples. Note that the `replace()` method is capable of accepting a function through which the user can implement a more involved replacement algorithm which takes into account what was found rather than just globally replacing all matches with a static string.
 
@@ -1134,7 +1130,7 @@ Below are a couple of not very sophisticated examples. Note that the `replace()`
 	console.log(convertToSnakeCase("My    object container"));
 
 #### <a name="language-types-object"></a>Object
-JavaScript objects have been thoroughly explained in the [Objects](#language-objects) section further up. You can also look at [MDN - Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object).
+JavaScript objects have been thoroughly explained in the [Objects](#language-objects) section further up. You can also look at <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" dummy="_">MDN - Object</a>.
 
 When going up the prototype chain of virtually any object you will eventually reach the `Object`. It provides some basic "instance" methods, like `toString()`, which are therefore available to any object you create. It also provides some methods which, in the C# world, would be classed as static.
 
@@ -1160,7 +1156,7 @@ This function iterates through all the properties of an object and uses the `has
 
 
 ##### getPrototypeOf()
-According to [https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain](https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain): "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances". `getPrototypeOf()` will return the `__proto__` property of the object.
+According to <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" dummy="_">https://developer.mozilla.org/en/docs/Web/JavaScript/Inheritance_and_the_prototype_chain</a>: "In short, prototype is for types, while Object.getPrototypeOf() is the same for instances". `getPrototypeOf()` will return the `__proto__` property of the object.
 
     console.clear();
 
@@ -1207,7 +1203,7 @@ Used to create an object where the caller specifies what that object's prototype
 
 It is commonly used when setting the `prototype` property of a constructor function. In the [Sample Inheritance Tree](#language-objects-example-inheritance) section `create()` is used to assign a value to the prototype of Bird.
 
-Also see [MDN - Object.create()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create).
+Also see <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank" dummy="_">MDN - Object.create()</a>.
 
 
 #### <a name="language-types-function"></a>Function
@@ -1255,12 +1251,12 @@ Here is an example creating a "partially applied" version of another function. C
 
 [The this Keyword](#language-this-keyword) section further up also shows some examples of these functions being used.
 
-Also see [MDN - Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
+Also see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" dummy="_">MDN - Function.prototype.bind()</a>.
 
 ##### <a name="language-types-arguments-object"></a>arguments Object
 This object is explained in the [Handling a Variable Number of Parameters](#language-variable-number-of-parameters) section further up. Note that this is the _arguments object_. It is different from the _arguments property_ of the function object, which is deprecated.
 
-Also see [arguments object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments).
+Also see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" dummy="_">arguments object</a>.
 
 ### <a name="language-javascript-keywords"></a>JavaScript Keywords
 Most the of the language keywords in JavaScript behave pretty much the same as in other C-based languages. It would be pointless explaining them all again. Below are keywords which behave a bit differently from C# or are not in the language at all.
@@ -1314,7 +1310,7 @@ Two properties of `Math` are used below: `Math.cos()` and `Math.PI`. `pi` is _no
 	}
 
 ### <a name="language-reserved-words"></a>Reserved Words
-[http://www.w3schools.com/js/js_reserved.asp](http://www.w3schools.com/js/js_reserved.asp) lists the keywords that are reserved for JavaScript.
+<a href="http://www.w3schools.com/js/js_reserved.asp" target="_blank" dummy="_">http://www.w3schools.com/js/js_reserved.asp</a> lists the keywords that are reserved for JavaScript.
 
 They are not necessarily used by the language at present. It may be that they are not used in ES5 but are used in later versions of JavaScript, like ES2015 (the new name for ES6). `float`, `double`, `interface`, `public` and `private` are examples of words that are not used by ES5. The main thing to bear in mind is not to use any of the keywords that your version of JavaScript does not utilise.
 
@@ -1360,7 +1356,7 @@ It does NOT affect comparison operators in the sense that, just because false an
 
 	console.log(0 == null);		       // false.
 
-See [Comparison Operators & Equality](#language-comparison-operators), further down, for more information on how values of different types are compared.
+See <a href="#language-comparison-operators" target="_blank" dummy="_">Comparison Operators & Equality</a>, further down, for more information on how values of different types are compared.
 
 #### Uses
 It is really only used for writing less cluttered code **but** in places where the user **knows** the context, e.g. a variable will only equal particular type(s) due to the structure of their code.
@@ -1373,7 +1369,7 @@ It is really only used for writing less cluttered code **but** in places where t
 	// A shorthand way of detecting if the length of something is non-zero.
 	if ($(".my-class").length)
 
-[https://www.sitepoint.com/javascript-truthy-falsy/](https://www.sitepoint.com/javascript-truthy-falsy/)
+<a href="https://www.sitepoint.com/javascript-truthy-falsy/" target="_blank" dummy="_">https://www.sitepoint.com/javascript-truthy-falsy/</a>
 
 > NOTE: Truthy and falsy only affect boolean evaluations, e.g. in if statements or ternary expressions. They do not affect comparisons. So, for example, the fact that `null` and `false` are both falsy does not mean that they will ever be equal when compared
 
@@ -1384,7 +1380,7 @@ It is really only used for writing less cluttered code **but** in places where t
 ### <a name="language-operators"></a>Operators
 These are mostly the same as in C# with the same operator precedence rules.
 
-[MDN - Operator Precedence](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
+<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank" dummy="_">MDN - Operator Precedence</a>.
 
 #### <a name="language-comparison-operators"></a>Comparison Operators & Equality
 There are basically two pairs of these operators.
@@ -1455,7 +1451,7 @@ They are **far safer** and you should **prefer these** over the ordinary equalit
 
 > NOTE: When editing legacy code, be careful about replacing occurrences of the equality operators with their identity operator equivalent, e.g. if a linter or hinter highlights that you should. It may be that the code previously "worked but for the wrong reasons". Your "improvements" may result in the code not then behaving as previously expected.
 
-[w3schools - Comparison and Logical Operators](http://www.w3schools.com/js/js_comparisons.asp)
+<a href="http://www.w3schools.com/js/js_comparisons.asp" target="_blank" dummy="_">w3schools - Comparison and Logical Operators</a>
 
 
 #### + and - With a Mixture of Strings and Numbers
@@ -1473,7 +1469,7 @@ Returns a string indicating the type of a variable. Note that this is only gener
     	alert("a is not a number.")
     }
 
-See [MDN - typeof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) for more information on what types this keyword works with.
+See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" dummy="_">MDN - typeof</a> for more information on what types this keyword works with.
 
 Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) section further up.
 
@@ -1491,7 +1487,7 @@ Example:
 
 Also see the [Defining an Object Template via a Constructor Function](#language-objects-constructors) and [Sample Inheritance Tree](#language-objects-example-inheritance) sections further up.
 
-[MDN - instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) provides full documentation.
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" dummy="_">MDN - instanceof</a> provides full documentation.
 
 #### new
 > NOTE: This keyword is probably better explained in the [Creating Objects via Constructors](#language-objects-creating-via-constructors) section further up.
@@ -1593,12 +1589,12 @@ The `window` object is the global object when operating with JavaScript within a
 	var myFreeStandingVariable = 4;
 	alert(window.myFreeStandingVariable);
 
-The window object also contains some useful properties and methods, some of which are mentioned below. [w3schools - The Window Object](http://www.w3schools.com/jsref/obj_window.asp) and [MDN - Window](https://developer.mozilla.org/en-US/docs/Web/API/Window) contain more information.
+The window object also contains some useful properties and methods, some of which are mentioned below. <a href="http://www.w3schools.com/jsref/obj_window.asp" target="_blank" dummy="_">w3schools - The Window Object</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank" dummy="_">MDN - Window</a> contain more information.
 
 ##### window Properties
 `document` gives you access to the document object described in this [section below](#language-built-in-objects-document).
 
-`location` gives you access the [Location object](http://www.w3schools.com/jsref/obj_location.asp) which allows you to access and manipulate things related to the current URL.
+`location` gives you access the <a href="http://www.w3schools.com/jsref/obj_location.asp" target="_blank" dummy="_">Location object</a> which allows you to access and manipulate things related to the current URL.
 
 `history` gives you access to the history object which holds information about and allows you to navigate to URLs accessible in the current tab via the `Go Back` and `Go Forward` buttons in the browser.
 
@@ -1664,8 +1660,6 @@ There are a few methods for displaying popup windows. The windows very simple an
 
 
 #### <a name="language-built-in-objects-document"></a>Document
-https://developer.mozilla.org/en/docs/Web/API/Document
-
 The `document` object is a property of the `window` object. Because the window object is the global object you can just write `document.title` rather than `window.document.title`.
 
 It does not provide any _essential_ properties or methods. You may use the `title` to modify the `<title>` content of the document or the `writeln()` could be used for testing purposes (certainly not for generating your actual page content).
@@ -1674,7 +1668,9 @@ There are also a number of methods available to query and modify the DOM. The DO
 implemented...I think writing a
 Good Parts book about the DOM would be extremely challenging."_ is a quote from the book `JavaScript - The Good Parts` by Douglas Crockford.
 
-[jQuery](https://jquery.com/) is one library that has made DOM manipulation much easier and less error-prone.
+<a href="https://jquery.com/" target="_blank" dummy="_">jQuery</a> is one library that has made DOM manipulation much easier and less error-prone.
+
+Also see <a href="https://developer.mozilla.org/en/docs/Web/API/Document" target="_blank" dummy="_">MDN - Document</a>.
 
 
 #### <a name="language-built-in-objects-math"></a>Math
@@ -1687,7 +1683,7 @@ This object provides many mathematical functions and standard mathematical value
 	var area = calculateAreaOfCircle(2);
 	console.log(area);						// 12.566370614359172
 
-Investigate [w3schools - Math Reference](http://www.w3schools.com/jsref/jsref_obj_math.asp) for a full list. [MDN - Math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) has a bigger list but many are only available in ES2015 and won't even work in any version of IE.
+Investigate <a href="http://www.w3schools.com/jsref/jsref_obj_math.asp" target="_blank" dummy="_">w3schools - Math Reference</a> for a full list. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math" target="_blank" dummy="_">MDN - Math</a> has a bigger list but many are only available in ES2015 and won't even work in any version of IE.
 
 
 #### <a name="language-built-in-objects-json"></a>JSON
@@ -1699,7 +1695,7 @@ JSON (JavaScript Object Notation) allows you to define JavaScript object via a s
 * Arrays - a sequence of values surrounded by square brackets, e.g. <br />
 	`["apple", "orange", "banana", false, 23]`
 
-Technically the property keys should be surrounded by `double quotes` for the JSON to be valid (see [http://www.jsonlint.com/](http://www.jsonlint.com/)). Often you will not need to do this but it is something to bear in mind.
+Technically the property keys should be surrounded by `double quotes` for the JSON to be valid (see <a href="http://www.jsonlint.com/" target="_blank" dummy="_">http://www.jsonlint.com/</a>). Often you will not need to do this but it is something to bear in mind.
 
 You can nest objects and arrays within other objects or arrays. In the example below we have cheated, to avoid an ugly example, and used an ES2015 `template literal` as the JSON container instead of a string.
 
@@ -1743,13 +1739,13 @@ The JSON string would not normally be defined within the code, it would come fro
 	// This outputs: {"name": "Spain","population": 47000000}
 	console.log(countryJson);
 
-Also see [w3schools - JavaScript JSON](http://www.w3schools.com/js/js_json.asp) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+Also see <a href="http://www.w3schools.com/js/js_json.asp" target="_blank" dummy="_">w3schools - JavaScript JSON</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank" dummy="_">MDN</a>.
 
 > Note: [Json.NET](http://www.newtonsoft.com/json) is a popular third party library for JSON manipulation.
 
 
 #### <a name="language-built-in-objects-console"></a>Console
-The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually used in conjunction with the `Console tab` in the `F12 developer tools` of you browser. [MDN - Console](https://developer.mozilla.org/en/docs/Web/API/console) give a full list of the methods this object provides.
+The `console` object is one of the most useful items for detecting and fixing errors in your code. It allows you to perform various JavaScript debugging tasks. These are usually used in conjunction with the `Console tab` in the `F12 developer tools` of you browser. <a href="https://developer.mozilla.org/en/docs/Web/API/console" target="_blank" dummy="_">MDN - Console</a> give a full list of the methods this object provides.
 
 ##### Basic Methods
 These methods are called from within your code. They should only exist in your code when you are debugging.
@@ -1763,7 +1759,7 @@ These methods are called from within your code. They should only exist in your c
 * `debugger;` is not a console method but it worth mentioning here. Rather than trying to find code and add a breakpoint via the F12 tools you can just add a line containing this to your code and re-run. It also maintains the breakpoint in the correct position if you add or remove lines to your code (breakpoints remaining on exactly the same line number after you have edited your code has been a problem in Firefox). You should take care to ensure that debugger lines are only added **temporarily**.
 
 ##### Other Methods
-There are some other more sophisticated methods you can use, although the basic ones will often be enough. [Beyond Console Debugging Tricks](https://medium.com/outsystems-experts/beyond-console-debugging-tricks-f7d0d7f5df4#.pmwwd5e9g) is a web page which explains these pretty nicely.
+There are some other more sophisticated methods you can use, although the basic ones will often be enough. <a href="https://medium.com/outsystems-experts/beyond-console-debugging-tricks-f7d0d7f5df4#.pmwwd5e9g" target="_blank" dummy="_">Beyond Console Debugging Tricks</a> is a web page which explains these pretty nicely.
 
 * `console.trace()` can be typed into the Console when you are in "breakpoint" mode. It will give you a complete stack trace. One thing to note is that the more anonymous functions you have in your call stack the harder it will be to make sense of the stack trace.
 
@@ -1787,7 +1783,7 @@ There are some other more sophisticated methods you can use, although the basic 
 
 
 ### <a name="language-built-in-global-functions"></a>Built-in Global Properties and Functions
-[JavaScript Global Reference](http://www.w3schools.com/jsref/jsref_obj_global.asp) explains that there are a few global properties and global functions. They are _not_ attached to any particular objects so they really are just standalone variables and functions, not methods.
+<a href="http://www.w3schools.com/jsref/jsref_obj_global.asp" target="_blank" dummy="_">JavaScript Global Reference</a> explains that there are a few global properties and global functions. They are _not_ attached to any particular objects so they really are just standalone variables and functions, not methods.
 
 Out of those there may be more convenient alternatives, e.g. there are jQuery methods for testing for numeracy.
 
@@ -1908,7 +1904,7 @@ Here are the exceptions. They are written differently with the intention of send
 * Avoid declaring global variables, i.e. a `var` declaration that is not within a function.
 * It is often recommended to declare all local variables at the top of the scope (function) it is within to help with code readability and error prevention. This is as opposed to the C# style of declaring variables only when they are about to be used. Remember that variable hoisting in JavaScript means the declarations will be moved to the top of the containing function at runtime anyway, so it could help to reduce confusion by moving declarations to the point where they will be hoisted to, i.e. the top of the containing function.
 
-Also see [w3schools - JavaScript Best Practices](http://www.w3schools.com/js/js_best_practices.asp).
+Also see <a href="http://www.w3schools.com/js/js_best_practices.asp" target="_blank" dummy="_">w3schools - JavaScript Best Practices</a>.
 
 ### <a name="style-strict-mode"></a>Strict Mode
 Prefer to use [strict mode](#language-strict-mode), as described earlier. It helps you to avoid some silly and/or dangerous mistakes.
@@ -2152,7 +2148,7 @@ In ES2015 we can simply use the `let` keyword to define the loop variable instea
       setTimeout(function () { console.log(i); }, 1000);
     }
 
-[https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315](https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+<a href="https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315" target="_blank" dummy="_">https://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315</a>
 
 ### <a name="style-redefining-properties-within-prototypes-of-standard-types"></a>Redefining Properties within Prototypes of Standard Types
 Modifying methods of the built-in JavaScript object prototypes, like Object.prototype and Array.prototype is **strictly forbidden**. Even if it is only for code consumed within a particular application of yours, it causes a high error risk if other people are unaware of the change or if you yourself forget after a period of working on another project. No further explanation is necessary in the case that you are writing library code that is more publicly available.
@@ -2262,7 +2258,7 @@ As in C# they are really just methods that are called via a special syntax.
 
 <a dummy="_"></a>
 
-Also see [MDN - Defining getters and setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters).
+Also see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters" target="_blank" dummy="_">MDN - Defining getters and setters</a>.
 
 ### <a name="style-separate-files-for-javascript"></a>Put Your JavaScript in Separate Files from Your Markup
 This is an important rule for many web development environments. This includes ASP.NET Web Forms or MVC as well as conventional HTML/CSS/JavaScript development and, in these, you should avoid writing websites with "scripts dotted about all over the place within markup files". It is not necessarily appropriate for _every_ environment. Some of the modern website frameworks regularly mix HTML and JavaScript and their organisation may be based on this idea.
@@ -2276,7 +2272,7 @@ Be especially careful about putting script code directly within controls or part
 #### Tightly-coupled Script
 Although we have suggested keeping JavaScript in separate files from markup it _must_ be appreciated that very often some JavaScript gets written that is very specific to some particular control, view or HTML. It is important that these tightly coupled pieces of script are placed in files that give some indication that it very specialised to some area. This could be in a file that is in the same location as the markup file or within the scripts folder in some appropriately named subfolder and/or file. Putting JavaScript that is very specific to a certain piece of markup in some generic "scripts.js" file where people have to hunt it down would actually be **worse** than putting it in a &lt;script&gt; tag just below the HTML.
 
-In [React’s JSX: The Other Side of the Coin](https://medium.com/@housecor/react-s-jsx-the-other-side-of-the-coin-2ace7ab62b98#.b5vs0bs70) (_just_ the Phase 1: Unobtrusive JavaScript) section it is highlighted how separating script from markup can actually be counterproductive.
+In <a href="https://medium.com/@housecor/react-s-jsx-the-other-side-of-the-coin-2ace7ab62b98#.b5vs0bs70" target="_blank" dummy="_">React’s JSX: The Other Side of the Coin</a> (_just_ the Phase 1: Unobtrusive JavaScript section) it is highlighted how separating script from markup can actually be counterproductive.
 
 #### IIFEs
 It is often a good idea, in ES5, to wrap all the code in one file within one immediately-invoked function expression whose first line is `"use strict";`. Then you can take advantage of function-level strict mode. This is as opposed to using file-level strict mode which may cause problems if third-party libraries you use have not been written in strict mode.
@@ -2473,7 +2469,7 @@ Situations where you may see this pattern include within a callback function or 
 You may occasionally have a need to use this technique and it certainly helps to appreciate the meaning of its presence when reading somebody else's code.
 
 ### <a name="tips-code-lines-which-aid-debugging"></a>Code Lines Which Aid Debugging
-These consist of the `Console` object methods and the `debugger` statement and are explained in [this  section further up](#language-built-in-objects-console).
+These consist of the `Console` object methods and the `debugger` statement and are explained in [this section further up](#language-built-in-objects-console).
 
 Avoid leaving these lines within your code once you have finished debugging.
 
@@ -2596,11 +2592,11 @@ Transpilers, like Babel and TypeScript, are an absolute requirement as not many 
 
 Since this is mainly an ES5 document and an "easily-runnable" example would be difficult to create, we will avoid showing examples but the mechanism looks like a very exciting step forward, certainly in the world of JavaScript.
 
-[MDN - import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import" target="_blank" dummy="_">MDN - import</a>
 
-[MDN - export](https://developer.mozilla.org/en/docs/web/javascript/reference/statements/export)
+<a href="https://developer.mozilla.org/en/docs/web/javascript/reference/statements/export" target="_blank" dummy="_">MDN - export</a>
 
-[http://www.2ality.com/2014/09/es6-modules-final.html](http://www.2ality.com/2014/09/es6-modules-final.html)
+<a href="http://www.2ality.com/2014/09/es6-modules-final.html" target="_blank" dummy="_">http://www.2ality.com/2014/09/es6-modules-final.html</a>
 
 ### <a name="tips-inheritance"></a>Inheritance
 Prototypical inheritance has already been covered in [Object Prototypes](#language-objects-prototypes). One downside to defining methods against the prototype of an object defined by a constuctor function is that `private` variables are not realistically possible due to the fact that the object methods are defined externally and not encapsulated within the constructor function. Instead people often resort to a poor man's version of `private` or `protected` by prefixing the names with an underscore (or maybe using more underscores before and after the main part of the name). This does not prevent any form of tampering, it merely gives consuming programmers a visual indication.
@@ -2652,7 +2648,7 @@ Here we will define a situation that involves asynchronous calls. You find yours
 
 The pseudo-code described above is a bit ugly and can get far more complicated if more asynchronous calls are required. In other situations you can end up with chains of callbacks nested within callbacks. Often these may involve multiple AJAX calls.
 
-The [jQuery Deferred](https://api.jquery.com/category/deferred-object/) object is a pretty complicated object and this document is not going to explain it. However, it can make complicated multiple asynchronous call situations much simpler to handle. It allows promises to be returned that allow you to access a function's result at a later time.
+The <a href="https://api.jquery.com/category/deferred-object/" target="_blank" dummy="_">jQuery Deferred</a> object is a pretty complicated object and this document is not going to explain it. However, it can make complicated multiple asynchronous call situations much simpler to handle. It allows promises to be returned that allow you to access a function's result at a later time.
 
 You can try this example in JSFiddle with F12 console open. Make sure you add an external resource for jQuery: https://code.jquery.com/jquery-2.2.4.min.js. `doSomethingLater` uses a Deferred object to wrap another function that will be called after a certain amount of time. It then returns a Promise object which will allow that inner functions result to be accessed elsewhere. The `$.when()` statement wraps calls to fived deferred functions (called after 1, 2, 3, 4 and 5 seconds). The inner function it contains will only execute once all those functions have finished executing. Within there the results of the wrapped functions are added to gether.
 
@@ -2689,7 +2685,7 @@ You can try this example in JSFiddle with F12 console open. Make sure you add an
           console.log("Total of all function results is " + totalOfAllResults);
       });
 
-JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)). However, it is not supported in IE, although polyfills are available.
+JavaScript also has a Promise object (see <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" dummy="_">MDN - Promise</a>). However, it is not supported in IE, although polyfills are available.
 
 <hr />
 
@@ -2716,8 +2712,8 @@ JavaScript also has a Promise object (see [MDN](https://developer.mozilla.org/en
 ### <a name="tools-jquery"></a>jQuery
 A library which makes traversing, querying and manipulating the DOM a whole lot easier than using native JavaScript. It also removes some of the horrible efficiency traps which exist. Sophisticated selector queries can be built up. Some functionality not related the DOM is also made available, e.g. the Deferred object and making AJAX calls. The functionality works across many browsers including all IE versions which we would generally be expected to support these days.
 
-[http://jquery.com/](http://jquery.com/)
-[http://api.jquery.com/](http://api.jquery.com/)
+<a href="http://jquery.com/" target="_blank" dummy="_">http://jquery.com/</a>
+<a href="http://api.jquery.com/" target="_blank" dummy="_">http://api.jquery.com/</a>
 
 #### Attaching Event Handlers
 The `on()` method is the most recent way of several to attach event handlers in jQuery. Multiple versions exist but you should **prefer** version where your selector specifies a container for the objects you wish to attach event handlers to. The parameters for this versions are:
@@ -2741,7 +2737,7 @@ Binding an event handler to the results of a jQuery result will only bind to tho
         console.log($(this).text());
     });
 
-[http://api.jquery.com/on/](http://api.jquery.com/on/)
+<a href="http://api.jquery.com/on/" target="_blank" dummy="_">http://api.jquery.com/on/</a>
 
 #### Creating Plugins
 jQuery allows you to create your own `plugins`. Despite the elaborate name, jQuery plugins are just methods which operate on the result of a selector, e.g. `$(".my-class").myPlugin()`. Here is an example which allows you to scroll to the bottom of a scrollable object.
@@ -2783,23 +2779,23 @@ The example below overrides jQuery's `addClass()` method. Firstly the _original_
 This has already been explained in an [earlier section](#tips-deferred-object).
 
 ### <a name="tools-forms"></a>Forms
-[jQuery Form Plugin](http://malsup.com/jquery/form/) is lightweight library which allows you to serialize a form and submit it via AJAX.
+<a href="http://malsup.com/jquery/form/" target="_blank" dummy="_">jQuery Form Plugin</a> is lightweight library which allows you to serialize a form and submit it via AJAX.
 
-[jQuery Validation Plugin](https://jqueryvalidation.org/) is another simple library which makes custom client-side form validation very easy.
+<a href="https://jqueryvalidation.org/" target="_blank" dummy="_">jQuery Validation Plugin</a> is another simple library which makes custom client-side form validation very easy.
 
 ### <a name="tools-shims-and-polyfills"></a>Shims and Polyfills
 The differences between these items seem to be rather subtle. They are more browser-level things so, rather than just enhancing JavaScript, they will also make HTML and CSS features missing from a browser available to you.
 
-A `shim` (also known as a `shiv`) is a library that brings a new API to an older browser version, using only the means of its environment. For example, even when writing JavaScript using ES5 you may well run into compatibility problems if your code has to work in IE8. IE8 does not support many things, e.g. String.prototype.trim(). You can, however, use a library like [es5-shim](https://github.com/es-shims/es5-shim) which will make most of the missing items available to you. In the main it defines missing object methods using JavaScript code from an earlier version than ES5.
+A `shim` (also known as a `shiv`) is a library that brings a new API to an older browser version, using only the means of its environment. For example, even when writing JavaScript using ES5 you may well run into compatibility problems if your code has to work in IE8. IE8 does not support many things, e.g. String.prototype.trim(). You can, however, use a library like <a href="https://github.com/es-shims/es5-shim" target="_blank" dummy="_">es5-shim</a> which will make most of the missing items available to you. In the main it defines missing object methods using JavaScript code from an earlier version than ES5.
 
 A `polyfill` adds something that is missing from a browser altogether. `Babel` is a transpiler commonly used to generate ES5 code from later versions. However, certain things, like Object.assign() are missing from IE altogether and apparently this cannot be recreated efficiently using alternative JavaScript commands that _are_ available. In order to allow Babel-generated ES5 to work with IE you need to use a library called `babel-polyfill`.
 
-[http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used](http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used) contains various alternative ways of trying to explain the above.
+<a href="http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used" target="_blank" dummy="_">http://stackoverflow.com/questions/32148218/why-does-object-assign-require-a-polyfill-when-babel-loader-is-being-used</a> contains various alternative ways of trying to explain the above.
 
-[HTML5 PLEASE](http://html5please.com/) contains a list of polyfills along with recommended use. They are not all perfect and most will have odd things which the writers indicate they haven't resolved.
+<a href="http://html5please.com/" target="_blank" dummy="_">HTML5 PLEASE</a> contains a list of polyfills along with recommended use. They are not all perfect and most will have odd things which the writers indicate they haven't resolved.
 
 ### <a name="tools-functional-and-data"></a>Functional Programming and Data Manipulation
-There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. [Lodash](https://lodash.com/) is a successor to Underscore.js and [Lazy.js](http://danieltao.com/lazy.js/) provides a lazily evaluated equivalent which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
+There are a number of functional programming libraries which provide a lot of functionality for reshaping data structures, particularly objects and arrays. <a href="https://lodash.com/" target="_blank" dummy="_">Lodash</a> is a successor to Underscore.js and <a href="http://danieltao.com/lazy.js/" target="_blank" dummy="_">lazy.js</a> provides a lazily evaluated equivalent which seems to be much more efficient. They perform a lot of the same sort of functionality that LINQ provides in .NET.
 
 Here are a couple of Lodash examples. You will need to add an external resource for a LoDash CDN source if running this in JSFiddle.
 
@@ -2819,7 +2815,7 @@ Here are a couple of Lodash examples. You will need to add an external resource 
 
 <a dummy="_"></a>
 
-Another library called [Immutable](https://facebook.github.io/immutable-js/) provides easy ways to work with immutable data. Many of the functions give the impression of allowing you to change something about a data object whilst, under the bonnet, a new data structure based on the old one is actually generated.
+Another library called <a href="https://facebook.github.io/immutable-js/" target="_blank" dummy="_">Immutable</a> provides easy ways to work with immutable data. Many of the functions give the impression of allowing you to change something about a data object whilst, under the bonnet, a new data structure based on the old one is actually generated.
 
 Immutable data objects a big thing in functional programming. `Redux`, a state container for JavaScript applications, bases it whole operation on its store not being mutated. If some aspect of the data has been changed, the store has to be set to a whole new object, rather than just changing the value of a property. Because of that, the applications which use the store can tell if state has changed using a simple `==` comparison of two objects, as opposed to some potentially laborious deep comparison of all the properties.
 
@@ -2827,14 +2823,14 @@ Immutable data objects a big thing in functional programming. `Redux`, a state c
 The two languages many people would like to be using instead of `ES5` are `ES2015` or `TypeScript`. Since not all browsers support these two languages (IE is the main culprit) it is necessary to use transpilers to convert your code from those languages into ES5 before being sent out in a page request.
 
 #### JavaScript Versions Greater than ES5
-Chrome and Firefox are both kept in line with the latest ES versions. They both understand virtually everything in ES2015 ([http://kangax.github.io/compat-table/es6/](http://kangax.github.io/compat-table/es6/)) and most things in ES2016 ([http://kangax.github.io/compat-table/es2016plus/](http://kangax.github.io/compat-table/es2016plus/)).
+Chrome and Firefox are both kept in line with the latest ES versions. They both understand virtually everything in ES2015 (<a href="http://kangax.github.io/compat-table/es6/" target="_blank" dummy="_">http://kangax.github.io/compat-table/es6/</a>) and most things in ES2016 (<a href="http://kangax.github.io/compat-table/es2016plus/" target="_blank" dummy="_">http://kangax.github.io/compat-table/es2016plus/</a>).
 
 IE is a waste of space and the main reason why we are forced to use transpilers. Edge is significantly better than IE.
 
-`Babel` is the best transpiler for ES2015 or later. It generates pretty readable ES5. `Traceur` is another transpiler. The code it generates is significantly less readable. See [http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/](http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/) for a comparison.
+`Babel` is the best transpiler for ES2015 or later. It generates pretty readable ES5. `Traceur` is another transpiler. The code it generates is significantly less readable. See <a href="http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/" target="_blank" dummy="_">http://ilikekillnerds.com/2015/01/transpiling-wars-6to5-vs-traceur/</a> for a comparison.
 
 #### TypeScript
-[TypeScript](https://www.typescriptlang.org/) is a well-respected alternative to future ES versions by Microsoft. It is superset of all but the latest ES offerings and provides some type safety. The documentation is excellent and you can see what your code transpiles to online at the [playground](https://www.typescriptlang.org/play/index.html).
+<a href="https://www.typescriptlang.org/" target="_blank" dummy="_">TypeScript</a> is a well-respected alternative to future ES versions by Microsoft. It is superset of all but the latest ES offerings and provides some type safety. The documentation is excellent and you can see what your code transpiles to online at the <a href="https://www.typescriptlang.org/play/index.html" target="_blank" dummy="_">playground</a>.
 
 There are also tools available in Chrome which allow you to debug TypeScript directly.
 
@@ -2852,19 +2848,19 @@ The best tools in this category are made by Google and Mozilla. It is probably a
 More superior documentation than this document can offer already exists elsewhere.
 
 #### Google
-[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is often favoured. It provides tools allowing you to detect events handlers that have been attached to a selected element. The link takes you to some excellent documentation.
+<a href="https://developers.google.com/web/tools/chrome-devtools/" target="_blank" dummy="_">Chrome DevTools</a> is often favoured. It provides tools allowing you to detect events handlers that have been attached to a selected element. The link takes you to some excellent documentation.
 
-[Chrome Canary](https://www.google.com/intl/en/chrome/browser/canary.html) is a version of Chrome which receives nightly updates and therefore offers the very latest developer tools from Google. The only downside is some pages may occasionally break because the releases are not always stable.
+<a href="https://www.google.com/intl/en/chrome/browser/canary.html" target="_blank" dummy="_">Chrome Canary</a> is a version of Chrome which receives nightly updates and therefore offers the very latest developer tools from Google. The only downside is some pages may occasionally break because the releases are not always stable.
 
 #### Mozilla
-[Firebug](http://getfirebug.com/) is a plugin for Firefox offering development tools. Once one of the best tools available it is now inferior to Chrome and is also no longer being developed.
+<a href="http://getfirebug.com/" target="_blank" dummy="_">Firebug</a> is a plugin for Firefox offering development tools. Once one of the best tools available it is now inferior to Chrome and is also no longer being developed.
 
-[Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools) are built into Firefox and are the tools Mozilla now maintain instead of Firebug.
+<a href="https://developer.mozilla.org/en-US/docs/Tools" target="_blank" dummy="_">Firefox Developer Tools</a> are built into Firefox and are the tools Mozilla now maintain instead of Firebug.
 
-[Firefox Developer Edition](https://www.mozilla.org/en-GB/firefox/developer/) offers the very latest cutting-edge tools Mozilla have to offer. These will probably be better than Chrome tools in some places at least.
+<a href="https://www.mozilla.org/en-GB/firefox/developer/" target="_blank" dummy="_">Firefox Developer Edition</a> offers the very latest cutting-edge tools Mozilla have to offer. These will probably be better than Chrome tools in some places at least.
 
 ### <a name="tools-jsfiddle"></a>JSFiddle
-[JSFiddle](https://jsfiddle.net/) is a website which allows you to create "web page test situations" or `fiddles`. Its main window is split into 4 panes: 3 input panes allow you to specify `HTML`, `CSS` and `JavaScript`. A fourth pain displays what a page would `output` given the 3 inputs. This gets populated when you click the `Run` button.
+<a href="https://jsfiddle.net/" target="_blank" dummy="_">JSFiddle</a> is a website which allows you to create "web page test situations" or `fiddles`. Its main window is split into 4 panes: 3 input panes allow you to specify `HTML`, `CSS` and `JavaScript`. A fourth pain displays what a page would `output` given the 3 inputs. This gets populated when you click the `Run` button.
 
 In the left-hand sidebar there is an `External Resources` link which allows you to paste URLs to a CDN for external JavaScript libraries, e.g. a jQuery CDN.
 
@@ -2873,9 +2869,9 @@ If you create an account you can save your most useful fiddles.
 Most of the examples in this document were intended for the user to paste into JSFiddle, with the F12 console open so you can see what gets logged.
 
 ### <a name="tools-code-editors"></a>Code Editors
-[WebStorm](https://www.jetbrains.com/webstorm/) is regarded as the best development environment for JavaScript. It costs money.
+<a href="https://www.jetbrains.com/webstorm/" target="_blank" dummy="_">WebStorm</a> is regarded as the best development environment for JavaScript. It costs money.
 
-Two free alternatives that are also highly regarded are [Atom](https://atom.io/) and [Visual Studio Code](https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.co.uk%2F).
+Two free alternatives that are also highly regarded are <a href="https://atom.io/" target="_blank" dummy="_">Atom</a> and <a href="https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.co.uk%2F" target="_blank" dummy="_">Visual Studio Code</a>.
 
 ### <a name="tools-linting"></a>Linting/Hinting
 Linting or hinting JavaScript simply means the process of submitting your code to a tool which then examines the code and returns a list of things it thinks are wrong with it. It is similar to submitting C# code to StyleCop.
@@ -2886,19 +2882,19 @@ It is _far better_ to use these tools as you develop rather than having one big 
 
 Linting tools come in two flavours:
 
-  1. One where you navigate to a web page, paste your JavaScript into some text area, run the tool and wait for its results. [JSLint](http://www.jslint.com/) and [JSHint](http://jshint.com/) are two examples.
-  2. Tools which you integrate with your development environment and which will run on any file which you save. [ESLint](http://eslint.org/) is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation, e.g. "no-inline-comments", will be highlighted. You will also be able to automatically configure your environment to perform different actions depending on the results.
+  1. One where you navigate to a web page, paste your JavaScript into some text area, run the tool and wait for its results. <a href="http://www.jslint.com/" target="_blank" dummy="_">JSLint</a> and <a href="http://jshint.com/" target="_blank" dummy="_">JSHint</a> are two examples.
+  2. Tools which you integrate with your development environment and which will run on any file which you save. <a href="http://eslint.org/" target="_blank" dummy="_">ESLint</a> is one such library. It can be used within a Node.js development environment and its rules are configurable. If your standards vary from the default you can change the level at which a particular violation, e.g. "no-inline-comments", will be highlighted. You will also be able to automatically configure your environment to perform different actions depending on the results.
 
 ### <a name="tools-testing"></a>Testing
 There are many testing frameworks for JavaScript. Most of them allow you to write both unit tests and behaviour-driven tests, which test the behaviour of elements on an HTML page. Often these are used from within a Node.js environment although many frameworks have plugins which allow them to work within Visual Studio projects.
 
-Currently the most popular ones are [Mocha](https://mochajs.org/) and [QUnit](https://qunitjs.com/). Many of the MV* frameworks have there own preferred testing frameworks which are tailored towards their particular ways of doing things. For example, [Jest](https://facebook.github.io/jest/) is preferred for working with React.
+Currently the most popular ones are <a href="https://mochajs.org/" target="_blank" dummy="_">Mocha</a> and <a href="https://qunitjs.com/" target="_blank" dummy="_">QUnit</a>. Many of the MV* frameworks have there own preferred testing frameworks which are tailored towards their particular ways of doing things. For example, <a href="https://facebook.github.io/jest/" target="_blank" dummy="_">Jest</a> is preferred for working with React.
 
-As well as a testing framework for writing the tests, a `test runner` is required to run them. The most commonly used runner is [Karma](https://karma-runner.github.io/1.0/index.html). The tests can be run against all major browsers as well as [Headless Browsers](https://en.wikipedia.org/wiki/Headless_browser), like [PhantomJS](http://phantomjs.org/).
+As well as a testing framework for writing the tests, a `test runner` is required to run them. The most commonly used runner is <a href="https://karma-runner.github.io/1.0/index.html" target="_blank" dummy="_">Karma</a>. The tests can be run against all major browsers as well as <a href="https://en.wikipedia.org/wiki/Headless_browser" target="_blank" dummy="_">Headless Browsers</a>, like <a href="http://phantomjs.org/" target="_blank" dummy="_">PhantomJS</a>.
 
-You can set your environment up so that files are watched and tests are run on any file as soon as it is saved. Code coverage tools, like [Istanbul](https://github.com/gotwarlost/istanbul), provide you with reports that you can view in a browser which indicate code coverage information and highlight script lines that are not currently covered by any tests.
+You can set your environment up so that files are watched and tests are run on any file as soon as it is saved. Code coverage tools, like <a href="https://github.com/gotwarlost/istanbul" target="_blank" dummy="_">Istanbul</a>, provide you with reports that you can view in a browser which indicate code coverage information and highlight script lines that are not currently covered by any tests.
 
-This example uses [Jasmine](https://jasmine.github.io/) for the test framework and a library called [jasmin-jquery](https://github.com/velesin/jasmine-jquery), which provides extensions to allow you to locate and test elements of a page using jQuery selectors. Firstly, an implementation of an `addClass()` jQuery plugin is shown. Two tests have been written to check the triggering of events, one of which fails. An implementation which makes both tests pass is then shown. Unfortunately this code was written to operate within a Node.js environment so it cannot be run from within JSFiddle.
+This example uses <a href="https://jasmine.github.io/" target="_blank" dummy="_">Jasmine</a> for the test framework and a library called <a href="https://github.com/velesin/jasmine-jquery" target="_blank" dummy="_">jasmin-jquery</a>, which provides extensions to allow you to locate and test elements of a page using jQuery selectors. Firstly, an implementation of an `addClass()` jQuery plugin is shown. Two tests have been written to check the triggering of events, one of which fails. An implementation which makes both tests pass is then shown. Unfortunately this code was written to operate within a Node.js environment so it cannot be run from within JSFiddle.
 
 Original plugin code:
 
@@ -2964,15 +2960,15 @@ The `$.fn.addClass` plugin was modified until both tests passed:
 ### <a name="tools-documentation-libraries"></a>Documentation Tools
 If you find yourself writing common code libraries that will be utilised by other people not working on the same project, documentation tools can provide a rich complement to your code.
 
-One example of a documentation tool is [JSDoc](http://usejsdoc.org/). If you add comments alongside the various entities within your code containing special tags JSDoc will then generate some documentation for you. For example, you might add a comment above a function containing an [@function](http://usejsdoc.org/tags-function.html) tag and some [@param](http://usejsdoc.org/tags-param.html) tags. You can also help get across to the user things which you can't restrict within the actual code itself, e.g. if a property of an object is intended to be private or protected.
+One example of a documentation tool is <a href="http://usejsdoc.org/" target="_blank" dummy="_">JSDoc</a>. If you add comments alongside the various entities within your code containing special tags JSDoc will then generate some documentation for you. For example, you might add a comment above a function containing an <a href="http://usejsdoc.org/tags-function.html" target="_blank" dummy="_">@function</a> tag and some <a href="http://usejsdoc.org/tags-param.html" target="_blank" dummy="_">@param</a> tags. You can also help get across to the user things which you can't restrict within the actual code itself, e.g. if a property of an object is intended to be private or protected.
 
 ### <a name="tools-graphics"></a>Graphics Libraries
 Here are some examples of libraries which can provide you with some fancy graphics:
 
-[Raphaël](http://dmitrybaranovskiy.github.io/raphael/) - vector graphics
-[three.js](https://threejs.org/) - 3D graphics using WebGL
-[Velocity.js](Velocity.js) and [GreenSock](https://greensock.com/get-started-js) - fast animations
-[Processing.js](http://processingjs.org/exhibition/) - fancy graphics
+<a href="http://dmitrybaranovskiy.github.io/raphael/" target="_blank" dummy="_">Raphaël</a> - vector graphics
+<a href="https://threejs.org/" target="_blank" dummy="_">three.js</a> - 3D graphics using WebGL
+<a href="Velocity.js" target="_blank" dummy="_">Velocity.js</a> and <a href="https://greensock.com/get-started-js" target="_blank" dummy="_">GreenSock</a> - fast animations
+<a href="http://processingjs.org/exhibition/" target="_blank" dummy="_">Processing.js</a> - fancy graphics
 
 Here is an example drawing an analogue clock on the page using Processing.js. You can use JSFiddle.
 
@@ -3020,41 +3016,41 @@ OK, it's not the most sophisticated looking clock but it wouldn't take too much 
 ### <a name="tools-mv-frameworks"></a>MV* Frameworks
 There is a long list of JavaScript website frameworks which can replace .NET MVC or be integrated with it. The list looks like it will continue to grow forever. Here are a few popular ones. Different ones have different strengths and their own religion of people who swear by it. Many of them use the concept of two-way data binding.
 
-[AngularJS](https://angularjs.org/) is the most comprehensive one which looks after more website areas than all the others. It uses dependency inject all over the place.
+<a href="https://angularjs.org/" target="_blank" dummy="_">AngularJS</a> is the most comprehensive one which looks after more website areas than all the others. It uses dependency inject all over the place.
 
-[React](https://facebook.github.io/react/) is another comprehensive framework. It promotes the insertion of HTML within JavaScript. In actual fact it is JSX, rather than HTML strings, and gets converted by React into JavaScript. This may look dirty but seems to work quite well. It does not use two-way data binding but instead the preference is to use it in conjunction with a data state library like, [Redux](http://redux.js.org/docs/basics/UsageWithReact.html). They call it a `unidirectional data flow`. Data flows from the store to the page only. Page events trigger actions which are sent to the store and the store decides what data should be changed as a result of the action. If the data state has changed the page will be notified of the new data. It definitely requires you to write more boiler plate code so the benefits would not be seen when writing a small website.
+<a href="https://facebook.github.io/react/" target="_blank" dummy="_">React</a> is another comprehensive framework. It promotes the insertion of HTML within JavaScript. In actual fact it is JSX, rather than HTML strings, and gets converted by React into JavaScript. This may look dirty but seems to work quite well. It does not use two-way data binding but instead the preference is to use it in conjunction with a data state library like, <a href="http://redux.js.org/docs/basics/UsageWithReact.html" target="_blank" dummy="_">Redux</a>. They call it a `unidirectional data flow`. Data flows from the store to the page only. Page events trigger actions which are sent to the store and the store decides what data should be changed as a result of the action. If the data state has changed the page will be notified of the new data. It definitely requires you to write more boiler plate code so the benefits would not be seen when writing a small website.
 
-Other popular solutions that are more lightweight include [Aurelia](http://aurelia.io/), [KnockoutJS](http://knockoutjs.com/) and [Vue](https://vuejs.org/). These could serve your needs better, e.g. if you want to use ASP.NET MVC but would like to write your views in something other than Razor.
+Other popular solutions that are more lightweight include <a href="http://aurelia.io/" target="_blank" dummy="_">Aurelia</a>, <a href="http://knockoutjs.com/" target="_blank" dummy="_">KnockoutJS</a> and <a href="https://vuejs.org/" target="_blank" dummy="_">Vue</a>. These could serve your needs better, e.g. if you want to use ASP.NET MVC but would like to write your views in something other than Razor.
 
 ### <a name="tools-ui-libraries"></a>User Interface Libraries
 If you aren't planning on using an MV* framework there are lots of other frameworks around which provide you with helpful building blocks for a UI. Some are paid for, like [Kendo]().
 
-[jQuery UI](https://jqueryui.com/) is an example of a free library which contains all sorts of widgets to help reduce the amount of HTML and JavaScript you have to manually put together to construct a decent looking user interface. It includes functionality such as draggable or resizable items and accordion widgets.
+<a href="https://jqueryui.com/" target="_blank" dummy="_">jQuery UI</a> is an example of a free library which contains all sorts of widgets to help reduce the amount of HTML and JavaScript you have to manually put together to construct a decent looking user interface. It includes functionality such as draggable or resizable items and accordion widgets.
 
-If you like your JavaScript you will almost certainly be drawn to the environment known as [Node.js](https://nodejs.org/en/). Node.js provides the runtime but it is actually [npm](https://www.npmjs.com/) (Node Package Manager) which provides the real power in the form of the
+If you like your JavaScript you will almost certainly be drawn to the environment known as <a href="https://nodejs.org/en/" target="_blank" dummy="_">Node.js</a>. Node.js provides the runtime but it is actually <a href="https://www.npmjs.com/" target="_blank" dummy="_">npm</a> (Node Package Manager) which provides the real power in the form of the
 "largest ecosystem of open source libraries in the world".
 
-Here is a link to [most starred npm packages](https://www.npmjs.com/browse/star) where you can gauge some idea of the facilities available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
+Here is a link to <a href="https://www.npmjs.com/browse/star" target="_blank" dummy="_">most starred npm packages</a> where you can gauge some idea of the facilities available to you. If you want to develop using the MV* frameworks mentioned further up you will likely end up working with Node.js and npm.
 
 ### <a name="tools-external-references"></a>External References
 Some [slightly random] links to pages which may be of interest.
 
-[W3Schools JavaScript Tutorial](http://www.w3schools.com/js)
+<a href="http://www.w3schools.com/js" target="_blank" dummy="_">W3Schools JavaScript Tutorial</a>
 
-[Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml) - useful style guide tips.
+<a href="https://google.github.io/styleguide/javascriptguide.xml" target="_blank" dummy="_">Google JavaScript Style Guide</a> - useful style guide tips.
 
-[JavaScript 101](http://hsablonniere.github.io/markleft/prezas/javascript-101.html)
+<a href="http://hsablonniere.github.io/markleft/prezas/javascript-101.html" target="_blank" dummy="_">JavaScript 101</a>
 
-[Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
+<a href="http://javascript.crockford.com/code.html" target="_blank" dummy="_">Code Conventions for the JavaScript Programming Language</a>
 
-[7 Essential JavaScript Functions](https://davidwalsh.name/essential-javascript-functions)
+<a href="https://davidwalsh.name/essential-javascript-functions" target="_blank" dummy="_">7 Essential JavaScript Functions</a>
 
-[Seven JS Concepts You Must Understand Before Your Next Job Interview](https://gist.github.com/ericelliott/263f24b5ad987e2f09d2)
+<a href="https://gist.github.com/ericelliott/263f24b5ad987e2f09d2" target="_blank" dummy="_">Seven JS Concepts You Must Understand Before Your Next Job Interview</a>
 
-[Stop Nesting Functions! (But Not All of Them)](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315)
+<a href="http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315" target="_blank" dummy="_">Stop Nesting Functions! (But Not All of Them)</a>
 
-[JavaScript Common Mistakes](http://www.w3schools.com/js/js_mistakes.asp)
+<a href="http://www.w3schools.com/js/js_mistakes.asp" target="_blank" dummy="_">JavaScript Common Mistakes</a>
 
-[16 Common JavaScript Gotchas](http://www.standardista.com/javascript/15-common-javascript-gotchas/)
+<a href="http://www.standardista.com/javascript/15-common-javascript-gotchas/" target="_blank" dummy="_">16 Common JavaScript Gotchas</a>
 
-[JavaScript: The Good Parts Paperback by Douglas Crockford](https://www.amazon.co.uk/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742) - one of the few really good books on ES5 and earlier. We have PDF version.
+<a href="https://www.amazon.co.uk/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742" target="_blank" dummy="_">JavaScript: The Good Parts Paperback by Douglas Crockford</a> - one of the few really good books on ES5 and earlier. We have PDF version.
