@@ -284,7 +284,7 @@ This is exactly like a function expression but the function is assigned to a pro
 There are situations where you may want to define a function _without_ explicitly assigning it to a variable. For example, you may want to specify a callback method or assign an event handler. In this example the callback function defined as the first parameter is called once after 2 seconds.
 
     setTimeout(function () {
-      alert("Boo!");
+        alert("Boo!");
     }, 2000);
 
 ##### Named Function Expressions
@@ -380,7 +380,7 @@ You can also supply **more** parameters to simulate the equivalent of a C# _para
     var sum = function () {
         var result = 0;
         for (var i = 0; i < arguments.length; i++) {
-          result += arguments[i];
+            result += arguments[i];
         }
         return result;
     };
