@@ -9,7 +9,7 @@ export default {
   // NOTE: In his example debugger WORKS.
 
   //devtool: 'cheap-module-eval-source-map',
-  // source-map dDID work for me - the debugger statements broke at the line I put them on.
+  // source-map DID work for me - the debugger statements broke at the line I put them on.
   //devtool: 'source-map',        // Worked.
   devtool: 'eval-source-map',     // Worked.
   //devtool: 'cheap-module-source-map',     // Didn't work.
@@ -19,6 +19,8 @@ export default {
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
     //path.resolve(__dirname, 'src/index')
+
+    // Important that the app entry point is defined last.
     './src/index'
   ],
   target: 'web',

@@ -1,4 +1,4 @@
-import "babel-polyfill";      // DC: object.assign is one thing that cannot be transpile to ES5.
+import "babel-polyfill";      // DC: object.assign is one thing that cannot be transpiled to ES5.
 import React from "react";
 import { render } from "react-dom";
 import configureStore from "./store/configureStore";
