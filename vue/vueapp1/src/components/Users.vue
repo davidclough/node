@@ -7,7 +7,7 @@
     </form>
     <ul>
       <li v-for='user in users'>
-        <input type='checkbox' v-model='user.contacted' class='toggle' />
+        <input type='checkbox' v-model='user.contacted' />
         <span :class='{contacted: user.contacted}'>
           {{user.name}}: {{user.email}}
         </span>
@@ -60,7 +60,13 @@ export default {
   created: function () {
     this.$http.get('https://jsonplaceholder.typicode.com/users')
       .then(function (response) {
+        // OBSERVATION: If do this on this.users, after setting that, the toggling does not work.
+        response.data.forEach(function (user) {
+          user.contacted = false;
+        });
+
         this.users = response.data;
+        // this.users = response.data.concat(response.data).concat(response.data);
       });
   }
 }
