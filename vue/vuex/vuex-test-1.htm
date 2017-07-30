@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Vue Test</title>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css" />
+	<style>
+		html {
+			font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+			font-size: 11px;
+		}
+		#widgetsContainer[v-cloak] {
+			display: none;
+		}
+		body {
+			background: #9ecbff;
+			margin: 20px;
+			padding: 20px;
+			min-height: 200px;
+		}
+		.button {
+			display: block;
+			position: fixed;
+			background-color: #ff0;
+			padding: 10px;
+			cursor: pointer;
+			font-weight: bold;
+			border: 1px solid #bb0;
+			border-radius: 5px;
+			opacity: 0.6;
+		    transition: all 0.2s ease 0s;
+		}
+		.button:hover {
+			opacity: 1;
+		}
+		#increase {
+			top: 40px;
+			right: 40px;
+		}
+		#decrease {
+			top: 80px;
+			right: 40px;
+		}
+		.counter {
+			font-size: 32px;
+		}
+	</style>
+</head>
+<body>
+	<a id="increase" class="button">Increase by Random</a>
+	<a id="decrease" class="button">Decrease by Random</a>
+	<div v-cloak id="widgetsContainer">
+		<div v-html="this.$store.state.count" class="counter"></div>
+		<div v-html="this.$store.state.count" class="counter"></div>
+		<div v-html="this.$store.state.count" class="counter"></div>
+		
+	    <ul>
+	        <li v-for="(v, k, i) in person">
+	            {{i}}: {{k}} - {{v}}
+	        </li>
+	    </ul>
+		
+	    <ul>
+	        <li v-for="i in 5">
+	            {{i}}
+	        </li>
+	    </ul>
+		
+	    <ul>
+	        <li v-for="widget in widgets" v-bind:class="[widget.line]">
+	            <span v-html="widget.tab"></span><a v-bind:href="widget.url" target="_blank">{{widget.text}}</a> {{widget.description}}
+	        </li>
+	    </ul>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.3.1/vuex.min.js"></script>
+
+	<script>
+		// const Counter = {
+		//   template: `<div>{{ count }}</div>`,
+		//   computed: {
+		//     count () {
+		//       return store.state.count
+		//     }
+		//   }
+		// }
+
+		const store = new Vuex.Store({
+		  state: {
+		    count: 1
+		  },
+		  mutations: {
+		    increment (state, n) {
+			    state.count += n
+			},
+		    decrement (state, n) {
+			    state.count -= n
+			}
+		  }
+		})
+
+		$(function() {
+			// data, methods, watchers, computed
+			let demo = new Vue({
+			    el: '#widgetsContainer',
+			    // provide the store using the "store" option.
+			    // this will inject the store instance to all child components.
+			    store,
+		    	//components: { Counter },
+			    data: {
+			    	person: {
+		    			firstName: "Frodo",
+		    			surname: "Baggins",
+		    			fingers: 9
+			    	},
+			        widgets: [
+			        	{
+			        		description: "hello",
+			        		text: "GO TO",
+			        		url: "http://www.bbc.co.uk/sport/football"
+			        	}
+			        ]
+			    },
+			    methods: {
+			    }
+			});
+
+			// $("#widgetsContainer").removeClass("hidden");
+		})
+
+		let lastRandomLink;
+
+		$("body").on("click", "#increase", function() {
+			let rnd = Math.floor(Math.random() * 10) +1;
+			store.commit('increment', rnd);
+		});		
+
+		$("body").on("click", "#decrease", function() {
+			let rnd = Math.floor(Math.random() * 10) +1;
+			store.commit('decrement', rnd);
+		});		
+	</script>
+</body>
