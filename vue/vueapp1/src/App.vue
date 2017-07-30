@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <img class='logo' src="./assets/logo.png">
-    <ul class='links'>
-      <li><router-link to="/users">Users</router-link>
-      </li><li><router-link to="/">Test</router-link>
-      </li><li><router-link to="/hello">Hello</router-link></li>
-    </ul>
+    <links></links>
 
     <router-view msg='msg via <router-view>'></router-view>
     <!-- <test msg='msg via <test>'></test> -->
@@ -13,11 +9,13 @@
 </template>
 
 <script>
+  import Links from '@/components/Links'
   //import Test from '@/components/Test'
 
   export default {
     name: 'app'
     //, components: { Test }
+    , components: { Links }
   }
 </script>
 
