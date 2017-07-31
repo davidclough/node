@@ -2,7 +2,11 @@
   <div class='row'>
     <!-- <h1>{{title}}</h1> -->
     <ul class='squares'>
-      <li v-for='i in squares.length' v-bind:key='"square" + rowNumber + i'  v-bind:id='"square" + rowNumber + i'>{{squares[i - 1]}}</li>
+      <li v-for='i in squares.length' v-bind:key='"square" + rowNumber + i'
+          v-bind:id='"square" + rowNumber + i' v-on:click='enterHit'>
+        <span>{{squares[i - 1]}}</span>
+        <input type='hidden' v-model:value='squares[i - 1]' />
+      </li>
     </ul>
   </div>
 </template>
@@ -28,15 +32,10 @@ export default {
     }
   },
   methods: {
-    // greet: function (greeting) {
-    //   alert(greeting);
-    // },
-    // press: function (e) {
-    //   console.log(e.target.value);
-    // },
-    // enterHit: function (e) {
-    //   console.log('enterHit');
-    // }
+    enterHit: function (e) {
+      this.squares[0] = 'X';
+      //console.log('enterHit');
+    }
   }
 }
 </script>
