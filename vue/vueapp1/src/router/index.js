@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Test from '@/components/Test'
 import Users from '@/components/Users'
+import NoughtsAndCrossesBoard from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoard'
 
 Vue.use(Router)
 
@@ -16,7 +17,8 @@ export default new Router({
   routes: [
     { path: '/hello', name: 'Hello', component: Hello },
     { path: '/', component: Test },
-    { path: '/users', component: Users }
+    { path: '/users', component: Users },
+    { path: '/game', component: NoughtsAndCrossesBoard }
   ],
 
   

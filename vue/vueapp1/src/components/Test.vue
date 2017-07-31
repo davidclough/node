@@ -16,6 +16,9 @@
     <label>Last Name:</label><input type='text' v-model='user.lastName' />
     <h3>{{fullName}}</h3>
     <h2>{{msg}}</h2>
+
+    <input type='date' />
+    <input type='time' />
   </div>
 </template>
 

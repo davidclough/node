@@ -13,6 +13,7 @@
           { route: '/users', text: 'Users' },
           { route: '/', text: 'Test' },
           { route: '/hello', text: 'Hello' },
+          { route: '/game', text: 'Game' }
         ]
       }
     }
