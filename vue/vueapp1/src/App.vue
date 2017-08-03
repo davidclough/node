@@ -19,6 +19,8 @@
   }
 </script>
 
+<style src="./test.less" lang="less"></style>
+
 <style>
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
