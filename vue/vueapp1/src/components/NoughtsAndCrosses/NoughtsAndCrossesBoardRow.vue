@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .row {
     display: inline-block; 
     /*float: left;
@@ -49,25 +49,27 @@ export default {
   .squares {
     padding: 0;
     margin: 0;
-  }
-  .squares li {
-    display: inline-block;
-    list-style: none;
-    border: 0 solid #999;
-    border-width: 0 4px;
-    width: 25vw;
-    height: 25vh;
-    text-align: central;
-    line-height: 25vh;
-    font-size: 22vh;
-    font-weight: bold;
-    /* https://stackoverflow.com/questions/4053575/inline-block-element-with-no-text-renders-differently */
-    vertical-align: bottom;
-  }
-  .squares li:first-of-type {
-    border-left: none;
-  }
-  .squares li:last-of-type {
-    border-right: none;
+
+    li {
+      display: inline-block;
+      list-style: none;
+      border: 0 solid #999;
+      border-width: 0 4px;
+      width: 25vw;
+      height: 25vh;
+      text-align: central;
+      line-height: 25vh;
+      font-size: 22vh;
+      font-weight: bold;
+      /* https://stackoverflow.com/questions/4053575/inline-block-element-with-no-text-renders-differently */
+      vertical-align: bottom;
+      
+      &:first-of-type {
+        border-left: none;
+      }
+      &:last-of-type {
+        border-right: none;
+      }
+    }
   }
 </style>
