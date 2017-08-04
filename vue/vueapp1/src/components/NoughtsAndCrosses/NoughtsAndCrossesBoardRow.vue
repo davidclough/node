@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .row {
     display: inline-block; 
     /*float: left;
