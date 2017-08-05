@@ -34,4 +34,8 @@
   .links li:last-of-type {
     border: none;
   }
+  a {
+      display: inline-block;
+      transform: rotate(7deg);
+  }
 </style>
