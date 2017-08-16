@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Slots from '@/components/Slots/Slots';
 import Test from '@/components/Test';
 import Users from '@/components/Users';
-import NoughtsAndCrossesBoard from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoard';
+import ButtonCounter from '@/components/ButtonCounter/ButtonCounter';
 
 Vue.use(Router);
 
@@ -18,7 +18,7 @@ export default new Router({
     { path: '/slots', name: 'Slots', component: Slots },
     { path: '/', component: Test },
     { path: '/users', component: Users },
-    { path: '/game', component: NoughtsAndCrossesBoard }
+    { path: '/button-counter', component: ButtonCounter }
   ],
 
   base: __dirname

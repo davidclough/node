@@ -13,7 +13,7 @@
           { route: '/users', text: 'Users' },
           { route: '/', text: 'Test' },
           { route: '/slots', text: 'Slots' },
-          { route: '/game', text: 'Game' }
+          { route: '/button-counter', text: 'Button Counter' }
         ]
       };
     }
