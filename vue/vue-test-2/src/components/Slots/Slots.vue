@@ -15,7 +15,7 @@
 </template>
 
 <<script>
-  import NamedSlots from '@/components/Slots/NamedSlots'
+  import NamedSlots from '@/components/Slots/NamedSlots';
 
   export default {
     name: 'slots',
@@ -24,14 +24,14 @@
     data() {
       return {
         title: 'Named Slots and Default Slot'
-      }
+      };
     },
     methods: {
     },
     computed: {
     },
     components: { NamedSlots }
-  }
+  };
 </script>
 
 <style scoped lang="less">

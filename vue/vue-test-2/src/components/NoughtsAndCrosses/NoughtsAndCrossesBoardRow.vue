@@ -25,19 +25,19 @@ export default {
   },
   data() {
     return {
-      title: 'Noughts and Crosses Row',
+      title: 'Noughts and Crosses Row'
       // pieces: [
       //   null, 'X', 'O'
       // ]
-    }
+    };
   },
   methods: {
     enterHit: function (e) {
       this.squares[0] = 'X';
-      //console.log('enterHit');
+      // console.log('enterHit');
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

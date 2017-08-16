@@ -19,13 +19,13 @@
     },
     data() {
       return {
-      }
+      };
     },
     methods: {
     },
     computed: {
     }
-  }
+  };
 </script>
 
 <style scoped lang="less">

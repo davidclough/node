@@ -8,7 +8,7 @@
 </template>
 
 <<script>
-import NoughtsAndCrossesBoardRow from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoardRow'
+import NoughtsAndCrossesBoardRow from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoardRow';
 
 export default {
   name: 'noughts-and-crosses-board',
@@ -22,7 +22,7 @@ export default {
         [null, null, 'X'],
         ['X', null, null]
       ]
-    }
+    };
   },
   methods: {
     // greet: function (greeting) {
@@ -37,11 +37,11 @@ export default {
   },
   computed: {
     // this in arrow functions is bound to the parent context, not the object we are currently in.
-    ////fullName: () => this.user.firstName + ' ' + this.user.lastName
+    // fullName: () => this.user.firstName + ' ' + this.user.lastName
     // fullName: function () { return this.user.firstName + ' ' + this.user.lastName; }
-  }
-  , components: { NoughtsAndCrossesBoardRow }
-}
+  },
+  components: { NoughtsAndCrossesBoardRow }
+};
 </script>
 
 <style scoped>

@@ -36,7 +36,7 @@ export default {
     }
   },
   data() {
-    let meat = 'Meat', potatoes = 'Potatoes';
+    const [meat, potatoes] = [']Meat', 'Potatoes'];
 
     return {
       title: 'Test',
@@ -53,7 +53,7 @@ export default {
       toggleAB: meat,
       a: meat,
       b: potatoes
-    }
+    };
   },
   methods: {
     greet: function (greeting) {
@@ -68,10 +68,10 @@ export default {
   },
   computed: {
     // this in arrow functions is bound to the parent context, not the object we are currently in.
-    ////fullName: () => this.user.firstName + ' ' + this.user.lastName
-    fullName: function () { return this.user.firstName + ' ' + this.user.lastName; }
+    // fullName: () => this.user.firstName + ' ' + this.user.lastName
+    fullName: function () { return `${this.user.firstName} ${this.user.lastName}`; }
   }
-}
+};
 </script>
 
 <style scoped>

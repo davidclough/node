@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  import Links from '@/components/Links'
-  //import Test from '@/components/Test'
+  import Links from '@/components/Links';
+  // import Test from '@/components/Test'
 
   export default {
-    name: 'app'
-    //, components: { Test }
-    , components: { Links }
-  }
+    name: 'app',
+    // , components: { Test }
+    components: { Links }
+  };
 </script>
 
 <style src="./test.less" lang="less"></style>

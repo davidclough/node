@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Slots from '@/components/Slots/Slots'
-import Test from '@/components/Test'
-import Users from '@/components/Users'
-import NoughtsAndCrossesBoard from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoard'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Slots from '@/components/Slots/Slots';
+import Test from '@/components/Test';
+import Users from '@/components/Users';
+import NoughtsAndCrossesBoard from '@/components/NoughtsAndCrosses/NoughtsAndCrossesBoard';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   // DC: I needed to add this to get it to recognise the different route.
@@ -21,9 +21,8 @@ export default new Router({
     { path: '/game', component: NoughtsAndCrossesBoard }
   ],
 
-  
   base: __dirname
-})
+});
 
 // export default new Router({
 //   routes: [
@@ -32,8 +31,6 @@ export default new Router({
 //       name: 'test',
 //       component: Test
 //     },
-
-
 
 //     {
 //       path: '/hello',

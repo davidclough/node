@@ -15,9 +15,9 @@
           { route: '/slots', text: 'Slots' },
           { route: '/game', text: 'Game' }
         ]
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

@@ -42,7 +42,7 @@ export default {
         //   contacted: false
         // }
       ]
-    }
+    };
   },
   methods: {
     addUser: function (e) {
@@ -61,7 +61,7 @@ export default {
     this.$http.get('https://jsonplaceholder.typicode.com/users')
       .then(function (response) {
         // OBSERVATION: If do this on this.users, after setting that, the toggling does not work.
-        response.data.forEach(function (user) {
+        response.data.forEach((user) => {
           user.contacted = false;
         });
 
@@ -69,7 +69,7 @@ export default {
         // this.users = response.data.concat(response.data).concat(response.data);
       });
   }
-}
+};
 </script>
 
 <style scoped>
