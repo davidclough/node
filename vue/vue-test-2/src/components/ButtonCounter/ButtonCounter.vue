@@ -7,11 +7,14 @@
     <counting-button v-on:increment="incrementTotal"></counting-button>
     <counting-button v-on:increment="incrementTotal"></counting-button>
     <counting-button v-on:increment="incrementTotal"></counting-button>
+    
+    <multi-select />
   </div>
 </template>
 
 <<script>
 import CountingButton from '@/components/ButtonCounter/CountingButton';
+import MultiSelect from '@/components/MultiSelect/MultiSelect';
 
 export default {
   name: 'button-counter',
@@ -30,7 +33,7 @@ export default {
   },
   computed: {
   },
-  components: { CountingButton }
+  components: { CountingButton, MultiSelect }
 };
 </script>
 
