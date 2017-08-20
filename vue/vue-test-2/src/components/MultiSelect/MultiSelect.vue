@@ -6,7 +6,7 @@
     </select>
     <div class='selected-container'>
       <selected-item v-for='selected in selectedItems' 
-                     :value='selected.value.toString()' :text='selected.text' 
+                     :value='selected.value' :text='selected.text' 
                      @itemDeselected='itemDeselected' />
     </div>
   </div>
