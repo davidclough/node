@@ -67,13 +67,13 @@
 <style scoped lang='less'>
   .multi-select {
     width: 200px;
-    box-sizing: border-box;
     text-align: left;
     background-color: #b00;
     position: relative;
 
     > select {
       width: 100%;
+      overflow-y: auto;
     }
 
     .selected-container {

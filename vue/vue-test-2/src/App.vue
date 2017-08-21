@@ -22,6 +22,14 @@
 <style src="./test.less" lang="less"></style>
 
 <style>
+  /* https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
