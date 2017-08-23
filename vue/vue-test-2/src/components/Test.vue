@@ -3,7 +3,12 @@
     <h1>{{title}}</h1>
     <input type='text' v-model='title' />
     <input type='checkbox' v-model='showUser' />
-    <p v-if="showUser">{{user.firstName}}</p>
+    <!-- <transition name="fade">
+      <p v-if="showUser">{{user.firstName}}</p>
+    </transition> -->
+    <transition name="slide">
+      <div class='sausages' v-if="showUser">{{user.firstName}}{{user.firstName}}</div>
+    </transition>
     <ul>
       <li v-for="item in items">{{item.title}}</li>
     </ul>
@@ -74,6 +79,46 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang='less'>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 
+  .sausages {
+    overflow: hidden;
+  }
+  .slide-enter-active {
+    transition: all 0.3s;// ease;
+  }
+  .slide-leave-active {
+    transition: all 0.3s;// cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-enter, .slide-leave-to {
+    height: 0;
+  }  
+  .slide-leave, .slide-enter-to {
+    height: 18px;   // Problem is this is a hard-coded height.
+  }  
+
+
+
+
+
+
+  /* Enter and leave animations can use different */
+  /* durations and timing functions.              */
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
+  }  
 </style>
