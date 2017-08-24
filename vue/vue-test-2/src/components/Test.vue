@@ -3,11 +3,26 @@
     <h1>{{title}}</h1>
     <input type='text' v-model='title' />
     <input type='checkbox' v-model='showUser' />
-    <!-- <transition name="fade">
+
+    <transition v-on:enter="enterSlidily" v-on:leave="leaveSlidily">
+      <div class='' v-if="showUser">{{user.firstName}}{{user.firstName}}{{user.firstName}}{{user.firstName}}{{user.firstName}}</div>
+    </transition>
+
+    <transition v-on:enter="enter" v-on:leave="leave">
+      <div class='' v-if="showUser">{{user.firstName}}{{user.firstName}}{{user.firstName}}{{user.firstName}}</div>
+    </transition>
+
+    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:after-enter="afterEnter" v-on:enter-cancelled="enterCancelled"
+                v-on:before-leave="beforeLeave" v-on:leave="leave" v-on:after-leave="afterLeave" v-on:leave-cancelled="leaveCancelled">
+      <div class='' v-if="showUser">{{user.firstName}}{{user.firstName}}{{user.firstName}}</div>
+    </transition>
+
+    <transition name="slide-css">
+      <div class='thing-being-slid' v-if="showUser">{{user.firstName}}{{user.firstName}}</div>
+    </transition>
+
+    <transition name="fade">
       <p v-if="showUser">{{user.firstName}}</p>
-    </transition> -->
-    <transition name="slide">
-      <div class='sausages' v-if="showUser">{{user.firstName}}{{user.firstName}}</div>
     </transition>
     <ul>
       <li v-for="item in items">{{item.title}}</li>
@@ -32,6 +47,8 @@
 </template>
 
 <<script>
+import Velocity from 'velocity-animate';
+
 export default {
   name: 'test',
   props: {
@@ -41,7 +58,7 @@ export default {
     }
   },
   data() {
-    const [meat, potatoes] = [']Meat', 'Potatoes'];
+    const [meat, potatoes] = ['Meat', 'Potatoes'];
 
     return {
       title: 'Test',
@@ -69,6 +86,62 @@ export default {
     },
     enterHit: function (e) {
       console.log('enterHit');
+    },
+
+    // JavaScript Hooks - https://vuejs.org/v2/guide/transitions.html#JavaScript-Hooks
+    // Also see my test: https://jsfiddle.net/davidclough/pxtz350p/5/
+
+    // --------
+    // ENTERING
+    // --------
+    beforeEnter: function (el) {
+      // ...
+    },
+    // the done callback is optional when
+    // used in combination with CSS
+    enter: function (el, done) {
+      // ...
+      // done()
+      Velocity(el, { rotateZ: '360deg' }, { loop: 2, complete: done });
+    },
+    afterEnter: function (el) {
+      // ...
+    },
+    enterCancelled: function (el) {
+      // ...
+    },
+    // --------
+    // LEAVING
+    // --------
+    beforeLeave: function (el) {
+      // ...
+    },
+    // the done callback is optional when
+    // used in combination with CSS
+    leave: function (el, done) {
+      // ...
+      // done()
+      Velocity(el, { rotateZ: '100deg' }, { loop: 2 });
+      Velocity(el, {
+        rotateZ: '45deg',
+        translateY: '30px',
+        translateX: '30px',
+        opacity: 0
+      }, { complete: done });
+    },
+    afterLeave: function (el) {
+      // ...
+    },
+    // leaveCancelled only available with v-show
+    leaveCancelled: function (el) {
+      // ...
+    },
+
+    enterSlidily: function (el, done) {
+      Velocity(el, 'slideDown', { complete: done });
+    },
+    leaveSlidily: function (el, done) {
+      Velocity(el, 'slideUp', { complete: done });
     }
   },
   computed: {
@@ -87,21 +160,21 @@ export default {
     opacity: 0;
   }
 
-  .sausages {
+  .thing-being-slid {
     overflow: hidden;
   }
-  .slide-enter-active {
+  .slide-css-enter-active {
     transition: all 0.3s;// ease;
   }
-  .slide-leave-active {
+  .slide-css-leave-active {
     transition: all 0.3s;// cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .slide-enter, .slide-leave-to {
+  .slide-css-enter, .slide-css-leave-to {
     height: 0;
-  }  
-  .slide-leave, .slide-enter-to {
+  }
+  .slide-css-leave, .slide-css-enter-to {
     height: 18px;   // Problem is this is a hard-coded height.
-  }  
+  }
 
 
 
