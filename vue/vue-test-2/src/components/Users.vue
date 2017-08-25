@@ -6,18 +6,22 @@
       <input type='submit' text='Add New User' />
     </form>
     <ul>
-      <li v-for='user in users'>
+    <transition-group v-on:enter="enterSlidily" v-on:leave="leaveSlidily">
+      <li v-for='user in users' :key='user.name'>
         <input type='checkbox' v-model='user.contacted' />
         <span :class='{contacted: user.contacted}'>
           {{user.name}}: {{user.email}}
         </span>
         <button v-on:click='deleteUser(user)'>X</button>
       </li>
+    </transition-group>
     </ul>
   </div>
 </template>
 
-<<script>
+<script>
+import Velocity from 'velocity-animate';
+
 export default {
   name: 'users',
   props: {
@@ -55,6 +59,12 @@ export default {
     },
     deleteUser: function (user) {
       this.users.splice(this.users.indexOf(user), 1);
+    },
+    enterSlidily: function (el, done) {
+      Velocity(el, 'slideDown', { complete: done });
+    },
+    leaveSlidily: function (el, done) {
+      Velocity(el, 'slideUp', { complete: done });
     }
   },
   created: function () {
