@@ -61,7 +61,7 @@ export default {
       this.users.splice(this.users.indexOf(user), 1);
     },
     enterSlidily: function (el, done) {
-      Velocity(el, 'slideDown', { complete: done });
+      Velocity(el, 'slideDown', { duration: 1000, easing: 'easeInSine', complete: done });
     },
     leaveSlidily: function (el, done) {
       Velocity(el, 'slideUp', { complete: done });
