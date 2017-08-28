@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class='test'>
     <h1>{{title}}</h1>
     <input type='text' v-model='title' />
@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<<script>
+<script>
 import Velocity from 'velocity-animate';
 
 export default {

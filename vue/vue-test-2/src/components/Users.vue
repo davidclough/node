@@ -6,7 +6,8 @@
       <input type='submit' text='Add New User' />
     </form>
     <ul>
-    <transition-group v-on:enter="enterSlidily" v-on:leave="leaveSlidily">
+    <transition-group v-on:enter="enterSlidily" v-on:leave="leaveSlidily" v-bind:css="false"
+                      appear appear-active-class="custom-appear-class">
       <li v-for='user in users' :key='user.name'>
         <input type='checkbox' v-model='user.contacted' />
         <span :class='{contacted: user.contacted}'>
@@ -85,5 +86,8 @@ export default {
 <style scoped>
   .contacted {
     text-decoration: line-through;
+  }
+  .custom-appear-class {
+    color: crimson;
   }
 </style>
