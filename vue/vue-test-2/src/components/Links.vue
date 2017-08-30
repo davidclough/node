@@ -14,7 +14,8 @@
           { route: '/', text: 'Test' },
           { route: '/slots', text: 'Slots' },
           { route: '/button-counter', text: 'Button Counter' },
-          { route: '/animations', text: 'Animations' }
+          { route: '/animations', text: 'Animations' },
+          { route: '/state-transitions', text: 'State Trans' }
         ]
       };
     }

@@ -5,6 +5,7 @@ import Test from '@/components/Test';
 import Users from '@/components/Users';
 import ButtonCounter from '@/components/ButtonCounter/ButtonCounter';
 import Animations from '@/components/Animations/Animations';
+import StateTransitions from '@/components/Animations/StateTransitions';
 
 Vue.use(Router);
 
@@ -20,7 +21,8 @@ export default new Router({
     { path: '/', component: Test },
     { path: '/users', component: Users },
     { path: '/button-counter', component: ButtonCounter },
-    { path: '/animations', component: Animations }
+    { path: '/animations', component: Animations },
+    { path: '/state-transitions', component: StateTransitions }
   ],
 
   base: __dirname
