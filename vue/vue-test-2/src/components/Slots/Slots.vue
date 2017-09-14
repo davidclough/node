@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class='board'>
     <h1>{{title}}</h1>
 

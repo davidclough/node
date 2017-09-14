@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class='users'>
     <form v-on:submit.prevent='addUser'>
       <input type='text' v-model='newUser.name' placeholder='Name of new user' /><br />

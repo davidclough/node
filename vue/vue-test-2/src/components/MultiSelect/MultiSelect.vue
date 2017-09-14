@@ -1,9 +1,13 @@
-<<template>
+<!-- TODO: When removed excess < in line below, I was prompted to add key attributes for two of the elements within
+           v-fors below. When I do that though and make the key attribute equal to value ones, I have to click an item
+           twice for it to be be added to the "selected container". Sort it out. -->
+<template>
   <div class='multi-select'>
     <div class='selected-container' @click.self='toggleItemSelectorVisibility'>
       <selected-item v-for='selected in selectedItems' 
                      :value='selected.value' :text='selected.text' 
-                     @itemDeselected='itemDeselected' />
+                     @itemDeselected='itemDeselected'
+                     :key="selected.value" />
     </div>
 
     <!-- <transition v-on:enter="enterSlidily" v-on:leave="leaveSlidily"> -->
@@ -11,13 +15,13 @@
     <transition v-on:enter="enterFadily" v-on:leave="leaveFadily">
       <select size='5' v-model='selectedItem' v-if='isItemSelectorVisible' @keyup.27='isItemSelectorVisible = false'>
         <option v-for='item in listItems' :value='{ value: item.value }'
-                @click.self='selectValue'>{{ item.text }}</option>
+                @click.self='selectValue' :key="item.value">{{ item.text }}</option>
       </select>
     </transition>
   </div>
 </template>
 
-<<script>
+<script>
   import SelectedItem from '@/components/MultiSelect/SelectedItem';
   import Velocity from 'velocity-animate';
 

@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class='butt0-counter'>
     <h1>{{ title }}</h1>
     <p>{{ total }}</p>

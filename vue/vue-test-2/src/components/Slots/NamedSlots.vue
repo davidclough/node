@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class="container">
     <header>
       <slot name="header"></slot>

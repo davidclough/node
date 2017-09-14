@@ -1,4 +1,4 @@
-<<template>
+<template>
   <span>{{ tweeningValue }}</span>
 </template>
 

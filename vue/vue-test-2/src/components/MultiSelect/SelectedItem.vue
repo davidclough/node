@@ -1,11 +1,11 @@
-<<template>
+<template>
   <div class='selected-item' :value='value'>
     <span>{{ text }}</span>
     <span @click.self="deselectItem" class='deselect-button'>X</span>
   </div>
 </template>
 
-<<script>
+<script>
 export default {
   name: 'selected-item',
   data() {
