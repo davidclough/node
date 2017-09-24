@@ -12,10 +12,17 @@
     <br />
     <input type='text' @keyup='press' @keyup.enter='enterHit' />
     <hr />
-    <label>First Name:</label><input type='text' v-model='user.firstName' />
+    <label>LAZY First Name:</label><input type='text' v-model.lazy='user.firstName' />
     <label>Last Name:</label><input type='text' v-model='user.lastName' />
     <h3>{{fullName}}</h3>
     <h2>{{msg}}</h2>
+
+    <input type='date' />
+    <input type='time' /><br />
+
+    <!-- checkbox not bound to a bool: https://vuejs.org/v2/guide/forms.html#Multiline-text -->
+    <label>toggleAB:</label>
+    <input type="checkbox" v-model='toggleAB' v-bind:true-value='a' v-bind:false-value='b' /> {{toggleAB}}
   </div>
 </template>
 
@@ -29,6 +36,8 @@ export default {
     }
   },
   data() {
+    let meat = 'Meat', potatoes = 'Potatoes';
+
     return {
       title: 'Test',
       user: {
@@ -40,7 +49,10 @@ export default {
         { title: 'React' },
         { title: 'Angular' },
         { title: 'Vue' }
-      ]
+      ],
+      toggleAB: meat,
+      a: meat,
+      b: potatoes
     }
   },
   methods: {

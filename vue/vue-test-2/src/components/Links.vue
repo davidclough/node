@@ -12,12 +12,14 @@
         linkDetails: [
           { route: '/users', text: 'Users' },
           { route: '/', text: 'Test' },
-          { route: '/hello', text: 'Hello' },
-          { route: '/game', text: 'Game' }
+          { route: '/slots', text: 'Slots' },
+          { route: '/button-counter', text: 'Button Counter' },
+          { route: '/animations', text: 'Animations' },
+          { route: '/state-transitions', text: 'State Trans' }
         ]
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

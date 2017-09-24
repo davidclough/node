@@ -1,0 +1,17 @@
+
+https://github.com/webpack-contrib/sass-loader
+npm install sass-loader node-sass webpack --save-dev
+
+Did pretty much the same with SCSS.
+There was no need to alter the webpack file in order to process a LESS file, we only needed to have the 
+appropriate "-loader" packages npm installed.
+
+Autoprefixer:
+https://github.com/postcss/postcss-loader
+npm i -D  postcss-loader
+
+https://vuejs.org/v2/guide/class-and-style.html#Auto-prefixing
+When you use a CSS property that requires vendor prefixes in v-bind:style, for example transform,
+Vue will automatically detect and add appropriate prefixes to the applied styles.
+
+
