@@ -31,3 +31,15 @@ Use lite?? to watch
 ## socket.io
 ## DONE
 https://www.npmjs.com/package/socket.io
+
+<hr />
+- Fiddler PS Course
+- More substantial Vue site. Will probably still disparate unless can think of good idea but should have more professional content (Footbal??)
+- Blog with vue/react and Mongo
+- reCAPTCHA
+- Note npm commands from course
+
+
+npm root -g
+npm list --depth 0
+
