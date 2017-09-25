@@ -1,6 +1,3 @@
-<!-- TODO: When removed excess < in line below, I was prompted to add key attributes for two of the elements within
-           v-fors below. When I do that though and make the key attribute equal to value ones, I have to click an item
-           twice for it to be be added to the "selected container". Sort it out. -->
 <template>
   <div class='multi-select'>
     <div class='selected-container' @click.self='toggleItemSelectorVisibility'>
