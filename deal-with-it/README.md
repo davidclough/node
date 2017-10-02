@@ -25,7 +25,7 @@ Obviously, the keys should not generally be stored in a publicly available place
 In Windows, run:
 
 set PORT=3005
-set myoxfordkey = '02e8ab76ff0341149ee9c896fd539a1e'
+set myoxfordkey=02e8ab76ff0341149ee9c896fd539a1e
 npm start
 
 
