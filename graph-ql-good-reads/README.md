@@ -19,5 +19,20 @@ query {
 }
 
 
+query {
+  author(id: 21559) {
+    name,
+    books {
+      title,
+      isbn,
+      description
+    }
+  }
+}
+
+<hr />
+
+Next video: [More GraphQL - Fun Fun Function](https://www.youtube.com/watch?v=RMtq0RCLuzs)
+
 
 

@@ -19,7 +19,8 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLInt,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } = require('graphql')
 
 // const x = fetch('https://www.goodreads.com/author/show.xml?id=4432&key=T3VkNIzRe7KaNgic5PfDVA')
@@ -29,13 +30,40 @@ const {
 // quokka inspection (see around 17 minutes):
 //x
 
+const BookType = new GraphQLObjectType({
+  name: 'Book',
+  description: '...',
+
+  fields: () => ({
+    title: {
+      type: GraphQLString,
+      resolve: xml => xml.title[0]
+      //resolve: xml => console.log('BOOK: ', JSON.stringify(xml, null, 2))
+      //resolve: xml => console.log('BOOK: ', xml)
+    },
+    isbn: {
+      type: GraphQLString,
+      resolve: xml => xml.isbn[0]
+    },
+    description: {
+      type: GraphQLString,
+      resolve: xml => xml.description[0]
+    }
+  })
+})
+
 const AuthorType = new GraphQLObjectType({
   name: 'Author',
   description: '...',
 
   fields: () => ({
     name: {
-      type: GraphQLString
+      type: GraphQLString,
+      resolve: xml => xml.GoodreadsResponse.author[0].name[0]
+    },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve: xml => xml.GoodreadsResponse.author[0].books[0].book
     }
   })
 })
