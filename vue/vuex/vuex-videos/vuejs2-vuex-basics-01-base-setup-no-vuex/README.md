@@ -4,10 +4,9 @@
 
 ## DC Notes
 
-Downloaded from his source code and modified whilst watching his videos, starting with [STATE & STORE | VueJS 2 & Vuex | Learning the Basics](https://www.youtube.com/watch?v=2CSr2vBApSI).
+This was his original source code, downloaded from [GitHub](https://github.com/mschwarzmueller/vuejs2-vuex-basics).
 
-
-The first thing he added was the `store.js` file.
+There is no Vuex store. He instead emits events from within components and handles them within the `App.vue`, which contains those components.
 
 ## Build Setup
 
