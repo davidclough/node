@@ -14,6 +14,8 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex"
+
     export default {
         methods: {
             unregister(registration) {
@@ -24,15 +26,34 @@
                 this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
             }
         },
-        computed: {
-            total() {
-                return this.$store.state.registrations.length;
-            },
-            registrations() {
-                return this.$store.state.registrations
-            }
+
+        // computed: {
+        //     registrations() {
+        //         return this.$store.getters.registrations
+        //     },
+        //     total() {
+        //         return this.$store.getters.totalRegistrations;
+        //     }
+        // }
+
+        // computed: mapGetters(["registrations", "totalRegistrations"])
+
+        // computed: mapGetters({
+        //     registrations: "registrations",
+        //     total: "totalRegistrations"
+        // })
+
+         computed: {
+             // He installed babel-preset-stage-2
+             // I was surprised at this as thought babel would be enough. However, the above package is installed by default when "vue init".
+             // NOTE: We also had to an an additional "preset" within .babelrc:          ["stage-2"]
+             ...mapGetters({
+                registrations: "registrations",
+                total: "totalRegistrations"
+             })
+             // ,    // CAN ADD ADDITIONAL methods which are not mapped to ones in the store
         }
-    }
+   }
 </script>
 
 <style scoped>

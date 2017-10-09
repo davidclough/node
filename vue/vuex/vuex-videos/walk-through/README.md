@@ -8,7 +8,9 @@ Downloaded from his source code and modified whilst watching his [STATE & STORE 
 
 - [Video 1](https://www.youtube.com/watch?v=2CSr2vBApSI) - Here he sets up the store and stores users and registered users within it. The only problem is he directly manipulates all the data from within the `App.vue` file and also in a rather manual way.
 - [Video 2](https://www.youtube.com/watch?v=iw1eajzWQAM)
-- [Video 3](https://www.youtube.com/watch?v=dkFWOsKrPAI)   ??????
+- [Video 3](https://www.youtube.com/watch?v=dkFWOsKrPAI)
+- Video 4
+- Video 5
 
 The first thing he added was the `store.js` file.
 

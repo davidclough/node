@@ -2,7 +2,7 @@
     <div id="registration">
         <h3>Register here</h3>
         <hr>
-        <div class="row" v-for="user in users">
+        <div class="row" v-for="user in unregisteredUsers">
             <h4>{{ user.name }}</h4>
             <button @click="registerUser(user)">Register</button>
         </div>
@@ -10,12 +10,15 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex"
+
     export default {
-        computed: {
-            users() {
-                return this.$store.state.users.filter(user => !user.registered)
-            }
-        },
+        computed: mapGetters(["unregisteredUsers"]),
+        // computed: {
+        //     unregisteredUsers() {
+        //         return this.$store.getters.unregisteredUsers
+        //     }
+        // },
         methods: {
             registerUser(user) {
                 user.registered = true;
