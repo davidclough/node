@@ -21,12 +21,15 @@
         // },
         methods: {
             registerUser(user) {
-                user.registered = true;
+                // user.registered = true;
                 
-                // SHOULDN'T MANIPULATE STORE VALUES DIRRECTLY.
-                const date = new Date;
-                this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
-            }
+                // // SHOULDN'T MANIPULATE STORE VALUES DIRRECTLY.
+                // const date = new Date;
+                // this.$store.state.registrations.push({userId: user.id, name: user.name, date: date.getMonth() + '/' + date.getDay()})
+
+                // Video 3.
+                this.$store.commit("register", user.id)
+            },
         }
     }
 </script>
