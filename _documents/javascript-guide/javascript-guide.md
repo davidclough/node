@@ -709,6 +709,7 @@ The three essential things when creating a constructor function for a derived "t
   2. Ensure that the prototype of the derived type is an object that is created from the base prototype.
   3. Ensure you set the constructor property of the derived prototype.
 
+```
         var Animal = function (legs, noise) {
             this.legs = legs || 4;
             this.noise = noise;
@@ -747,6 +748,7 @@ The three essential things when creating a constructor function for a derived "t
 
         console.log(bird.constructor === Bird);	    // true
         console.log(bird.constructor === Animal);   // false
+```
 
 The `Bird` constructor called the `Animal` constructor via the `call()` method. This allowed us to specify that the `this` that is under construction within `Bird` should also be the object `this` is pointing to within `Animal`. Therefore `Animal` will set some properties of the object under construction and then `Bird` will set some more before returning it.
 
