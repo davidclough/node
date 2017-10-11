@@ -26,7 +26,13 @@
                 // this.$store.state.registrations.splice(this.$store.state.registrations.indexOf(registration), 1);
 
                 // Video 3.
-                this.$store.commit({
+                // this.$store.commit({
+                //     type: "unregister",
+                //     userId: registration.userId
+                // })
+
+                // Video 4.
+                this.$store.dispatch({
                     type: "unregister",
                     userId: registration.userId
                 })

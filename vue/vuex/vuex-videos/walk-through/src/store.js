@@ -29,6 +29,8 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    // Video 4: We should not mutate state using asynchronous code. Therefore introduced actions.
+
     register(state, userId) {
       const user = state.users.find(user => user.id === userId)
       user.registered = true
@@ -42,6 +44,28 @@ export const store = new Vuex.Store({
       user.registered = false
       const registration = state.registrations.find(r => r.userId === payload.userId)
       state.registrations.splice(state.registrations.indexOf(registration), 1);
+    }
+  },
+  actions: {
+    // We can put asynchronous code inside actions.
+    // register(context, userId) {
+    //   setTimeout(() => {
+    //     context.commit("register", userId)
+    //   }, 1000)
+    // }
+
+    // We can put asynchronous code inside actions.
+    // OBSERVATION: With the delay in register, clicking the "Register" button multiple times results in
+    //              the same user being added to the registerd users multiple times.
+
+    // We don't actually need the whole context object.
+    register({ commit }, userId) {
+      setTimeout(() => {
+        commit("register", userId)
+      }, 1000)
+    },
+    unregister({ commit }, payload) {
+      commit("unregister", payload)
     }
   }
 });
