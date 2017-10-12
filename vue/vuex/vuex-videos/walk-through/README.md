@@ -10,7 +10,7 @@ Downloaded from his source code and modified whilst watching his [STATE & STORE 
 - [Video 2](https://www.youtube.com/watch?v=iw1eajzWQAM)
 - [Video 3](https://www.youtube.com/watch?v=dkFWOsKrPAI) - Introduces mutations
 - [Video 4](https://www.youtube.com/watch?v=kRI4YLMjgHQ&index=4&list=PL55RiY5tL51pT0DNJraU93FhMzhXxtDAo) - Introduces actions
-- [Video 5](https://www.youtube.com/watch?v=5z8joUGkGKE&list=PL55RiY5tL51pT0DNJraU93FhMzhXxtDAo&index=5)
+- [Video 5](https://www.youtube.com/watch?v=5z8joUGkGKE&list=PL55RiY5tL51pT0DNJraU93FhMzhXxtDAo&index=5) - Splits the store up into separate modules.
 
 The first thing he added was the `store.js` file.
 
