@@ -35,19 +35,33 @@ const BookType = new GraphQLObjectType({
   description: '...',
 
   fields: () => ({
+      // Original.
+    //   title: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.title[0]
+    //   //resolve: xml => console.log('BOOK: ', JSON.stringify(xml, null, 2))
+    //   //resolve: xml => console.log('BOOK: ', xml)
+    // },
+    // isbn: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.isbn[0]
+    // },
+    // description: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.description[0]
+    // }
+
     title: {
       type: GraphQLString,
-      resolve: xml => xml.title[0]
-      //resolve: xml => console.log('BOOK: ', JSON.stringify(xml, null, 2))
-      //resolve: xml => console.log('BOOK: ', xml)
+      resolve: xml => xml.GoodreadsResponse.book[0].title[0]
     },
     isbn: {
       type: GraphQLString,
-      resolve: xml => xml.isbn[0]
+      resolve: xml => xml.GoodreadsResponse.book[0].isbn[0]
     },
     description: {
       type: GraphQLString,
-      resolve: xml => xml.description[0]
+      resolve: xml => xml.GoodreadsResponse.book[0].description[0]
     }
   })
 })
@@ -63,7 +77,19 @@ const AuthorType = new GraphQLObjectType({
     },
     books: {
       type: new GraphQLList(BookType),
-      resolve: xml => xml.GoodreadsResponse.author[0].books[0].book
+
+      // Original.
+      // resolve: xml => xml.GoodreadsResponse.author[0].books[0].book
+
+      // Books now lazily fetched from separate end point.
+      resolve: xml => {
+        const ids = xml.GoodreadsResponse.author[0].books[0].book.map(elem => elem.id[0]._)
+        return Promise.all(ids.map(id =>
+          fetch(`https://www.goodreads.com/book/show.xml?id=${id}&key=T3VkNIzRe7KaNgic5PfDVA`)
+            .then(response => response.text())
+            .then(parsedXml)
+        ))
+      }
     }
   })
 })

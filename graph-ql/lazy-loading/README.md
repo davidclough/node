@@ -35,5 +35,18 @@ query {
 }
 
 
+The last 8 minutes was to translate books titles using Google Translate API. However, this doe not appear to be free (although it is cheap).
+
+query {
+  author(id: 21559) {
+    name,
+    books {
+      title(lang: "pt")
+    }
+  }
+}
+
+
+TODO: There is an apparently free version. Try a small project with this `npm install --save google-translate-api`, get that to perform something then finish the final task in the video.
 
 
