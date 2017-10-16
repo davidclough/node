@@ -10,6 +10,14 @@ http://graphql.org/swapi-graphql/
 VS Code plugin: [https://marketplace.visualstudio.com/items?itemName=WallabyJs.quokka-vscode](Quokka.js)
 
 <hr />
+
+Install packages with `npm install`
+
+To run server type `npm start`
+
+In browser go to `http://localhost:4000/graphql`
+
+<hr />
 ### Queries
 
 query {

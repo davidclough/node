@@ -14,6 +14,14 @@ http://graphql.org/swapi-graphql/
 VS Code plugin: [https://marketplace.visualstudio.com/items?itemName=WallabyJs.quokka-vscode](Quokka.js)
 
 <hr />
+
+Install packages with `npm install`
+
+To run server type `npm start`
+
+In browser go to `http://localhost:4000/graphql`
+
+<hr />
 ### Queries
 
 query {
@@ -35,7 +43,7 @@ query {
 }
 
 
-The last 8 minutes was to translate books titles using Google Translate API. However, this doe not appear to be free (although it is cheap).
+The last 8 minutes was to translate books titles using Google Translate API. However, this doe not appear to be free (although it is cheap). However, I later found that I was able to use the free and easy-to-use package called `google-translate-api` to do the translations.
 
 query {
   author(id: 21559) {
