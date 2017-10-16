@@ -8,6 +8,21 @@
 
 
 
+// Unlike the one in his video, this package offer free (rather than very cheap) and unlimited translations:
+//    https://github.com/matheuss/google-translate-api
+// It is also even easier to use.
+const translate = require('google-translate-api');
+translate('Ik spreek Engels', {to: 'en'}).then(res => {
+   console.log(res.text);
+   console.log(res.from.language.iso);    // I speak English
+}).catch(err => {                         // nl 
+   console.error(err);
+});
+
+
+
+
+
 const fetch = require('node-fetch')
 
 // In Node.js 8 this was added to enable libraries which use callbacks to now use promises. It is a BUILT-IN node module.
@@ -35,7 +50,7 @@ const BookType = new GraphQLObjectType({
   description: '...',
 
   fields: () => ({
-      // Original.
+    // Original.
     //   title: {
     //   type: GraphQLString,
     //   resolve: xml => xml.title[0]
@@ -51,9 +66,36 @@ const BookType = new GraphQLObjectType({
     //   resolve: xml => xml.description[0]
     // }
 
+    // First part of lazy loading.
+    // title: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.GoodreadsResponse.book[0].title[0]
+    // },
+    // isbn: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.GoodreadsResponse.book[0].isbn[0]
+    // },
+    // description: {
+    //   type: GraphQLString,
+    //   resolve: xml => xml.GoodreadsResponse.book[0].description[0]
+    // }
+
+
     title: {
       type: GraphQLString,
-      resolve: xml => xml.GoodreadsResponse.book[0].title[0]
+      args: {
+        lang: { type: GraphQLString }
+      },
+      resolve: (xml, args) => {
+        //console.log(xml)
+        //console.dir(args)
+        const title = xml.GoodreadsResponse.book[0].title[0]
+        return args.lang 
+                ? translate(title, {to: args.lang})
+                  .then(res => res.text)
+                  .catch(err => `${args.lang} TRANSLATION NOT AVAILABLE`)
+                : title
+      }
     },
     isbn: {
       type: GraphQLString,
