@@ -18,6 +18,7 @@ To run server type `npm start`
 In browser go to [http://localhost:4000/graphql](http://localhost:4000/graphql)
 
 <hr />
+
 ### Queries
 
 query {
