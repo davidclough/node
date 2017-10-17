@@ -24,37 +24,50 @@ In browser go to [http://localhost:4000/graphql](http://localhost:4000/graphql)
 <hr />
 ### Queries
 
-query {
-  author(id: 4432) {
-    name
-  }
-}
+	query {
+	  author(id: 4432) {
+	    name
+	  }
+	}
 
+Multiple fields and fields of child objects:
 
-query {
-  author(id: 21559) {
-    name,
-    books {
-      title,
-      isbn,
-      description
-    }
-  }
-}
+	query {
+	  author(id: 21559) {
+	    name,
+	    books {
+	      title,
+	      isbn,
+	      description
+	    }
+	  }
+	}
 
+> Note that the fields that can be queried and the way in which they can be queried, e.g. with parameters, have to have been defined within the GraphQL schema.
 
 The last 8 minutes was to translate books titles using Google Translate API. However, this doe not appear to be free (although it is cheap). However, I later found that I was able to use the free and easy-to-use package called `google-translate-api` to do the translations.
 
-query {
-  author(id: 21559) {
-    name,
-    books {
-      title(lang: "pt")
-    }
-  }
-}
+	query {
+	  author(id: 21559) {
+	    name,
+	    books {
+	      title(lang: "pt")
+	    }
+	  }
+	}
 
 
-TODO: There is an apparently free version. Try a small project with this `npm install --save google-translate-api`, get that to perform something then finish the final task in the video.
+Multiple translations of the same field:
+
+	query {
+	  author(id: 21564) {
+	    name,
+	    books {
+	      title: title,
+	      frenchTitle: title(lang: "fr"),
+	      germanTitle: title(lang: "de")
+	    }
+	  }
+	}
 
 
