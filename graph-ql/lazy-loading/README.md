@@ -22,7 +22,7 @@ To run server type `npm start`
 In browser go to [http://localhost:4000/graphql](http://localhost:4000/graphql)
 
 <hr />
-### Queries
+### Queries ###
 
 	query {
 	  author(id: 4432) {
@@ -90,10 +90,11 @@ After making the book description translatable:
 	    books {
 	      title: title,
 	      spanishTitle: title(lang: "es"),
-	      germanTitle: title(lang: "ru"),
+	      germanTitle: title(lang: "de"),
 	      chineseTitle: title(lang: "zh-cn"),
 	      description: description,
 	      frenchDescription: description(lang: "fr")
 	    }
 	  }
 	}
+
