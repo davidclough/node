@@ -45,28 +45,21 @@ const {
 // quokka inspection (see around 17 minutes):
 //x
 
+
+const translateValue = (fieldValue, args) => {
+  return args.lang 
+          ? translate(fieldValue, {to: args.lang})
+            .then(res => res.text)
+            .catch(err => `${args.lang} TRANSLATION NOT AVAILABLE`)
+          : fieldValue
+}
+
 const BookType = new GraphQLObjectType({
   name: 'Book',
   description: '...',
 
   fields: () => ({
-    // Original.
-    //   title: {
-    //   type: GraphQLString,
-    //   resolve: xml => xml.title[0]
-    //   //resolve: xml => console.log('BOOK: ', JSON.stringify(xml, null, 2))
-    //   //resolve: xml => console.log('BOOK: ', xml)
-    // },
-    // isbn: {
-    //   type: GraphQLString,
-    //   resolve: xml => xml.isbn[0]
-    // },
-    // description: {
-    //   type: GraphQLString,
-    //   resolve: xml => xml.description[0]
-    // }
-
-    // First part of lazy loading.
+    // First part of lazy loading video:
     // title: {
     //   type: GraphQLString,
     //   resolve: xml => xml.GoodreadsResponse.book[0].title[0]
@@ -86,16 +79,7 @@ const BookType = new GraphQLObjectType({
       args: {
         lang: { type: GraphQLString }
       },
-      resolve: (xml, args) => {
-        //console.log(xml)
-        //console.dir(args)
-        const title = xml.GoodreadsResponse.book[0].title[0]
-        return args.lang 
-                ? translate(title, {to: args.lang})
-                  .then(res => res.text)
-                  .catch(err => `${args.lang} TRANSLATION NOT AVAILABLE`)
-                : title
-      }
+      resolve: (xml, args) => translateValue(xml.GoodreadsResponse.book[0].title[0], args)
     },
     isbn: {
       type: GraphQLString,
@@ -103,7 +87,10 @@ const BookType = new GraphQLObjectType({
     },
     description: {
       type: GraphQLString,
-      resolve: xml => xml.GoodreadsResponse.book[0].description[0]
+      args: {
+        lang: { type: GraphQLString }
+      },
+      resolve: (xml, args) => translateValue(xml.GoodreadsResponse.book[0].description[0], args)
     }
   })
 })

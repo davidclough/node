@@ -70,4 +70,30 @@ Multiple translations of the same field:
 	  }
 	}
 
+	query {
+	  author(id: 4432) {
+	    name,
+	    books {
+	      title: title,
+	      frenchTitle: title(lang: "fr"),
+	      russianTitle: title(lang: "ru"),
+	      chineseTitle: title(lang: "zh-cn")
+	    }
+	  }
+	}
 
+After making the book description translatable:
+
+	query {
+	  author(id: 4432) {
+	    name,
+	    books {
+	      title: title,
+	      spanishTitle: title(lang: "es"),
+	      germanTitle: title(lang: "ru"),
+	      chineseTitle: title(lang: "zh-cn"),
+	      description: description,
+	      frenchDescription: description(lang: "fr")
+	    }
+	  }
+	}
