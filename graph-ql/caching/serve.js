@@ -24,12 +24,12 @@ const parsedXml = util.promisify(require('xml2js').parseString)
 // OBSERVATION: Before we added the DataLoaders to the graphqlHTTP context the, first time we called a query the data was fetched
 //              as normal but calling the same query again returned pretty instantaneous results.
 
-const fetchAuthor = (id) =>
+const fetchAuthor = id =>
 fetch(`https://www.goodreads.com/author/show.xml?id=${id}&key=${apiKey}`)
   .then(response => response.text())
   .then(parsedXml)
 
-const fetchBook = (id) =>
+const fetchBook = id =>
 fetch(`https://www.goodreads.com/book/show.xml?id=${id}&key=${apiKey}`)
   .then(response => response.text())
   .then(parsedXml)
@@ -42,10 +42,10 @@ fetch(`https://www.goodreads.com/book/show.xml?id=${id}&key=${apiKey}`)
 
 app.use('/graphql', graphqlHTTP(req => {
   const authorLoader = new DataLoader(keys =>
-  Promise.all(keys.map(id => fetchAuthor(id))))
+    Promise.all(keys.map(id => fetchAuthor(id))))
 
   const bookLoader = new DataLoader(keys =>
-  Promise.all(keys.map(id => fetchBook(id))))
+    Promise.all(keys.map(id => fetchBook(id))))
 
   return {
     schema,
