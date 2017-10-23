@@ -42,4 +42,6 @@ const AuthorType = new GraphQLObjectType({
 // ------------------------------------------------------------------------------------------------------------------------------------
 
 
-module.exports = { authorLoader, AuthorType }
+//module.exports = { authorLoader, AuthorType }
+module.exports.authorLoader = authorLoader
+module.exports.AuthorType = AuthorType

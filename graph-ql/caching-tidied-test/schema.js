@@ -14,6 +14,8 @@ const { translateValue } = require("./my-translate")
 //  http://requirejs.org/docs/api.html#circular
 //
 
+// const { BookType } = require("./books")
+
 const BookType = new GraphQLObjectType({
   name: 'Book',
   description: '...',
@@ -47,6 +49,8 @@ const BookType = new GraphQLObjectType({
     }
   })
 })
+
+// const { AuthorType } = require("./authors")
 
 const AuthorType = new GraphQLObjectType({
   name: 'Author',

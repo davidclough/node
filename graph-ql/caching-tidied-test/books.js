@@ -69,4 +69,6 @@ const BookType = new GraphQLObjectType({
 
 // module.exports = { fetchBook, bookLoader }
 // module.exports = { bookLoader }
-module.exports = { bookLoader, BookType }
+//module.exports = { bookLoader, BookType }
+module.exports.bookLoader = bookLoader
+module.exports.BookType = BookType
