@@ -114,7 +114,7 @@ After making the book description translatable:
 	    books {
 	      title: title,
 	      frenchTitle: title(lang: "fr"),
-	      germanTitle: title(lang: "es")
+	      spanishTitle: title(lang: "es")
 	    }
 	  }
 	}
