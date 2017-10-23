@@ -42,10 +42,10 @@ Multiple fields and fields of child objects:
 
 	query {
 	  author(id: 21559) {
-	    name,
+	    name
 	    books {
-	      title,
-	      isbn,
+	      title
+	      isbn
 	      description
 	    }
 	  }
@@ -57,7 +57,7 @@ The last 8 minutes was to translate books titles using Google Translate API. How
 
 	query {
 	  author(id: 21559) {
-	    name,
+	    name
 	    books {
 	      title(lang: "pt")
 	    }
@@ -69,10 +69,10 @@ Multiple translations of the same field:
 
 	query {
 	  author(id: 21564) {
-	    name,
+	    name
 	    books {
 	      title: title,
-	      frenchTitle: title(lang: "fr"),
+	      frenchTitle: title(lang: "fr")
 	      germanTitle: title(lang: "de")
 	    }
 	  }
@@ -80,11 +80,11 @@ Multiple translations of the same field:
 
 	query {
 	  author(id: 4432) {
-	    name,
+	    name
 	    books {
-	      title: title,
-	      frenchTitle: title(lang: "fr"),
-	      russianTitle: title(lang: "ru"),
+	      title: title
+	      frenchTitle: title(lang: "fr")
+	      russianTitle: title(lang: "ru")
 	      chineseTitle: title(lang: "zh-cn")
 	    }
 	  }
@@ -106,11 +106,25 @@ After making the book description translatable:
 	  }
 	}
 
+
+	# Charles Dickens.
+	query {
+	  author(id: 239579) {
+	    name,
+	    books {
+	      title: title,
+	      frenchTitle: title(lang: "fr"),
+	      germanTitle: title(lang: "es")
+	    }
+	  }
+	}
+
+
 This would have been an exceptionally slow query before per-request caching via `dataloader` was added.
 
 	query {
 	  author(id: 21559) {
-	    name,
+	    name
 	    books {
 	      title
 	      isbn
