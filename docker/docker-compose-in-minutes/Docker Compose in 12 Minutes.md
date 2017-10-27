@@ -1,3 +1,6 @@
+	docker-compose up
+
+
 // I managed to run it manually - from the "product" folder:
 docker build .                                                                  (docker build . -t product-service)
 docker run -p 5001:80 dockercomposein12minutes_product-service
@@ -6,10 +9,14 @@ THIS WAS WITHOUT mounting, so changing the contents of a file within the "produc
 However, cannot run this with a mounted volume.
 
 
-Go to    [http://localhost:5001/](http://localhost:5001/)
+Go to [http://localhost:5001/](http://localhost:5001/) for API and [http://localhost:5002/](http://localhost:5002/) for website.
 
-docker ps -a
-docker stop <ID>
+
+
+
+
+	docker ps -a
+	docker stop <ID>
 
 
 // Now he is going to use docker-compose.yml file.
