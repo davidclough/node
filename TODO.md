@@ -43,3 +43,45 @@ https://www.npmjs.com/package/socket.io
 npm root -g
 npm list --depth 0
 
+
+
+## 2017
+SVG
+	Snap.svg
+
+Docker Compose
+	Elastic Search
+	Rel database, e.g. SQL Server
+
+CSS
+[Awesome Split Screen Slider Using CSS3 & JavaScript](https://www.youtube.com/watch?v=5F0EvajMlXo)
+
+Responsive CSS
+Do with Vue as section within new app.
+[HTML5/CSS3 Flat Responsive Website - Start To Finish Web Design Tutorial](https://www.youtube.com/watch?v=muZ0JYBCnrU)
+
+Docker with NPM??? Only if this is a sensible combination that adds some value.
+    That container that can be used to manage Docker Cs and Is
+Finish React course
+
+
+
+axios - for API calls
+json-server - for mocking test data within an API
+browsersync - open site on different browsers and, when operating from one of them, see the site behaving on all of them
+Web Workers - for running code on different threads than UI
+<script type=module>
+
+
+## Next
+Make a proper Vue/Vuex/VueRouter project with tests
+Make menu screen with screen splitter
+
+Pick an interesting-looking Docker container and do a Docker Compose
+
+Call a web service via Axios
+
+
+
+## Useful Links
+[OverAPI.com](http://overapi.com/)
