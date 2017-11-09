@@ -41,8 +41,11 @@ module.exports = {
     'no-console': 'off',
     'func-names': 'off',
     'object-shorthand': 'off',
-    'no-unused-vars': 'warn',
-    'object-shorthand': 'warn',
-    'no-param-reassign': ['error', {'props': false }]
+    'no-unused-vars': 'off',
+    'no-param-reassign': ['error', {'props': false }],
+    'object-curly-newline': 'off',
+    'indent': 'off',
+    'no-multi-spaces': 'off',
+    'no-alert': 'no-alert'
   }
 }
