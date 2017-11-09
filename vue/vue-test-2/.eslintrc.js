@@ -46,6 +46,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'indent': 'off',
     'no-multi-spaces': 'off',
-    'no-alert': 'no-alert'
+    'no-alert': 'off'
   }
 }

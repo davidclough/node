@@ -30,6 +30,10 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin({
+      // DC: I had to add this object to prevent the console from being cleared part way through building.
+      //     Previously I had not been able to see the text output BEFORE the screen had been cleared.
+      clearConsole: false
+    })
   ]
 })
