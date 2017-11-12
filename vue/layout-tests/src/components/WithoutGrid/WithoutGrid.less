@@ -1,0 +1,51 @@
+// div {
+//   > div {
+//     background-color: #f00;
+//   }
+// }
+
+
+.grid-container {
+  width: 100%;
+  min-width: 320px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  padding: 20px;
+  width: 100%;
+  min-height: 1px;
+  float: left;
+}
+
+.col {
+  background-color: #677dcc;
+  min-height: 40px;
+  border-radius: 8px;
+  margin-left: 2.4%;
+  margin-right: 2.4%;
+  // display: inline-block;
+  float: left;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.one { width: 3.93%; }
+  &.two { width: 12.66%; }
+  &.three { width: 21.4%; }
+  &.four { width: 30.13%; }
+  &.five { width: 38.867%; }
+  &.six { width: 47.6%; }
+  &.seven { width: 56.333%; }
+  &.eight { width: 65.07%; }
+  &.nine { width: 73.8%; }
+  &.ten { width: 82.533%; }
+  &.eleven { width: 91.27%; }
+  &.twelve { width: 100%; }
+}
