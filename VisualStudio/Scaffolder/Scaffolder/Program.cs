@@ -12,6 +12,8 @@ namespace Scaffolder
         public static void Main(string[] args)
         {
             var templateData = GetTemplateDataFromFile("TemplateData.json");
+            //var templateData = ConstructTemplateDataFile();
+
             var templateProcessor = new TemplateProcessor(templateData);
             templateProcessor.CopyTemplateToNewLocation();
 
@@ -33,8 +35,8 @@ namespace Scaffolder
                 EntityNamePascalCase = "WashingMachine",
                 Properties = new[]
                 {
-                    new PropertyData { PropertyName = "ModelName", DbFieldType = "nvarchar(255)", PropertyType = "string" },
-                    new PropertyData { PropertyName = "HasDryer", DbFieldType = "bit", PropertyType = "bool" },
+                    new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },
+                    new PropertyData { PropertyName = "HasDryer", FluentMigratorTypeInstruction = "AsBoolean.Nullable()" },
                 }
             };
 

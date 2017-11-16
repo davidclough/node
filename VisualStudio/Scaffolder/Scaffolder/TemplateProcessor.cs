@@ -17,6 +17,9 @@ namespace Scaffolder
         private readonly string ForEachPropertyAddFinalSemiColonRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON");
         private readonly string ForEachPropertyRemoveFinalCommaRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_REMOVE_FINAL_COMMA");
 
+        private const string NewGuidPlaceholderName = "{{NEW_GUID}}";
+        private const string MigrationTimeStampPlaceholderName = "{{MIGRATION_TIME_STAMP}}";
+
         private TemplateData _templateData;
 
         public TemplateProcessor(TemplateData templateData)
@@ -45,6 +48,14 @@ namespace Scaffolder
                 string targetPath = Path.Combine(target.FullName, file.Name.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase));
                 string fileContents = File.ReadAllText(file.FullName);
                 string processedFileContents = ProcessContents(fileContents);
+
+                if (file.Name.Contains(MigrationTimeStampPlaceholderName))
+                {
+                    var currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp().ToString();
+                    targetPath = targetPath.Replace(MigrationTimeStampPlaceholderName, currentUnixTimeStamp);
+                    processedFileContents = processedFileContents.Replace(MigrationTimeStampPlaceholderName, currentUnixTimeStamp);
+                }
+
                 File.WriteAllText(targetPath, processedFileContents);
             }
 
@@ -60,6 +71,14 @@ namespace Scaffolder
             processedContents = processedContents.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(EntityPlaceHolderNameCamelCase, _templateData.EntityNameCamelCase);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
+
+
+            // TODO: NEED TO REPLACE EACH INSTANCE WITH A DIFFERENT GUID
+            processedContents = processedContents.Replace(NewGuidPlaceholderName, Guid.NewGuid().ToString());
+
+
+
+
             return processedContents;
         }
 
@@ -92,7 +111,7 @@ namespace Scaffolder
                         foreach (string line in lines.Skip(1).Take(lines.Length - 2))
                         {
                             replacementLines.Add(line.Replace("PropertyName", propertyData.PropertyName)
-                                                     .Replace("DbFieldType", propertyData.DbFieldType)
+                                                     .Replace("FluentMigratorTypeInstruction", propertyData.FluentMigratorTypeInstruction)
                                                      .Replace("PropertType", propertyData.PropertyType));
                         }
                     }

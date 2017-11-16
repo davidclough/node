@@ -9,7 +9,7 @@ public class XyzModule
 }}
 
 {{FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON:
-    public DbFieldType PropertyNameProxy { get; set; }
+    public PropertType PropertyNameProxy { get; set; }
 }}
 
     private _xyz = new Xyz

@@ -9,3 +9,16 @@ D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\obj\Debu
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.dll
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.xml
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\TemplateData.json
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.exe.config
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.exe
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.pdb
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebSite\XyzFolder\XyzClass.cs
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebSite\XyzModule.cs
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\TemplateData.json
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.exe
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.pdb
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.dll
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.xml
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.csprojResolveAssemblyReference.cache
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\ToXyzDto.cs

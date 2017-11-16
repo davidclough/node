@@ -8,34 +8,47 @@ namespace Scaffolder
     public class PropertyData
     {
         public string PropertyName { get; set; }
-        public string DbFieldType { get; set; }
+
+        /// <summary>
+        /// This does not include the '.WithColumn("col_name")' but but any further method calls for that column, excluding the initial '.'
+        ///                                                                                  e.g. 'AsString(255).NotNullable()'.
+        /// </summary>
+        public string FluentMigratorTypeInstruction { get; set; }
+        
         public string PropertyType { get; set; }
 
         public void PopulatePropertyTypeFromDbFieldType()
         {
-            if (DbFieldType.Contains("varchar"))
+            if (FluentMigratorTypeInstruction.StartsWith("AsString") || FluentMigratorTypeInstruction.StartsWith("AsMaxString"))
             {
                 PropertyType = "string";
             }
-            else if (DbFieldType.StartsWith("bit"))
+            else if (FluentMigratorTypeInstruction.StartsWith("AsBoolean"))
             {
                 PropertyType = "bool";
             }
-            else if (DbFieldType.StartsWith("int"))
+            else if (FluentMigratorTypeInstruction.StartsWith("AsInt32"))
             {
                 PropertyType = "int";
             }
-            else if (DbFieldType.StartsWith("date"))
+            else if (FluentMigratorTypeInstruction.StartsWith("AsDate"))
             {
                 PropertyType = "DateTime";
             }
-            else if (DbFieldType.StartsWith("decimal") || DbFieldType.StartsWith("money") || DbFieldType.StartsWith("float"))
+            else if (FluentMigratorTypeInstruction.StartsWith("AsCurrency") ||
+                     FluentMigratorTypeInstruction.StartsWith("AsDecimal") ||
+                FluentMigratorTypeInstruction.StartsWith("AsDouble"))
             {
                 PropertyType = "decimal";
             }
             else
             {
-                throw new ApplicationException(String.Format("DbFieldType not recognized: {0)", DbFieldType));
+                throw new ApplicationException(String.Format("FluentMigratorTypeInstruction not recognized: {0)", FluentMigratorTypeInstruction));
+            }
+
+            if (PropertyType != "string" && FluentMigratorTypeInstruction.Contains(".Nullable()"))
+            {
+                PropertyType += "?";
             }
         }
     }

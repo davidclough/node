@@ -3,12 +3,11 @@
   "Properties": [
     {
       "PropertyName": "ModelName",
-      "DbFieldType": "nvarchar(255)"
+      "FluentMigratorTypeInstruction": "AsString(255).NotNullable()"
     },
     {
       "PropertyName": "HasDryer",
-      "DbFieldType": "bit"
+      "FluentMigratorTypeInstruction": "AsBoolean.Nullable()"
     }
-  ],
-  "EntityNameCamelCase": "washingMachine"
+  ]
 }
