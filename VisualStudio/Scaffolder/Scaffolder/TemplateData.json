@@ -1,0 +1,14 @@
+{
+  "EntityNamePascalCase": "WashingMachine",
+  "Properties": [
+    {
+      "PropertyName": "ModelName",
+      "DbFieldType": "nvarchar(255)"
+    },
+    {
+      "PropertyName": "HasDryer",
+      "DbFieldType": "bit"
+    }
+  ],
+  "EntityNameCamelCase": "washingMachine"
+}

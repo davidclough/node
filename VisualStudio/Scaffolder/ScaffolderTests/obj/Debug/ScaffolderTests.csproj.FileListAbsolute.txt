@@ -1,0 +1,12 @@
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\obj\Debug\ScaffolderTests.csprojResolveAssemblyReference.cache
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebSite\XyzFolder\XyzClass.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\ScaffolderTests.dll
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\ScaffolderTests.pdb
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Scaffolder.exe
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Scaffolder.pdb
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\obj\Debug\ScaffolderTests.dll
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\obj\Debug\ScaffolderTests.pdb
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebSite\XyzModule.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Newtonsoft.Json.dll
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Newtonsoft.Json.xml
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\TemplateData.json

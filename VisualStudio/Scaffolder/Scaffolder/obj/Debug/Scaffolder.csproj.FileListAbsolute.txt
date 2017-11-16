@@ -1,0 +1,11 @@
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebSite\XyzFolder\XyzClass.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.exe.config
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.exe
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Scaffolder.pdb
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.exe
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.pdb
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebSite\XyzModule.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\obj\Debug\Scaffolder.csprojResolveAssemblyReference.cache
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.dll
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Newtonsoft.Json.xml
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\TemplateData.json
