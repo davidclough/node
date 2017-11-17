@@ -31,6 +31,7 @@ namespace SuperApi.FluentMigrator.Migrations._001._000._000
 {{FOR_EACH_PROPERTY:
                .WithColumn("PropertyName").FluentMigratorTypeInstruction
 }}
+               .WithColumn("IsDeleted").AsBoolean().NotNullable()
                .WithColumn("CreatedDateTime").AsDateTime().NotNullable()
                .WithColumn(CreatedByUserIdColumn).AsGuid().NotNullable()
                .WithColumn("ModifiedDateTime").AsDateTime().NotNullable()
