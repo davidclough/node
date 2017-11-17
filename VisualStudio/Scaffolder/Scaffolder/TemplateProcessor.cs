@@ -10,22 +10,21 @@ namespace Scaffolder
     public class TemplateProcessor
     {
         private const string EntityPlaceholderName = "Xyz";
-        private readonly string EntityPlaceHolderNameCamelCase;
+        private static readonly string EntityPlaceHolderNameCamelCase = EntityPlaceholderName.ToCamelCase();
 
         private const string TemplateRegexFormat = "{{INSTRUCTION:.+?}}";
-        private readonly string ForEachPropertyRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY");
-        private readonly string ForEachPropertyAddFinalSemiColonRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON");
-        private readonly string ForEachPropertyRemoveFinalCommaRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_REMOVE_FINAL_COMMA");
+        private static readonly string ForEachPropertyRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY");
+        private static readonly string ForEachPropertyAddFinalSemiColonRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON");
+        private static readonly string ForEachPropertyRemoveFinalCommaRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_REMOVE_FINAL_COMMA");
 
         private const string NewGuidPlaceholderName = "{{NEW_GUID}}";
         private const string MigrationTimeStampPlaceholderName = "{{MIGRATION_TIME_STAMP}}";
 
-        private TemplateData _templateData;
+        private readonly TemplateData _templateData;
 
         public TemplateProcessor(TemplateData templateData)
         {
             _templateData = templateData;
-            EntityPlaceHolderNameCamelCase = EntityPlaceholderName.ToCamelCase();
         }
 
         public void CopyTemplateToNewLocation()
@@ -71,13 +70,7 @@ namespace Scaffolder
             processedContents = processedContents.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(EntityPlaceHolderNameCamelCase, _templateData.EntityNameCamelCase);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
-
-
-            // TODO: NEED TO REPLACE EACH INSTANCE WITH A DIFFERENT GUID
-            processedContents = processedContents.Replace(NewGuidPlaceholderName, Guid.NewGuid().ToString());
-
-
-
+            processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
 
             return processedContents;
         }
@@ -130,6 +123,20 @@ namespace Scaffolder
 
                     processedContents = processedContents.Replace(match.Value, replacementText);
                 }
+            }
+
+            return processedContents;
+        }
+
+        private string ReplaceEachNewGuidPlaceholderWithDifferentGuid(string fileContents)
+        {
+            string processedContents = fileContents;
+
+            var guidPlaceholderRegex = new Regex(NewGuidPlaceholderName);
+            int guidPlaceholdersCount = guidPlaceholderRegex.Matches(processedContents).Count;
+            for (int i = 0; i < guidPlaceholdersCount; i++)
+            {
+                processedContents = guidPlaceholderRegex.Replace(processedContents, Guid.NewGuid().ToString(), 1);
             }
 
             return processedContents;

@@ -1,4 +1,4 @@
-﻿namespace ThreeSquared.AutoMapper.V1.Mappings.TaxSummaryMappings
+﻿namespace SuperApi.AutoMapper.V1.Mappings.TaxSummaryMappings
 {
     public class ToXyzDto : IObjectMappingConfiguration
     {

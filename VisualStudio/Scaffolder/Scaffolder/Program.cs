@@ -17,7 +17,9 @@ namespace Scaffolder
             var templateProcessor = new TemplateProcessor(templateData);
             templateProcessor.CopyTemplateToNewLocation();
 
-            // TODO: Add Guid functionality for migration scripts.
+            // TODO: Add {{MIGRATION_VERSION}} 1.4.0 and it will generate migration namspace and version folder.
+            // TODO: Check if any of the files which need to be modified have a custom namespace that is relevant to the specific solution.
+            // TODO: Go through all required template files and see if can find and REPLACE MENT PATTERNS that have not been covered.
         }
 
         private static TemplateData GetTemplateDataFromFile(string filePath)
