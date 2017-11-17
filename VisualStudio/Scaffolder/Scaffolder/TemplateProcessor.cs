@@ -67,6 +67,7 @@ namespace Scaffolder
         public string ProcessContents(string fileContents)
         {
             string processedContents = fileContents;
+
             processedContents = processedContents.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(EntityPlaceHolderNameCamelCase, _templateData.EntityNameCamelCase);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
@@ -78,9 +79,11 @@ namespace Scaffolder
         public string ProcessPropertiesForEachPropertyRegex(string fileContents)
         {
             string processedContents = fileContents;
+
             processedContents = ProcessProperties(processedContents, ForEachPropertyRegex);
             processedContents = ProcessProperties(processedContents, ForEachPropertyAddFinalSemiColonRegex);
             processedContents = ProcessProperties(processedContents, ForEachPropertyRemoveFinalCommaRegex);
+
             return processedContents;
         }
 
