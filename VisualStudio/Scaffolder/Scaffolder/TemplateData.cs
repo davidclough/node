@@ -8,6 +8,7 @@ namespace Scaffolder
     public class TemplateData
     {
         public string EntityNamePascalCase { get; set; }
+        public string NextAssemblyVersionToBePublished { get; set; }
 
         /// <summary>
         /// NOTE: These properties should not include the default properties which are always included and which should be catered for in a

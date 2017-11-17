@@ -24,3 +24,5 @@ D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\ob
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\obj\Debug\ScaffolderTests.pdb
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebApi\ToXyzDto.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebApi\ToXyzDto.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs

@@ -35,6 +35,7 @@ namespace Scaffolder
             var templateData = new TemplateData
             {
                 EntityNamePascalCase = "WashingMachine",
+                NextAssemblyVersionToBePublished = "1.0.0",
                 Properties = new[]
                 {
                     new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },

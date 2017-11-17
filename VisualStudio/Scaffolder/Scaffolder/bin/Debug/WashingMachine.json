@@ -1,0 +1,17 @@
+{
+  "EntityNamePascalCase": "WashingMachine",
+  "NextAssemblyVersionToBePublished": "1.0.0",
+  "Properties": [
+    {
+      "PropertyName": "ModelName",
+      "FluentMigratorTypeInstruction": "AsString(255).NotNullable()",
+      "PropertyType": null
+    },
+    {
+      "PropertyName": "HasDryer",
+      "FluentMigratorTypeInstruction": "AsBoolean.Nullable()",
+      "PropertyType": null
+    }
+  ],
+  "EntityNameCamelCase": "washingMachine"
+}

@@ -7,7 +7,7 @@ using FluentMigrator;
 namespace SuperApi.FluentMigrator.Migrations._001._000._000
 {
     [Migration({{MIGRATION_TIME_STAMP}})]
-    public class AddXyzsTable : Migration
+    public class AddXyzTable : Migration
     {
         private const string DefaultSchema = "dbo";
 
