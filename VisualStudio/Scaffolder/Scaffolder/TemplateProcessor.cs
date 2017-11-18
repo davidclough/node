@@ -20,6 +20,9 @@ namespace Scaffolder
         private const string NewGuidPlaceholderName = "{{NEW_GUID}}";
         private const string MigrationTimeStampPlaceholderName = "{{MIGRATION_TIME_STAMP}}";
 
+        private const string VersionMigrationNamespacePlaceholderName = "{{VERSION_MIGRATION_NAMESPACE}}";
+        private const string VersionMigrationFolderNamePlaceholderName = "{{VERSION_MIGRATION_FOLDERNAME}}";
+
         private readonly TemplateData _templateData;
 
         public TemplateProcessor(TemplateData templateData)
@@ -60,7 +63,11 @@ namespace Scaffolder
 
             foreach (DirectoryInfo dir in source.GetDirectories())
             {
-                ProcessFolder(dir, target.CreateSubdirectory(dir.Name.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase)));
+                string targetFolderPath =
+                    dir.Name.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase)
+                            .Replace(VersionMigrationFolderNamePlaceholderName, _templateData.VersionMigrationFolderName);
+
+                ProcessFolder(dir, target.CreateSubdirectory(targetFolderPath));
             }
         }
 
@@ -70,6 +77,7 @@ namespace Scaffolder
 
             processedContents = processedContents.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(EntityPlaceHolderNameCamelCase, _templateData.EntityNameCamelCase);
+            processedContents = processedContents.Replace(VersionMigrationNamespacePlaceholderName, _templateData.VersionMigrationNamespace);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
             processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
 

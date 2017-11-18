@@ -23,4 +23,4 @@ D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\obj\Deb
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\ToXyzDto.cs
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\ToXyzDto.cs
-D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\Scaffolder\bin\Debug\Template\WebApi\{{VERSION_MIGRATION_FOLDERNAME}}\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs

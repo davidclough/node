@@ -29,6 +29,39 @@ namespace Scaffolder
             }
         }
 
+        // Example: _001._004._000
+        public string VersionMigrationNamespace
+        {
+            get
+            {
+                IEnumerable<int> numbers = ParseVersionStringIntoNumbers(NextAssemblyVersionToBePublished);
+                string migrationNamespace = String.Join(".", numbers.Select(x => String.Format("_{0:000}", x)));
+                return migrationNamespace;
+            }
+        }
+
+        // Example: 001.004.000
+        public string VersionMigrationFolderName
+        {
+            get
+            {
+                IEnumerable<int> numbers = ParseVersionStringIntoNumbers(NextAssemblyVersionToBePublished);
+                string migrationNamespace = String.Join(".", numbers.Select(x => String.Format("{0:000}", x)));
+                return migrationNamespace;
+            }
+        }
+
+        private IEnumerable<int> ParseVersionStringIntoNumbers(string version)
+        {
+            IEnumerable<int> numbers = version
+                                        .Split('.')
+                                        // If they haven't used numbers only we will rightly get an exception.
+                                        .Select(x => Int32.Parse(x));
+            return numbers;
+        }
+
+
+
         public void PopulatePropertyTypesFromDbFieldTypes()
         {
             foreach (PropertyData property in Properties)

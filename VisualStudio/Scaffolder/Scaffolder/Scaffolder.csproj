@@ -56,7 +56,7 @@
     <None Include="Template\WebApi\ToXyzDto.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Template\WebApi\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs">
+    <None Include="Template\WebApi\{{VERSION_MIGRATION_FOLDERNAME}}\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

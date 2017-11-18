@@ -1,6 +1,6 @@
 {
   "EntityNamePascalCase": "WashingMachine",
-  "NextAssemblyVersionToBePublished": "1.0.0",
+  "NextAssemblyVersionToBePublished": "1.4.12",
   "Properties": [
     {
       "PropertyName": "ModelName",
