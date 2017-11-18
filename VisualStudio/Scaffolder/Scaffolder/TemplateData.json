@@ -1,14 +1,21 @@
 {
+  "TemplateName": "TestTemplate",
   "EntityNamePascalCase": "WashingMachine",
-  "NextAssemblyVersionToBePublished": "1.4.12",
+  "SolutionNamespace": "BozzerBox",
+  "NextAssemblyVersionToBePublished": "1.14.3",
   "Properties": [
     {
       "PropertyName": "ModelName",
-      "FluentMigratorTypeInstruction": "AsString(255).NotNullable()"
+      "FluentMigratorTypeInstruction": "AsString(255).NotNullable()",
+      "PropertyType": null
     },
     {
       "PropertyName": "HasDryer",
-      "FluentMigratorTypeInstruction": "AsBoolean.Nullable()"
+      "FluentMigratorTypeInstruction": "AsBoolean.Nullable()",
+      "PropertyType": null
     }
-  ]
+  ],
+  "EntityNameCamelCase": "washingMachine",
+  "VersionMigrationNamespace": "_001._014._003",
+  "VersionMigrationFolderName": "001.014.003"
 }

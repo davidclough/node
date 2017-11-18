@@ -7,7 +7,9 @@ namespace Scaffolder
 {
     public class TemplateData
     {
+        public string TemplateName { get; set; }
         public string EntityNamePascalCase { get; set; }
+        public string SolutionNamespace { get; set; }
         public string NextAssemblyVersionToBePublished { get; set; }
 
         /// <summary>

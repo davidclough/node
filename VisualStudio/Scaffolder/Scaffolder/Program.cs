@@ -17,7 +17,6 @@ namespace Scaffolder
             var templateProcessor = new TemplateProcessor(templateData);
             templateProcessor.CopyTemplateToNewLocation();
 
-            // TODO: Add {{MIGRATION_VERSION}} 1.4.0 and it will generate migration namspace and version folder.
             // TODO: Check if any of the files which need to be modified have a custom namespace that is relevant to the specific solution.
             // TODO: Go through all required template files and see if can find and REPLACE MENT PATTERNS that have not been covered.
         }
@@ -34,8 +33,10 @@ namespace Scaffolder
         {
             var templateData = new TemplateData
             {
+                TemplateName = "TestTemplate",
                 EntityNamePascalCase = "WashingMachine",
-                NextAssemblyVersionToBePublished = "1.0.0",
+                SolutionNamespace = "BozzerBox",
+                NextAssemblyVersionToBePublished = "1.14.3",
                 Properties = new[]
                 {
                     new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },

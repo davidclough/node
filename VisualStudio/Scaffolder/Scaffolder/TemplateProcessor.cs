@@ -9,20 +9,6 @@ namespace Scaffolder
 {
     public class TemplateProcessor
     {
-        private const string EntityPlaceholderName = "Xyz";
-        private static readonly string EntityPlaceHolderNameCamelCase = EntityPlaceholderName.ToCamelCase();
-
-        private const string TemplateRegexFormat = "{{INSTRUCTION:.+?}}";
-        private static readonly string ForEachPropertyRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY");
-        private static readonly string ForEachPropertyAddFinalSemiColonRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON");
-        private static readonly string ForEachPropertyRemoveFinalCommaRegex = TemplateRegexFormat.Replace("INSTRUCTION", "FOR_EACH_PROPERTY_REMOVE_FINAL_COMMA");
-
-        private const string NewGuidPlaceholderName = "{{NEW_GUID}}";
-        private const string MigrationTimeStampPlaceholderName = "{{MIGRATION_TIME_STAMP}}";
-
-        private const string VersionMigrationNamespacePlaceholderName = "{{VERSION_MIGRATION_NAMESPACE}}";
-        private const string VersionMigrationFolderNamePlaceholderName = "{{VERSION_MIGRATION_FOLDERNAME}}";
-
         private readonly TemplateData _templateData;
 
         public TemplateProcessor(TemplateData templateData)
@@ -32,8 +18,13 @@ namespace Scaffolder
 
         public void CopyTemplateToNewLocation()
         {
-            string templateFolderName = String.Format("{0} Template ({1:d MMM, H-mm-ss})", _templateData.EntityNamePascalCase, DateTime.Now);
-            ProcessTemplateFolder("Template", templateFolderName);
+            string templateFolderName = String.Format("{0} {1} ({2:d MMM, H-mm-ss})", 
+                                                      _templateData.EntityNamePascalCase,
+                                                      _templateData.TemplateName,
+                                                      DateTime.Now);
+
+            string relativeTemplateFolderPath = String.Format("Templates\\{0}", _templateData.TemplateName);
+            ProcessTemplateFolder(relativeTemplateFolderPath, templateFolderName);
         }
 
         private void ProcessTemplateFolder(string sourceFolderPath, string targetFolderPath)
@@ -47,15 +38,15 @@ namespace Scaffolder
         {
             foreach (FileInfo file in source.GetFiles())
             {
-                string targetPath = Path.Combine(target.FullName, file.Name.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase));
+                string targetPath = Path.Combine(target.FullName, file.Name.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase));
                 string fileContents = File.ReadAllText(file.FullName);
                 string processedFileContents = ProcessContents(fileContents);
 
-                if (file.Name.Contains(MigrationTimeStampPlaceholderName))
+                if (file.Name.Contains(PlaceholderNames.MigrationTimeStamp))
                 {
                     var currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp().ToString();
-                    targetPath = targetPath.Replace(MigrationTimeStampPlaceholderName, currentUnixTimeStamp);
-                    processedFileContents = processedFileContents.Replace(MigrationTimeStampPlaceholderName, currentUnixTimeStamp);
+                    targetPath = targetPath.Replace(PlaceholderNames.MigrationTimeStamp, currentUnixTimeStamp);
+                    processedFileContents = processedFileContents.Replace(PlaceholderNames.MigrationTimeStamp, currentUnixTimeStamp);
                 }
 
                 File.WriteAllText(targetPath, processedFileContents);
@@ -64,8 +55,8 @@ namespace Scaffolder
             foreach (DirectoryInfo dir in source.GetDirectories())
             {
                 string targetFolderPath =
-                    dir.Name.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase)
-                            .Replace(VersionMigrationFolderNamePlaceholderName, _templateData.VersionMigrationFolderName);
+                    dir.Name.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase)
+                            .Replace(PlaceholderNames.VersionMigrationFolderName, _templateData.VersionMigrationFolderName);
 
                 ProcessFolder(dir, target.CreateSubdirectory(targetFolderPath));
             }
@@ -75,9 +66,10 @@ namespace Scaffolder
         {
             string processedContents = fileContents;
 
-            processedContents = processedContents.Replace(EntityPlaceholderName, _templateData.EntityNamePascalCase);
-            processedContents = processedContents.Replace(EntityPlaceHolderNameCamelCase, _templateData.EntityNameCamelCase);
-            processedContents = processedContents.Replace(VersionMigrationNamespacePlaceholderName, _templateData.VersionMigrationNamespace);
+            processedContents = processedContents.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase);
+            processedContents = processedContents.Replace(PlaceholderNames.EntityCamelCase, _templateData.EntityNameCamelCase);
+            processedContents = processedContents.Replace(PlaceholderNames.VersionMigrationNamespace, _templateData.VersionMigrationNamespace);
+            processedContents = processedContents.Replace(PlaceholderNames.SolutionNamespace, _templateData.SolutionNamespace);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
             processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
 
@@ -88,9 +80,9 @@ namespace Scaffolder
         {
             string processedContents = fileContents;
 
-            processedContents = ProcessProperties(processedContents, ForEachPropertyRegex);
-            processedContents = ProcessProperties(processedContents, ForEachPropertyAddFinalSemiColonRegex);
-            processedContents = ProcessProperties(processedContents, ForEachPropertyRemoveFinalCommaRegex);
+            processedContents = ProcessProperties(processedContents, PlaceholderNames.ForEachPropertyRegex);
+            processedContents = ProcessProperties(processedContents, PlaceholderNames.ForEachPropertyAddFinalSemiColonRegex);
+            processedContents = ProcessProperties(processedContents, PlaceholderNames.ForEachPropertyRemoveFinalCommaRegex);
 
             return processedContents;
         }
@@ -122,12 +114,12 @@ namespace Scaffolder
 
                     string replacementText = String.Join(Environment.NewLine, replacementLines);
 
-                    if (forEachRegex == ForEachPropertyAddFinalSemiColonRegex)
+                    if (forEachRegex == PlaceholderNames.ForEachPropertyAddFinalSemiColonRegex)
                     {
                         replacementText = replacementText + ";";
                     }
 
-                    if (forEachRegex == ForEachPropertyRemoveFinalCommaRegex)
+                    if (forEachRegex == PlaceholderNames.ForEachPropertyRemoveFinalCommaRegex)
                     {
                         replacementText = replacementText.Substring(replacementText.Length - 1);
                     }
@@ -143,7 +135,7 @@ namespace Scaffolder
         {
             string processedContents = fileContents;
 
-            var guidPlaceholderRegex = new Regex(NewGuidPlaceholderName);
+            var guidPlaceholderRegex = new Regex(PlaceholderNames.NewGuid);
             int guidPlaceholdersCount = guidPlaceholderRegex.Matches(processedContents).Count;
             for (int i = 0; i < guidPlaceholdersCount; i++)
             {
