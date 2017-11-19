@@ -16,9 +16,10 @@ namespace Scaffolder
             _templateData = templateData;
         }
 
-        public void CopyTemplateToNewLocation()
+        public void CopyTemplateToNewLocationAndReplacePlaceholders()
         {
-            string templateFolderName = String.Format("{0} {1} ({2:d MMM, H-mm-ss})", 
+            //string templateFolderName = String.Format("{0} {1} ({2:d MMM, H-mm-ss})", 
+            string templateFolderName = String.Format("C:\\Temp\\{0} {1} ({2:d MMM, H-mm-ss})",
                                                       _templateData.EntityNamePascalCase,
                                                       _templateData.TemplateName,
                                                       DateTime.Now);
