@@ -3,6 +3,7 @@
   "EntityNamePascalCase": "WashingMachine",
   "SolutionNamespace": "BozzerBox",
   "NextAssemblyVersionToBePublished": "1.14.3",
+  "ApiVersionNumber": 2,
   "Properties": [
     {
       "PropertyName": "ModelName",
@@ -15,7 +16,5 @@
       "PropertyType": null
     }
   ],
-  "EntityNameCamelCase": "washingMachine",
-  "VersionMigrationNamespace": "_001._014._003",
-  "VersionMigrationFolderName": "001.014.003"
+  "EntityNameCamelCase": "washingMachine"
 }

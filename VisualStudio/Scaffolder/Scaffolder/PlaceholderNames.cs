@@ -22,5 +22,7 @@ namespace Scaffolder
 
         public const string VersionMigrationNamespace = "{{VERSION_MIGRATION_NAMESPACE}}";
         public const string VersionMigrationFolderName = "{{VERSION_MIGRATION_FOLDERNAME}}";
+
+        public const string ApiVersionNumber = "{{API_VERSION_NUMBER}}";
     }
 }

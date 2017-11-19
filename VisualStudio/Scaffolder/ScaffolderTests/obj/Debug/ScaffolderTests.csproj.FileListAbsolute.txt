@@ -20,9 +20,9 @@ D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\ob
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\obj\Debug\ScaffolderTests.pdb
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\ToXyzDto.cs
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\{{VERSION_MIGRATION_FOLDERNAME}}\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
-D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder\XyzClass.cs
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzModule.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\ToXyzDto.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\{{VERSION_MIGRATION_FOLDERNAME}}\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder\XyzClass.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzModule.cs
+D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder.V{{API_VERSION_NUMBER}}\XyzClass.cs

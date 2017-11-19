@@ -61,7 +61,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Templates\TestTemplate\WebSite\XyzFolder\XyzClass.cs">
+    <None Include="Templates\TestTemplate\WebSite\XyzFolder.V{{API_VERSION_NUMBER}}\XyzClass.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Templates\TestTemplate\WebSite\XyzModule.cs">

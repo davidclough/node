@@ -42,6 +42,7 @@ namespace Scaffolder
                 EntityNamePascalCase = "WashingMachine",
                 SolutionNamespace = "BozzerBox",
                 NextAssemblyVersionToBePublished = "1.14.3",
+                ApiVersionNumber = 2,
                 Properties = new[]
                 {
                     new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },

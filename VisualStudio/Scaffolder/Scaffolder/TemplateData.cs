@@ -11,6 +11,7 @@ namespace Scaffolder
         public string EntityNamePascalCase { get; set; }
         public string SolutionNamespace { get; set; }
         public string NextAssemblyVersionToBePublished { get; set; }
+        public int ApiVersionNumber { get; set; }
 
         /// <summary>
         /// NOTE: These properties should not include the default properties which are always included and which should be catered for in a
@@ -61,8 +62,6 @@ namespace Scaffolder
                                         .Select(x => Int32.Parse(x));
             return numbers;
         }
-
-
 
         public void PopulatePropertyTypesFromDbFieldTypes()
         {
