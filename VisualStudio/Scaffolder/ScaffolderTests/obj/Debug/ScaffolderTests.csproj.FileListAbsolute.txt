@@ -23,6 +23,6 @@ D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzModule.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\ToXyzDto.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebApi\{{VERSION_MIGRATION_FOLDERNAME}}\{{MIGRATION_TIME_STAMP}} - AddXyzTable.cs
-D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder\XyzClass.cs
 D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzModule.cs
 D:\David\Development\JavaScript\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder.V{{API_VERSION_NUMBER}}\XyzClass.cs
+D:\Visual Studio Projects\GitHub\node\VisualStudio\Scaffolder\ScaffolderTests\bin\Debug\Templates\TestTemplate\WebSite\XyzFolder.{{API_VERSION}}\XyzClass.cs

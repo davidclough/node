@@ -4,6 +4,7 @@
   "SolutionNamespace": "BozzerBox",
   "NextAssemblyVersionToBePublished": "1.14.3",
   "ApiVersionNumber": 2,
+  "TargetSolutionPath": "C:\\Solutions\\MySpecialSolution",
   "Properties": [
     {
       "PropertyName": "ModelName",

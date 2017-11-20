@@ -23,7 +23,7 @@ namespace Scaffolder
             // TODO: {{MIGRATION_TIME_STAMP+001}} - need a way for the order of the migrations to be specified.
             //          1) A migration may depend on entities added/modified by a previous new script
             //          2) If the program run really quickly we may end up with multiple scripts that have the same time stamp.
-            // TODO: {{API_VERSION_NUMBER}} - Another TemplateData field for folders and namespaces containing V1...
+            // TODO: {{TARGET_SOLUTION_PATH}} - Another TemplateData field for folders and namespaces containing V1...
         }
 
         private static TemplateData GetTemplateDataFromFile(string filePath)
@@ -43,6 +43,7 @@ namespace Scaffolder
                 SolutionNamespace = "BozzerBox",
                 NextAssemblyVersionToBePublished = "1.14.3",
                 ApiVersionNumber = 2,
+                TargetSolutionPath = @"C:\Solutions\MySpecialSolution",
                 Properties = new[]
                 {
                     new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },

@@ -58,7 +58,7 @@ namespace Scaffolder
                 string targetFolderPath =
                     dir.Name.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase)
                             .Replace(PlaceholderNames.VersionMigrationFolderName, _templateData.VersionMigrationFolderName)
-                            .Replace(PlaceholderNames.ApiVersionNumber, _templateData.ApiVersionNumber.ToString());
+                            .Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
 
                 ProcessFolder(dir, target.CreateSubdirectory(targetFolderPath));
             }
@@ -72,7 +72,8 @@ namespace Scaffolder
             processedContents = processedContents.Replace(PlaceholderNames.EntityCamelCase, _templateData.EntityNameCamelCase);
             processedContents = processedContents.Replace(PlaceholderNames.VersionMigrationNamespace, _templateData.VersionMigrationNamespace);
             processedContents = processedContents.Replace(PlaceholderNames.SolutionNamespace, _templateData.SolutionNamespace);
-            processedContents = processedContents.Replace(PlaceholderNames.ApiVersionNumber, _templateData.ApiVersionNumber.ToString());
+            processedContents = processedContents.Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
+            processedContents = processedContents.Replace(PlaceholderNames.TargetSolutionPath, _templateData.TargetSolutionPath);
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
             processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
 

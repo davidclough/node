@@ -12,6 +12,7 @@ namespace Scaffolder
         public string SolutionNamespace { get; set; }
         public string NextAssemblyVersionToBePublished { get; set; }
         public int ApiVersionNumber { get; set; }
+        public string TargetSolutionPath { get; set; }
 
         /// <summary>
         /// NOTE: These properties should not include the default properties which are always included and which should be catered for in a
@@ -51,6 +52,14 @@ namespace Scaffolder
                 IEnumerable<int> numbers = ParseVersionStringIntoNumbers(NextAssemblyVersionToBePublished);
                 string migrationNamespace = String.Join(".", numbers.Select(x => String.Format("{0:000}", x)));
                 return migrationNamespace;
+            }
+        }
+
+        public string ApiVersion
+        {
+            get
+            {
+                return String.Format("V{0}", ApiVersionNumber);
             }
         }
 
