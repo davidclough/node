@@ -14,8 +14,15 @@ namespace Scaffolder
         ///                                                                                  e.g. 'AsString(255).NotNullable()'.
         /// </summary>
         public string FluentMigratorTypeInstruction { get; set; }
-        
+
         public string PropertyType { get; set; }
+
+        /// <summary>
+        /// Note that it may be a string here but this value will only be used to replace the placeholder text in any template.
+        /// For example, "3" in here will end up being the value 3 if the PropertyType i "int".
+        /// NOTE: Ensure surrounding quotes are included if the PropertyType is string, e.g. "\"test string\"".
+        /// </summary>
+        public string MappingTestValue { get; set; }
 
         public void PopulatePropertyTypeFromDbFieldType()
         {

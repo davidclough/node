@@ -15,6 +15,14 @@ namespace Scaffolder
         public string TargetSolutionPath { get; set; }
 
         /// <summary>
+        /// Used in comjunction with Properties to determine the total number of properties to assert for in a mapping test.
+        /// In the initial template being constructed there are 6: XyzId, IsDeleted and the 4 created/modified properties.
+        /// NOTE: Do not use the default value for the property type, e.g. use true for bools rather than false just to make sure
+        ///       a test assertion isn't "correct by accident".
+        /// </summary>
+        public int NumberOfStandardProperties { get; set; }
+
+        /// <summary>
         /// NOTE: These properties should not include the default properties which are always included and which should be catered for in a
         ///       non-automated way, with specific lines in each template catering for them.
         ///       Currently there are 6 default properties which should not be in this list:
@@ -60,6 +68,14 @@ namespace Scaffolder
             get
             {
                 return String.Format("V{0}", ApiVersionNumber);
+            }
+        }
+
+        public int PropertyCount
+        {
+            get
+            {
+                return NumberOfStandardProperties + Properties.Count();
             }
         }
 

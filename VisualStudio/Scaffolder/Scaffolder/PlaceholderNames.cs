@@ -18,7 +18,11 @@ namespace Scaffolder
         public const string SolutionNamespace = "{{SOLUTION_NAMESPACE}}";
 
         public const string NewGuid = "{{NEW_GUID}}";
-        public const string MigrationTimeStamp = "{{MIGRATION_TIME_STAMP}}";
+
+        // The addition captures an optional "+ followed by 1 or more digits" to specify how mutch should be added to the current Unix time stamp.
+        public const string MigrationTimeStampRegex = @"{{MIGRATION_TIME_STAMP(?<addition>\+\d+)?}}";
+
+        public const string PropertyCount = "{{PROPERTY_COUNT}}";
 
         public const string VersionMigrationNamespace = "{{VERSION_MIGRATION_NAMESPACE}}";
         public const string VersionMigrationFolderName = "{{VERSION_MIGRATION_FOLDERNAME}}";

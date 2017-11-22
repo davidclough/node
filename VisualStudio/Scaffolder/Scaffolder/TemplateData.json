@@ -5,17 +5,17 @@
   "NextAssemblyVersionToBePublished": "1.14.3",
   "ApiVersionNumber": 2,
   "TargetSolutionPath": "C:\\Solutions\\MySpecialSolution",
+  "NumberOfStandardProperties": 6,
   "Properties": [
     {
       "PropertyName": "ModelName",
       "FluentMigratorTypeInstruction": "AsString(255).NotNullable()",
-      "PropertyType": null
+      "MappingTestValue": "\"Super Washer 600\""
     },
     {
       "PropertyName": "HasDryer",
       "FluentMigratorTypeInstruction": "AsBoolean.Nullable()",
-      "PropertyType": null
+      "MappingTestValue": "true"
     }
-  ],
-  "EntityNameCamelCase": "washingMachine"
+  ]
 }

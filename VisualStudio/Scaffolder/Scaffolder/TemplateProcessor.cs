@@ -43,11 +43,20 @@ namespace Scaffolder
                 string fileContents = File.ReadAllText(file.FullName);
                 string processedFileContents = ProcessContents(fileContents);
 
-                if (file.Name.Contains(PlaceholderNames.MigrationTimeStamp))
+                Match match = Regex.Match(file.Name, PlaceholderNames.MigrationTimeStampRegex);
+                if (match.Success)
                 {
-                    var currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp().ToString();
-                    targetPath = targetPath.Replace(PlaceholderNames.MigrationTimeStamp, currentUnixTimeStamp);
-                    processedFileContents = processedFileContents.Replace(PlaceholderNames.MigrationTimeStamp, currentUnixTimeStamp);
+                    string additionCapture = match.Groups["addition"].Value;
+                    int addition = String.IsNullOrEmpty(additionCapture) ? 0 : Int32.Parse(additionCapture);
+
+                    int currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp();
+                    string unixTimeStampReplacement = (currentUnixTimeStamp + addition).ToString();
+
+                    targetPath = Regex.Replace(targetPath, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
+
+                    // Any regex matches within the file (there should be one at most) will be replaced by the same value, even if
+                    // they contain a different value for the "addition" capture.
+                    processedFileContents = Regex.Replace(processedFileContents, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
                 }
 
                 File.WriteAllText(targetPath, processedFileContents);
@@ -71,6 +80,7 @@ namespace Scaffolder
             processedContents = processedContents.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(PlaceholderNames.EntityCamelCase, _templateData.EntityNameCamelCase);
             processedContents = processedContents.Replace(PlaceholderNames.VersionMigrationNamespace, _templateData.VersionMigrationNamespace);
+            processedContents = processedContents.Replace(PlaceholderNames.PropertyCount, _templateData.PropertyCount.ToString());
             processedContents = processedContents.Replace(PlaceholderNames.SolutionNamespace, _templateData.SolutionNamespace);
             processedContents = processedContents.Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
             processedContents = processedContents.Replace(PlaceholderNames.TargetSolutionPath, _templateData.TargetSolutionPath);
@@ -112,7 +122,8 @@ namespace Scaffolder
                         {
                             replacementLines.Add(line.Replace("PropertyName", propertyData.PropertyName)
                                                      .Replace("FluentMigratorTypeInstruction", propertyData.FluentMigratorTypeInstruction)
-                                                     .Replace("PropertType", propertyData.PropertyType));
+                                                     .Replace("PropertType", propertyData.PropertyType)
+                                                     .Replace("MappingTestValue", propertyData.MappingTestValue));
                         }
                     }
 

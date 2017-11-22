@@ -44,10 +44,21 @@ namespace Scaffolder
                 NextAssemblyVersionToBePublished = "1.14.3",
                 ApiVersionNumber = 2,
                 TargetSolutionPath = @"C:\Solutions\MySpecialSolution",
+                NumberOfStandardProperties = 6,
                 Properties = new[]
                 {
-                    new PropertyData { PropertyName = "ModelName", FluentMigratorTypeInstruction = "AsString(255).NotNullable()" },
-                    new PropertyData { PropertyName = "HasDryer", FluentMigratorTypeInstruction = "AsBoolean.Nullable()" },
+                    new PropertyData
+                    {
+                        PropertyName = "ModelName",
+                        FluentMigratorTypeInstruction = "AsString(255).NotNullable()",
+                        MappingTestValue = "\"Super Washer 600\"",
+                    },
+                    new PropertyData
+                    {
+                        PropertyName = "HasDryer",
+                        FluentMigratorTypeInstruction = "AsBoolean.Nullable()",
+                        MappingTestValue = "true",
+                    },
                 }
             };
 
