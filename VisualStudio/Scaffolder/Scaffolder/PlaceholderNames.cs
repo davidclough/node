@@ -19,7 +19,7 @@ namespace Scaffolder
 
         public const string NewGuid = "{{NEW_GUID}}";
 
-        // The addition captures an optional "+ followed by 1 or more digits" to specify how mutch should be added to the current Unix time stamp.
+        // The addition captures an optional "+ followed by 1 or more digits" to specify how much should be added to the current Unix time stamp.
         public const string MigrationTimeStampRegex = @"{{MIGRATION_TIME_STAMP(?<addition>\+\d+)?}}";
 
         public const string PropertyCount = "{{PROPERTY_COUNT}}";
