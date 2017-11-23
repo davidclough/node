@@ -71,6 +71,14 @@ namespace Scaffolder
             }
         }
 
+        public int CustomPropertyCount
+        {
+            get
+            {
+                return Properties.Count();
+            }
+        }
+
         public int PropertyCount
         {
             get

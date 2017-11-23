@@ -84,6 +84,9 @@ namespace Scaffolder
             processedContents = processedContents.Replace(PlaceholderNames.SolutionNamespace, _templateData.SolutionNamespace);
             processedContents = processedContents.Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
             processedContents = processedContents.Replace(PlaceholderNames.TargetSolutionPath, _templateData.TargetSolutionPath);
+
+            processedContents = processedContents.Replace(PlaceholderNames.CustomPropertyCount, _templateData.CustomPropertyCount.ToString());
+
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
             processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
 
