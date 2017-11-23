@@ -5,11 +5,11 @@ public class XyzModule
     private string _xyz = "Xyz";
 
 {{FOR_EACH_PROPERTY:
-    public PropertType PropertyName { get; set; }
+    public PropertyType PropertyName { get; set; }
 }}
 
 {{FOR_EACH_PROPERTY_ADD_FINAL_SEMI_COLON:
-    public PropertType PropertyNameProxy { get; set; }
+    public PropertyType PropertyNameProxy { get; set; }
 }}
 
     private _xyz = new Xyz

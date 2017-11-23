@@ -125,7 +125,7 @@ namespace Scaffolder
                         {
                             replacementLines.Add(line.Replace("PropertyName", propertyData.PropertyName)
                                                      .Replace("FluentMigratorTypeInstruction", propertyData.FluentMigratorTypeInstruction)
-                                                     .Replace("PropertType", propertyData.PropertyType)
+                                                     .Replace("PropertyType", propertyData.PropertyType)
                                                      .Replace("MappingTestValue", propertyData.MappingTestValue));
                         }
                     }
