@@ -20,7 +20,8 @@ namespace Scaffolder.Templates.TestTemplate.WebApi
 {{FOR_EACH_PROPERTY:
             Assert.AreEqual(MappingTestValue, xyz.PropertyName);
 }}
-            // Total number of properties to assert for is: {{PROPERTY_COUNT}}
+            // Total number of properties to assert for is: {{CUSTOM_PROPERTY_COUNT}}
+            // Total number of properties to assert for is: {{CUSTOM_PROPERTY_COUNT+5}}
         }
     }
 }

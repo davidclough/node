@@ -17,13 +17,11 @@ namespace Scaffolder
             var templateProcessor = new TemplateProcessor(templateData);
             templateProcessor.CopyTemplateToNewLocationAndReplacePlaceholders();
 
-            // TODO: Check if any of the files which need to be modified have a custom namespace that is relevant to the specific solution.
-            // TODO: Go through all required template files and see if can find and REPLACE MENT PATTERNS that have not been covered.
+            // TODO: {{CUSTOM_PROPERTY_COUNT+N}}
+            // TODO: When obvious that they are no use, it will be extremely easy to remove the properties:
+            //          NumberOfStandardProperties and PropertyCount.
 
-            // TODO: {{MIGRATION_TIME_STAMP+001}} - need a way for the order of the migrations to be specified.
-            //          1) A migration may depend on entities added/modified by a previous new script
-            //          2) If the program run really quickly we may end up with multiple scripts that have the same time stamp.
-            // TODO: {{TARGET_SOLUTION_PATH}} - Another TemplateData field for folders and namespaces containing V1...
+            // TODO: Rename TemplateData.Properties to CustomProperties in class and JSON file.
         }
 
         private static TemplateData GetTemplateDataFromFile(string filePath)

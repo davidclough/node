@@ -22,8 +22,9 @@ namespace Scaffolder
         // The addition captures an optional "+ followed by 1 or more digits" to specify how much should be added to the current Unix time stamp.
         public const string MigrationTimeStampRegex = @"{{MIGRATION_TIME_STAMP(?<addition>\+\d+)?}}";
 
-        public const string CustomPropertyCount = "{{CUSTOM_PROPERTY_COUNT}}";
         public const string PropertyCount = "{{PROPERTY_COUNT}}";
+        // The addition captures an optional "+ followed by 1 or more digits" to specify how much should be added to the current Unix time stamp.
+        public const string CustomPropertyCount = @"{{CUSTOM_PROPERTY_COUNT(?<addition>\+\d+)?}}";
 
         public const string VersionMigrationNamespace = "{{VERSION_MIGRATION_NAMESPACE}}";
         public const string VersionMigrationFolderName = "{{VERSION_MIGRATION_FOLDERNAME}}";

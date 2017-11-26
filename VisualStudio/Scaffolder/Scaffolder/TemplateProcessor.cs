@@ -80,12 +80,14 @@ namespace Scaffolder
             processedContents = processedContents.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase);
             processedContents = processedContents.Replace(PlaceholderNames.EntityCamelCase, _templateData.EntityNameCamelCase);
             processedContents = processedContents.Replace(PlaceholderNames.VersionMigrationNamespace, _templateData.VersionMigrationNamespace);
-            processedContents = processedContents.Replace(PlaceholderNames.PropertyCount, _templateData.PropertyCount.ToString());
             processedContents = processedContents.Replace(PlaceholderNames.SolutionNamespace, _templateData.SolutionNamespace);
             processedContents = processedContents.Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
             processedContents = processedContents.Replace(PlaceholderNames.TargetSolutionPath, _templateData.TargetSolutionPath);
 
-            processedContents = processedContents.Replace(PlaceholderNames.CustomPropertyCount, _templateData.CustomPropertyCount.ToString());
+            // TODO: One below to go.
+            processedContents = processedContents.Replace(PlaceholderNames.PropertyCount, _templateData.PropertyCount.ToString());
+
+            processedContents = ReplaceEachCustomPropertyCountPlaceholder(processedContents);
 
             processedContents = ProcessPropertiesForEachPropertyRegex(processedContents);
             processedContents = ReplaceEachNewGuidPlaceholderWithDifferentGuid(processedContents);
@@ -158,6 +160,23 @@ namespace Scaffolder
             for (int i = 0; i < guidPlaceholdersCount; i++)
             {
                 processedContents = guidPlaceholderRegex.Replace(processedContents, Guid.NewGuid().ToString(), 1);
+            }
+
+            return processedContents;
+        }
+
+        private string ReplaceEachCustomPropertyCountPlaceholder(string fileContents)
+        {
+            string processedContents = fileContents;
+
+            var customPropertyCountRegex = new Regex(PlaceholderNames.CustomPropertyCount);
+            MatchCollection customPropertyCountMatches = customPropertyCountRegex.Matches(processedContents);
+            for (int i = 0; i < customPropertyCountMatches.Count; i++)
+            {
+                string additionCapture = customPropertyCountMatches[i].Groups["addition"].Value;
+                int addition = String.IsNullOrEmpty(additionCapture) ? 0 : Int32.Parse(additionCapture);
+                processedContents = customPropertyCountRegex.Replace(processedContents,
+                                                                     (_templateData.CustomPropertyCount + addition).ToString(), 1);
             }
 
             return processedContents;
