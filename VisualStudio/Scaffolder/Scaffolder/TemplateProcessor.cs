@@ -35,31 +35,11 @@ namespace Scaffolder
             ProcessFolder(sourceDirectoryInfo, targetDirectoryInfo);
         }
 
-        private void ProcessFolder(DirectoryInfo source, DirectoryInfo target)
+        private void ProcessFolder(DirectoryInfo source, DirectoryInfo targetFolder)
         {
             foreach (FileInfo file in source.GetFiles())
             {
-                string targetPath = Path.Combine(target.FullName, file.Name.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase));
-                string fileContents = File.ReadAllText(file.FullName);
-                string processedFileContents = ProcessContents(fileContents);
-
-                Match match = Regex.Match(file.Name, PlaceholderNames.MigrationTimeStampRegex);
-                if (match.Success)
-                {
-                    string additionCapture = match.Groups["addition"].Value;
-                    int addition = String.IsNullOrEmpty(additionCapture) ? 0 : Int32.Parse(additionCapture);
-
-                    int currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp();
-                    string unixTimeStampReplacement = (currentUnixTimeStamp + addition).ToString();
-
-                    targetPath = Regex.Replace(targetPath, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
-
-                    // Any regex matches within the file (there should be one at most) will be replaced by the same value, even if
-                    // they contain a different value for the "addition" capture.
-                    processedFileContents = Regex.Replace(processedFileContents, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
-                }
-
-                File.WriteAllText(targetPath, processedFileContents);
+                ProcessFile(file, targetFolder);
             }
 
             foreach (DirectoryInfo dir in source.GetDirectories())
@@ -69,8 +49,34 @@ namespace Scaffolder
                             .Replace(PlaceholderNames.VersionMigrationFolderName, _templateData.VersionMigrationFolderName)
                             .Replace(PlaceholderNames.ApiVersion, _templateData.ApiVersion);
 
-                ProcessFolder(dir, target.CreateSubdirectory(targetFolderPath));
+                ProcessFolder(dir, targetFolder.CreateSubdirectory(targetFolderPath));
             }
+        }
+
+        private void ProcessFile(FileInfo file, DirectoryInfo targetFolder)
+        {
+            string targetPath = Path.Combine(targetFolder.FullName,
+                                             file.Name.Replace(PlaceholderNames.Entity, _templateData.EntityNamePascalCase));
+            string fileContents = File.ReadAllText(file.FullName);
+            string processedFileContents = ProcessContents(fileContents);
+
+            Match match = Regex.Match(file.Name, PlaceholderNames.MigrationTimeStampRegex);
+            if (match.Success)
+            {
+                string additionCapture = match.Groups["addition"].Value;
+                int addition = String.IsNullOrEmpty(additionCapture) ? 0 : Int32.Parse(additionCapture);
+
+                int currentUnixTimeStamp = DateAndTime.GetUnixTimeStamp();
+                string unixTimeStampReplacement = (currentUnixTimeStamp + addition).ToString();
+
+                targetPath = Regex.Replace(targetPath, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
+
+                // Any regex matches within the file (there should be one at most) will be replaced by the same value, even if
+                // they contain a different value for the "addition" capture.
+                processedFileContents = Regex.Replace(processedFileContents, PlaceholderNames.MigrationTimeStampRegex, unixTimeStampReplacement);
+            }
+
+            File.WriteAllText(targetPath, processedFileContents);
         }
 
         public string ProcessContents(string fileContents)
