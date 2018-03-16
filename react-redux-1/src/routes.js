@@ -7,7 +7,7 @@ import CoursesPage from "./components/course/CoursesPage";
 import ManageCoursePage from "./components/course/ManageCoursePage";
 
 // NOTE(DC): I stuck braces in here instead of brackets and got compilation errors.
-//           In actual fact, the compilation error was being indicated be the command line but
+//           In actual fact, the compilation error was being indicated by the command line but
 //           I just didn't spot the error and assumed that some other underlying problem was causing it.
 // NOTE: Looks like JSX is wrapped in ().
 // NOTE: After reading, it looks like the brackets are nothing to do with JSX, they are just added to prevent

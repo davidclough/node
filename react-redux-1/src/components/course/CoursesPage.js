@@ -59,6 +59,8 @@ function mapStateToProps(state, ownProps) {
     // DC: This give the component the "this.props.courses" property.
     courses: state.courses          // CourseReducer - see file (he named the file that for distinguishability of tabs).
   };
+
+  // If do anything expensive in here, introduce memoization using a library like Reselect.
 }
 
 function mapDispatchToProps(dispatch) {

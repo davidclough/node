@@ -3,10 +3,12 @@
 import {combineReducers} from "redux";
 import courses from "./courseReducer";    // DC: He uses different names for readability when used.
 import authors from "./authorReducer";
+import ajaxCallsInProgress from "./ajaxStatusReducer";
 
 const rootReducer = combineReducers({
   courses,
-  authors
+  authors,
+  ajaxCallsInProgress
 });
 
 export default rootReducer;
