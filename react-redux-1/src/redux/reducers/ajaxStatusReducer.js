@@ -1,5 +1,5 @@
-import * as types from '../actions/actionTypes'
-import initialState from './initialState'
+import * as types from '../actions/actionTypes';
+import initialState from './initialState';
 
 // Trick indicated by Dan Abramov for detecting end of AJAX calls.
 // ALL OUT THUNKS dispatch a SUCCESS action when they complete.

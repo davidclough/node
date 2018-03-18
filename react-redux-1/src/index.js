@@ -1,16 +1,16 @@
 import "babel-polyfill";      // DC: object.assign is one thing that cannot be transpiled to ES5.
 import React from "react";
 import { render } from "react-dom";
-import configureStore from "./store/configureStore";
+import configureStore from "./redux/store/configureStore";
 import { Provider } from "react-redux";
 import { Router, browserHistory } from "react-router";
-import routes from "./routes";
-import { loadCourses } from "./actions/courseActions";
-import { loadAuthors } from "./actions/authorActions";
-import "./styles/styles.css";     // Webpack can import CSS files too (using this line).
+import routes from "./react/routes";
+import { loadCourses } from "./redux/actions/courseActions";
+import { loadAuthors } from "./redux/actions/authorActions";
+import "./react/styles/styles.css";     // Webpack can import CSS files too (using this line).
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-//console.log("hi");
+// DC: It looks like index.js need to go in the root folder. I am not sure what is governing this or if it is just convention.
 
 // May want to rehydrate your store here.
 const store = configureStore();
