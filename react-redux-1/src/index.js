@@ -9,6 +9,7 @@ import { loadCourses } from "./redux/actions/courseActions";
 import { loadAuthors } from "./redux/actions/authorActions";
 import "./react/styles/styles.css";     // Webpack can import CSS files too (using this line).
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/toastr/build/toastr.min.css";
 
 // DC: It looks like index.js need to go in the root folder.
 //     I am not sure what is governing this or if it is just convention.

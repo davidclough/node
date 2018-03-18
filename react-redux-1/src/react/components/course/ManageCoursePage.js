@@ -1,6 +1,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import toastr from "toastr";
 
 // import * as courseActions from "../../../redux/actions/courseActions";
 // DC: The absolute path below can now be used as we have includes a "resolve" setting in WebPack ("modules in WP2").
@@ -15,7 +16,9 @@ class ManageCoursePage extends React.Component {
 
     this.state = {
       course: Object.assign({}, this.props.course),
-      errors: {}
+      errors: {},
+      // He just uses local state, without redux, here. It is not necessary to use redux every time, this is only a very local thing.
+      saving: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -46,21 +49,51 @@ class ManageCoursePage extends React.Component {
   }
 
   redirect() {
+    this.setState({saving: false});
+    toastr.success('Course saved');
     this.context.router.push('/courses');
   }
 
+
+
   saveCourse(event) {
     event.preventDefault();
+
+    this.setState({saving: true});
+
     // saveCourse() in courseActions.js returns a thunk (via redux-thunk middleware) (and thunks utilise Promises, he said).
     this.props.actions.saveCourse(this.state.course)
-                      .then(() => this.redirect());
+                      .then(() => this.redirect())
+                      .catch(error => {
+                        toastr.error(error);
+                        this.setState({saving: false});
+                      });
   }
+
+  // async/await version: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+  // OBSERVATION: The eslint version we are using really does't like the line below.
+  // async saveCourse(event) {
+  //   event.preventDefault();
+
+  //   this.setState({saving: true});
+                      
+  //   // OBSERVATION: Saving the file resulted in a black error in browser but OK after reloaded.
+  //   try {
+  //     await this.props.actions.saveCourse(this.state.course);
+  //     this.redirect();
+  //   } catch(error) {
+  //     toastr.error(error);
+  //     this.setState({saving: false});
+  //   }
+  // }
+
+
 
   // OBSERVATION: state seems to relate to component values, props is where the list of all authors for the dropdown is held.
   render() {
     return (
       <CourseForm course={this.state.course} allAuthors={this.props.authors} onChange={this.updateCourseState} onSave={this.saveCourse}
-                  errors={this.state.errors} />
+                  errors={this.state.errors} saving={this.state.saving} />
     );
   }
 }
