@@ -10,7 +10,10 @@ import { loadAuthors } from "./redux/actions/authorActions";
 import "./react/styles/styles.css";     // Webpack can import CSS files too (using this line).
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-// DC: It looks like index.js need to go in the root folder. I am not sure what is governing this or if it is just convention.
+// DC: It looks like index.js need to go in the root folder.
+//     I am not sure what is governing this or if it is just convention.
+//     index.js is a significant name in Node when you include a folder it is in.
+//     In the webpack file the "entry\'./src/index'" line is referring to index.js. The devServer\contentBase value is just indicating which folder our code is in.
 
 // May want to rehydrate your store here.
 const store = configureStore();

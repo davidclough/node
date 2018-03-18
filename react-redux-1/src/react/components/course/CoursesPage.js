@@ -1,7 +1,11 @@
 import React, { PropTypes } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as courseActions from "../../../redux/actions/courseActions";
+
+// import * as courseActions from "../../../redux/actions/courseActions";
+// DC: The absolute path below can now be used as we have includes a "resolve" setting in WebPack ("modules in WP2").
+import * as courseActions from "redux/actions/courseActions";
+
 import CourseList from "./CourseList";
 import { browserHistory } from "react-router";
 

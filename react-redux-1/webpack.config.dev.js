@@ -21,6 +21,7 @@ export default {
     //path.resolve(__dirname, 'src/index')
 
     // Important that the app entry point is defined last.
+    // DC: This is referring index.js and not the html file.
     './src/index'
   ],
   target: 'web',
@@ -46,6 +47,16 @@ export default {
       {test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000'},
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
+    ]
+  },
+
+
+  // DC: https://moduscreate.com/blog/es6-es2015-import-no-relative-path-webpack/
+  resolve: {
+    // modules: [     // We are using WebPack 1 in this project, NOT 2.
+    root: [
+      path.resolve('./node_modules'),
+      path.resolve('./src')
     ]
   }
 };

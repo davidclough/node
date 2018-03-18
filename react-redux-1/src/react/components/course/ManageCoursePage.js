@@ -1,7 +1,12 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as courseActions from "../../../redux/actions/courseActions";
+
+// import * as courseActions from "../../../redux/actions/courseActions";
+// DC: The absolute path below can now be used as we have includes a "resolve" setting in WebPack ("modules in WP2").
+// HOWEVER: These are more robust than relative paths but we now have the NASTY problem that ESLINT tells us there is a module path resolution error,
+import * as courseActions from "redux/actions/courseActions";
+
 import CourseForm from "./CourseForm";
 
 class ManageCoursePage extends React.Component {
