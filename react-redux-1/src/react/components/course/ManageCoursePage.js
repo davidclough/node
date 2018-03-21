@@ -3,14 +3,17 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import toastr from "toastr";
 
-// import * as courseActions from "../../../redux/actions/courseActions";
+import * as courseActions from "../../../redux/actions/courseActions";
 // DC: The absolute path below can now be used as we have includes a "resolve" setting in WebPack ("modules in WP2").
 // HOWEVER: These are more robust than relative paths but we now have the NASTY problem that ESLINT tells us there is a module path resolution error,
-import * as courseActions from "redux/actions/courseActions";
+//// import * as courseActions from "redux/actions/courseActions";
+// LATER: This worked untils added ManageCoursePage.test.js. There it seemed to confuse.
 
 import CourseForm from "./CourseForm";
+import {authorsFormattedForDropdown} from "../../selectors/selectors";
 
-class ManageCoursePage extends React.Component {
+// Now exporting the plain, unconnected-to-store component.
+export class ManageCoursePage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -53,11 +56,28 @@ class ManageCoursePage extends React.Component {
     toastr.success('Course saved');
     this.context.router.push('/courses');
   }
+  
+  courseFormIsValid() {
+    let formIsValid = true;
+    let errors = {};
+
+    if (this.state.course.title.length < 5) {
+      errors.title = 'Title must be at least 5 characters.';
+      formIsValid = false;
+    }
+
+    this.setState({errors: errors});
+    return formIsValid;
+  }
 
 
-
+  
   saveCourse(event) {
     event.preventDefault();
+
+    if (!this.courseFormIsValid()) {
+      return;
+    }
 
     this.setState({saving: true});
 
@@ -141,17 +161,9 @@ function mapStateToProps(state, ownProps) {
   // ANSWER: This is because, in the constructor, we set the state and its course property is assigned to this.props.course which,
   //         because of the delay we introduced??, is null. This is why we implemented the componentWillReceiveProps lifecycle method.
 
-  // DC: The properties in the "store authors" are different from what we would ideally like to use in this component.
-  const authorsFormattedForDropdown = state.authors.map(author => {
-    return {
-      value: author.id,
-      text: author.firstName + " " + author.lastName
-    };
-  });
-
   return {
     course: course,
-    authors: authorsFormattedForDropdown
+    authors: authorsFormattedForDropdown(state.authors)
   };
 }
 
