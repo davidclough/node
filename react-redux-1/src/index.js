@@ -1,7 +1,9 @@
+/*eslint-disable import/default*/  // Now store.js is no longer "exporting a default", because we are using module.exports for dynamism, eslint complains.
+
 import "babel-polyfill";      // DC: object.assign is one thing that cannot be transpiled to ES5.
 import React from "react";
 import { render } from "react-dom";
-import configureStore from "./redux/store/configureStore";
+import configureStore from "./redux/store/store";
 import { Provider } from "react-redux";
 import { Router, browserHistory } from "react-router";
 import routes from "./react/routes";

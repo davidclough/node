@@ -32,6 +32,7 @@ export class ManageCoursePage extends React.Component {
   //     We therefore need to ensure that, when the API call has finished, and the props change, we update this component's state.
 
   // Update state when props has changed.
+  // TODO: See see if a component will update naturally when one of its props, rather than state, has changed.
   // https://facebook.github.io/react/docs/react-component.html
   componentWillReceiveProps(nextProps) {
     // This method runs when react THINKS props has changed. However, it may not have actually changed.
@@ -69,8 +70,6 @@ export class ManageCoursePage extends React.Component {
     this.setState({errors: errors});
     return formIsValid;
   }
-
-
   
   saveCourse(event) {
     event.preventDefault();
@@ -90,7 +89,7 @@ export class ManageCoursePage extends React.Component {
                       });
   }
 
-  // async/await version: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+  // async/await version of saveCourse(): https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
   // OBSERVATION: The eslint version we are using really does't like the line below.
   // async saveCourse(event) {
   //   event.preventDefault();
@@ -106,8 +105,6 @@ export class ManageCoursePage extends React.Component {
   //     this.setState({saving: false});
   //   }
   // }
-
-
 
   // OBSERVATION: state seems to relate to component values, props is where the list of all authors for the dropdown is held.
   render() {

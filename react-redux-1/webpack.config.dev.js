@@ -11,8 +11,8 @@ export default {
   //devtool: 'cheap-module-eval-source-map',
   // source-map DID work for me - the debugger statements broke at the line I put them on.
   //devtool: 'source-map',        // Worked.
-  devtool: 'eval-source-map',     // Worked.
-  //devtool: 'cheap-module-source-map',     // Didn't work.
+  //devtool: 'eval-source-map',     // Worked.
+  devtool: 'cheap-module-source-map',     // XXDidn't work. AT LATER DATE - it worked fine.
 
   noInfo: false,
   entry: [
@@ -22,6 +22,7 @@ export default {
 
     // Important that the app entry point is defined last.
     // DC: This is referring index.js and not the html file.
+    //     It is the server file, e.g. srcServer.js, which sends out the index.html.
     './src/index'
   ],
   target: 'web',

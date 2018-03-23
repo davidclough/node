@@ -15,7 +15,7 @@ export function updateCourseSuccess(course) {
 }
 
 export function loadCourses() {
-  return function (dispatch) {      // <------- a thunk ---- redux-thunk is applied as middleware to the store in configureStore.js
+  return function (dispatch) {      // <------- a thunk ---- redux-thunk is applied as middleware to the store in store.js
     dispatch(beginAjaxCall());
 
     return courseApi.getAllCourses()
