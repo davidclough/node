@@ -1,7 +1,12 @@
 import React, { PropTypes } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as courseActions from "../../actions/courseActions";
+
+import * as courseActions from "../../../redux/actions/courseActions";
+// DC: The absolute path below can now be used as we have includes a "resolve" setting in WebPack ("modules in WP2").
+// HOWEVER: These are more robust than relative paths but we now have the NASTY problem that ESLINT tells us there is a module path resolution error,
+// import * as courseActions from "redux/actions/courseActions";
+
 import CourseList from "./CourseList";
 import { browserHistory } from "react-router";
 
@@ -59,6 +64,8 @@ function mapStateToProps(state, ownProps) {
     // DC: This give the component the "this.props.courses" property.
     courses: state.courses          // CourseReducer - see file (he named the file that for distinguishability of tabs).
   };
+
+  // If do anything expensive in here, introduce memoization using a library like Reselect.
 }
 
 function mapDispatchToProps(dispatch) {

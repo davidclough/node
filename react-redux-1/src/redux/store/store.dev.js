@@ -3,7 +3,9 @@ import rootReducer from "../reducers";
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
 import thunk from "redux-thunk";
 
-// DC: In "Store" he mentions server-side redering
+// He called the file configureStore.js but this file name caused me a bit of confusion and does not appear to be required by any convention.
+// He still called the test file store.test.js.
+
 export default function configureStore(initialState) {
   return createStore(
     rootReducer,
