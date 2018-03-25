@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <div class="page-header">
       <h1>
-        Vue.js and FieBase Sample Application
+        Vue.js and FireBase Sample Application
       </h1>
     </div>
     <div class="panel panel-default">

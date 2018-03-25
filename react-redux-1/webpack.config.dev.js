@@ -11,8 +11,8 @@ export default {
   //devtool: 'cheap-module-eval-source-map',
   // source-map DID work for me - the debugger statements broke at the line I put them on.
   //devtool: 'source-map',        // Worked.
-  devtool: 'eval-source-map',     // Worked.
-  //devtool: 'cheap-module-source-map',     // Didn't work.
+  //devtool: 'eval-source-map',     // Worked.
+  devtool: 'cheap-module-source-map',     // XXDidn't work. AT LATER DATE - it worked fine.
 
   noInfo: false,
   entry: [
@@ -21,6 +21,8 @@ export default {
     //path.resolve(__dirname, 'src/index')
 
     // Important that the app entry point is defined last.
+    // DC: This is referring index.js and not the html file.
+    //     It is the server file, e.g. srcServer.js, which sends out the index.html.
     './src/index'
   ],
   target: 'web',
@@ -46,6 +48,16 @@ export default {
       {test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000'},
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
+    ]
+  },
+
+
+  // DC: https://moduscreate.com/blog/es6-es2015-import-no-relative-path-webpack/
+  resolve: {
+    // modules: [     // We are using WebPack 1 in this project, NOT 2.
+    root: [
+      path.resolve('./node_modules'),
+      path.resolve('./src')
     ]
   }
 };
