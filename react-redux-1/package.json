@@ -12,7 +12,6 @@
     "test": "mocha --reporter spec tools/testSetup.js \"src/**/*.test.js\"",
     "testNORMAL": "mocha --reporter progress tools/testSetup.js \"src/**/*.test.js\"",
     "test:watch": "npm run test -- --watch",
-
     "remove-dist": "node_modules/.bin/rimraf ./dist",
     "clean-dist": "npm run remove-dist && mkdir dist",
     "build:html": "babel-node tools/buildHtml.js",
