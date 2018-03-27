@@ -1,3 +1,0 @@
-Copied from https://github.com/coryhouse/react-slingshot on 26/3/2018.
-
-His latest commit: b94e504  an hour ago
