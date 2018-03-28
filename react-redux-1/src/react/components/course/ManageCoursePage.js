@@ -12,6 +12,8 @@ import * as courseActions from "../../../redux/actions/courseActions";
 import CourseForm from "./CourseForm";
 import {authorsFormattedForDropdown} from "../../selectors/selectors";
 
+import { browserHistory } from "react-router";
+
 // Now exporting the plain, unconnected-to-store component.
 export class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -153,6 +155,18 @@ function mapStateToProps(state, ownProps) {
     course = getCourseById(state.courses, courseId);
   }
 
+
+
+  // DC: Does the job if course not found but dirty and unclean as it does not appear to redirect and end component lifecycle immediately.
+  if (!course) {
+    // DC: I think this failed because the context.router was not defined because the browser route was illegal.
+    // this.context.router.push('/page-not-found');
+    browserHistory.push("/page-not-found");
+  }
+
+
+
+  
   // OBSERVATION: So far, if we go to Manage Course via a link, the elements are populated.
   //              However, if we then refresh that page, course is populated but the elements are empty.
   // ANSWER: This is because, in the constructor, we set the state and its course property is assigned to this.props.course which,

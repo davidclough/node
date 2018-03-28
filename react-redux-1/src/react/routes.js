@@ -7,6 +7,8 @@ import CoursesPage from "./components/course/CoursesPage";
 // Disabled eslint for this line as the file exports ManageCoursePage as both a named export and as the default - should be a better solution.
 import ManageCoursePage from "./components/course/ManageCoursePage";  // eslint-disable-line import/no-named-as-default
 
+import NotFoundPage from './components/common/NotFoundPage';
+
 // NOTE(DC): I stuck braces in here instead of brackets and got compilation errors.
 //           In actual fact, the compilation error was being indicated by the command line but
 //           I just didn't spot the error and assumed that some other underlying problem was causing it.
@@ -23,5 +25,6 @@ export default (
     <Route path="course" component={ManageCoursePage} />
     <Route path="course/:id" component={ManageCoursePage} />
     <Route path="about" component={AboutPage} />
+    <Route path="page-not-found" component={NotFoundPage} />
   </Route>
 );
