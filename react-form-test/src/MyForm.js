@@ -1,10 +1,15 @@
 import React from 'react';
 
 export default class MyForm extends React.Component {
-  //constructor(props) {
-  //  super(props);
-  //  //console.log(Object.getOwnPropertyNames(this.state));
-  //}
+  constructor(props) {
+    super(props);
+
+    // Yes, you can have multiple refs.
+    for (let sv of Object.getOwnPropertyNames(this.state)) {
+      this[sv + 'Ref'] = React.createRef();
+    }
+    this.setInitialFocus = this.setInitialFocus.bind(this);
+  }
 
   // OBSERVATION: He has not used a constructor to set this.
   state = this.getEmptyState();
@@ -12,6 +17,16 @@ export default class MyForm extends React.Component {
   //getEmptyState = () => {       // OBSERVATION: This syntax only worked when declared method BEFORE the "state = " line.
   getEmptyState() {
     return {firstName: 'dog', lastName: '', userName: '', email: '', password: ''};
+  }
+
+  setInitialFocus() {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.userNameRef.current.focus();
+  }
+
+  componentDidMount(prevProps, prevState, snapshot) {
+    this.setInitialFocus();
   }
 
   change = e => {
@@ -52,7 +67,7 @@ export default class MyForm extends React.Component {
       textInputs.push(
         <p key={sv}>
           <input name={sv} placeholder={sv} value={this.state[sv]} onChange={e => this.change(e)}
-                 type={sv === 'password' ? 'password' : 'text'} />
+                 type={sv === 'password' ? 'password' : 'text'} ref={this[sv + 'Ref']} />
         </p>
       );
     }
