@@ -1,0 +1,15 @@
+networks:
+  default:
+    external:
+      name: nat
+services:
+  rstest1:
+    build:
+      context: D:\Visual Studio Projects\GitHub\node\RService\RSTest1
+      dockerfile: RSTest1\Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: rstest1
+    ports:
+    - 80/tcp
+version: '3.0'

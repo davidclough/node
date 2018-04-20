@@ -1,0 +1,11 @@
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\bin\Debug\netcoreapp2.0\RSTest1.deps.json
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\bin\Debug\netcoreapp2.0\RSTest1.runtimeconfig.json
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\bin\Debug\netcoreapp2.0\RSTest1.runtimeconfig.dev.json
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\bin\Debug\netcoreapp2.0\RSTest1.dll
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\bin\Debug\netcoreapp2.0\RSTest1.pdb
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.csproj.CoreCompileInputs.cache
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.AssemblyInfoInputs.cache
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.AssemblyInfo.cs
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.dll
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.pdb
+D:\Visual Studio Projects\GitHub\node\RService\RSTest1\RSTest1\obj\Debug\netcoreapp2.0\RSTest1.csprojResolveAssemblyReference.cache

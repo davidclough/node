@@ -1,0 +1,10 @@
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\bin\Debug\netcoreapp2.0\CoreCmdTest.deps.json
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\bin\Debug\netcoreapp2.0\CoreCmdTest.runtimeconfig.json
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\bin\Debug\netcoreapp2.0\CoreCmdTest.runtimeconfig.dev.json
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\bin\Debug\netcoreapp2.0\CoreCmdTest.dll
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\bin\Debug\netcoreapp2.0\CoreCmdTest.pdb
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\obj\Debug\netcoreapp2.0\CoreCmdTest.csproj.CoreCompileInputs.cache
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\obj\Debug\netcoreapp2.0\CoreCmdTest.AssemblyInfoInputs.cache
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\obj\Debug\netcoreapp2.0\CoreCmdTest.AssemblyInfo.cs
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\obj\Debug\netcoreapp2.0\CoreCmdTest.dll
+D:\Visual Studio Projects\GitHub\node\RService\CoreCmdTest\obj\Debug\netcoreapp2.0\CoreCmdTest.pdb
