@@ -17,6 +17,7 @@ namespace RServiceSample
             services.AddRServiceIo(options =>
             {
                 options.AddServiceAssembly(typeof(ValuesService));
+                ////options.AddServiceAssembly(typeof(QwertyService));
             }); 
         }
 

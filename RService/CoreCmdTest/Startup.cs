@@ -29,16 +29,28 @@ namespace CoreCmdTest
         {
             if (env.IsDevelopment())
             {
+                // Set using an environment variable. This was in Properties/launchSettings.json in VS project.
+                // In VSCode it appears to be defines in .vscode/launch.json
+                //env.IsEnvironment("QA");
+                // Set using an environment variable.
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler();
+            }
+
+            // app.UseDefaultFiles();       // Needs to go first as this changes the request under the bonnet.
+            // app.UseStaticFiles();
+            app.UseFileServer();
 
             // DC: This is an example of one piece of middleware. Other generally start app.Use...()
             app.Run(async (context) =>
             {
-                throw new Exception("Errorio");
+                //throw new Exception("Errorio");
 
                 var greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync(greeting);
+                await context.Response.WriteAsync($"{greeting} : {env.EnvironmentName}");
             });
         }
 
