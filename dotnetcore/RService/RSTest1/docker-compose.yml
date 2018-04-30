@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  rstest1:
-    image: rstest1
-    build:
-      context: .
-      dockerfile: RSTest1\Dockerfile

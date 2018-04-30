@@ -1,1 +1,0 @@
-D:\Visual Studio Projects\GitHub\node\RService\RSTest1\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
