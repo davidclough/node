@@ -55,10 +55,3 @@ ol, ul {
   border: #999 solid 1px;
   margin: 0 20px 20px 0;
 }
-
-.graph-container {
-  background-color: blanchedalmond;
-  margin: 20px 0 0 0;
-  padding: 10px;
-  overflow: hidden;
-}

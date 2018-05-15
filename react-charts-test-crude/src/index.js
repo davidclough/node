@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Dygraph from 'dygraphs';
-import LineGraph from './LineGraph';
 
 function Square(props) {
   return (
@@ -48,13 +47,13 @@ class Game extends React.Component {
     super(props);
 
 
-    // // http://dygraphs.com/gallery/#g/dynamic-update
-    // let data = [];
-    // let t = new Date();
-    // for (let i = 10; i >= 0; i--) {
-    //   let x = new Date(t.getTime() - i * 1000);
-    //   data.push([x, Math.random()]);
-    // }
+    // http://dygraphs.com/gallery/#g/dynamic-update
+    let data = [];
+    let t = new Date();
+    for (let i = 10; i >= 0; i--) {
+      let x = new Date(t.getTime() - i * 1000);
+      data.push([x, Math.random()]);
+    }
     
 
 
@@ -65,8 +64,19 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
-      // chartData: data,
+      chartData: data,
     };
+
+
+      this.intervalId = setInterval(() => {
+        var x = new Date();  // current time
+        var y = Math.random();
+
+        this.setState({
+          chartData: [...this.state.chartData, [x, y]],
+        });
+      }, 4000);
+    
   }
 
   render() {
@@ -93,7 +103,7 @@ class Game extends React.Component {
     
     return (
       <div className="game-container">
-        <div className="game" style={{display:'none'}}>
+        <div className="game">
           <div className="game-board">
             <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
           </div>
@@ -103,9 +113,27 @@ class Game extends React.Component {
           </div>
         </div>
 
-        <LineGraph graphId={this.state.gameId} />
+
+
+
+        <div id={"graphdiv-" + this.state.gameId}></div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.dygraph = new Dygraph(document.getElementById(`graphdiv-${this.state.gameId}`),
+                                this.state.chartData,//data,
+                                {
+                                  drawPoints: true,
+                                  showRoller: true,
+                                  valueRange: [0.0, 1.2],
+                                  labels: ['Time', 'Random']
+                                });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   generateMoves(history) {
@@ -150,7 +178,7 @@ class Game extends React.Component {
 // ========================================
 
 const games = [];
-const numberOfGames = 6;//Math.random() * 25 + 3;
+const numberOfGames = 1;//Math.random() * 25 + 3;
 for (let i = 0; i < numberOfGames; i++) {
   games.push(<Game key={i} />);
 }
