@@ -43,6 +43,19 @@ namespace SwaggerTest
         // http://www.codedigest.com/posts/49/using-autofac-instead-of-inbuilt-di-container-with-in-aspnet-core-mvc
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // DC: I had problems requesting a call from a different localhost port in my UI test application.
+            // HELP: https://weblog.west-wind.com/posts/2016/Sep/26/ASPNET-Core-and-CORS-Gotchas
+            //       He also indicated that it should go before the UseMvc(), although that is in Configure()!
+            services.AddCors(x => x.AddPolicy("CorsPolicy", corsPolicy =>
+            {
+                // OBSERVATION: This overcomes the problem.
+                //              I did not see the Access-Control-Allow-Origin header in the response in Fiddler but DID see it in browser development tools.
+                corsPolicy.AllowAnyOrigin()
+                          //.WithOrigins("http://localhost:3000")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+            }));
+
             // This bit same as normal.
             services.AddMvc();
 

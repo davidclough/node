@@ -21,7 +21,8 @@ namespace SwaggerTest.Classes
             // The experiment revealed they are different instances.
             var aaa = _channelRepository.ChannelRepositoryId;
 
-            return _channelRepository.GetChannelDataPoints(12345);
+            var channelDataPoints = _channelRepository.GetChannelDataPoints(12345);
+            return channelDataPoints;
         }
     }
 }

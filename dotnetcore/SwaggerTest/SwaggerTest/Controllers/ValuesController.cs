@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerTest.Classes;
 
@@ -12,6 +13,7 @@ namespace SwaggerTest.Controllers
     /// Swagger still seems to ignore this comment, although I would expect it is in the generated XML file.
     /// </inheritdoc>
     [Route("api/[controller]")]
+    [EnableCors("CorsPolicy")]
     public class ValuesController : Controller
     {
         private readonly IUtility _utility;

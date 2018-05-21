@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerTest.Interfaces;
 using SwaggerTest.Classes;
@@ -20,6 +21,7 @@ namespace SwaggerTest.Controllers
     ///              and they even preferred using the MVC 2 ViewData instead of ViewBag.
     /// </inheritdoc>
     [Route("api/[controller]")]
+    [EnableCors("CorsPolicy")]
     public class LocomotivesController : Controller
     {
         private readonly ILocomotiveBusiness _locomotiveBusiness;
@@ -43,7 +45,8 @@ namespace SwaggerTest.Controllers
             // The experiment revealed they are different instances.
             var aaa = _channelRepository.ChannelRepositoryId;
 
-            return _locomotiveBusiness.GetLocomotiveInfo();
+            var locomotiveInfo = _locomotiveBusiness.GetLocomotiveInfo();
+            return locomotiveInfo;
         }
     }
 }
