@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="infoMessage"></div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      const resultElement = document.getElementById(`infoMessage`);
+      $.get( "http://localhost:57112/api/locomotives", function (data) {
+        resultElement.innerHTML = data;
+      })
+      .fail(function() {
+        resultElement.innerHTML = 'error';
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+

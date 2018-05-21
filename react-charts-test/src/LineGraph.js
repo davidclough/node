@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import Dygraph from 'dygraphs';
+import axios from 'axios';
 
 export default class LineGraph extends React.Component {
   constructor(props) {
@@ -49,6 +49,7 @@ export default class LineGraph extends React.Component {
     return (
       <div className="graph-container">
         <div id={"graphdiv-" + this.props.graphId}></div>
+        <div id={"getResult1-" + this.props.graphId}></div>
       </div>
     );
   }
@@ -62,11 +63,27 @@ export default class LineGraph extends React.Component {
                                   valueRange: [0.0, 1.2],
                                   labels: ['Time', 'Random']
                                 });
+
+    this.performGetRequest1();
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
+  // https://medium.com/codingthesmartway-com-blog/getting-started-with-axios-166cb0035237
+  performGetRequest1() {
+    var resultElement = document.getElementById(`getResult1-${this.props.graphId}`);
+    resultElement.innerHTML = '';
+    
+    axios.get('http://localhost:57112/api/locomotives')
+      .then(function (response) {
+        resultElement.innerHTML = `${response.data[0]} (${response.data.length})`;
+      })
+      .catch(function (error) {
+        resultElement.innerHTML = error;
+      });   
+  }
+  
   // TODO: Would define props but this is meant to be a very simple project rather than a "best practice" project.
 }

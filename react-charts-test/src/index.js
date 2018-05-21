@@ -1,8 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Dygraph from 'dygraphs';
 import LineGraph from './LineGraph';
+
+
+
+
+import LocalizedStrings from 'react-localization';
+
+let strings = new LocalizedStrings({
+ en:{
+   how: "How do you want your egg today?",
+   boiledEgg: "Boiled egg",
+   softBoiledEgg: "Soft-boiled egg",
+   choice: "How to choose the egg"
+ },
+ "it": {
+   how: "Come vuoi il tuo uovo oggi?",
+   boiledEgg: "Uovo sodo",
+   softBoiledEgg: "Uovo alla coque",
+   choice: "Come scegliere l'uovo"
+ },
+ "it-IT": {
+   softBoiledEgg: "Uovo fritto",
+ }
+});
+
+
+
 
 function Square(props) {
   return (
@@ -47,17 +72,9 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
 
-
-    // // http://dygraphs.com/gallery/#g/dynamic-update
-    // let data = [];
-    // let t = new Date();
-    // for (let i = 10; i >= 0; i--) {
-    //   let x = new Date(t.getTime() - i * 1000);
-    //   data.push([x, Math.random()]);
-    // }
-    
-
-
+    //strings.setLanguage('it-IT');
+    strings.setLanguage(Math.random() < 0.5 ? 'en' : 'it-IT');
+        
     this.state = {
       gameId: Math.random() * 1000000,
       history: [{
@@ -65,7 +82,6 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
-      // chartData: data,
     };
   }
 
@@ -82,15 +98,6 @@ class Game extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
-
-    // When render() is first called this.g has not been created. componentDidMount() executes afterwards.
-    // passing props from parent / lifting state: https://reactjs.org/docs/lifting-state-up.html.
-    // http://dygraphs.com/options.html
-    if (this.dygraph) {
-      this.dygraph.updateOptions( { 'file': this.state.chartData } );
-    }
-
-    
     return (
       <div className="game-container">
         <div className="game" style={{display:'none'}}>
@@ -104,6 +111,7 @@ class Game extends React.Component {
         </div>
 
         <LineGraph graphId={this.state.gameId} />
+        <div>{strings.softBoiledEgg}</div>
       </div>
     );
   }
