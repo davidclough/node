@@ -31,9 +31,11 @@ class CoursesPage extends React.Component {
 
   render() {
     const {courses} = this.props;
+    const numCourses = courses.length;
+    const title = `${numCourses} Course${numCourses == 1 ? "" : "s"}`;
     return (
       <div>
-        <h1>Courses</h1>
+        <h1>{title}</h1>
         <input type="submit" value="Add Course" className="btn btn-primary" onClick={this.redirectToAddCoursePage} />
         <CourseList courses={courses} />
       </div>
