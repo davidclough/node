@@ -12,6 +12,8 @@ import * as courseActions from "../../../redux/actions/courseActions";
 import CourseForm from "./CourseForm";
 import {authorsFormattedForDropdown} from "../../selectors/selectors";
 
+import { browserHistory } from "react-router";
+
 // Now exporting the plain, unconnected-to-store component.
 export class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -21,7 +23,9 @@ export class ManageCoursePage extends React.Component {
       course: Object.assign({}, this.props.course),
       errors: {},
       // He just uses local state, without redux, here. It is not necessary to use redux every time, this is only a very local thing.
-      saving: false
+      saving: false,
+
+      courseNotFound: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -35,6 +39,12 @@ export class ManageCoursePage extends React.Component {
   // TODO: See see if a component will update naturally when one of its props, rather than state, has changed.
   // https://facebook.github.io/react/docs/react-component.html
   componentWillReceiveProps(nextProps) {
+
+    if (this.state.courseNotFound) {
+      browserHistory.push("/page-not-found");
+    }
+
+
     // This method runs when react THINKS props has changed. However, it may not have actually changed.
     if (this.props.course.id != nextProps.course.id) {
       // Need this if load the page directly rather than from a link in CoursesPage.
@@ -150,9 +160,23 @@ function mapStateToProps(state, ownProps) {
   const courseId = ownProps.params.id;      // From the defined route "course/:id"  ****
   // course may be empty - we implemented a delay when fetching from API.
   if (courseId && state.courses.length > 0) {
-    course = getCourseById(state.courses, courseId);
+    const result = getCourseById(state.courses, courseId);
+    if (result) {
+      course = result;
+    } else {
+      // DC: I think this failed because the context.router was not defined because the browser route was illegal.
+      // this.context.router.push('/page-not-found');
+      // DC: Does the job if course not found but dirty and unclean as it does not appear to redirect and end component lifecycle immediately.
+      //browserHistory.push("/page-not-found");
+
+      // Both the lines below and above cause warnings. Does mapStateToProps have to be a true function?
+      //this.setState({courseNotFound: true});
+      this.courseNotFound = true;
+    }
   }
 
+
+  
   // OBSERVATION: So far, if we go to Manage Course via a link, the elements are populated.
   //              However, if we then refresh that page, course is populated but the elements are empty.
   // ANSWER: This is because, in the constructor, we set the state and its course property is assigned to this.props.course which,

@@ -7,7 +7,7 @@ import compression from 'compression';
 
 // Similar to srcServer, mainly without the webpack stuff.
 
-const port = 3000;
+const port = 3294;
 const app = express();
 
 // GZIPs from 411K to 126K. Can reduce even further by excluding babel-polyfill, toastr, jquery, bootstrap (he included for speed of development).
